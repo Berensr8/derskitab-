@@ -19,6 +19,19 @@ Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 | `veri/` | İncelenecek kitap PDF'leri ve çıktılar (git'e eklenmez) |
 | `belgeler/` | Proje tanımı ve ders belgeleri |
 
+## Kullanım
+
+```bash
+# 1. PDF'ten blokları çıkar -> veri/kitap_bloklar.json
+.venv\Scripts\python.exe -m derskitabi.pdf_cikarma veri\kitap.pdf
+
+# 2. Okunabilirlik -> veri/kitap_okunabilirlik_ozet.json, _tespitler.json
+.venv\Scripts\python.exe -m derskitabi.kriterler.okunabilirlik veri\kitap_bloklar.json
+
+# Sistemin gözünden PDF: bloklar, cümleler ve tespitler kitabın üzerine çizilir
+.venv\Scripts\python.exe -m derskitabi.gorsellestir veri\kitap.pdf --sayfalar 28-35
+```
+
 ## Kurulum
 
 ```bash

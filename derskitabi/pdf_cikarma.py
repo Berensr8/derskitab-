@@ -1,7 +1,7 @@
 """PDF'ten metin bloklarını çıkarma (Faz 1, adım 1).
 
 Girdi : PDF dosyası
-Çıktı : Blok listesi (sayfa_no, blok_no, bbox, metin, basili_sayfa_no)
+Çıktı : Blok listesi (sayfa_no, blok_no, bbox, metin, basili_sayfa_no, tur)
 
 Kullanım:
     python -m derskitabi.pdf_cikarma veri/kitap.pdf
@@ -10,12 +10,13 @@ Kullanım:
 import re
 import sys
 import unicodedata
+from collections import Counter
 from pathlib import Path
 
 import pymupdf
 
 from .kayit import bloklari_kaydet
-from .model import Blok
+from .model import BLOK_TURLERI, Blok
 
 # Sayfanın üstünden ve altından bu oranda bir şerit "kenar" sayılır. Kenarda tek
 # başına duran bir sayı, basılı sayfa numarası kabul edilir.
@@ -38,6 +39,9 @@ _YUMUSAK_TIRE = re.compile("­\\s*")
 _SATIR_SONU_TIRESI = re.compile(r"(\w)[-‐]\n\s*(?=[a-zçğıöşüâîû])")
 _GERCEK_TIRE_SATIR_SONU = re.compile(r"([-‐])\n\s*")
 
+# Bu kadar ve daha fazla kelimeli bloklar "paragraf" sayılır (K8).
+PARAGRAF_ESIGI = 5
+
 
 class MetinYokHatasi(Exception):
     """PDF'te seçilebilir metin yok (taranmış kitap). OCR Faz 1 kapsamı dışında."""
@@ -52,6 +56,17 @@ def _metni_temizle(ham: str) -> str:
     metin = _GERCEK_TIRE_SATIR_SONU.sub(r"\1", metin)
     # Kalan satır sonları ve fazla boşluklar tek boşluğa indirilir.
     return " ".join(metin.split())
+
+
+def blok_turu(metin: str) -> str:
+    """Bloğun hangi kriterlerce analiz edileceğini belirleyen tür (K8)."""
+    if "�" in metin:  # Unicode karşılığı olmayan karakter: metin okunamıyor
+        return "bozuk"
+    if not any(c.isalnum() for c in metin):
+        return "simge"
+    if len(metin.split()) >= PARAGRAF_ESIGI:
+        return "paragraf"
+    return "kisa"
 
 
 def _sayfa_etiketi(sayfa: pymupdf.Page) -> str | None:
@@ -89,8 +104,12 @@ def sayfa_bloklari(sayfa: pymupdf.Page) -> list[Blok]:
             continue
         adaylar.append((bbox, metin))
 
+    # Okuma sırası (K7): PyMuPDF blokları PDF'e yazıldıkları sırayla verir; biz
+    # yukarıdan aşağıya, aynı yükseklikte soldan sağa sıralarız (önce y0, sonra x0).
+    adaylar.sort(key=lambda a: (a[0][1], a[0][0]))
+
     return [
-        Blok(sayfa_no, i, bbox, metin, basili_no)
+        Blok(sayfa_no, i, bbox, metin, basili_no, blok_turu(metin))
         for i, (bbox, metin) in enumerate(adaylar, start=1)
     ]
 
@@ -122,6 +141,8 @@ def main() -> None:
     basili = {b.sayfa_no for b in bloklar if b.basili_sayfa_no}
     print(f"{len(bloklar)} blok, {len(sayfalar)} sayfadan çıkarıldı -> {cikti}")
     print(f"Basılı sayfa numarası bulunan sayfa: {len(basili)} / {len(sayfalar)}")
+    turler = Counter(b.tur for b in bloklar)
+    print("Blok türleri: " + ", ".join(f"{t} {turler[t]}" for t in BLOK_TURLERI))
     for b in bloklar[:5]:
         print(f"  [PDF s.{b.sayfa_no} / kitap s.{b.basili_sayfa_no or '-'} / blok {b.blok_no}] "
               f"{b.metin[:80]}")

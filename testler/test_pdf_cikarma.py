@@ -11,7 +11,7 @@ from pathlib import Path
 import pymupdf
 
 from derskitabi.kayit import bloklari_kaydet, bloklari_yukle
-from derskitabi.pdf_cikarma import MetinYokHatasi, _metni_temizle, bloklari_cikar
+from derskitabi.pdf_cikarma import MetinYokHatasi, _metni_temizle, blok_turu, bloklari_cikar
 
 # Türkçe karakterleri (ş, ğ, ı, İ) basabilmek için Windows'un Arial fontu kullanılır.
 FONT = Path(r"C:\Windows\Fonts\arial.ttf")
@@ -29,8 +29,10 @@ def ornek_pdf(yol, sayfa_etiketi=False):
     _yaz(kapak, 300, "TÜRKÇE 6")
 
     s2 = belge.new_page()
-    _yaz(s2, 100, "Birinci paragraf: Türkçe ders kitaplarında öğren-\nciler çok okur.")
+    # Alttaki paragraf PDF'e önce yazılıyor: çıkarmanın okuma sırasına (yukarıdan
+    # aşağıya) göre sıraladığını sınamak için (K7).
     _yaz(s2, 300, "İkinci paragraf ayrı bir bloktur.")
+    _yaz(s2, 100, "Birinci paragraf: Türkçe ders kitaplarında öğren-\nciler çok okur.")
     _yaz(s2, 815, "7")  # altbilgideki basılı sayfa numarası
 
     s3 = belge.new_page()
@@ -63,6 +65,24 @@ class MetinTemizlemeTesti(unittest.TestCase):
         self.assertEqual(_metni_temizle("Bir\nparagraf  burada.\n"), "Bir paragraf burada.")
 
 
+class BlokTuruTesti(unittest.TestCase):
+    # Örnekler gerçek kitaptan (Sosyal Bilgiler) alınmıştır.
+    def test_paragraf(self):
+        self.assertEqual(blok_turu("Bu süreçte Türk halkının pek çok temel ihtiyacı bulunuyordu."),
+                         "paragraf")
+
+    def test_kisa(self):
+        self.assertEqual(blok_turu("Edirne Kırklareli"), "kisa")
+        self.assertEqual(blok_turu("Görsel 1.31 Temsili"), "kisa")
+
+    def test_bozuk_karakterli_uzun_blok_bile_bozuk_sayilir(self):
+        self.assertEqual(blok_turu("Bast���n yerleri toprak diyerek geçme"), "bozuk")
+
+    def test_simge(self):
+        self.assertEqual(blok_turu("! !"), "simge")
+        self.assertEqual(blok_turu("!("), "simge")
+
+
 @unittest.skipUnless(FONT.exists(), "Arial fontu bulunamadı")
 class PdfCikarmaTesti(unittest.TestCase):
     def setUp(self):
@@ -77,6 +97,18 @@ class PdfCikarmaTesti(unittest.TestCase):
         bloklar = bloklari_cikar(self.pdf)
         konumlar = [(b.sayfa_no, b.blok_no) for b in bloklar]
         self.assertEqual(konumlar, [(1, 1), (2, 1), (2, 2), (3, 1)])
+
+    def test_bloklar_okuma_sirasinda_numaralanir(self):
+        ornek_pdf(self.pdf)
+        ikinci_sayfa = [b for b in bloklari_cikar(self.pdf) if b.sayfa_no == 2]
+        self.assertTrue(ikinci_sayfa[0].metin.startswith("Birinci"))
+        self.assertTrue(ikinci_sayfa[1].metin.startswith("İkinci"))
+
+    def test_blok_turleri_belirlenir(self):
+        ornek_pdf(self.pdf)
+        turler = [b.tur for b in bloklari_cikar(self.pdf)]
+        # kapak "TÜRKÇE 6", iki paragraf, 4 kelimelik son blok
+        self.assertEqual(turler, ["kisa", "paragraf", "paragraf", "kisa"])
 
     def test_satir_sonu_tiresi_birlestirilir(self):
         ornek_pdf(self.pdf)

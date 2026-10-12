@@ -12,6 +12,13 @@ BBox = tuple[float, float, float, float]
 
 KRITERLER = ("yazim", "okunabilirlik", "tutarlilik")
 
+# Blok türleri (K8):
+#   paragraf : analiz edilecek düz metin (5+ kelime)
+#   kisa     : başlık, harita etiketi, altyazı gibi kısa metin
+#   bozuk    : fontu Türkçe harfleri bozuk kodladığı için okunamayan metin ('�')
+#   simge    : harf/rakam içermeyen blok (harita simgeleri vb.)
+BLOK_TURLERI = ("paragraf", "kisa", "bozuk", "simge")
+
 
 @dataclass
 class Blok:
@@ -23,6 +30,11 @@ class Blok:
     metin: str
     # Kitabın üzerinde basılı numara (ör. "15", "iv"); bulunamazsa None (K6)
     basili_sayfa_no: str | None = None
+    tur: str = "paragraf"  # BLOK_TURLERI içinden biri (K8)
+
+    def __post_init__(self):
+        if self.tur not in BLOK_TURLERI:
+            raise ValueError(f"Bilinmeyen blok türü: {self.tur!r} (geçerli: {BLOK_TURLERI})")
 
     def sozluge(self) -> dict:
         return asdict(self)

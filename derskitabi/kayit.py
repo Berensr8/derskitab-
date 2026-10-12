@@ -19,6 +19,11 @@ def _oku(yol) -> list[dict]:
     return json.loads(Path(yol).read_text(encoding="utf-8"))
 
 
+def json_kaydet(veri: dict, yol) -> None:
+    """Kitap özeti gibi tek bir sözlüğü kaydeder."""
+    Path(yol).write_text(json.dumps(veri, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 def bloklari_kaydet(bloklar: list[Blok], yol) -> None:
     _yaz(bloklar, yol)
 

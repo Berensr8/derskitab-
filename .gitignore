@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Kitap PDF'leri ve çalışma çıktıları (büyük dosyalar, git'e eklenmez)
+veri/
+
+# Haftalık rapor (kişisel, ikili dosya)
+*.docx
+~$*
+
+# Editör / işletim sistemi
+.vscode/
+.idea/
+Thumbs.db

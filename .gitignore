@@ -15,3 +15,7 @@ veri/
 .vscode/
 .idea/
 Thumbs.db
+
+# Kişisel çalışma notları (git'e eklenmez)
+KARARLAR.md
+GUNLUK.md

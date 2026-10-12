@@ -17,24 +17,28 @@ KRITERLER = ("yazim", "okunabilirlik", "tutarlilik")
 class Blok:
     """PDF'ten çıkarılan bir metin bloğu. Faz 1'de blok = paragraf kabul edilir."""
 
-    sayfa_no: int  # Hangi numaralandırma kullanıldığı KARARLAR.md'de (sayfa numarası kararı)
+    sayfa_no: int  # PDF sayfa indeksi, 1'den başlar (K6)
     blok_no: int  # Sayfa içindeki sıra, 1'den başlar
     bbox: BBox
     metin: str
+    # Kitabın üzerinde basılı numara (ör. "15", "iv"); bulunamazsa None (K6)
+    basili_sayfa_no: str | None = None
 
     def sozluge(self) -> dict:
         return asdict(self)
 
     @classmethod
     def sozlukten(cls, d: dict) -> "Blok":
-        return cls(d["sayfa_no"], d["blok_no"], tuple(d["bbox"]), d["metin"])
+        d = dict(d)
+        d["bbox"] = tuple(d["bbox"])
+        return cls(**d)
 
 
 @dataclass
 class Tespit:
     """Bir kriterin bulduğu olası hata."""
 
-    sayfa_no: int
+    sayfa_no: int  # PDF sayfa indeksi, 1'den başlar (K6)
     blok_no: int
     bbox: BBox
     kriter: str  # KRITERLER içinden biri
@@ -42,6 +46,7 @@ class Tespit:
     guven_skoru: float  # 0.0 (çok emin değil) – 1.0 (kesin)
 
     # İsteğe bağlı alanlar
+    basili_sayfa_no: str | None = None  # Arayüzde "PDF s. 19 / Kitap s. 15" göstermek için
     alt_tur: str | None = None  # Ör. "de_da_ayri_yazim"
     metin_parcasi: str | None = None  # Hatalı kelime/ifade (ileride PDF'te işaretlemek için)
     # Çelişkinin diğer tarafı gibi ilgili başka yerler: [(sayfa_no, blok_no), ...]

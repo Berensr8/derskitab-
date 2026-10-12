@@ -1,1 +1,2 @@
 # Kütüphaneler, her biri KARARLAR.md'de onaylandıkça buraya eklenir.
+pymupdf==1.28.2  # K5: PDF'ten blok + bbox çıkarma

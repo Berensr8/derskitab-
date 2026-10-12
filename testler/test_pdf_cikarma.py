@@ -55,6 +55,10 @@ class MetinTemizlemeTesti(unittest.TestCase):
         self.assertEqual(_metni_temizle("Türk-\nYunan savaşı"), "Türk-Yunan savaşı")
         self.assertEqual(_metni_temizle("1923-\n1938 yılları"), "1923-1938 yılları")
 
+    def test_ayrik_aksanlar_tek_karaktere_birlesir(self):
+        # Gerçek kitapta görüldü: "Ç" = "C" + U+0327 (birleşen çengel)
+        self.assertEqual(_metni_temizle("Çil, 2009"), "Çil, 2009")
+
     def test_satir_sonlari_ve_fazla_bosluk_teke_iner(self):
         self.assertEqual(_metni_temizle("Bir\nparagraf  burada.\n"), "Bir paragraf burada.")
 

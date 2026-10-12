@@ -9,6 +9,7 @@ Kullanım:
 
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 import pymupdf
@@ -43,7 +44,10 @@ class MetinYokHatasi(Exception):
 
 
 def _metni_temizle(ham: str) -> str:
-    metin = _YUMUSAK_TIRE.sub("", ham)
+    # Bazı PDF'ler "Ç" harfini "C" + ayrı çengel işareti olarak saklar; NFC
+    # normalleştirmesi bunları tek karaktere birleştirir.
+    metin = unicodedata.normalize("NFC", ham)
+    metin = _YUMUSAK_TIRE.sub("", metin)
     metin = _SATIR_SONU_TIRESI.sub(r"\1", metin)
     metin = _GERCEK_TIRE_SATIR_SONU.sub(r"\1", metin)
     # Kalan satır sonları ve fazla boşluklar tek boşluğa indirilir.

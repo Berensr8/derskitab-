@@ -26,5 +26,3 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 ```
-
-Kararlar ve gerekçeleri: [KARARLAR.md](KARARLAR.md) · Çalışma günlüğü: [GUNLUK.md](GUNLUK.md)

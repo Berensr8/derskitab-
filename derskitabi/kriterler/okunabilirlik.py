@@ -33,12 +33,20 @@ HEDEF_SINIF_ARAMA_SAYFASI = 5  # Hedef sınıf yalnızca ilk sayfalarda (kapak) 
 
 _UNLULER = set("aeıioöuüâîûAEIİOÖUÜÂÎÛ")
 
-# Sonundaki nokta cümle bitirmeyen kısaltmalar
-_KISALTMA = re.compile(r"\b(M\.Ö|M\.S|vb|vs|bkz|bk|örn|Dr|Prof|Doç|yy|sf|s|No)\.")
-# Cümle sonu: . ! ? … (ardından tırnak gelebilir) + boşluk + küçük harfle başlamayan devam.
-# "6. sınıf" gibi sıra sayıları küçük harfle devam ettiği için cümle sonu sayılmaz.
+# Sonundaki nokta cümle bitirmeyen kısaltmalar: bilinen kısaltmalar ve ardışık büyük
+# harf baş harfleri ("T.B.M.M.", "A.B.D.")
+_KISALTMA = re.compile(
+    r"\b(?:[A-ZÇĞİÖŞÜ]\.){2,}|\b(M\.Ö|M\.S|vb|vs|bkz|bk|örn|Dr|Prof|Doç|yy|sf|s|No)\."
+)
+# Cümle sonu iki şekilde olur:
+#  1. . ! ? … (ardından tırnak gelebilir) + boşluk + küçük harfle başlamayan devam.
+#     "6. sınıf" gibi sıra sayıları küçük harfle devam ettiği için cümle sonu sayılmaz.
+#  2. Boşluksuz: küçük harf + . ! ? + hemen ardından "(…)" ya da büyük harf
+#     ("gelmiştir.(…) En", "alabiliriz.Öğrenci" — kitapta görüldü). Noktadan önce
+#     küçük harf şartı "M.Ö", "T.B.M.M" gibi kısaltmaları korur.
 _CUMLE_SONU = re.compile(
     r"(?:(?<=[.!?…])|(?<=[.!?…][\"”’'»]))\s+(?=[^a-zçğıöşüâîû\s])"
+    r"|(?<=[a-zçğıöşüâîû][.!?])(?=\(…\)|\(\.\.\.\)|[A-ZÇĞİÖŞÜÂÎÛ])"
 )
 # Kelime: harflerden oluşur, kesme işaretinden sonra ek alabilir ("Atatürk’ün").
 # Rakamlar kelime sayılmaz (okunuşlarının hece sayısı belirsiz).

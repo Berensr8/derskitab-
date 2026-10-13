@@ -40,6 +40,15 @@ class CumleBolmeTesti(unittest.TestCase):
         self.assertEqual(len(cumlelere_bol("6. sınıf öğrencileri geldi.")), 1)
         self.assertEqual(len(cumlelere_bol("Görsel 1.31'e bakınız.")), 1)
 
+    def test_bosluksuz_cumle_sonu_bolunur(self):
+        # Gerçek kitaptan: s.31 (Kaynak 5) ve s.15
+        self.assertEqual(len(cumlelere_bol("Sanat hâline gelmiştir.(…) En sık desen çiçektir.")), 2)
+        self.assertEqual(len(cumlelere_bol("Roller alabiliriz.Öğrenci rolüyle bilgi ediniriz.")), 2)
+
+    def test_bosluksuz_kisaltmalar_bolunmez(self):
+        self.assertEqual(len(cumlelere_bol("T.B.M.M. 1920'de açıldı.")), 1)
+        self.assertEqual(len(cumlelere_bol("Kaynak: s.230 ve Dr.Ahmet'in notları.")), 1)
+
     def test_tirnakli_cumle_sonu(self):
         self.assertEqual(len(cumlelere_bol('"Yurtta sulh, cihanda sulh." Bu sözü biliriz.')), 2)
 

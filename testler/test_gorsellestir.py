@@ -7,7 +7,8 @@ from pathlib import Path
 import pymupdf
 
 from derskitabi.gorsellestir import (
-    blok_raporu, isaretli_pdf_olustur, kelimeleri_eslestir, rapor_metni, sayfa_araligi_coz,
+    blok_raporu, cumle_dikdortgenleri, isaretli_pdf_olustur, kelimeleri_eslestir, rapor_metni,
+    sayfa_araligi_coz,
 )
 from derskitabi.model import Blok
 from testler.test_pdf_cikarma import FONT, ornek_pdf
@@ -30,6 +31,16 @@ class KelimeEslestirmeTesti(unittest.TestCase):
     def test_eslesmezse_none(self):
         self.assertIsNone(kelimeleri_eslestir(["Ali", "geldi"], ["Veli", "geldi"]))
         self.assertIsNone(kelimeleri_eslestir(["Ali"], ["Ali", "geldi"]))
+
+
+class CumleKutusuTesti(unittest.TestCase):
+    def test_bosluksuz_cumle_sonunda_kelimeler_dogru_cumleye_atanir(self):
+        # PDF'te "gelmiştir.(…)" tek kelime ama iki cümlenin sınırında (s.31'de görüldü)
+        kelimeler = [(10 * i, 0, 10 * i + 8, 10, k, 0, 0, i)
+                     for i, k in enumerate(["Sanat", "gelmiştir.(…)", "En", "sık", "desen."])]
+        b = Blok(1, 1, (0, 0, 60, 10), "Sanat gelmiştir.(…) En sık desen.", "1", "paragraf")
+        kutular = cumle_dikdortgenleri(kelimeler, b)
+        self.assertEqual([len(c) for c in kutular], [2, 3])
 
 
 class SayfaAraligiTesti(unittest.TestCase):

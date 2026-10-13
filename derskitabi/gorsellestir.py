@@ -17,6 +17,7 @@ görüntüleyici (HTML vb.) aynı fonksiyonu kullanabilir.
 """
 
 import argparse
+import bisect
 import re
 import sys
 import unicodedata
@@ -167,18 +168,30 @@ def cumle_dikdortgenleri(sayfa_kelimeleri: list, blok: Blok) -> list[list[pymupd
     ham = _ham_kelimeler(sayfa_kelimeleri, blok.bbox)
     tokenler = blok.metin.split()
     eslesme = kelimeleri_eslestir([k for _, k in ham], tokenler)
-    if eslesme is None:
+    cumleler = okunabilirlik.cumlelere_bol(blok.metin)
+    if eslesme is None or not cumleler:
         return None
-    sonuc, t = [], 0
-    for cumle in okunabilirlik.cumlelere_bol(blok.metin):
-        cumle_tokenleri = cumle.split()
-        # cumlelere_bol harf içermeyen parçaları atar; onları atlayarak hizala
-        while t < len(tokenler) and tokenler[t:t + len(cumle_tokenleri)] != cumle_tokenleri:
-            t += 1
-        if t >= len(tokenler):
-            return None
-        sonuc.append([ham[j][0] for k in range(t, t + len(cumle_tokenleri)) for j in eslesme[k]])
-        t += len(cumle_tokenleri)
+    # Kelimeler cümlelere metindeki karakter konumuyla atanır: bir kelime, başladığı
+    # yerin içinde kaldığı cümleye aittir. (Boşluksuz cümle sonu "gelmiştir.(…)"
+    # tek kelime olduğu için kelime sayarak hizalamak mümkün değil.)
+    try:
+        kelime_baslari, p = [], 0
+        for tk in tokenler:
+            p = blok.metin.index(tk, p)
+            kelime_baslari.append(p)
+            p += len(tk)
+        cumle_baslari, p = [], 0
+        for c in cumleler:
+            p = blok.metin.index(c, p)
+            cumle_baslari.append(p)
+            p += len(c)
+    except ValueError:
+        return None
+    sonuc = [[] for _ in cumleler]
+    for k, bas in enumerate(kelime_baslari):
+        i = bisect.bisect_right(cumle_baslari, bas) - 1
+        if i >= 0:
+            sonuc[i] += [ham[j][0] for j in eslesme[k]]
     return sonuc
 
 

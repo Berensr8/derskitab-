@@ -71,13 +71,18 @@ def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict) -> d
 
 
 def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = None,
-                          hedef_sinif: int | None = None) -> None:
-    bloklar = bloklari_cikar(pdf_yolu)
-    try:
-        ozet, tespit_listesi = okunabilirlik.analiz_et(bloklar, hedef_sinif)
-        ozet_verisi = ozet.sozluge()
-    except ValueError:  # skorlanabilen paragraf yok
-        ozet_verisi, tespit_listesi = None, []
+                          hedef_sinif: int | None = None, bloklar: list[Blok] | None = None,
+                          analiz: tuple | None = None) -> None:
+    """bloklar ve analiz (ozet, tespitler) önceden hesaplandıysa verilebilir (demo.py)."""
+    if bloklar is None:
+        bloklar = bloklari_cikar(pdf_yolu)
+    if analiz is None:
+        try:
+            analiz = okunabilirlik.analiz_et(bloklar, hedef_sinif)
+        except ValueError:  # skorlanabilen paragraf yok
+            analiz = (None, [])
+    ozet, tespit_listesi = analiz
+    ozet_verisi = ozet.sozluge() if ozet else None
     tespitler = {(t.sayfa_no, t.blok_no): t for t in tespit_listesi}
 
     with pymupdf.open(pdf_yolu) as belge:

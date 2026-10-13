@@ -21,6 +21,12 @@ Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 
 ## Kullanım
 
+**En kolay yol:** `DEMO.bat` dosyasına çift tıklayın (ya da bir PDF'i üzerine sürükleyin).
+PDF seçilir, tüm adımlar çalışır ve inceleme sayfası tarayıcıda açılır. Çıktılar
+`veri/demo/<kitap adı>/` klasörüne yazılır.
+
+Adımlar tek tek de çalıştırılabilir:
+
 ```bash
 # 1. PDF'ten blokları çıkar -> veri/kitap_bloklar.json
 .venv\Scripts\python.exe -m derskitabi.pdf_cikarma veri\kitap.pdf

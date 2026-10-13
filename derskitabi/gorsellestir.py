@@ -65,7 +65,20 @@ def blok_raporu(blok: Blok) -> dict:
         })
     skor = okunabilirlik.skorla(blok.metin)
     if skor:
+        # Formül hesabının ara adımları (inceleyicide adım adım gösterilir)
+        heceler = [h for c in rapor["cumleler"] for _, h in c["kelimeler"]]
+        n_cumle, n_kelime = len(rapor["cumleler"]), len(heceler)
+        hesap = {
+            "cumle": n_cumle,
+            "kelime": n_kelime,
+            "hece": sum(heceler),
+            "hece_kelime": sum(heceler) / n_kelime,
+            "kelime_cumle": n_kelime / n_cumle,
+            # Bezirci-Yılmaz: cümle başına ortalama n heceli kelime (6 = 6 ve üstü)
+            "h": {str(n): sum(1 for h in heceler if min(h, 6) == n) / n_cumle for n in (3, 4, 5, 6)},
+        }
         rapor["skorlar"] = {
+            "hesap": hesap,
             "atesman": (round(skor.atesman, 1), okunabilirlik.atesman_duzeyi(skor.atesman)),
             "cetinkaya_uzun": (round(skor.cetinkaya_uzun, 1),
                                okunabilirlik.cetinkaya_uzun_duzeyi(skor.cetinkaya_uzun)),

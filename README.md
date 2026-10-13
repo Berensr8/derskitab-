@@ -30,6 +30,9 @@ Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 
 # Sistemin gözünden PDF: bloklar, cümleler ve tespitler kitabın üzerine çizilir
 .venv\Scripts\python.exe -m derskitabi.gorsellestir veri\kitap.pdf --sayfalar 28-35
+
+# Etkileşimli inceleyici (tarayıcıda açılan tek HTML dosyası): bloğa tıkla, ayrıntıyı gör
+.venv\Scripts\python.exe -m derskitabi.inceleyici veri\kitap.pdf --sayfalar 13-32
 ```
 
 ## Kurulum

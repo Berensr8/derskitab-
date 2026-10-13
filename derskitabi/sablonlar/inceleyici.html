@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF İnceleyici</title>
+<style>
+  :root {
+    --zemin: #f4f5f7; --kart: #ffffff; --cizgi: #dde1e6; --yazi: #1d2330; --soluk: #5d6675;
+    --paragraf: #1f9d55; --kisa: #2f6fdb; --bozuk: #d63c3c; --simge: #8a9099;
+    --tespit: #f08c00; --cumle1: #ffd84d; --cumle2: #7cd3ff; --vurgu: #6c47ff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.5 system-ui, "Segoe UI", Arial, sans-serif; color: var(--yazi);
+         background: var(--zemin); height: 100vh; display: flex; flex-direction: column; }
+  header { background: var(--kart); border-bottom: 1px solid var(--cizgi); padding: 10px 16px;
+           display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+  header h1 { font-size: 16px; margin: 0; }
+  .cip { background: var(--zemin); border: 1px solid var(--cizgi); border-radius: 999px;
+         padding: 2px 10px; font-size: 12.5px; white-space: nowrap; }
+  .cip b { font-weight: 600; }
+  main { flex: 1; display: grid; grid-template-columns: 200px minmax(0, 1fr) 430px; min-height: 0; }
+  aside, section { overflow: auto; min-height: 0; }
+  #sol { border-right: 1px solid var(--cizgi); background: var(--kart); padding: 12px; }
+  #sag { border-left: 1px solid var(--cizgi); background: var(--kart); padding: 14px 16px; }
+  #orta { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--soluk);
+       margin: 14px 0 6px; }
+  h2:first-child { margin-top: 0; }
+  .lejant label { display: flex; align-items: center; gap: 8px; padding: 2px 0; cursor: pointer; }
+  .kare { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+  #sayfaListesi button { display: flex; justify-content: space-between; width: 100%; text-align: left;
+       border: 0; background: none; padding: 5px 8px; border-radius: 6px; cursor: pointer; font: inherit; }
+  #sayfaListesi button:hover { background: var(--zemin); }
+  #sayfaListesi button.secili { background: #ebe6ff; font-weight: 600; }
+  .rozet { background: var(--tespit); color: #fff; border-radius: 999px; font-size: 11px; padding: 0 7px; }
+  .arac { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .arac button { border: 1px solid var(--cizgi); background: var(--kart); border-radius: 6px;
+                 padding: 4px 10px; cursor: pointer; font: inherit; }
+  .arac button:hover { border-color: var(--vurgu); }
+  #sayfaKutusu { overflow: auto; flex: 1; }
+  svg#sayfa { display: block; margin: 0 auto; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+  .blok { cursor: pointer; fill-opacity: .07; stroke-width: 1.2; transition: fill-opacity .1s; }
+  .blok:hover { fill-opacity: .28; stroke-width: 2.4; }
+  .blok.secili { fill-opacity: .12; stroke-width: 3; stroke: var(--vurgu) !important; }
+  .soluk .blok:not(.secili) { opacity: .35; }
+  .tespitCerceve { fill: none; stroke: var(--tespit); stroke-width: 3; stroke-dasharray: 7 4; pointer-events: none; }
+  .cumleKutu { pointer-events: none; opacity: .38; }
+  .cumleKutu.parlak { opacity: .8; stroke: var(--yazi); stroke-width: .8; }
+  .ipucu { color: var(--soluk); }
+  .kart { border: 1px solid var(--cizgi); border-radius: 10px; padding: 12px; margin: 10px 0; }
+  .baslik { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .tur { color: #fff; border-radius: 6px; padding: 1px 8px; font-weight: 600; font-size: 12.5px; }
+  .uyari { border-color: var(--tespit); background: #fff6e8; }
+  .cumle { display: grid; grid-template-columns: 26px 1fr; gap: 6px; padding: 8px 6px;
+           border-radius: 8px; cursor: default; }
+  .cumle:hover { background: var(--zemin); }
+  .no { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+        font-size: 12px; font-weight: 700; }
+  .kelimeler { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+  .kelime { border-radius: 5px; padding: 0 5px; font-size: 12.5px; border: 1px solid transparent; }
+  .kelime sup { font-size: 10px; font-weight: 700; margin-left: 2px; }
+  .h1 { background: #eef0f3; } .h3 { background: #e3f1ff; } .h5 { background: #ffe9c7; }
+  .h6 { background: #ffd3d3; border-color: #f2a3a3; }
+  .adim { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; background: var(--zemin);
+          border-radius: 6px; padding: 6px 8px; margin: 4px 0; overflow-x: auto; }
+  .formul { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: baseline; }
+  .formul .deger { font-size: 22px; font-weight: 700; }
+  .cubuk { grid-column: 1 / -1; position: relative; height: 8px; border-radius: 4px; margin: 6px 0 2px;
+           background: linear-gradient(90deg, #d63c3c, #f0c000, #1f9d55); }
+  .cubuk.ters { background: linear-gradient(90deg, #1f9d55, #f0c000, #d63c3c); }
+  .isaret { position: absolute; top: -4px; width: 4px; height: 16px; background: var(--yazi); border-radius: 2px; }
+  .ortanca { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--soluk); opacity: .8; }
+  .kucuk { font-size: 12px; color: var(--soluk); }
+  #blokListesi div { display: flex; gap: 8px; align-items: baseline; padding: 4px 6px; border-radius: 6px;
+       cursor: pointer; }
+  #blokListesi div:hover { background: var(--zemin); }
+  #blokListesi div.secili { background: #ebe6ff; }
+  #blokListesi .kare { position: relative; top: 1px; }
+  #blokListesi span.m { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="kitapAdi">PDF İnceleyici</h1>
+  <div id="ozet" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+</header>
+<main>
+  <aside id="sol">
+    <h2>Gösterilenler</h2>
+    <div class="lejant" id="lejant"></div>
+    <label class="lejant" style="display:flex;gap:8px;margin-top:6px;cursor:pointer">
+      <input type="checkbox" id="tumCumleler"> Tüm cümleleri renklendir</label>
+    <label class="lejant" style="display:flex;gap:8px;cursor:pointer">
+      <input type="checkbox" id="yalnizTespitli"> Yalnız tespitli sayfalar</label>
+    <h2>Sayfalar</h2>
+    <div id="sayfaListesi"></div>
+  </aside>
+  <section id="orta">
+    <div class="arac">
+      <button id="onceki">◀ Önceki</button>
+      <strong id="sayfaBilgisi"></strong>
+      <button id="sonraki">Sonraki ▶</button>
+      <span style="flex:1"></span>
+      <button id="kucult">−</button><span id="olcek">100%</span><button id="buyut">+</button>
+    </div>
+    <div class="ipucu kucuk">Bir kutuya tıklayın: ayrıntılar sağda açılır. Klavye: ← → sayfa, Esc seçimi kaldır.</div>
+    <div id="sayfaKutusu"></div>
+  </section>
+  <aside id="sag">
+    <div id="ayrinti"></div>
+    <h2>Bu sayfadaki bloklar</h2>
+    <div id="blokListesi"></div>
+  </aside>
+</main>
+<script>
+const VERI = /*__VERI__*/null;
+
+const TURLER = {
+  paragraf: { ad: "Paragraf", renk: "var(--paragraf)" },
+  kisa: { ad: "Kısa metin", renk: "var(--kisa)" },
+  bozuk: { ad: "Bozuk metin", renk: "var(--bozuk)" },
+  simge: { ad: "Simge", renk: "var(--simge)" },
+};
+const CUMLE_RENK = ["var(--cumle1)", "var(--cumle2)"];
+const SVGNS = "http://www.w3.org/2000/svg";
+const durum = { sayfa: 0, blok: null, olcek: 1, gorunur: { paragraf: true, kisa: true, bozuk: true, simge: true } };
+
+// --- yardımcılar ---
+function el(etiket, ozellik = {}, ...cocuklar) {
+  const e = document.createElement(etiket);
+  for (const [k, v] of Object.entries(ozellik)) {
+    if (k === "class") e.className = v;
+    else if (k === "style") e.style.cssText = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v);
+  }
+  for (const c of cocuklar.flat()) if (c != null) e.append(c instanceof Node ? c : String(c));
+  return e;
+}
+function svg(etiket, ozellik = {}) {
+  const e = document.createElementNS(SVGNS, etiket);
+  for (const [k, v] of Object.entries(ozellik)) e.setAttribute(k, v);
+  return e;
+}
+const sayi = (x, d = 1) => Number(x).toLocaleString("tr-TR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const kelimeSayisi = m => m.split(/\s+/).filter(Boolean).length;
+const sayfa = () => VERI.sayfalar[durum.sayfa];
+
+// --- üst bilgi ---
+function ustBilgi() {
+  document.getElementById("kitapAdi").textContent = VERI.kitap;
+  const o = VERI.ozet, kutu = document.getElementById("ozet");
+  if (!o) { kutu.append(el("span", { class: "cip" }, "Okunabilirlik özeti yok")); return; }
+  kutu.append(
+    el("span", { class: "cip" }, "Hedef: ", el("b", {}, o.hedef_sinif ? o.hedef_sinif + ". sınıf" : "bilinmiyor")),
+    el("span", { class: "cip", title: "Kitaptaki tüm paragrafların ortancası" },
+       "Ateşman ", el("b", {}, sayi(o.atesman)), " · ", o.atesman_duzeyi),
+    el("span", { class: "cip" }, "Çetinkaya-Uzun ", el("b", {}, sayi(o.cetinkaya_uzun)), " · ", o.cetinkaya_uzun_duzeyi),
+    el("span", { class: "cip" }, "Bezirci-Yılmaz ", el("b", {}, sayi(o.bezirci_yilmaz)), " · ", o.bezirci_yilmaz_duzeyi),
+    el("span", { class: "cip" }, "Okunabilirlik tespiti: ", el("b", {}, VERI.toplam_tespit), " paragraf (tüm kitapta)"),
+  );
+}
+
+// --- sol panel ---
+function lejant() {
+  const kutu = document.getElementById("lejant");
+  for (const [tur, t] of Object.entries(TURLER)) {
+    const kutucuk = el("input", { type: "checkbox" });
+    kutucuk.checked = true;
+    kutucuk.addEventListener("change", () => { durum.gorunur[tur] = kutucuk.checked; sayfaCiz(); });
+    kutu.append(el("label", {}, kutucuk, el("span", { class: "kare", style: `background:${t.renk}` }), t.ad));
+  }
+  kutu.append(el("label", { style: "cursor:default" }, el("span", { style: "width:13px" }),
+    el("span", { class: "kare", style: "border:2px dashed var(--tespit)" }), "Okunabilirlik tespiti"));
+}
+function sayfaListesi() {
+  const kutu = document.getElementById("sayfaListesi");
+  kutu.replaceChildren();
+  const yalniz = document.getElementById("yalnizTespitli").checked;
+  VERI.sayfalar.forEach((s, i) => {
+    const tespit = s.bloklar.filter(b => b.tespit).length;
+    if (yalniz && !tespit) return;
+    kutu.append(el("button", { class: i === durum.sayfa ? "secili" : "", onclick: () => sayfayaGit(i) },
+      el("span", {}, `s. ${s.no}`, s.basili && s.basili !== String(s.no) ? el("span", { class: "kucuk" }, ` (kitap ${s.basili})`) : null),
+      tespit ? el("span", { class: "rozet", title: "okunabilirlik tespiti" }, tespit) : null));
+  });
+}
+
+// --- sayfa çizimi ---
+function sayfaCiz() {
+  const s = sayfa(), kutu = document.getElementById("sayfaKutusu");
+  document.getElementById("sayfaBilgisi").textContent =
+    `PDF s. ${s.no} / kitap s. ${s.basili ?? "–"}  (${durum.sayfa + 1} / ${VERI.sayfalar.length})`;
+  const k = svg("svg", { id: "sayfa", viewBox: `0 0 ${s.genislik} ${s.yukseklik}` });
+  k.style.width = `${Math.round(durum.olcek * 100)}%`;
+  k.style.maxWidth = durum.olcek === 1 ? "760px" : "none";
+  if (durum.blok !== null) k.classList.add("soluk");
+  k.append(svg("image", { href: s.goruntu, width: s.genislik, height: s.yukseklik }));
+  k.addEventListener("click", e => { if (e.target === k || e.target.tagName === "image") blokSec(null); });
+
+  const tum = document.getElementById("tumCumleler").checked;
+  s.bloklar.forEach((b, i) => {
+    if (!(tum || i === durum.blok)) return;
+    b.cumle_kutulari.forEach((kutular, ci) => kutular.forEach(([x0, y0, x1, y1]) => {
+      k.append(svg("rect", { class: "cumleKutu", "data-cumle": `${i}-${ci}`, x: x0, y: y0,
+        width: x1 - x0, height: y1 - y0, fill: CUMLE_RENK[ci % 2], rx: 1.5 }));
+    }));
+  });
+  // Küçük bloklar büyüklerin üstünde kalsın diye büyükten küçüğe çizilir
+  const sira = s.bloklar.map((b, i) => i).sort((a, c) => alan(s.bloklar[c]) - alan(s.bloklar[a]));
+  for (const i of sira) {
+    const b = s.bloklar[i], [x0, y0, x1, y1] = b.bbox, renk = TURLER[b.rapor.tur].renk;
+    if (!durum.gorunur[b.rapor.tur] && i !== durum.blok) continue;
+    const r = svg("rect", { class: "blok" + (i === durum.blok ? " secili" : ""), x: x0 - 2, y: y0 - 2,
+      width: x1 - x0 + 4, height: y1 - y0 + 4, rx: 3, fill: renk, stroke: renk });
+    r.append(svg("title"));
+    r.firstChild.textContent = `Blok ${b.rapor.blok_no} · ${TURLER[b.rapor.tur].ad}`;
+    r.addEventListener("click", e => { e.stopPropagation(); blokSec(i); });
+    k.append(r);
+    if (b.tespit) k.append(svg("rect", { class: "tespitCerceve", x: x0 - 6, y: y0 - 6,
+      width: x1 - x0 + 12, height: y1 - y0 + 12, rx: 5 }));
+  }
+  kutu.replaceChildren(k);
+  document.getElementById("olcek").textContent = `${Math.round(durum.olcek * 100)}%`;
+  blokListesi();
+}
+const alan = b => (b.bbox[2] - b.bbox[0]) * (b.bbox[3] - b.bbox[1]);
+
+function blokListesi() {
+  const kutu = document.getElementById("blokListesi");
+  kutu.replaceChildren(...sayfa().bloklar.map((b, i) => el("div",
+    { class: i === durum.blok ? "secili" : "", onclick: () => blokSec(i) },
+    el("span", { class: "kare", style: `background:${TURLER[b.rapor.tur].renk}` }),
+    el("b", {}, `b${b.rapor.blok_no}`),
+    b.tespit ? el("span", { class: "rozet" }, "!") : null,
+    el("span", { class: "m" }, b.rapor.metin))));
+}
+
+// --- seçim ve ayrıntı paneli ---
+function blokSec(i) {
+  durum.blok = i;
+  sayfaCiz();
+  ayrinti();
+  document.getElementById("sag").scrollTop = 0;  // ayrıntılar baştan okunsun
+}
+
+function turAciklamasi(r) {
+  const n = kelimeSayisi(r.metin);
+  return {
+    paragraf: `${n} kelimeden oluşuyor (5 ve üzeri) → paragraf sayıldı. Okunabilirlik analizine girer; ileride yazım ve bilgi tutarlılığı kontrolüne de girecek.`,
+    kisa: `${n} kelime (5'ten az) → kısa metin sayıldı: başlık, harita etiketi, görsel altyazısı gibi. Okunabilirlik hesabına girmez; ileride yazım kontrolüne girecek.`,
+    bozuk: "Metinde '�' karakteri var: PDF'in fontu Türkçe harfleri (ş, ı, ğ, İ) bozuk kodlamış, metin doğru okunamıyor. Hata kitapta değil PDF'te; sahte hata üretmemek için hiçbir kriter analiz etmez.",
+    simge: "Hiç harf veya rakam içermiyor (harita simgesi gibi) → analiz edilmez.",
+  }[r.tur];
+}
+
+function ayrinti() {
+  const kutu = document.getElementById("ayrinti");
+  if (durum.blok === null) {
+    kutu.replaceChildren(el("div", { class: "kart ipucu" },
+      "Sayfadaki bir kutuya ya da aşağıdaki listeden bir bloğa tıklayın. ",
+      "Sistemin o metni nasıl algıladığını burada adım adım göreceksiniz."));
+    return;
+  }
+  const b = sayfa().bloklar[durum.blok], r = b.rapor, t = TURLER[r.tur];
+  const parcalar = [
+    el("div", { class: "baslik" },
+      el("span", { class: "tur", style: `background:${t.renk}` }, t.ad),
+      el("strong", {}, `Blok ${r.blok_no}`),
+      el("span", { class: "kucuk" }, `PDF s. ${sayfa().no} · kitap s. ${sayfa().basili ?? "–"}`)),
+    el("div", { class: "kart" }, el("b", {}, "Neden bu tür? "), turAciklamasi(r)),
+  ];
+  if (b.tespit) parcalar.push(el("div", { class: "kart uyari" },
+    el("b", {}, `⚠ Okunabilirlik tespiti (güven ${sayi(b.tespit.guven, 2)})`), el("br"),
+    b.tespit.aciklama.split(". Ateşman")[0] + ".",
+    el("div", { class: "kucuk", style: "margin-top:6px" },
+      "Not: Bu, paragrafın kitabın geri kalanına göre belirgin şekilde zor olduğunu söyler; tek başına \"sınıfa uygun değil\" demek değildir.")));
+
+  if (r.cumleler.length) {
+    parcalar.push(el("h2", {}, `Cümleler (${r.cumleler.length})`),
+      el("div", { class: "kucuk" }, "Kelimelerin yanındaki sayı hece sayısıdır (hece = ünlü harf sayısı). Uzun kelimeler renkli."));
+    r.cumleler.forEach((c, ci) => {
+      const satir = el("div", { class: "cumle" },
+        el("span", { class: "no", style: `background:${CUMLE_RENK[ci % 2]}` }, ci + 1),
+        el("div", {}, c.metin, el("div", { class: "kelimeler" }, c.kelimeler.map(([k, h]) =>
+          el("span", { class: "kelime " + (h >= 6 ? "h6" : h === 5 ? "h5" : h >= 3 ? "h3" : "h1") }, k, el("sup", {}, h))))));
+      satir.addEventListener("mouseenter", () => cumleParlat(`${durum.blok}-${ci}`, true));
+      satir.addEventListener("mouseleave", () => cumleParlat(`${durum.blok}-${ci}`, false));
+      parcalar.push(satir);
+    });
+  } else {
+    parcalar.push(el("h2", {}, "Metin"), el("div", { class: "kart" }, r.metin));
+  }
+
+  if (r.skorlar) parcalar.push(...hesapPaneli(r.skorlar));
+  kutu.replaceChildren(...parcalar);
+}
+
+function cumleParlat(anahtar, acik) {
+  document.querySelectorAll(`[data-cumle="${anahtar}"]`).forEach(e => e.classList.toggle("parlak", acik));
+}
+
+function hesapPaneli(s) {
+  const h = s.hesap, o = VERI.ozet, out = [el("h2", {}, "Okunabilirlik hesabı (adım adım)")];
+  if (!s.tespit_adayi) out.push(el("div", { class: "kart kucuk" },
+    `${VERI.min_cumle} cümleden az olduğu için bu paragraf tespit adayı değil: tek cümlede formüller kararsız sonuç verir. Puanlar yalnızca bilgi amaçlıdır (kitap özetine katılır).`));
+  out.push(
+    el("div", { class: "adim" }, `Kelime / cümle = ${h.kelime} ÷ ${h.cumle} = ${sayi(h.kelime_cumle, 2)}`),
+    el("div", { class: "adim" }, `Hece / kelime  = ${h.hece} ÷ ${h.kelime} = ${sayi(h.hece_kelime, 2)}`));
+  const hk = sayi(h.hece_kelime, 2), kc = sayi(h.kelime_cumle, 2);
+  out.push(formulKarti("Ateşman (1997)", s.atesman, o?.atesman, 0, 120, false,
+      `198,825 − 40,175 × ${hk} − 2,610 × ${kc}`, "Yüksek puan = kolay. 90+ çok kolay · 70–89 kolay · 50–69 orta · 30–49 zor · <30 çok zor"),
+    formulKarti("Çetinkaya-Uzun (2010)", s.cetinkaya_uzun, o?.cetinkaya_uzun, 0, 100, false,
+      `118,823 − 25,987 × ${hk} − 0,971 × ${kc}`, "Yüksek puan = kolay. 51+ → 5–7. sınıf · 35–50 → 8–9. sınıf · <35 → 10–12. sınıf"),
+    formulKarti("Bezirci-Yılmaz (2010)", s.bezirci_yilmaz, o?.bezirci_yilmaz, 0, 30, true,
+      `√( ${kc} × (${sayi(h.h["3"], 2)}×0,84 + ${sayi(h.h["4"], 2)}×1,5 + ${sayi(h.h["5"], 2)}×3,5 + ${sayi(h.h["6"], 2)}×26,25) )`,
+      "Yüksek değer = zor (≈ sınıf düzeyi). H3…H6: cümle başına 3, 4, 5, 6+ heceli kelime sayısı"));
+  return out;
+}
+
+function formulKarti(ad, [deger, duzey], ortanca, min, max, yuksekZor, acilim, not) {
+  const yuzde = v => Math.max(0, Math.min(100, (v - min) / (max - min) * 100));
+  const cubuk = el("div", { class: "cubuk" + (yuksekZor ? " ters" : "") },
+    el("span", { class: "isaret", style: `left:calc(${yuzde(deger)}% - 2px)`, title: "bu paragraf" }));
+  if (ortanca != null) cubuk.append(el("span", { class: "ortanca", style: `left:calc(${yuzde(ortanca)}% - 1px)`, title: "kitap ortancası" }));
+  return el("div", { class: "kart formul" },
+    el("b", {}, ad), el("span", { class: "deger" }, sayi(deger)),
+    el("span", {}, duzey), el("span", { class: "kucuk" }, ortanca != null ? `kitap ortancası ${sayi(ortanca)}` : ""),
+    cubuk,
+    el("div", { class: "adim", style: "grid-column:1/-1" }, `= ${acilim} ≈ ${sayi(deger)}`),
+    el("div", { class: "kucuk", style: "grid-column:1/-1" }, not));
+}
+
+// --- gezinme ---
+function sayfayaGit(i) {
+  if (i < 0 || i >= VERI.sayfalar.length) return;
+  durum.sayfa = i; durum.blok = null;
+  sayfaCiz(); ayrinti(); sayfaListesi();
+}
+document.getElementById("onceki").onclick = () => sayfayaGit(durum.sayfa - 1);
+document.getElementById("sonraki").onclick = () => sayfayaGit(durum.sayfa + 1);
+document.getElementById("buyut").onclick = () => { durum.olcek = Math.min(3, durum.olcek + 0.25); sayfaCiz(); };
+document.getElementById("kucult").onclick = () => { durum.olcek = Math.max(0.5, durum.olcek - 0.25); sayfaCiz(); };
+document.getElementById("tumCumleler").onchange = sayfaCiz;
+document.getElementById("yalnizTespitli").onchange = sayfaListesi;
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") sayfayaGit(durum.sayfa + 1);
+  else if (e.key === "ArrowLeft") sayfayaGit(durum.sayfa - 1);
+  else if (e.key === "Escape") blokSec(null);
+});
+
+ustBilgi(); lejant(); sayfaListesi(); sayfaCiz(); ayrinti();
+</script>
+</body>
+</html>

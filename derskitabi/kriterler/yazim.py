@@ -161,7 +161,7 @@ def kelime_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci],
                 atlananlar[sebep] += 1
             continue
         hemfikir = not st_gecerli and not zb_gecerli
-        kim = "iki araç da (Starlang ve Zemberek)" if hemfikir else (
+        kim = "iki araç da: Starlang ve Zemberek" if hemfikir else (
             "yalnız Starlang" if not st_gecerli else "yalnız Zemberek")
         tespitler.append(_tespit(
             blok, "morfoloji", 1.0 if hemfikir else 0.5, kelime,

@@ -17,12 +17,13 @@ import argparse
 import base64
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 import pymupdf
 
-from .gorsellestir import blok_raporu, cumle_dikdortgenleri, sayfa_araligi_coz
-from .kriterler import okunabilirlik
+from .gorsellestir import _ham_kelimeler, blok_raporu, cumle_dikdortgenleri, sayfa_araligi_coz
+from .kriterler import okunabilirlik, yazim
 from .model import Blok, Tespit
 from .pdf_cikarma import _OKUMA_AYARLARI, bloklari_cikar
 
@@ -48,17 +49,46 @@ def _tespit_verisi(t: Tespit | None) -> dict | None:
     return {"aciklama": t.aciklama, "guven": t.guven_skoru, "metin_parcasi": t.metin_parcasi}
 
 
-def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict) -> dict:
+def parca_kutulari(ham: list[tuple[pymupdf.Rect, str]], parca: str) -> list[list[float]]:
+    """Yazım tespitindeki metin parçasının sayfadaki kelime kutuları (kırmızı çizgi için).
+
+    Morfoloji tespitinde parça tek kelimedir; kural tespitinde birkaç kelimelik bir
+    kesittir ("katlandı.Takım arkada") — noktalama içeren ya da tam kelime olan parçalar aranır.
+    """
+    adaylar = [p.strip("…") for p in parca.replace("’", "'").split()]
+    adaylar = [p for p in adaylar if len(p) >= 2]
+    noktalamali = [p for p in adaylar if any(c in p for c in ".,;:!?")]
+    kutular = []
+    for aday in (noktalamali or adaylar):
+        for r, k in ham:
+            k = k.replace("’", "'")
+            if aday == k or (len(aday) >= 4 and (aday in k or (len(k) >= 4 and k in aday))):
+                kutular.append([round(v, 1) for v in (r.x0, r.y0, r.x1, r.y1)])
+                break
+    return kutular
+
+
+def _yazim_verisi(t: Tespit, ham) -> dict:
+    return {"alt_tur": t.alt_tur, "parca": t.metin_parcasi, "aciklama": t.aciklama,
+            "guven": t.guven_skoru, "kutular": parca_kutulari(ham, t.metin_parcasi)}
+
+
+def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict,
+                 yazim: dict | None = None) -> dict:
     goruntu = sayfa.get_pixmap(dpi=GORUNTU_DPI).tobytes("jpeg", jpg_quality=80)
     kelimeler = sayfa.get_text("words", flags=_OKUMA_AYARLARI)
+    yazim = yazim or {}
     veri_bloklari = []
     for b in bloklar:
         cumleler = cumle_dikdortgenleri(kelimeler, b) if b.tur == "paragraf" else None
+        yazim_listesi = yazim.get((b.sayfa_no, b.blok_no), [])
+        ham = _ham_kelimeler(kelimeler, b.bbox) if yazim_listesi else []
         veri_bloklari.append({
             "bbox": [round(v, 1) for v in b.bbox],
             "rapor": blok_raporu(b),
             "cumle_kutulari": [satirlari_birlestir(c) for c in cumleler] if cumleler else [],
             "tespit": _tespit_verisi(tespitler.get((b.sayfa_no, b.blok_no))),
+            "yazim": [_yazim_verisi(t, ham) for t in yazim_listesi],
         })
     return {
         "no": sayfa.number + 1,
@@ -72,8 +102,10 @@ def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict) -> d
 
 def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = None,
                           hedef_sinif: int | None = None, bloklar: list[Blok] | None = None,
-                          analiz: tuple | None = None) -> None:
-    """bloklar ve analiz (ozet, tespitler) önceden hesaplandıysa verilebilir (demo.py)."""
+                          analiz: tuple | None = None,
+                          yazim_tespitleri: list[Tespit] | None = None) -> None:
+    """bloklar, analiz (ozet, tespitler) ve yazım tespitleri önceden hesaplandıysa
+    verilebilir (demo.py); verilmezse burada hesaplanır."""
     if bloklar is None:
         bloklar = bloklari_cikar(pdf_yolu)
     if analiz is None:
@@ -87,8 +119,15 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
 
     with pymupdf.open(pdf_yolu) as belge:
         secili = sayfalar or list(range(1, len(belge) + 1))
+        if yazim_tespitleri is None:
+            secili_kume = set(secili)
+            yazim_tespitleri = yazim.analiz_et([b for b in bloklar if b.sayfa_no in secili_kume])
+        yazim_bloklari = defaultdict(list)
+        for t in yazim_tespitleri:
+            yazim_bloklari[(t.sayfa_no, t.blok_no)].append(t)
         sayfa_listesi = [
-            sayfa_verisi(belge[no - 1], [b for b in bloklar if b.sayfa_no == no], tespitler)
+            sayfa_verisi(belge[no - 1], [b for b in bloklar if b.sayfa_no == no], tespitler,
+                         yazim_bloklari)
             for no in secili
         ]
 
@@ -96,6 +135,7 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         "kitap": Path(pdf_yolu).name,
         "ozet": ozet_verisi,
         "toplam_tespit": len(tespit_listesi),
+        "toplam_yazim": sum(len(v) for k, v in yazim_bloklari.items() if k[0] in set(secili)),
         "min_cumle": okunabilirlik.MIN_CUMLE,
         "sayfalar": sayfa_listesi,
     }

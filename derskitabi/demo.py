@@ -18,7 +18,7 @@ import pymupdf
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
 from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet
-from .kriterler import okunabilirlik
+from .kriterler import okunabilirlik, yazim
 from .model import BLOK_TURLERI
 from .pdf_cikarma import MetinYokHatasi, bloklari_cikar
 
@@ -63,7 +63,7 @@ def sayfa_sor(sayfa_sayisi: int) -> list[int] | None:
 
 
 def adim(no: int, metin: str) -> float:
-    print(f"\n[{no}/3] {metin}...")
+    print(f"\n[{no}/4] {metin}...")
     return time.perf_counter()
 
 
@@ -122,10 +122,26 @@ def main() -> None:
         print("  Skorlanabilen paragraf yok; okunabilirlik atlandı.")
         analiz = (None, [])
 
-    # 3. İnceleme sayfası
-    t = adim(3, "İnceleme sayfası hazırlanıyor")
+    # 3. Yazım (sayfa aralığı seçildiyse yalnız o sayfalar)
+    t = adim(3, "Yazım denetleniyor (Starlang + Zemberek, TDK kuralları)")
+    secili = set(sayfalar) if sayfalar else None
+    atlananlar = Counter()
+    yazim_tespitleri = yazim.analiz_et(
+        [b for b in bloklar if secili is None or b.sayfa_no in secili], atlananlar=atlananlar)
+    tespitleri_kaydet(yazim_tespitleri, klasor / "yazim_tespitler.json")
+    yuksek = sum(t_.guven_skoru == 1.0 for t_ in yazim_tespitleri)
+    print(f"  {len(yazim_tespitleri)} yazım tespiti (yüksek güven {yuksek}, "
+          f"düşük güven {len(yazim_tespitleri) - yuksek}) ({time.perf_counter() - t:.1f} sn)")
+    for tur, n in Counter(t_.alt_tur for t_ in yazim_tespitleri).most_common():
+        print(f"    {tur}: {n}")
+    print(f"  Sahte hata önlemiyle denetim dışı bırakılan kelime: {sum(atlananlar.values())} "
+          f"(özel isim, kısaltma, bölünmüş parça…)")
+
+    # 4. İnceleme sayfası
+    t = adim(4, "İnceleme sayfası hazırlanıyor")
     html = klasor / "inceleme.html"
-    inceleme_html_olustur(pdf, html, sayfalar, bloklar=bloklar, analiz=analiz)
+    inceleme_html_olustur(pdf, html, sayfalar, bloklar=bloklar, analiz=analiz,
+                          yazim_tespitleri=yazim_tespitleri)
     print(f"  {html} ({html.stat().st_size / 1e6:.1f} MB, {time.perf_counter() - t:.1f} sn)")
 
     print("\nTarayıcıda açılıyor. Bir kutuya tıklayın: ayrıntılar sağda görünür.")

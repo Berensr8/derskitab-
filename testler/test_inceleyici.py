@@ -9,7 +9,7 @@ from pathlib import Path
 import pymupdf
 
 from derskitabi.gorsellestir import blok_raporu
-from derskitabi.inceleyici import inceleme_html_olustur, satirlari_birlestir
+from derskitabi.inceleyici import inceleme_html_olustur, parca_kutulari, satirlari_birlestir
 from derskitabi.model import Blok
 from testler.test_pdf_cikarma import FONT, ornek_pdf
 
@@ -22,6 +22,18 @@ class SatirBirlestirmeTesti(unittest.TestCase):
     def test_farkli_satirlar_ayri_kalir(self):
         kutular = [pymupdf.Rect(10, 100, 30, 110), pymupdf.Rect(10, 115, 40, 125)]
         self.assertEqual(len(satirlari_birlestir(kutular)), 2)
+
+
+class ParcaKutusuTesti(unittest.TestCase):
+    HAM = [(pymupdf.Rect(0, 0, 30, 10), "ikiye"), (pymupdf.Rect(35, 0, 90, 10), "katlandı.Takım"),
+           (pymupdf.Rect(95, 0, 140, 10), "arkadaşlarımla"), (pymupdf.Rect(0, 20, 40, 30), "kisisel")]
+
+    def test_kelime_tespiti_tek_kutu(self):
+        self.assertEqual(parca_kutulari(self.HAM, "kisisel"), [[0, 20, 40, 30]])
+
+    def test_noktalama_tespitinde_noktalamali_kelime_isaretlenir(self):
+        # Kural tespitinin parçası bir kesittir: "iye katlandı.Takım arkada"
+        self.assertEqual(parca_kutulari(self.HAM, "iye katlandı.Takım arkada"), [[35, 0, 90, 10]])
 
 
 class HesapAdimlariTesti(unittest.TestCase):

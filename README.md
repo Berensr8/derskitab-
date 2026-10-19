@@ -34,6 +34,9 @@ Adımlar tek tek de çalıştırılabilir:
 # 2. Okunabilirlik -> veri/kitap_okunabilirlik_ozet.json, _tespitler.json
 .venv\Scripts\python.exe -m derskitabi.kriterler.okunabilirlik veri\kitap_bloklar.json
 
+# 3. Yazım (Starlang + Zemberek, TDK kuralları) -> veri/kitap_yazim_tespitler.json
+.venv\Scripts\python.exe -m derskitabi.kriterler.yazim veri\kitap_bloklar.json
+
 # Sistemin gözünden PDF: bloklar, cümleler ve tespitler kitabın üzerine çizilir
 .venv\Scripts\python.exe -m derskitabi.gorsellestir veri\kitap.pdf --sayfalar 28-35
 

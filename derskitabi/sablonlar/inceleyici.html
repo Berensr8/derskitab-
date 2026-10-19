@@ -34,6 +34,12 @@
   #sayfaListesi button:hover { background: var(--zemin); }
   #sayfaListesi button.secili { background: #ebe6ff; font-weight: 600; }
   .rozet { background: var(--tespit); color: #fff; border-radius: 999px; font-size: 11px; padding: 0 7px; }
+  .rozet.yazim { background: var(--bozuk); }
+  .rozetler { display: flex; gap: 3px; }
+  .yazimCizgi { fill: var(--bozuk); pointer-events: none; }
+  .yazimZemin { fill: var(--bozuk); opacity: .14; pointer-events: none; }
+  .yazimKart { border-color: var(--bozuk); background: #fff1f1; }
+  .parca { font-family: ui-monospace, Consolas, monospace; background: #ffd9d9; border-radius: 4px; padding: 0 4px; }
   .arac { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .arac button { border: 1px solid var(--cizgi); background: var(--kart); border-radius: 6px;
                  padding: 4px 10px; cursor: pointer; font: inherit; }
@@ -159,6 +165,7 @@ function ustBilgi() {
     el("span", { class: "cip" }, "Çetinkaya-Uzun ", el("b", {}, sayi(o.cetinkaya_uzun)), " · ", o.cetinkaya_uzun_duzeyi),
     el("span", { class: "cip" }, "Bezirci-Yılmaz ", el("b", {}, sayi(o.bezirci_yilmaz)), " · ", o.bezirci_yilmaz_duzeyi),
     el("span", { class: "cip" }, "Okunabilirlik tespiti: ", el("b", {}, VERI.toplam_tespit), " paragraf (tüm kitapta)"),
+    el("span", { class: "cip" }, "Yazım tespiti: ", el("b", {}, VERI.toplam_yazim ?? 0), " (gösterilen sayfalarda)"),
   );
 }
 
@@ -173,17 +180,22 @@ function lejant() {
   }
   kutu.append(el("label", { style: "cursor:default" }, el("span", { style: "width:13px" }),
     el("span", { class: "kare", style: "border:2px dashed var(--tespit)" }), "Okunabilirlik tespiti"));
+  kutu.append(el("label", { style: "cursor:default" }, el("span", { style: "width:13px" }),
+    el("span", { class: "kare", style: "border-bottom:3px solid var(--bozuk);border-radius:0" }), "Yazım tespiti"));
 }
+const yazimSayisi = s => s.bloklar.reduce((n, b) => n + (b.yazim?.length || 0), 0);
 function sayfaListesi() {
   const kutu = document.getElementById("sayfaListesi");
   kutu.replaceChildren();
   const yalniz = document.getElementById("yalnizTespitli").checked;
   VERI.sayfalar.forEach((s, i) => {
-    const tespit = s.bloklar.filter(b => b.tespit).length;
-    if (yalniz && !tespit) return;
+    const tespit = s.bloklar.filter(b => b.tespit).length, yz = yazimSayisi(s);
+    if (yalniz && !tespit && !yz) return;
     kutu.append(el("button", { class: i === durum.sayfa ? "secili" : "", onclick: () => sayfayaGit(i) },
       el("span", {}, `s. ${s.no}`, s.basili && s.basili !== String(s.no) ? el("span", { class: "kucuk" }, ` (kitap ${s.basili})`) : null),
-      tespit ? el("span", { class: "rozet", title: "okunabilirlik tespiti" }, tespit) : null));
+      el("span", { class: "rozetler" },
+        tespit ? el("span", { class: "rozet", title: "okunabilirlik tespiti" }, tespit) : null,
+        yz ? el("span", { class: "rozet yazim", title: "yazım tespiti" }, yz) : null)));
   });
 }
 
@@ -221,6 +233,12 @@ function sayfaCiz() {
     if (b.tespit) k.append(svg("rect", { class: "tespitCerceve", x: x0 - 6, y: y0 - 6,
       width: x1 - x0 + 12, height: y1 - y0 + 12, rx: 5 }));
   }
+  // Yazım tespitleri: hatalı kelimenin altı kırmızı çizilir (blok türü gizli olsa bile)
+  s.bloklar.forEach(b => (b.yazim || []).forEach(y => y.kutular.forEach(([x0, y0, x1, y1]) => {
+    k.append(svg("rect", { class: "yazimZemin", x: x0 - 1, y: y0, width: x1 - x0 + 2, height: y1 - y0, rx: 1.5 }));
+    k.append(svg("rect", { class: "yazimCizgi", x: x0 - 1, y: y1 - 0.4, width: x1 - x0 + 2,
+      height: 1.6, opacity: y.guven >= 1 ? 1 : 0.55 }));
+  })));
   kutu.replaceChildren(k);
   document.getElementById("olcek").textContent = `${Math.round(durum.olcek * 100)}%`;
   blokListesi();
@@ -234,6 +252,7 @@ function blokListesi() {
     el("span", { class: "kare", style: `background:${TURLER[b.rapor.tur].renk}` }),
     el("b", {}, `b${b.rapor.blok_no}`),
     b.tespit ? el("span", { class: "rozet" }, "!") : null,
+    b.yazim?.length ? el("span", { class: "rozet yazim" }, b.yazim.length) : null,
     el("span", { class: "m" }, b.rapor.metin))));
 }
 
@@ -276,6 +295,11 @@ function ayrinti() {
     b.tespit.aciklama.split(". Ateşman")[0] + ".",
     el("div", { class: "kucuk", style: "margin-top:6px" },
       "Not: Bu, paragrafın kitabın geri kalanına göre belirgin şekilde zor olduğunu söyler; tek başına \"sınıfa uygun değil\" demek değildir.")));
+  (b.yazim || []).forEach(y => parcalar.push(el("div", { class: "kart yazimKart" },
+    el("b", {}, `✎ Yazım tespiti (güven ${sayi(y.guven, 1)})  `), el("span", { class: "parca" }, y.parca), el("br"),
+    y.aciklama,
+    y.guven < 1 ? el("div", { class: "kucuk", style: "margin-top:6px" },
+      "Düşük güven: araçlardan yalnız biri hata buldu ya da durum tasarım tercihi olabilir; kontrol edin.") : null)));
 
   if (r.cumleler.length) {
     parcalar.push(el("h2", {}, `Cümleler (${r.cumleler.length})`),

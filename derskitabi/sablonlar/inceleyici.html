@@ -84,6 +84,33 @@
   #blokListesi div.secili { background: #ebe6ff; }
   #blokListesi .kare { position: relative; top: 1px; }
   #blokListesi span.m { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .yazimZemin.tiklanir { pointer-events: auto; cursor: pointer; }
+  .yazimZemin.tiklanir:hover { opacity: .35; }
+  .sekmeler { display: flex; gap: 4px; margin: 12px 0 4px; border-bottom: 1px solid var(--cizgi); }
+  .sekmeler button { border: 0; background: none; font: inherit; padding: 6px 12px; cursor: pointer;
+       border-bottom: 3px solid transparent; color: var(--soluk); }
+  .sekmeler button.secili { border-color: var(--vurgu); color: var(--yazi); font-weight: 600; }
+  .adimBaslik { display: flex; align-items: center; gap: 8px; font-weight: 600; margin-bottom: 6px; }
+  .adimNo { width: 22px; height: 22px; border-radius: 50%; background: var(--vurgu); color: #fff;
+       display: grid; place-items: center; font-size: 12px; flex: none; }
+  .olcum { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; font-size: 13px; }
+  .tamam { color: var(--paragraf); font-weight: 600; } .olumsuz { color: var(--bozuk); font-weight: 600; }
+  .yk { border-radius: 5px; padding: 1px 6px; font-size: 13px; border: 1px solid transparent; cursor: default; }
+  .yk:hover, .yk.odak { outline: 2px solid var(--vurgu); }
+  .yk.gecerli { background: #e4f4e9; } .yk.supheli { background: #fff0b8; border-color: #e0b400; }
+  .yk.hata { background: #ffd3d3; border-color: var(--bozuk); font-weight: 700; }
+  .yk.atlandi { background: #eceef1; color: var(--soluk); border: 1px dashed #b4bac3; }
+  .yk.terim { background: #ece6ff; border-color: #9a80ff; } .yk.okuma { background: #dceaff; border-color: #6e9be6; }
+  .ykLejant { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 6px 0; font-size: 12px; }
+  #kelimeBilgi { min-height: 64px; font-size: 13px; background: var(--zemin); border-radius: 8px;
+       padding: 8px 10px; margin-top: 8px; }
+  .kurallar { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .kurallar td { padding: 4px 4px; border-top: 1px solid var(--cizgi); vertical-align: top; }
+  .kurallar td:first-child { font-weight: 700; color: var(--soluk); width: 30px; }
+  .kurallar td:last-child { text-align: right; white-space: nowrap; }
+  .kelimeIz { fill-opacity: .08; stroke-width: 1.4; pointer-events: none; }
+  .kelimeIz.parlak { stroke-width: 3; fill-opacity: .3; }
+  .akis { margin: 6px 0 0 18px; padding: 0; } .akis li { margin: 3px 0; }
 </style>
 </head>
 <body>
@@ -130,7 +157,7 @@ const TURLER = {
 };
 const CUMLE_RENK = ["var(--cumle1)", "var(--cumle2)"];
 const SVGNS = "http://www.w3.org/2000/svg";
-const durum = { sayfa: 0, blok: null, olcek: 1, gorunur: { paragraf: true, kisa: true, bozuk: true, simge: true } };
+const durum = { sayfa: 0, blok: null, olcek: 1, sekme: "okunabilirlik", gorunur: { paragraf: true, kisa: true, bozuk: true, simge: true } };
 
 // --- yardımcılar ---
 function el(etiket, ozellik = {}, ...cocuklar) {
@@ -234,8 +261,20 @@ function sayfaCiz() {
       width: x1 - x0 + 12, height: y1 - y0 + 12, rx: 5 }));
   }
   // Yazım tespitleri: hatalı kelimenin altı kırmızı çizilir (blok türü gizli olsa bile)
-  s.bloklar.forEach(b => (b.yazim || []).forEach(y => y.kutular.forEach(([x0, y0, x1, y1]) => {
-    k.append(svg("rect", { class: "yazimZemin", x: x0 - 1, y: y0, width: x1 - x0 + 2, height: y1 - y0, rx: 1.5 }));
+  // Seçili bloğun yazım izi: tanınmayan / atlanan kelimeler durum rengiyle çerçevelenir
+  const iz = durum.blok !== null && durum.sekme === "yazim" ? s.bloklar[durum.blok].yazim_izi : null;
+  if (iz) iz.kelimeler.forEach((w, wi) => (w.kutular || []).forEach(([x0, y0, x1, y1]) => {
+    k.append(svg("rect", { class: "kelimeIz", "data-kelime": wi, x: x0 - 1.5, y: y0 - 1, width: x1 - x0 + 3,
+      height: y1 - y0 + 2, rx: 2, stroke: YK[w.d].cizgi, fill: YK[w.d].cizgi }));
+  }));
+  // Yazım tespitleri: hatalı kelimenin altı kırmızı çizilir (blok türü gizli olsa bile);
+  // tıklanınca o kelimenin yazım denetimi açılır
+  s.bloklar.forEach((b, bi) => (b.yazim || []).forEach(y => y.kutular.forEach(([x0, y0, x1, y1]) => {
+    const zemin = svg("rect", { class: "yazimZemin tiklanir", x: x0 - 1, y: y0, width: x1 - x0 + 2, height: y1 - y0, rx: 1.5 });
+    zemin.append(svg("title"));
+    zemin.firstChild.textContent = `Yazım: ${y.parca} (tıklayın)`;
+    zemin.addEventListener("click", e => { e.stopPropagation(); durum.sekme = "yazim"; blokSec(bi, y.parca); });
+    k.append(zemin);
     k.append(svg("rect", { class: "yazimCizgi", x: x0 - 1, y: y1 - 0.4, width: x1 - x0 + 2,
       height: 1.6, opacity: y.guven >= 1 ? 1 : 0.55 }));
   })));
@@ -257,18 +296,23 @@ function blokListesi() {
 }
 
 // --- seçim ve ayrıntı paneli ---
-function blokSec(i) {
+function blokSec(i, odakParca = null) {
   durum.blok = i;
   sayfaCiz();
   ayrinti();
   document.getElementById("sag").scrollTop = 0;  // ayrıntılar baştan okunsun
+  if (odakParca) {  // sayfadaki kırmızı çizgiden gelindi: o kelimeyi göster
+    const iz = sayfa().bloklar[i].yazim_izi;
+    const wi = iz ? iz.kelimeler.findIndex(w => w.d !== "gecerli" && odakParca.includes(w.k)) : -1;
+    if (wi >= 0) kelimeGoster(wi, true);
+  }
 }
 
 function turAciklamasi(r) {
   const n = kelimeSayisi(r.metin);
   return {
-    paragraf: `${n} kelimeden oluşuyor (5 ve üzeri) → paragraf sayıldı. Okunabilirlik analizine girer; ileride yazım ve bilgi tutarlılığı kontrolüne de girecek.`,
-    kisa: `${n} kelime (5'ten az) → kısa metin sayıldı: başlık, harita etiketi, görsel altyazısı gibi. Okunabilirlik hesabına girmez; ileride yazım kontrolüne girecek.`,
+    paragraf: `${n} kelimeden oluşuyor (5 ve üzeri) → paragraf sayıldı. Okunabilirlik ve yazım denetimine girer; ileride bilgi tutarlılığı kontrolüne de girecek.`,
+    kisa: `${n} kelime (5'ten az) → kısa metin sayıldı: başlık, harita etiketi, görsel altyazısı gibi. Okunabilirlik hesabına girmez, yazım denetimine girer (R3–R5 kuralları hariç).`,
     bozuk: "Metinde '�' karakteri var: PDF'in fontu Türkçe harfleri (ş, ı, ğ, İ) bozuk kodlamış, metin doğru okunamıyor. Hata kitapta değil PDF'te; sahte hata üretmemek için hiçbir kriter analiz etmez.",
     simge: "Hiç harf veya rakam içermiyor (harita simgesi gibi) → analiz edilmez.",
   }[r.tur];
@@ -279,7 +323,13 @@ function ayrinti() {
   if (durum.blok === null) {
     kutu.replaceChildren(el("div", { class: "kart ipucu" },
       "Sayfadaki bir kutuya ya da aşağıdaki listeden bir bloğa tıklayın. ",
-      "Sistemin o metni nasıl algıladığını burada adım adım göreceksiniz."));
+      "Sistemin o metni nasıl algıladığını burada adım adım göreceksiniz. ",
+      "Kırmızı çizgili kelimelere tıklarsanız yazım denetiminin o kelimede ne yaptığı açılır."),
+      el("div", { class: "kart" }, el("b", {}, "Sistem nasıl çalışıyor?"),
+        el("ol", { class: "akis" },
+          el("li", {}, el("b", {}, "PDF okuma: "), "sayfa metin bloklarına ayrılır; her blok türüne göre renklenir."),
+          el("li", {}, el("b", {}, "Okunabilirlik: "), "paragrafların cümle ve hece uzunluğundan üç formülle puan hesaplanır; kitabın en zor %10'u işaretlenir (turuncu kesikli çerçeve)."),
+          el("li", {}, el("b", {}, "Yazım: "), "her kelime iki Türkçe morfoloji aracına (Starlang, Zemberek) sorulur; tanınmayanlar sahte hata önlemlerinden geçer, kalanlar hata sayılır. Ayrıca TDK kuralları (de/da, mi, noktalama…) denetlenir (kırmızı çizgi)."))));
     return;
   }
   const b = sayfa().bloklar[durum.blok], r = b.rapor, t = TURLER[r.tur];
@@ -301,6 +351,13 @@ function ayrinti() {
     y.guven < 1 ? el("div", { class: "kucuk", style: "margin-top:6px" },
       "Düşük güven: araçlardan yalnız biri hata buldu ya da durum tasarım tercihi olabilir; kontrol edin.") : null)));
 
+  if (b.yazim_izi) {
+    const sekme = (ad, etiket) => el("button", { class: durum.sekme === ad ? "secili" : "",
+      onclick: () => { durum.sekme = ad; sayfaCiz(); ayrinti(); } }, etiket);
+    parcalar.push(el("div", { class: "sekmeler" }, sekme("okunabilirlik", "Okunabilirlik"),
+      sekme("yazim", "Yazım denetimi" + (b.yazim.length ? ` (${b.yazim.length})` : ""))));
+    if (durum.sekme === "yazim") { parcalar.push(...yazimPaneli(b)); kutu.replaceChildren(...parcalar); return; }
+  }
   if (r.cumleler.length) {
     parcalar.push(el("h2", {}, `Cümleler (${r.cumleler.length})`),
       el("div", { class: "kucuk" }, "Kelimelerin yanındaki sayı hece sayısıdır (hece = ünlü harf sayısı). Uzun kelimeler renkli."));
@@ -354,6 +411,109 @@ function formulKarti(ad, [deger, duzey], ortanca, min, max, yuksekZor, acilim, n
     cubuk,
     el("div", { class: "adim", style: "grid-column:1/-1" }, `= ${acilim} ≈ ${sayi(deger)}`),
     el("div", { class: "kucuk", style: "grid-column:1/-1" }, not));
+}
+
+// --- yazım denetimi (adım adım) ---
+const YK = {
+  gecerli: { ad: "tanındı", cizgi: "#1f9d55" },
+  hata: { ad: "hata (ikisi de tanımadı)", cizgi: "#d63c3c" },
+  supheli: { ad: "şüpheli (biri tanımadı)", cizgi: "#e0b400" },
+  atlandi: { ad: "atlandı (sahte hata önlemi)", cizgi: "#8a9099" },
+  terim: { ad: "kitaba özel terim", cizgi: "#7a5cff" },
+  okuma: { ad: "PDF okuma sorunu", cizgi: "#2f6fdb" },
+};
+const KURALLAR = [
+  ["R1", "noktalama_bosluk", "Noktalamadan sonra boşluk bırakılır (oynar.Yağlar ✗)", false],
+  ["R3", "bag_te_ta", "Bağlaç de/da 'te/ta' yazılmaz (kitap ta, ✗)", true],
+  ["R4", "bag_de_da_uyum", "Ayrı yazılan de/da ünlü uyumuna uyar (okul de ✗)", true],
+  ["R5", "soru_eki_uyum", "Soru eki mi ünlü uyumuna uyar (çınar mi ✗)", true],
+  ["R6", "ya_da", "'ya da' ayrı yazılır (yada ✗)", false],
+  ["R7", "bitisik_ayri", "Bitişik/ayrı yazım listesi (hiç bir, bir çok ✗)", false],
+  ["R8", "kelime_tekrari", "Bağlaç art arda tekrarlanmaz (ve ve ✗)", false],
+];
+const karar = ok => ok ? el("span", { class: "tamam" }, "✓ tanıdı") : el("span", { class: "olumsuz" }, "✗ çözümleyemedi");
+
+function yazimPaneli(b) {
+  const iz = b.yazim_izi, E = VERI.yazim_esikleri, out = [];
+  const adim = (no, baslik) => el("div", { class: "adimBaslik" }, el("span", { class: "adimNo" }, no), baslik);
+
+  // 1. PDF okuma kontrolü
+  const adim1 = el("div", { class: "kart" }, adim("1", "PDF doğru okunmuş mu?"));
+  if (iz.durum === "aralikli") {
+    adim1.append(el("div", {}, "Harfler aralıklı yazılmış (harita etiketi gibi: \"YU N A N\"). Kelimeler parçalandığı için ",
+      el("span", { class: "olumsuz" }, "kelime denetimi yapılmadı"), "."));
+  } else {
+    const oran = iz.uzun_kelime ? iz.ikisi_gecersiz / iz.uzun_kelime : 0;
+    const oranSorun = iz.durum === "okuma_orani", dusmusSorun = iz.durum === "dusmus_harf";
+    adim1.append(el("div", { class: "olcum" },
+      el("span", {}, `4+ harfli ${iz.uzun_kelime} kelimeden iki aracın da tanımadığı: ${iz.ikisi_gecersiz} (%${Math.round(oran * 100)})`),
+      el("span", { class: oranSorun ? "olumsuz" : "tamam" }, oranSorun ? "✗ eşik aşıldı" : "✓"),
+      el("span", { class: "kucuk" }, `Eşik %${Math.round(E.okuma_orani * 100)} (en az ${E.blok_min} kelimelik bloklarda). Bu kadar çok kelime tanınmıyorsa sorun büyük olasılıkla kitapta değil, PDF'in okunmasındadır.`), el("span"),
+      el("span", {}, `Bir 'ı/i' eklenince düzelen kelime: ${iz.dusmus_harf}`),
+      el("span", { class: dusmusSorun ? "olumsuz" : "tamam" }, dusmusSorun ? "✗ eşik aşıldı" : "✓"),
+      el("span", { class: "kucuk" }, `Eşik ${E.dusmus_harf}. Bazı PDF fontları bir harfi hiç kaydetmez ("altndaki"); bu kitabın değil PDF'in hatasıdır.`), el("span")),
+      el("div", { style: "margin-top:6px" }, oranSorun || dusmusSorun
+        ? el("span", { class: "olumsuz" }, "→ Blok \"PDF okuma sorunu\" sayıldı; sahte hata üretmemek için kelime tespiti yapılmadı.")
+        : el("span", { class: "tamam" }, "→ Okuma sağlıklı, kelimeler tek tek denetlendi.")));
+  }
+  out.push(adim1);
+
+  // 2. Kelime kelime
+  const say = {};
+  iz.kelimeler.forEach(w => say[w.d] = (say[w.d] || 0) + 1);
+  out.push(el("div", { class: "kart" }, adim("2", `Her kelime iki morfoloji aracına soruldu (${iz.kelimeler.length} kelime)`),
+    el("div", { class: "kucuk" }, "Araçlar kelimeyi kök ve eklerine ayırmaya çalışır (gel-iş-im-imiz). Ayıramıyorsa kelime Türkçenin kurallarına uymuyor demektir. Bir kelimenin üzerine gelin:"),
+    el("div", { class: "ykLejant" }, Object.entries(YK).filter(([d]) => say[d]).map(([d, y]) =>
+      el("span", { class: "yk " + d }, `${y.ad}: ${say[d]}`))),
+    el("div", { class: "kelimeler" }, iz.kelimeler.map((w, wi) => el("span", {
+      class: "yk " + w.d, "data-wi": wi, tabindex: 0,
+      onmouseenter: () => kelimeGoster(wi), onfocus: () => kelimeGoster(wi), onclick: () => kelimeGoster(wi),
+    }, w.k))),
+    el("div", { id: "kelimeBilgi", class: "ipucu" }, "Bir kelimenin üzerine gelince iki aracın kararı ve sistemin son kararı burada görünür; kelime sayfada da çerçevelenir.")));
+
+  // 3. TDK kuralları
+  const kisa = b.rapor.tur !== "paragraf" || iz.durum === "aralikli";
+  out.push(el("div", { class: "kart" }, adim("3", "TDK kuralları denetlendi"),
+    el("table", { class: "kurallar" }, KURALLAR.map(([kod, tur, ad, yalnizParagraf]) => {
+      const n = iz.kurallar[tur] || 0;
+      return el("tr", {}, el("td", {}, kod), el("td", {}, ad), el("td", {},
+        n ? el("span", { class: "olumsuz" }, `✗ ${n} tespit`)
+          : yalnizParagraf && kisa ? el("span", { class: "kucuk" }, "kısa metinde yok")
+          : el("span", { class: "tamam" }, "✓ temiz")));
+    })),
+    el("div", { class: "kucuk", style: "margin-top:6px" }, "R3–R5 yalnız paragraflarda çalışır: başlık ve harita etiketlerinde (\"KIY DA\") sahte hata üretiyordu.")));
+
+  // Sonuç: bu blokta raporlanan tespitler
+  out.push(el("h2", {}, "Sonuç"), b.yazim.length
+    ? el("div", { class: "kucuk" }, `Bu blokta ${b.yazim.length} yazım tespiti raporlandı (yukarıdaki kırmızı kartlar).`)
+    : el("div", { class: "kart" }, el("span", { class: "tamam" }, "✓ Bu blokta yazım hatası bulunmadı.")));
+  return out;
+}
+
+function kelimeGoster(wi, kaydir = false) {
+  const iz = sayfa().bloklar[durum.blok].yazim_izi, w = iz.kelimeler[wi], E = VERI.yazim_esikleri;
+  document.querySelectorAll(".yk.odak").forEach(e => e.classList.remove("odak"));
+  const cip = document.querySelector(`.yk[data-wi="${wi}"]`);
+  if (cip) { cip.classList.add("odak"); if (kaydir) cip.scrollIntoView({ block: "center", behavior: "smooth" }); }
+  document.querySelectorAll(".kelimeIz.parlak").forEach(e => e.classList.remove("parlak"));
+  document.querySelectorAll(`.kelimeIz[data-kelime="${wi}"]`).forEach(e => e.classList.add("parlak"));
+  const kitapta = w.kitapta != null ? ` Kitapta ${w.kitapta} kez geçiyor.` : "";
+  const sonuc = {
+    gecerli: "İki araç da çözümleyebildi → doğru yazılmış kabul edildi.",
+    hata: `İki araç da çözümleyemedi ve hiçbir sahte hata önlemine uymadı → YAZIM HATASI (güven 1,0).${kitapta} Terim sayılması için en az ${E.terim} kez geçmeliydi.`,
+    supheli: `Araçlardan yalnız biri çözümleyemedi → şüpheli, düşük güvenle raporlandı (güven 0,5).${kitapta}`,
+    atlandi: `En az bir araç tanımadı ama sahte hata önlemiyle atlandı: ${w.not}.`,
+    terim: `En az bir araç tanımadı ama kitapta sık geçiyor ("${w.not}" en az ${E.terim} kez) → araçların bilmediği, kitaba özel bir terim sayıldı.${kitapta}`,
+    okuma: "En az bir araç tanımadı ama bu blokta ya da sayfada PDF okuma sorunu (düşmüş harf) var → kitabın hatası sayılmadı.",
+  }[w.d];
+  const bilgi = document.getElementById("kelimeBilgi");
+  bilgi.classList.remove("ipucu");
+  bilgi.replaceChildren(
+    el("div", {}, el("b", { style: "font-size:15px" }, w.k), "  ", el("span", { class: "yk " + w.d }, YK[w.d].ad)),
+    el("div", { class: "olcum", style: "margin:4px 0" },
+      el("span", {}, "Starlang (ana denetçi)"), karar(w.st),
+      el("span", {}, "Zemberek (ikinci görüş)"), karar(w.zb)),
+    el("div", {}, "→ ", sonuc));
 }
 
 // --- gezinme ---

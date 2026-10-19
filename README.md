@@ -40,7 +40,8 @@ Adımlar tek tek de çalıştırılabilir:
 # Sistemin gözünden PDF: bloklar, cümleler ve tespitler kitabın üzerine çizilir
 .venv\Scripts\python.exe -m derskitabi.gorsellestir veri\kitap.pdf --sayfalar 28-35
 
-# Etkileşimli inceleyici (tarayıcıda açılan tek HTML dosyası): bloğa tıkla, ayrıntıyı gör
+# Etkileşimli inceleyici (tarayıcıda açılan tek HTML dosyası): bloğa tıkla, ayrıntıyı gör;
+# "Yazım denetimi" sekmesi her kelimede iki aracın kararını ve atlanma sebebini gösterir
 .venv\Scripts\python.exe -m derskitabi.inceleyici veri\kitap.pdf --sayfalar 13-32
 ```
 

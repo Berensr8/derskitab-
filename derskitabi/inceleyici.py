@@ -5,6 +5,8 @@ Girdi : PDF dosyası
   - Sayfa görüntüsü üzerinde bloklar (renk = tür). Bloğa tıklayınca yan panelde:
     neden bu türde sayıldığı, cümleleri, kelimelerin hece sayıları, formül hesabının
     adımları ve varsa okunabilirlik tespiti.
+  - Yazım denetimi adım adım: PDF okuma kontrolü, her kelimede iki aracın kararı ve
+    atlanma sebebi (renkli), TDK kurallarının bu blokta sonucu.
   - Yan panelde sayfadaki tüm bloklar listelenir (küçük kutulara listeden ulaşılır).
 
 Kullanım:
@@ -17,7 +19,7 @@ import argparse
 import base64
 import json
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import pymupdf
@@ -73,22 +75,74 @@ def _yazim_verisi(t: Tespit, ham) -> dict:
             "guven": t.guven_skoru, "kutular": parca_kutulari(ham, t.metin_parcasi)}
 
 
+def yazim_baglami(bloklar: list[Blok]) -> dict:
+    """Bütün sayfalar için bir kez hazırlanan bilgiler: araçlar ve kitaptaki kelime sayıları."""
+    return {"denetciler": yazim.varsayilan_denetciler(),
+            "kitap_kelimeleri": yazim.kitap_kelime_sayilari(bloklar)}
+
+
+def yazim_izi(blok: Blok, blok_tespitleri: list[Tespit], baglam: dict, ham) -> dict | None:
+    """Yazım denetiminin bu blokta adım adım ne yaptığı (inceleyicideki "adım adım" bölümü).
+
+    Kelimelerin son durumu:
+      gecerli  iki araç da tanıdı            supheli  yalnız biri tanımadı (güven 0,5)
+      hata     ikisi de tanımadı (güven 1)   atlandi  sahte hata önlemi (sebebiyle)
+      terim    kitaba özel terim (K15)       okuma    PDF okuma sorunu (blok/sayfa düzeyi)
+    Kararlar yazim.kelime_denetimi() içinden gelir; burada yeniden verilmez.
+    """
+    if blok.tur not in ("paragraf", "kisa"):
+        return None
+    iz = {}
+    yazim.kelime_denetimi(blok, baglam["denetciler"], iz=iz)
+    hatali = {t.metin_parcasi: t.guven_skoru for t in blok_tespitleri if t.alt_tur == "morfoloji"}
+    kelimeler = []
+    for k in iz["kelimeler"]:
+        kucuk = yazim.tr_kucuk(k["kelime"])
+        d = {"k": k["kelime"], "st": k["starlang"], "zb": k["zemberek"]}
+        if k["starlang"] and k["zemberek"]:
+            d["d"] = "gecerli"
+        elif k["kelime"] in hatali:
+            d["d"] = "hata" if hatali[k["kelime"]] >= 1 else "supheli"
+        elif iz["blok_durumu"] != "denetlendi":
+            d["d"] = "okuma"
+        elif k["sebep"]:
+            d["d"], d["not"] = "atlandi", k["sebep"]
+        elif terim := yazim.kitaba_ozel_terimler({kucuk}, baglam["kitap_kelimeleri"],
+                                                  baglam["denetciler"][0]):
+            d["d"], d["not"] = "terim", terim[kucuk]
+        else:
+            d["d"] = "okuma"  # sayfa düzeyinde düşmüş harf (yazim.analiz_et)
+        if d["d"] != "gecerli":
+            d["kitapta"] = baglam["kitap_kelimeleri"][kucuk]
+            d["kutular"] = parca_kutulari(ham, k["kelime"])
+        kelimeler.append(d)
+    return {
+        "durum": iz["blok_durumu"],
+        "uzun_kelime": iz.get("uzun_kelime", 0),
+        "ikisi_gecersiz": iz.get("ikisi_gecersiz", 0),
+        "dusmus_harf": iz.get("dusmus_harf", 0),
+        "kelimeler": kelimeler,
+        "kurallar": Counter(t.alt_tur for t in blok_tespitleri if t.alt_tur != "morfoloji"),
+    }
+
+
 def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict,
-                 yazim: dict | None = None) -> dict:
+                 yazim_tespitleri: dict | None = None, baglam: dict | None = None) -> dict:
     goruntu = sayfa.get_pixmap(dpi=GORUNTU_DPI).tobytes("jpeg", jpg_quality=80)
     kelimeler = sayfa.get_text("words", flags=_OKUMA_AYARLARI)
-    yazim = yazim or {}
+    yazim_tespitleri = yazim_tespitleri or {}
     veri_bloklari = []
     for b in bloklar:
         cumleler = cumle_dikdortgenleri(kelimeler, b) if b.tur == "paragraf" else None
-        yazim_listesi = yazim.get((b.sayfa_no, b.blok_no), [])
-        ham = _ham_kelimeler(kelimeler, b.bbox) if yazim_listesi else []
+        yazim_listesi = yazim_tespitleri.get((b.sayfa_no, b.blok_no), [])
+        ham = _ham_kelimeler(kelimeler, b.bbox) if (yazim_listesi or baglam) else []
         veri_bloklari.append({
             "bbox": [round(v, 1) for v in b.bbox],
             "rapor": blok_raporu(b),
             "cumle_kutulari": [satirlari_birlestir(c) for c in cumleler] if cumleler else [],
             "tespit": _tespit_verisi(tespitler.get((b.sayfa_no, b.blok_no))),
             "yazim": [_yazim_verisi(t, ham) for t in yazim_listesi],
+            "yazim_izi": yazim_izi(b, yazim_listesi, baglam, ham) if baglam else None,
         })
     return {
         "no": sayfa.number + 1,
@@ -126,9 +180,10 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         yazim_bloklari = defaultdict(list)
         for t in yazim_tespitleri:
             yazim_bloklari[(t.sayfa_no, t.blok_no)].append(t)
+        baglam = yazim_baglami(bloklar)
         sayfa_listesi = [
             sayfa_verisi(belge[no - 1], [b for b in bloklar if b.sayfa_no == no], tespitler,
-                         yazim_bloklari)
+                         yazim_bloklari, baglam)
             for no in secili
         ]
 
@@ -138,6 +193,8 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         "toplam_tespit": len(tespit_listesi),
         "toplam_yazim": sum(len(v) for k, v in yazim_bloklari.items() if k[0] in set(secili)),
         "min_cumle": okunabilirlik.MIN_CUMLE,
+        "yazim_esikleri": {"okuma_orani": yazim.OKUMA_SORUNU_ORANI, "blok_min": yazim.BLOK_MIN_KELIME,
+                           "dusmus_harf": yazim.DUSMUS_HARF_ESIGI, "terim": yazim.TERIM_TEKRAR_ESIGI},
         "sayfalar": sayfa_listesi,
     }
     # "</" kaçışı: kitap metninde "</script>" geçse bile sayfa bozulmasın

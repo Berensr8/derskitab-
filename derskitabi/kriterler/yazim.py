@@ -169,26 +169,38 @@ def _ek_notu(kelime: str, denetci: Denetci) -> str:
 
 
 def kelime_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci],
-                    atlananlar: Counter | None = None) -> list[Tespit]:
+                    atlananlar: Counter | None = None, iz: dict | None = None) -> list[Tespit]:
+    """iz verilirse, her kelime için araçların kararı ve atlanma sebebi buraya yazılır
+    (inceleyici bunu "adım adım" gösterir; karar mantığı yalnız burada durur)."""
     starlang, zemberek = denetciler
     metin = _WEB.sub(lambda w: " " * len(w.group(0)), blok.metin)  # konumlar korunur
+    if iz is None:
+        iz = {}
+    iz.update(blok_durumu="denetlendi", kelimeler=[])
     if _aralikli_mi(metin):
+        iz["blok_durumu"] = "aralikli"
         return []
     tespitler = []
     eslesmeler = list(_KELIME.finditer(metin))
     sonuclar = [(_gecerli(starlang, m.group(0)), _gecerli(zemberek, m.group(0))) for m in eslesmeler]
+    iz["kelimeler"] = [{"kelime": m.group(0), "starlang": st, "zemberek": zb, "sebep": None}
+                       for m, (st, zb) in zip(eslesmeler, sonuclar)]
     # Oran yalnız 4+ harfli kelimelerle hesaplanır: formüllerdeki tek harfli değişkenler
     # ("x", "k", "R") okuma sorunu sayılmasın
     uzunlar = [(st, zb) for m, (st, zb) in zip(eslesmeler, sonuclar) if len(m.group(0)) >= 4]
     ikisi_gecersiz = sum(1 for st, zb in uzunlar if not st and not zb)
+    iz.update(uzun_kelime=len(uzunlar), ikisi_gecersiz=ikisi_gecersiz)
     if len(uzunlar) >= BLOK_MIN_KELIME and ikisi_gecersiz / len(uzunlar) > OKUMA_SORUNU_ORANI:
+        iz["blok_durumu"] = "okuma_orani"
         if atlananlar is not None:
             atlananlar["PDF okuma sorunu şüphesi (blok)"] += 1
         return []
     dusmus = sum(1 for m, (st, zb) in zip(eslesmeler, sonuclar)
                  if not st and not zb and len(m.group(0)) >= 4 and m.group(0).islower()
                  and _harf_dusmus_mu(m.group(0), denetciler))
+    iz["dusmus_harf"] = dusmus
     if dusmus >= DUSMUS_HARF_ESIGI:
+        iz["blok_durumu"] = "dusmus_harf"
         if atlananlar is not None:
             atlananlar["PDF okuma sorunu: harf düşmüş (blok)"] += 1
         return []
@@ -197,6 +209,7 @@ def kelime_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci],
         if st_gecerli and zb_gecerli:
             continue
         sebep = _atlanma_sebebi(metin, m, ilk=(i == 0), son=(i == len(eslesmeler) - 1))
+        iz["kelimeler"][i]["sebep"] = sebep
         if sebep:
             if atlananlar is not None:
                 atlananlar[sebep] += 1
@@ -289,6 +302,31 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
     return tespitler
 
 
+def kitap_kelime_sayilari(bloklar: list[Blok]) -> Counter:
+    """Her kelimenin (Türkçe küçük harfle) kitapta kaç kez geçtiği."""
+    return Counter(map(tr_kucuk, (k for b in bloklar for k in _KELIME.findall(b.metin))))
+
+
+def kitaba_ozel_terimler(adaylar: set[str], kitap_kelimeleri: Counter,
+                         starlang: Denetci) -> dict[str, str]:
+    """Araçların tanımadığı ama kitapta sık tekrar eden kelimeler (K15): {kelime: terim kökü}.
+
+    Terimin ek almış hâlleri (Biyoloji 10: villus ×9 → villusları, villuslardaki…): kelime,
+    kitapta kendisi terim olan (tek başına ≥ eşik kez geçen, araçların tanımadığı) bir
+    kökle başlıyorsa terim sayılır. Kökün *tek başına* sık geçmesi şartı, sık tekrarlanmayan
+    bir yazım hatasının ("foksiyon" → "foksiyonun") ek almış hâllerinin terime
+    dönüşmesini engeller.
+    """
+    terimler = {}
+    for aday in adaylar:
+        kok = next((aday[:i] for i in range(len(aday), 4, -1)
+                    if kitap_kelimeleri[aday[:i]] >= TERIM_TEKRAR_ESIGI
+                    and (i == len(aday) or not _gecerli(starlang, aday[:i]))), None)
+        if kok:
+            terimler[aday] = kok
+    return terimler
+
+
 def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = None,
               atlananlar: Counter | None = None,
               kitap_bloklari: list[Blok] | None = None) -> list[Tespit]:
@@ -305,26 +343,13 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
             kelime_tespitleri += kelime_denetimi(b, denetciler, atlananlar)
             kural_tespitleri += kural_denetimi(b)
 
-    # Kitapta sık tekrar eden "geçersiz" kelimeler: araçların bilmediği terimler. Tekrar
-    # sayısı, kelimenin kitabın tamamındaki geçiş sayısıdır.
-    kitap = kitap_bloklari or bloklar
-    adaylar = {tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri}
-    # Terimin ek almış hâlleri (Biyoloji 10: villus ×9 → villusları, villuslardaki…): kelime,
-    # kitapta kendisi terim olan (tek başına ≥ eşik kez geçen, araçların tanımadığı) bir
-    # kökle başlıyorsa terim sayılır. Kökün *tek başına* sık geçmesi şartı, sık tekrarlanmayan
-    # bir yazım hatasının ("foksiyon" → "foksiyonun") ek almış hâllerinin terime
-    # dönüşmesini engeller.
-    kitap_kelimeleri = Counter(map(tr_kucuk, (k for b in kitap for k in _KELIME.findall(b.metin))))
-    terimler = set()
-    for aday in adaylar:
-        kok = next((aday[:i] for i in range(len(aday), 4, -1)
-                    if kitap_kelimeleri[aday[:i]] >= TERIM_TEKRAR_ESIGI
-                    and (i == len(aday) or not _gecerli(denetciler[0], aday[:i]))), None)
-        if kok:
-            terimler.add(aday)
-            if atlananlar is not None:
-                atlananlar[f"kitaba özel terim (≥{TERIM_TEKRAR_ESIGI} kez)"] += 1
-                atlananlar[f"terim: {kok}"] = kitap_kelimeleri[kok]
+    kitap_kelimeleri = kitap_kelime_sayilari(kitap_bloklari or bloklar)
+    terimler = kitaba_ozel_terimler({tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri},
+                                    kitap_kelimeleri, denetciler[0])
+    if atlananlar is not None:
+        for kok in terimler.values():
+            atlananlar[f"kitaba özel terim (≥{TERIM_TEKRAR_ESIGI} kez)"] += 1
+            atlananlar[f"terim: {kok}"] = kitap_kelimeleri[kok]
 
     # Düşmüş harf (K15) sayfa düzeyinde de sayılır: İstiklal Marşı'nda her dize ayrı bir
     # blok olabildiği için blok düzeyindeki eşik tek başına yetmiyor (Biyoloji 10).

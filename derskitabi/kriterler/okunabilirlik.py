@@ -37,6 +37,8 @@ _UNLULER = set("aeıioöuüâîûAEIİOÖUÜÂÎÛ")
 # harf baş harfleri ("T.B.M.M.", "A.B.D.")
 _KISALTMA = re.compile(
     r"\b(?:[A-ZÇĞİÖŞÜ]\.){2,}|\b(M\.Ö|M\.S|vb|vs|bkz|bk|örn|Dr|Prof|Doç|yy|sf|s|No)\."
+    # Roma rakamıyla sıra: "I. Haçlı Saldırısı", "II. Mahmut", "XV. yüzyıl" (Sosyal 6, s.171)
+    r"|\b(?=[IVX])X{0,3}(?:IX|IV|V?I{0,3})\.(?=\s)"
 )
 # Cümle sonu iki şekilde olur:
 #  1. . ! ? … (ardından tırnak gelebilir) + boşluk + küçük harfle başlamayan devam.

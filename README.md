@@ -37,6 +37,10 @@ Adımlar tek tek de çalıştırılabilir:
 # 3. Yazım (Starlang + Zemberek, TDK kuralları) -> veri/kitap_yazim_tespitler.json
 .venv\Scripts\python.exe -m derskitabi.kriterler.yazim veri\kitap_bloklar.json
 
+# 4. Bilgi tutarsızlığı (bge-m3 + gemma4 + Turkish-Gemma, Ollama ile yerel; önce: ollama serve)
+#    -> veri/kitap_tutarlilik_tespitler.json (+ _adaylar.json: her aday çiftin kararları)
+.venv\Scripts\python.exe -m derskitabi.kriterler.tutarlilik veri\kitap_bloklar.json
+
 # Sistemin gözünden PDF: bloklar, cümleler ve tespitler kitabın üzerine çizilir
 .venv\Scripts\python.exe -m derskitabi.gorsellestir veri\kitap.pdf --sayfalar 28-35
 
@@ -51,4 +55,12 @@ Adımlar tek tek de çalıştırılabilir:
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+Bilgi tutarsızlığı için [Ollama](https://ollama.com) ve modeller (~15 GB):
+
+```bash
+ollama pull bge-m3
+ollama pull gemma4:12b-it-qat
+ollama pull hf.co/ytu-ce-cosmos/Turkish-Gemma-9b-T1-GGUF:Q4_K_M
 ```

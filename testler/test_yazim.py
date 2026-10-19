@@ -54,6 +54,38 @@ class KelimeDenetimiTesti(unittest.TestCase):
         self.assertIn("soru eki ayrı yazılmalı olabilir ('geliyor mu')", t[0].aciklama)
 
 
+class IkinciKitapOnlemleriTesti(unittest.TestCase):
+    """K15: Matematik 11 kitabında görülen sahte hata kaynakları."""
+
+    def test_kitapta_3_kez_gecen_gecersiz_kelime_terim_sayilir(self):
+        bloklar = [blok("Ali trigonometrik kitap okudu.") for _ in range(3)]
+        sayac = Counter()
+        self.assertEqual(analiz_et(bloklar, ikisi_de_bilir, sayac), [])
+        self.assertEqual(sayac["terim: trigonometrik"], 3)
+
+    def test_iki_kez_gecen_gecersiz_kelime_hala_hata(self):
+        bloklar = [blok("Ali foksiyon kitap okudu.") for _ in range(2)]
+        self.assertEqual(len(analiz_et(bloklar, ikisi_de_bilir)), 2)
+
+    def test_harf_dusmus_blok_okuma_sorunu_sayilir(self):
+        # Gerçek kitaptan (İstiklal Marşı): font "ı" harfini kaydetmemiş
+        sozluk = SOZLUK | {"altındaki", "kanında", "kıymetli", "toprak"}
+        denetciler = (lambda k: k in sozluk, lambda k: k in sozluk)
+        sayac = Counter()
+        sonuc = kelime_denetimi(blok("toprak altndaki kannda kymetli"), denetciler, sayac)
+        self.assertEqual(sonuc, [])
+        self.assertEqual(sayac["PDF okuma sorunu: harf düşmüş (blok)"], 1)
+
+    def test_matematik_gosterimi_atlanir(self):
+        self.assertEqual(kelime_denetimi(blok("Ali okula sinx cotx gitti."), ikisi_de_bilir), [])
+
+    def test_gecersiz_orani_yuksek_blok_atlanir(self):
+        sayac = Counter()
+        metin = "Ali okula gitti kitap okudu precalculus geometry trigonometry"
+        self.assertEqual(kelime_denetimi(blok(metin), ikisi_de_bilir, sayac), [])
+        self.assertEqual(sayac["PDF okuma sorunu şüphesi (blok)"], 1)
+
+
 class KuralTesti(unittest.TestCase):
     def test_r1_noktalamadan_sonra_bosluk(self):
         # Gerçek kitaptan: s.15

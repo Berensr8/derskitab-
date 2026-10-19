@@ -40,6 +40,20 @@ KISALTMALAR = {"s", "vb", "vs", "bk", "bkz", "örn", "yy", "sf", "no", "dr", "pr
 # (harita etiketleri: Onega, Bakırçay, NAHÇIVAN…) çıktı; araçlar özel isimleri bilmediği için
 # sahte hata üretiyorlar. Faz 1'de denetlenmez, sayıları raporlanır (bkz. F3: LLM hakemi).
 BUYUK_HARF_DENETIMI = False
+# Kitapta bu kadar ve daha fazla kez geçen "geçersiz" kelime, araçların bilmediği ama kitabın
+# tutarlı kullandığı bir terim sayılır (Matematik 11: "trigonometrik" 141 kez). Gerçek yazım
+# hataları kitapta genellikle 1–2 kez geçiyor. Atlanan terimler ayrıca raporlanır.
+TERIM_TEKRAR_ESIGI = 3
+# Bir blokta (en az BLOK_MIN_KELIME kelime) kelimelerin bu oranından fazlası iki araca göre de
+# geçersizse, sorun kitapta değil PDF okumada olabilir (ör. İstiklal Marşı sayfasında "ı"
+# harfleri hiç kaydedilmemiş: "altndaki"). Böyle bir blokta kelime tespiti üretilmez.
+OKUMA_SORUNU_ORANI = 0.3
+BLOK_MIN_KELIME = 6
+# Fontun bir harfi hiç kaydetmediği bloklar (Matematik 11, İstiklal Marşı: "altndaki",
+# "vuracakm"): geçersiz kelimeye tek bir "ı"/"i" eklenince geçerli oluyorsa harf düşmüş
+# demektir. Bir blokta bu kadar kelimede görülürse blok "PDF okuma sorunu" sayılır.
+DUSMUS_HARF_ESIGI = 3
+_MATEMATIK = re.compile(r"(?:arc)?(?:sin|cos|tan|cot|sec|csc|log|ln|lim)[a-zθαβ]{0,2}", re.I)
 KALIN_UNLULER = set("aıouâû")
 UNLULER = set("aeıioöuüâîû")
 _SORU_UYUMU = {"a": "ı", "ı": "ı", "â": "ı", "e": "i", "i": "i", "î": "i",
@@ -94,6 +108,17 @@ def _gecerli(denetci: Denetci, kelime: str) -> bool:
         return True
 
 
+def _harf_dusmus_mu(kelime: str, denetciler: tuple[Denetci, Denetci]) -> bool:
+    """Kelimeye bir 'ı' ya da 'i' eklenince iki araca göre de geçerli oluyor mu?"""
+    k = tr_kucuk(kelime)
+    for i in range(1, len(k) + 1):
+        for harf in "ıi":
+            aday = k[:i] + harf + k[i:]
+            if all(_gecerli(d, aday) for d in denetciler):
+                return True
+    return False
+
+
 def _cumle_basi_mi(metin: str, bas: int) -> bool:
     onceki = metin[:bas].rstrip(" \"'“‘(«")
     return not onceki or onceki[-1] in ".!?:…"
@@ -113,6 +138,8 @@ def _atlanma_sebebi(metin: str, m: re.Match, ilk: bool, son: bool) -> str | None
         return "çok kısa (bölünmüş kelime parçası olabilir)"
     if not sade.replace("'", "").isalpha():
         return "rakam / sembol içeriyor (km²'lik gibi)"
+    if _MATEMATIK.fullmatch(kelime):
+        return "matematik gösterimi (sinx, cotx)"
     if sade.lower() in KISALTMALAR or sade.split("'")[0].lower() in KISALTMALAR:
         return "kısaltma / ölçü birimi"
     if kelime.isupper() and len(kelime) <= 5:
@@ -149,10 +176,24 @@ def kelime_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci],
         return []
     tespitler = []
     eslesmeler = list(_KELIME.finditer(metin))
-    for i, m in enumerate(eslesmeler):
+    sonuclar = [(_gecerli(starlang, m.group(0)), _gecerli(zemberek, m.group(0))) for m in eslesmeler]
+    # Oran yalnız 4+ harfli kelimelerle hesaplanır: formüllerdeki tek harfli değişkenler
+    # ("x", "k", "R") okuma sorunu sayılmasın
+    uzunlar = [(st, zb) for m, (st, zb) in zip(eslesmeler, sonuclar) if len(m.group(0)) >= 4]
+    ikisi_gecersiz = sum(1 for st, zb in uzunlar if not st and not zb)
+    if len(uzunlar) >= BLOK_MIN_KELIME and ikisi_gecersiz / len(uzunlar) > OKUMA_SORUNU_ORANI:
+        if atlananlar is not None:
+            atlananlar["PDF okuma sorunu şüphesi (blok)"] += 1
+        return []
+    dusmus = sum(1 for m, (st, zb) in zip(eslesmeler, sonuclar)
+                 if not st and not zb and len(m.group(0)) >= 4 and m.group(0).islower()
+                 and _harf_dusmus_mu(m.group(0), denetciler))
+    if dusmus >= DUSMUS_HARF_ESIGI:
+        if atlananlar is not None:
+            atlananlar["PDF okuma sorunu: harf düşmüş (blok)"] += 1
+        return []
+    for i, (m, (st_gecerli, zb_gecerli)) in enumerate(zip(eslesmeler, sonuclar)):
         kelime = m.group(0)
-        st_gecerli = _gecerli(starlang, kelime)
-        zb_gecerli = _gecerli(zemberek, kelime)
         if st_gecerli and zb_gecerli:
             continue
         sebep = _atlanma_sebebi(metin, m, ilk=(i == 0), son=(i == len(eslesmeler) - 1))
@@ -246,12 +287,20 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
     """Paragraf ve kısa metin bloklarında yazım tespitleri (bozuk ve simge bloklar atlanır, K8)."""
     if denetciler is None:
         denetciler = varsayilan_denetciler()
-    tespitler = []
+    kelime_tespitleri, kural_tespitleri = [], []
     for b in bloklar:
         if b.tur in ("paragraf", "kisa"):
-            tespitler += kelime_denetimi(b, denetciler, atlananlar)
-            tespitler += kural_denetimi(b)
-    return tespitler
+            kelime_tespitleri += kelime_denetimi(b, denetciler, atlananlar)
+            kural_tespitleri += kural_denetimi(b)
+
+    # Kitapta sık tekrar eden "geçersiz" kelimeler: araçların bilmediği terimler
+    tekrar = Counter(tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri)
+    terimler = {k for k, n in tekrar.items() if n >= TERIM_TEKRAR_ESIGI}
+    if atlananlar is not None:
+        for k in terimler:
+            atlananlar[f"kitaba özel terim (≥{TERIM_TEKRAR_ESIGI} kez)"] += tekrar[k]
+            atlananlar[f"terim: {k}"] = tekrar[k]
+    return [t for t in kelime_tespitleri if tr_kucuk(t.metin_parcasi) not in terimler] + kural_tespitleri
 
 
 def main() -> None:
@@ -268,7 +317,12 @@ def main() -> None:
     print(f"{len(tespitler)} yazım tespiti (güven 1,0: {sum(t.guven_skoru == 1.0 for t in tespitler)})")
     for tur, n in Counter(t.alt_tur for t in tespitler).most_common():
         print(f"  {tur}: {n}")
-    print("Atlanan (sahte hata önlemi): " + ", ".join(f"{s} {n}" for s, n in atlananlar.most_common()))
+    terimler = {s[7:]: n for s, n in atlananlar.items() if s.startswith("terim: ")}
+    print("Atlanan (sahte hata önlemi): " + ", ".join(
+        f"{s} {n}" for s, n in atlananlar.most_common() if not s.startswith("terim: ")))
+    if terimler:
+        print("Kitaba özel terimler (araçlar tanımıyor, kitapta tekrar ediyor): " + ", ".join(
+            f"{k}×{n}" for k, n in sorted(terimler.items(), key=lambda x: -x[1])))
 
 
 if __name__ == "__main__":

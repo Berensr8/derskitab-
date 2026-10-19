@@ -127,7 +127,8 @@ def main() -> None:
     secili = set(sayfalar) if sayfalar else None
     atlananlar = Counter()
     yazim_tespitleri = yazim.analiz_et(
-        [b for b in bloklar if secili is None or b.sayfa_no in secili], atlananlar=atlananlar)
+        [b for b in bloklar if secili is None or b.sayfa_no in secili], atlananlar=atlananlar,
+        kitap_bloklari=bloklar)
     tespitleri_kaydet(yazim_tespitleri, klasor / "yazim_tespitler.json")
     yuksek = sum(t_.guven_skoru == 1.0 for t_ in yazim_tespitleri)
     print(f"  {len(yazim_tespitleri)} yazım tespiti (yüksek güven {yuksek}, "

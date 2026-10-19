@@ -121,7 +121,8 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         secili = sayfalar or list(range(1, len(belge) + 1))
         if yazim_tespitleri is None:
             secili_kume = set(secili)
-            yazim_tespitleri = yazim.analiz_et([b for b in bloklar if b.sayfa_no in secili_kume])
+            yazim_tespitleri = yazim.analiz_et([b for b in bloklar if b.sayfa_no in secili_kume],
+                                               kitap_bloklari=bloklar)
         yazim_bloklari = defaultdict(list)
         for t in yazim_tespitleri:
             yazim_bloklari[(t.sayfa_no, t.blok_no)].append(t)

@@ -63,6 +63,12 @@ class IkinciKitapOnlemleriTesti(unittest.TestCase):
         self.assertEqual(analiz_et(bloklar, ikisi_de_bilir, sayac), [])
         self.assertEqual(sayac["terim: trigonometrik"], 3)
 
+    def test_terim_sayimi_secili_sayfalarda_degil_kitabin_tamaminda(self):
+        # Demo'da yalnız bazı sayfalar denetlenirken "trigonometrik" yine terim sayılmalı
+        kitap = [blok("Ali trigonometrik kitap okudu.") for _ in range(3)]
+        self.assertEqual(analiz_et(kitap[:1], ikisi_de_bilir, kitap_bloklari=kitap), [])
+        self.assertEqual(len(analiz_et(kitap[:1], ikisi_de_bilir)), 1)
+
     def test_iki_kez_gecen_gecersiz_kelime_hala_hata(self):
         bloklar = [blok("Ali foksiyon kitap okudu.") for _ in range(2)]
         self.assertEqual(len(analiz_et(bloklar, ikisi_de_bilir)), 2)

@@ -283,8 +283,13 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
 
 
 def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = None,
-              atlananlar: Counter | None = None) -> list[Tespit]:
-    """Paragraf ve kısa metin bloklarında yazım tespitleri (bozuk ve simge bloklar atlanır, K8)."""
+              atlananlar: Counter | None = None,
+              kitap_bloklari: list[Blok] | None = None) -> list[Tespit]:
+    """Paragraf ve kısa metin bloklarında yazım tespitleri (bozuk ve simge bloklar atlanır, K8).
+
+    kitap_bloklari: yalnız bazı sayfalar denetlenirken kitabın tamamı; "kitaba özel terim"
+    sayımı (K15) her zaman tüm kitaba göre yapılır. Verilmezse bloklar kullanılır.
+    """
     if denetciler is None:
         denetciler = varsayilan_denetciler()
     kelime_tespitleri, kural_tespitleri = [], []
@@ -293,8 +298,11 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
             kelime_tespitleri += kelime_denetimi(b, denetciler, atlananlar)
             kural_tespitleri += kural_denetimi(b)
 
-    # Kitapta sık tekrar eden "geçersiz" kelimeler: araçların bilmediği terimler
-    tekrar = Counter(tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri)
+    # Kitapta sık tekrar eden "geçersiz" kelimeler: araçların bilmediği terimler. Tekrar
+    # sayısı, kelimenin kitabın tamamındaki geçiş sayısıdır.
+    adaylar = {tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri}
+    tekrar = Counter(k for b in (kitap_bloklari or bloklar)
+                     for k in map(tr_kucuk, _KELIME.findall(b.metin)) if k in adaylar)
     terimler = {k for k, n in tekrar.items() if n >= TERIM_TEKRAR_ESIGI}
     if atlananlar is not None:
         for k in terimler:

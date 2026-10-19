@@ -240,8 +240,11 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
 
     # R6: "ya da" bitişik yazılmış
     for m in re.finditer(rf"(?<![{_HARF}])[Yy]ada(?![{_HARF}])", metin):
-        tespitler.append(_tespit(blok, "ya_da", 1.0, m.group(0),
-                                 "'ya da' bağlacı ayrı yazılır ('yada' değil)."))
+        # Güven 0,5: "yada" nadiren "yâd" (yabancı) kelimesinin yönelme hâli olabilir
+        # ("söyleme yada" — bir türküde görüldü)
+        tespitler.append(_tespit(blok, "ya_da", 0.5, m.group(0),
+                                 "'ya da' bağlacı ayrı yazılır ('yada' değil). Edebî metinde "
+                                 "'yâda' (yabancıya) anlamında olabilir."))
 
     # R7: bitişik / ayrı yazım listesi
     for yanlis, dogru in BITISIK_AYRI:
@@ -260,8 +263,11 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
             continue  # büyük harfli metin: harita etiketi/başlık ("KIY DA", "ER TA")
         ou = son_unlu(once)
         parca = f"{once} {simdi_m.group(0)}"
-        # R3: bağlaç de/da "te/ta" yazılmış
-        if simdi in ("te", "ta"):
+        sonraki_karakter = metin[simdi_m.end():simdi_m.end() + 1]
+        # R3: bağlaç de/da "te/ta" yazılmış. "ta" aynı zamanda zarftır ("ta Uşak'tan geldik",
+        # "ta eskiden" — Türk Dili ve Edebiyatı 9'da görüldü); bu yüzden "ta" yalnız
+        # noktalamadan hemen önceyse ("kitap ta,") bağlaç sayılır.
+        if simdi == "te" or (simdi == "ta" and sonraki_karakter in ",.;:!?"):
             tespitler.append(_tespit(blok, "bag_te_ta", 1.0, parca,
                                      "Bağlaç olan 'de/da' her zaman 'd' ile yazılır; 'te/ta' yazılmaz."))
         # R4: ayrı yazılan de/da'da ünlü uyumu
@@ -271,7 +277,8 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
                 tespitler.append(_tespit(blok, "bag_de_da_uyum", 1.0, parca,
                                          f"Bağlaç ünlü uyumuna uyar: '{once} {beklenen}' olmalı."))
         # R5: ayrı yazılan soru eki mi'de ünlü uyumu
-        elif (sm := _SORU_EKI.fullmatch(simdi)) and ou and sm.group(1) != _SORU_UYUMU[ou]:
+        elif ((sm := _SORU_EKI.fullmatch(simdi)) and ou and sm.group(1) != _SORU_UYUMU[ou]
+              and sonraki_karakter not in "-‐"):  # "mü-" satır sonunda bölünmüş kelime
             dogru = "m" + _SORU_UYUMU[ou] + simdi[2:]
             tespitler.append(_tespit(blok, "soru_eki_uyum", 1.0, parca,
                                      f"Soru eki ünlü uyumuna uyar: '{once} {dogru}' olmalı."))
@@ -300,15 +307,34 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
 
     # Kitapta sık tekrar eden "geçersiz" kelimeler: araçların bilmediği terimler. Tekrar
     # sayısı, kelimenin kitabın tamamındaki geçiş sayısıdır.
+    kitap = kitap_bloklari or bloklar
     adaylar = {tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri}
-    tekrar = Counter(k for b in (kitap_bloklari or bloklar)
-                     for k in map(tr_kucuk, _KELIME.findall(b.metin)) if k in adaylar)
-    terimler = {k for k, n in tekrar.items() if n >= TERIM_TEKRAR_ESIGI}
-    if atlananlar is not None:
-        for k in terimler:
-            atlananlar[f"kitaba özel terim (≥{TERIM_TEKRAR_ESIGI} kez)"] += tekrar[k]
-            atlananlar[f"terim: {k}"] = tekrar[k]
-    return [t for t in kelime_tespitleri if tr_kucuk(t.metin_parcasi) not in terimler] + kural_tespitleri
+    # Terimin ek almış hâlleri (Biyoloji 10: villus ×9 → villusları, villuslardaki…): kelime,
+    # kitapta kendisi terim olan (tek başına ≥ eşik kez geçen, araçların tanımadığı) bir
+    # kökle başlıyorsa terim sayılır. Kökün *tek başına* sık geçmesi şartı, sık tekrarlanmayan
+    # bir yazım hatasının ("foksiyon" → "foksiyonun") ek almış hâllerinin terime
+    # dönüşmesini engeller.
+    kitap_kelimeleri = Counter(map(tr_kucuk, (k for b in kitap for k in _KELIME.findall(b.metin))))
+    terimler = set()
+    for aday in adaylar:
+        kok = next((aday[:i] for i in range(len(aday), 4, -1)
+                    if kitap_kelimeleri[aday[:i]] >= TERIM_TEKRAR_ESIGI
+                    and (i == len(aday) or not _gecerli(denetciler[0], aday[:i]))), None)
+        if kok:
+            terimler.add(aday)
+            if atlananlar is not None:
+                atlananlar[f"kitaba özel terim (≥{TERIM_TEKRAR_ESIGI} kez)"] += 1
+                atlananlar[f"terim: {kok}"] = kitap_kelimeleri[kok]
+
+    # Düşmüş harf (K15) sayfa düzeyinde de sayılır: İstiklal Marşı'nda her dize ayrı bir
+    # blok olabildiği için blok düzeyindeki eşik tek başına yetmiyor (Biyoloji 10).
+    kalan = [t for t in kelime_tespitleri if tr_kucuk(t.metin_parcasi) not in terimler]
+    dusmus = [t for t in kalan if t.metin_parcasi.islower() and _harf_dusmus_mu(t.metin_parcasi, denetciler)]
+    sayfa_dusmus = Counter(t.sayfa_no for t in dusmus)
+    okuma_sorunlu = {id(t) for t in dusmus if sayfa_dusmus[t.sayfa_no] >= DUSMUS_HARF_ESIGI}
+    if atlananlar is not None and okuma_sorunlu:
+        atlananlar["PDF okuma sorunu: harf düşmüş (sayfa)"] += len(okuma_sorunlu)
+    return [t for t in kalan if id(t) not in okuma_sorunlu] + kural_tespitleri
 
 
 def main() -> None:

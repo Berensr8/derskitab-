@@ -73,6 +73,27 @@ class IkinciKitapOnlemleriTesti(unittest.TestCase):
         bloklar = [blok("Ali foksiyon kitap okudu.") for _ in range(2)]
         self.assertEqual(len(analiz_et(bloklar, ikisi_de_bilir)), 2)
 
+    def test_terimin_ek_almis_halleri_terim_sayilir(self):
+        # Biyoloji 10: "villus" tek başına sık geçiyor; "villusları" da terim
+        kitap = [blok("Ali villus kitap okudu.") for _ in range(3)] + [blok("Ali villusları okudu.")]
+        sayac = Counter()
+        self.assertEqual(analiz_et(kitap[3:], ikisi_de_bilir, sayac, kitap_bloklari=kitap), [])
+        self.assertEqual(sayac["terim: villus"], 3)
+
+    def test_sik_tekrarlanmayan_yazim_hatasinin_ekli_hali_terim_olmaz(self):
+        # Gerileme testi (Matematik 11): "foksiyon" 1 kez geçiyor; "foksiyonun" hata kalmalı
+        kitap = [blok("Ali foksiyon okudu."), blok("Ali foksiyonun kitap okudu."),
+                 blok("Ali foksiyonu okudu.")]
+        bulunan = {t.metin_parcasi for t in analiz_et(kitap, ikisi_de_bilir)}
+        self.assertEqual(bulunan, {"foksiyon", "foksiyonun", "foksiyonu"})
+
+    def test_harf_dusmus_sayfa_duzeyinde_de_sayilir(self):
+        # Biyoloji 10: İstiklal Marşı'nın her dizesi ayrı blok
+        sozluk = SOZLUK | {"altındaki", "kanında", "kıymetli", "toprak"}
+        denetciler = (lambda k: k in sozluk, lambda k: k in sozluk)
+        dizeler = [blok(m) for m in ("toprak altndaki", "kannda toprak", "kymetli toprak")]
+        self.assertEqual(analiz_et(dizeler, denetciler), [])
+
     def test_harf_dusmus_blok_okuma_sorunu_sayilir(self):
         # Gerçek kitaptan (İstiklal Marşı): font "ı" harfini kaydetmemiş
         sozluk = SOZLUK | {"altındaki", "kanında", "kıymetli", "toprak"}
@@ -109,7 +130,17 @@ class KuralTesti(unittest.TestCase):
             self.assertEqual(kural_denetimi(blok(metin)), [], metin)
 
     def test_r3_bag_te_ta(self):
-        self.assertEqual(turler(kural_denetimi(blok("Ali kitap ta okudu bugün."))), ["bag_te_ta"])
+        self.assertEqual(turler(kural_denetimi(blok("Ali kitap te okudu bugün."))), ["bag_te_ta"])
+        self.assertEqual(turler(kural_denetimi(blok("Ali kitap ta, defter de getirdi."))), ["bag_te_ta"])
+
+    def test_r3_zarf_olan_ta_hata_degil(self):
+        # Gerçek kitaptan (Türk Dili ve Edebiyatı 9, s.108 ve s.236)
+        self.assertEqual(kural_denetimi(blok("Evet, ta Türklüğün göbeğinden, ta Uşak’tan geldik.")), [])
+        self.assertEqual(kural_denetimi(blok("O hâlâ gözlerinde, ta eskiden yaptığı gibi eğlenir.")), [])
+
+    def test_r5_tireyle_bolunmus_kelime_soru_eki_sayilmaz(self):
+        # Gerçek kitaptan (TDE 9, s.119): "bunun mü-" + sonraki satır
+        self.assertEqual(kural_denetimi(blok("Bir hak olduğunun inancı ve bunun mü- dafaası gerekir.")), [])
 
     def test_r4_de_da_unlu_uyumu(self):
         self.assertEqual(turler(kural_denetimi(blok("Ali kitap de okudu bugün."))), ["bag_de_da_uyum"])
@@ -122,7 +153,9 @@ class KuralTesti(unittest.TestCase):
         self.assertEqual(kural_denetimi(blok("Sen bugün okula geldin mi acaba?")), [])
 
     def test_r6_r7_r8(self):
-        self.assertEqual(turler(kural_denetimi(blok("Kalem yada kitap getir."))), ["ya_da"])
+        t = kural_denetimi(blok("Kalem yada kitap getir."))
+        self.assertEqual(turler(t), ["ya_da"])
+        self.assertEqual(t[0].guven_skoru, 0.5)  # türküde "yâda" (yabancıya) olabilir
         self.assertEqual(turler(kural_denetimi(blok("Hiç bir şey olmadı."))), ["bitisik_ayri"])
         self.assertEqual(turler(kural_denetimi(blok("Herşey yolunda gitti."))), ["bitisik_ayri"])
         self.assertEqual(turler(kural_denetimi(blok("Ali ve ve Ayşe geldi."))), ["kelime_tekrari"])

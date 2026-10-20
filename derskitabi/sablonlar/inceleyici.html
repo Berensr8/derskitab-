@@ -8,7 +8,7 @@
   :root {
     --zemin: #f4f5f7; --kart: #ffffff; --cizgi: #dde1e6; --yazi: #1d2330; --soluk: #5d6675;
     --paragraf: #1f9d55; --kisa: #2f6fdb; --bozuk: #d63c3c; --simge: #8a9099;
-    --tespit: #f08c00; --cumle1: #ffd84d; --cumle2: #7cd3ff; --vurgu: #6c47ff;
+    --tespit: #f08c00; --cumle1: #ffd84d; --cumle2: #7cd3ff; --vurgu: #6c47ff; --celiski: #9b2fae;
   }
   * { box-sizing: border-box; }
   body { margin: 0; font: 14px/1.5 system-ui, "Segoe UI", Arial, sans-serif; color: var(--yazi);
@@ -111,6 +111,26 @@
   .kelimeIz { fill-opacity: .08; stroke-width: 1.4; pointer-events: none; }
   .kelimeIz.parlak { stroke-width: 3; fill-opacity: .3; }
   .akis { margin: 6px 0 0 18px; padding: 0; } .akis li { margin: 3px 0; }
+  .rozet.celiski { background: var(--celiski); }
+  .celiskiKutu { fill: var(--celiski); fill-opacity: .16; stroke: var(--celiski); stroke-width: 1.2;
+       stroke-dasharray: 4 2; cursor: pointer; }
+  .celiskiKutu:hover, .celiskiKutu.parlak { fill-opacity: .32; stroke-width: 2.2; }
+  .celiskiKart { border-color: var(--celiski); background: #fbf2fd; }
+  .ikiCumle { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 8px 0; }
+  .alinti { border-left: 4px solid var(--celiski); background: var(--kart); border-radius: 6px;
+       padding: 6px 9px; font-size: 13px; }
+  .alinti .kucuk { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 2px; }
+  .alinti button { border: 1px solid var(--celiski); color: var(--celiski); background: none; border-radius: 6px;
+       padding: 1px 8px; cursor: pointer; font: inherit; font-size: 12px; }
+  .oy { display: grid; grid-template-columns: 130px 1fr; gap: 2px 8px; font-size: 13px; margin: 4px 0; }
+  .oy .gerekce { grid-column: 2; color: var(--soluk); font-size: 12.5px; }
+  .karsi { display: grid; grid-template-columns: 44px 1fr auto; gap: 6px; align-items: start; font-size: 12.5px;
+       padding: 5px 4px; border-top: 1px solid var(--cizgi); }
+  .karsi .bz { font-family: ui-monospace, Consolas, monospace; color: var(--soluk); }
+  .etiket { border-radius: 999px; padding: 0 7px; font-size: 11.5px; white-space: nowrap; }
+  .etiket.uyumlu { background: #e4f4e9; } .etiket.ilgisiz { background: #eceef1; }
+  .etiket.celiski { background: #f3dcf7; color: var(--celiski); font-weight: 600; }
+  .etiket.elendi { background: #fff0b8; }
 </style>
 </head>
 <body>
@@ -193,6 +213,8 @@ function ustBilgi() {
     el("span", { class: "cip" }, "Bezirci-Yılmaz ", el("b", {}, sayi(o.bezirci_yilmaz)), " · ", o.bezirci_yilmaz_duzeyi),
     el("span", { class: "cip" }, "Okunabilirlik tespiti: ", el("b", {}, VERI.toplam_tespit), " paragraf (tüm kitapta)"),
     el("span", { class: "cip" }, "Yazım tespiti: ", el("b", {}, VERI.toplam_yazim ?? 0), " (gösterilen sayfalarda)"),
+    VERI.tutarlilik_var ? el("span", { class: "cip" }, "Bilgi tutarsızlığı: ", el("b", {}, VERI.toplam_tutarlilik), " (gösterilen sayfalara dokunan)")
+                        : el("span", { class: "cip", title: "Önce tutarlılık kriteri çalıştırılmalı (yerel modeller)" }, "Bilgi tutarsızlığı: çalıştırılmadı"),
   );
 }
 
@@ -209,20 +231,25 @@ function lejant() {
     el("span", { class: "kare", style: "border:2px dashed var(--tespit)" }), "Okunabilirlik tespiti"));
   kutu.append(el("label", { style: "cursor:default" }, el("span", { style: "width:13px" }),
     el("span", { class: "kare", style: "border-bottom:3px solid var(--bozuk);border-radius:0" }), "Yazım tespiti"));
+  if (VERI.tutarlilik_var) kutu.append(el("label", { style: "cursor:default" }, el("span", { style: "width:13px" }),
+    el("span", { class: "kare", style: "background:#f3dcf7;border:1.5px dashed var(--celiski)" }), "Bilgi tutarsızlığı"));
 }
 const yazimSayisi = s => s.bloklar.reduce((n, b) => n + (b.yazim?.length || 0), 0);
+const celiskiler = b => (b.tutarlilik || []).filter(k => k.guven);
+const celiskiSayisi = s => s.bloklar.reduce((n, b) => n + celiskiler(b).length, 0);
 function sayfaListesi() {
   const kutu = document.getElementById("sayfaListesi");
   kutu.replaceChildren();
   const yalniz = document.getElementById("yalnizTespitli").checked;
   VERI.sayfalar.forEach((s, i) => {
-    const tespit = s.bloklar.filter(b => b.tespit).length, yz = yazimSayisi(s);
-    if (yalniz && !tespit && !yz) return;
+    const tespit = s.bloklar.filter(b => b.tespit).length, yz = yazimSayisi(s), cs = celiskiSayisi(s);
+    if (yalniz && !tespit && !yz && !cs) return;
     kutu.append(el("button", { class: i === durum.sayfa ? "secili" : "", onclick: () => sayfayaGit(i) },
       el("span", {}, `s. ${s.no}`, s.basili && s.basili !== String(s.no) ? el("span", { class: "kucuk" }, ` (kitap ${s.basili})`) : null),
       el("span", { class: "rozetler" },
         tespit ? el("span", { class: "rozet", title: "okunabilirlik tespiti" }, tespit) : null,
-        yz ? el("span", { class: "rozet yazim", title: "yazım tespiti" }, yz) : null)));
+        yz ? el("span", { class: "rozet yazim", title: "yazım tespiti" }, yz) : null,
+        cs ? el("span", { class: "rozet celiski", title: "bilgi tutarsızlığı" }, cs) : null)));
   });
 }
 
@@ -278,6 +305,15 @@ function sayfaCiz() {
     k.append(svg("rect", { class: "yazimCizgi", x: x0 - 1, y: y1 - 0.4, width: x1 - x0 + 2,
       height: 1.6, opacity: y.guven >= 1 ? 1 : 0.55 }));
   })));
+  // Bilgi tutarsızlığı: çelişen cümle mor kesikli kutuyla; tıklanınca karşılaştırma açılır
+  s.bloklar.forEach((b, bi) => celiskiler(b).forEach((c, ci) => (c.kutular || []).forEach(([x0, y0, x1, y1]) => {
+    const r = svg("rect", { class: "celiskiKutu", "data-celiski": `${bi}-${ci}`, x: x0 - 2, y: y0 - 1.5,
+      width: x1 - x0 + 4, height: y1 - y0 + 3, rx: 2 });
+    r.append(svg("title"));
+    r.firstChild.textContent = `Bilgi tutarsızlığı: s. ${c.karsi.basili ?? c.karsi.sayfa_no} ile (tıklayın)`;
+    r.addEventListener("click", e => { e.stopPropagation(); durum.sekme = "tutarlilik"; blokSec(bi); });
+    k.append(r);
+  })));
   kutu.replaceChildren(k);
   document.getElementById("olcek").textContent = `${Math.round(durum.olcek * 100)}%`;
   blokListesi();
@@ -292,6 +328,7 @@ function blokListesi() {
     el("b", {}, `b${b.rapor.blok_no}`),
     b.tespit ? el("span", { class: "rozet" }, "!") : null,
     b.yazim?.length ? el("span", { class: "rozet yazim" }, b.yazim.length) : null,
+    celiskiler(b).length ? el("span", { class: "rozet celiski" }, celiskiler(b).length) : null,
     el("span", { class: "m" }, b.rapor.metin))));
 }
 
@@ -311,7 +348,7 @@ function blokSec(i, odakParca = null) {
 function turAciklamasi(r) {
   const n = kelimeSayisi(r.metin);
   return {
-    paragraf: `${n} kelimeden oluşuyor (5 ve üzeri) → paragraf sayıldı. Okunabilirlik ve yazım denetimine girer; ileride bilgi tutarlılığı kontrolüne de girecek.`,
+    paragraf: `${n} kelimeden oluşuyor (5 ve üzeri) → paragraf sayıldı. Okunabilirlik, yazım ve bilgi tutarlılığı denetimlerine girer.`,
     kisa: `${n} kelime (5'ten az) → kısa metin sayıldı: başlık, harita etiketi, görsel altyazısı gibi. Okunabilirlik hesabına girmez, yazım denetimine girer (R3–R5 kuralları hariç).`,
     bozuk: "Metinde '�' karakteri var: PDF'in fontu Türkçe harfleri (ş, ı, ğ, İ) bozuk kodlamış, metin doğru okunamıyor. Hata kitapta değil PDF'te; sahte hata üretmemek için hiçbir kriter analiz etmez.",
     simge: "Hiç harf veya rakam içermiyor (harita simgesi gibi) → analiz edilmez.",
@@ -329,7 +366,8 @@ function ayrinti() {
         el("ol", { class: "akis" },
           el("li", {}, el("b", {}, "PDF okuma: "), "sayfa metin bloklarına ayrılır; her blok türüne göre renklenir."),
           el("li", {}, el("b", {}, "Okunabilirlik: "), "paragrafların cümle ve hece uzunluğundan üç formülle puan hesaplanır; kitabın en zor %10'u işaretlenir (turuncu kesikli çerçeve)."),
-          el("li", {}, el("b", {}, "Yazım: "), "her kelime iki Türkçe morfoloji aracına (Starlang, Zemberek) sorulur; tanınmayanlar sahte hata önlemlerinden geçer, kalanlar hata sayılır. Ayrıca TDK kuralları (de/da, mi, noktalama…) denetlenir (kırmızı çizgi)."))));
+          el("li", {}, el("b", {}, "Yazım: "), "her kelime iki Türkçe morfoloji aracına (Starlang, Zemberek) sorulur; tanınmayanlar sahte hata önlemlerinden geçer, kalanlar hata sayılır. Ayrıca TDK kuralları (de/da, mi, noktalama…) denetlenir (kırmızı çizgi)."),
+          el("li", {}, el("b", {}, "Bilgi tutarlılığı: "), "kitaptaki bilgi cümleleri anlamca en benzer cümlelerle eşleştirilir (bge-m3); yerel bir dil modeli (gemma4) çelişip çelişmediğine bakar, şüphelileri iki model gerekçesiyle yeniden değerlendirir (mor kesikli kutu)."))));
     return;
   }
   const b = sayfa().bloklar[durum.blok], r = b.rapor, t = TURLER[r.tur];
@@ -351,12 +389,15 @@ function ayrinti() {
     y.guven < 1 ? el("div", { class: "kucuk", style: "margin-top:6px" },
       "Düşük güven: araçlardan yalnız biri hata buldu ya da durum tasarım tercihi olabilir; kontrol edin.") : null)));
 
-  if (b.yazim_izi) {
+  const tutSekmesi = VERI.tutarlilik_var && b.tutarlilik;
+  if (b.yazim_izi || tutSekmesi) {
     const sekme = (ad, etiket) => el("button", { class: durum.sekme === ad ? "secili" : "",
       onclick: () => { durum.sekme = ad; sayfaCiz(); ayrinti(); } }, etiket);
     parcalar.push(el("div", { class: "sekmeler" }, sekme("okunabilirlik", "Okunabilirlik"),
-      sekme("yazim", "Yazım denetimi" + (b.yazim.length ? ` (${b.yazim.length})` : ""))));
-    if (durum.sekme === "yazim") { parcalar.push(...yazimPaneli(b)); kutu.replaceChildren(...parcalar); return; }
+      b.yazim_izi ? sekme("yazim", "Yazım denetimi" + (b.yazim.length ? ` (${b.yazim.length})` : "")) : null,
+      tutSekmesi ? sekme("tutarlilik", "Tutarlılık" + (celiskiler(b).length ? ` (${celiskiler(b).length})` : "")) : null));
+    if (durum.sekme === "yazim" && b.yazim_izi) { parcalar.push(...yazimPaneli(b)); kutu.replaceChildren(...parcalar); return; }
+    if (durum.sekme === "tutarlilik" && tutSekmesi) { parcalar.push(...tutarlilikPaneli(b)); kutu.replaceChildren(...parcalar); return; }
   }
   if (r.cumleler.length) {
     parcalar.push(el("h2", {}, `Cümleler (${r.cumleler.length})`),
@@ -487,6 +528,77 @@ function yazimPaneli(b) {
   out.push(el("h2", {}, "Sonuç"), b.yazim.length
     ? el("div", { class: "kucuk" }, `Bu blokta ${b.yazim.length} yazım tespiti raporlandı (yukarıdaki kırmızı kartlar).`)
     : el("div", { class: "kart" }, el("span", { class: "tamam" }, "✓ Bu blokta yazım hatası bulunmadı.")));
+  return out;
+}
+
+// --- bilgi tutarlılığı (adım adım) ---
+const KARAR_AD = { celiski: "çelişki", uyumlu: "uyumlu", ilgisiz: "ilgisiz", "?": "cevap yok" };
+const sayfaSirasi = no => VERI.sayfalar.findIndex(s => s.no === no);
+const sy = (no, basili) => `s. ${basili ?? no}`;
+
+function karsiyaGit(k) {  // çelişkinin diğer tarafına geç: sayfayı aç, bloğu seç, tutarlılık sekmesi
+  const i = sayfaSirasi(k.karsi.sayfa_no);
+  if (i < 0) return;
+  sayfayaGit(i);
+  const bi = sayfa().bloklar.findIndex(b => b.rapor.blok_no === k.karsi.blok_no);
+  durum.sekme = "tutarlilik";
+  if (bi >= 0) blokSec(bi);
+}
+
+function oySatiri(ad, oy) {
+  if (!oy) return [];
+  return [el("span", {}, ad), el("span", { class: "etiket " + (oy.karar === "celiski" ? "celiski" : oy.karar) }, KARAR_AD[oy.karar] ?? oy.karar),
+          oy.aciklama ? el("span", { class: "gerekce" }, oy.aciklama) : null].filter(Boolean);
+}
+
+function celiskiKarti(b, k) {
+  const ikisi = k.ikinci?.karar === "celiski";
+  const varMi = sayfaSirasi(k.karsi.sayfa_no) >= 0;
+  return el("div", { class: "kart celiskiKart" },
+    el("b", {}, `⇄ Olası bilgi tutarsızlığı (güven ${sayi(k.guven, 1)})`),
+    el("div", { class: "ikiCumle" },
+      el("div", { class: "alinti" }, el("div", { class: "kucuk" }, el("span", {}, `Bu blok · ${sy(sayfa().no, sayfa().basili)}`)), k.ben),
+      el("div", { class: "alinti" }, el("div", { class: "kucuk" }, el("span", {}, sy(k.karsi.sayfa_no, k.karsi.basili)),
+        varMi ? el("button", { onclick: () => karsiyaGit(k) }, "O sayfaya git →")
+              : el("span", {}, "(bu incelemeye alınmamış sayfa)")), k.karsi.metin)),
+    el("div", { class: "adimBaslik" }, el("span", { class: "adimNo" }, "1"), "Neden karşılaştırıldı?"),
+    el("div", { class: "kucuk" }, `İki cümle anlamca benzer bulundu (bge-m3 benzerliği ${sayi(k.benzerlik, 2)}). Sistem her cümleyi yalnız kendisine en benzer 3 cümleyle karşılaştırır; böylece tüm kitabı her şeyle karşılaştırmak gerekmez.`),
+    el("div", { class: "adimBaslik", style: "margin-top:8px" }, el("span", { class: "adimNo" }, "2"), "Hızlı ön eleme"),
+    el("div", { class: "oy" }, ...oySatiri("gemma4", { karar: k.hizli })),
+    el("div", { class: "adimBaslik", style: "margin-top:8px" }, el("span", { class: "adimNo" }, "3"), "İki model gerekçeli karar verdi (cümlelerin geçtiği yerle birlikte)"),
+    el("div", { class: "oy" }, ...oySatiri("gemma4 (hakem)", k.hakem), ...oySatiri("Turkish-Gemma (ikinci görüş)", k.ikinci)),
+    el("div", { style: "margin-top:6px" }, "→ ", ikisi
+      ? "İki model de çelişki dedi: güven 1,0."
+      : "Yalnız gemma4 çelişki dedi: güven 0,5 — bir insanın bakması gerekir."),
+    el("div", { class: "kucuk", style: "margin-top:6px" }, "Not: Sistem hangi cümlenin doğru olduğuna karar vermez; yalnız iki ifadenin birlikte doğru olamayacağını söyler."));
+}
+
+function tutarlilikPaneli(b) {
+  const tumu = b.tutarlilik, tespit = tumu.filter(k => k.guven), diger = tumu.filter(k => !k.guven);
+  const out = [el("div", { class: "kart kucuk" },
+    "Bilgi tutarlılığı, bu bloğun bilgi cümlelerini kitabın geri kalanında anlamca en yakın cümlelerle karşılaştırır. ",
+    "Önce gemma4 hızlıca \"çelişki mi?\" diye bakar; şüphelileri gemma4 ve Turkish-Gemma cümlelerin geçtiği yeri de görerek gerekçeli değerlendirir. ",
+    "Turkish-Gemma tek başına tespit üretemez; yalnız güveni artırır.")];
+  tespit.forEach(k => out.push(celiskiKarti(b, k)));
+  if (!tumu.length) {
+    out.push(el("div", { class: "kart" }, "Bu bloğun cümleleri için yeterince benzer bir cümle bulunmadı (aday yok) ya da blokta bilgi cümlesi yok (soru, yönerge, kısa cümle, karakter konuşması)."));
+    return out;
+  }
+  if (!tespit.length) out.push(el("div", { class: "kart" }, el("span", { class: "tamam" }, "✓ Bu blokta bilgi tutarsızlığı bulunmadı.")));
+  if (diger.length) {
+    out.push(el("h2", {}, `Karşılaştırılan diğer cümleler (${diger.length})`),
+      el("div", { class: "kucuk" }, "Soldaki sayı anlam benzerliği (0–1). Sağdaki etiket kararı gösterir; \"elendi\": hızlı turda şüphelenildi ama gerekçeli değerlendirmede çelişki görülmedi."));
+    diger.forEach(k => {
+      const elendi = k.hizli === "celiski";
+      const satir = el("div", { class: "karsi" },
+        el("span", { class: "bz" }, sayi(k.benzerlik, 2)),
+        el("div", {}, el("div", { class: "kucuk" }, `Bu blok: ${k.ben.slice(0, 90)}${k.ben.length > 90 ? "…" : ""}`),
+          el("div", {}, `${sy(k.karsi.sayfa_no, k.karsi.basili)}: ${k.karsi.metin}`),
+          elendi && k.hakem?.aciklama ? el("div", { class: "kucuk", style: "margin-top:3px" }, "gemma4: ", k.hakem.aciklama) : null),
+        el("span", { class: "etiket " + (elendi ? "elendi" : k.hizli) }, elendi ? "elendi" : KARAR_AD[k.hizli] ?? k.hizli));
+      out.push(satir);
+    });
+  }
   return out;
 }
 

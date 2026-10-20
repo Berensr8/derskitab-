@@ -7,6 +7,10 @@ Girdi : PDF dosyası
     adımları ve varsa okunabilirlik tespiti.
   - Yazım denetimi adım adım: PDF okuma kontrolü, her kelimede iki aracın kararı ve
     atlanma sebebi (renkli), TDK kurallarının bu blokta sonucu.
+  - Bilgi tutarsızlığı: çelişen iki cümle (mor), karşı sayfaya geçiş; sistemin üç adımı
+    (bge-m3 benzerliği, gemma4 hızlı kararı, iki modelin açıklamalı kararı) ve bloğun
+    karşılaştırıldığı diğer cümleler. Veri <kitap>_tutarlilik_adaylar.json'dan okunur
+    (tutarlılık önceden çalıştırılmalı; yoksa sekme görünmez).
   - Yan panelde sayfadaki tüm bloklar listelenir (küçük kutulara listeden ulaşılır).
 
 Kullanım:
@@ -25,7 +29,8 @@ from pathlib import Path
 import pymupdf
 
 from .gorsellestir import _ham_kelimeler, blok_raporu, cumle_dikdortgenleri, sayfa_araligi_coz
-from .kriterler import okunabilirlik, yazim
+from .kriterler.okunabilirlik import cumlelere_bol
+from .kriterler import okunabilirlik, tutarlilik, yazim
 from .model import Blok, Tespit
 from .pdf_cikarma import _OKUMA_AYARLARI, bloklari_cikar
 
@@ -126,8 +131,47 @@ def yazim_izi(blok: Blok, blok_tespitleri: list[Tespit], baglam: dict, ham) -> d
     }
 
 
+TUTARLILIK_BLOK_SINIRI = 15  # bir blokta gösterilen en fazla karşılaştırma (dosya büyümesin)
+
+
+def tutarlilik_kaydi_yukle(pdf_yolu) -> list[dict] | None:
+    """tutarlilik.py'nin yazdığı aday kaydı (her aday çiftin bütün kararları); yoksa None."""
+    yol = Path(pdf_yolu).with_name(Path(pdf_yolu).stem + "_tutarlilik_adaylar.json")
+    return json.loads(yol.read_text(encoding="utf-8")) if yol.exists() else None
+
+
+def tutarlilik_bloklari(kayit: list[dict]) -> dict:
+    """{(sayfa, blok): [karşılaştırma, …]} — her aday çift iki tarafının bloğunda da görünür.
+    Sıra: tespitler (güvene göre), sonra hızlı turun şüphelendikleri, sonra benzerlik."""
+    dizin = defaultdict(list)
+    for k in kayit:
+        for ben, karsi in (("a", "b"), ("b", "a")):
+            dizin[(k[ben]["sayfa_no"], k[ben]["blok_no"])].append({
+                "ben": k[ben]["metin"],
+                "karsi": {"metin": k[karsi]["metin"], "sayfa_no": k[karsi]["sayfa_no"],
+                          "blok_no": k[karsi]["blok_no"], "basili": k[karsi].get("basili_sayfa_no")},
+                "benzerlik": k["benzerlik"], "hizli": k["hizli"],
+                "hakem": k.get("hakem"), "ikinci": k.get("ikinci_gorus"), "guven": k.get("guven"),
+            })
+    for liste in dizin.values():
+        liste.sort(key=lambda x: (-(x["guven"] or 0), x["hizli"] != "celiski", -x["benzerlik"]))
+    return dizin
+
+
+def _tutarlilik_verisi(b: Blok, karsilastirmalar: list[dict], cumle_kutulari) -> list[dict]:
+    cumleler = cumlelere_bol(b.metin)
+    sonuc = []
+    for k in karsilastirmalar[:TUTARLILIK_BLOK_SINIRI]:
+        d = dict(k)
+        if k["guven"] and cumle_kutulari and k["ben"] in cumleler:  # çelişkili cümle sayfada vurgulanır
+            d["kutular"] = satirlari_birlestir(cumle_kutulari[cumleler.index(k["ben"])])
+        sonuc.append(d)
+    return sonuc
+
+
 def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict,
-                 yazim_tespitleri: dict | None = None, baglam: dict | None = None) -> dict:
+                 yazim_tespitleri: dict | None = None, baglam: dict | None = None,
+                 tutarlilik: dict | None = None) -> dict:
     goruntu = sayfa.get_pixmap(dpi=GORUNTU_DPI).tobytes("jpeg", jpg_quality=80)
     kelimeler = sayfa.get_text("words", flags=_OKUMA_AYARLARI)
     yazim_tespitleri = yazim_tespitleri or {}
@@ -143,6 +187,8 @@ def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict,
             "tespit": _tespit_verisi(tespitler.get((b.sayfa_no, b.blok_no))),
             "yazim": [_yazim_verisi(t, ham) for t in yazim_listesi],
             "yazim_izi": yazim_izi(b, yazim_listesi, baglam, ham) if baglam else None,
+            "tutarlilik": (_tutarlilik_verisi(b, tutarlilik.get((b.sayfa_no, b.blok_no), []), cumleler)
+                           if tutarlilik is not None and b.tur == "paragraf" else None),
         })
     return {
         "no": sayfa.number + 1,
@@ -157,9 +203,11 @@ def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict,
 def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = None,
                           hedef_sinif: int | None = None, bloklar: list[Blok] | None = None,
                           analiz: tuple | None = None,
-                          yazim_tespitleri: list[Tespit] | None = None) -> None:
+                          yazim_tespitleri: list[Tespit] | None = None,
+                          tutarlilik_kaydi: list[dict] | None = None) -> None:
     """bloklar, analiz (ozet, tespitler) ve yazım tespitleri önceden hesaplandıysa
-    verilebilir (demo.py); verilmezse burada hesaplanır."""
+    verilebilir (demo.py); verilmezse burada hesaplanır. Tutarlılık burada hesaplanmaz
+    (yerel modeller gerekir, uzun sürer): verilmezse PDF'in yanındaki aday kaydı okunur."""
     if bloklar is None:
         bloklar = bloklari_cikar(pdf_yolu)
     if analiz is None:
@@ -181,9 +229,12 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         for t in yazim_tespitleri:
             yazim_bloklari[(t.sayfa_no, t.blok_no)].append(t)
         baglam = yazim_baglami(bloklar)
+        if tutarlilik_kaydi is None:
+            tutarlilik_kaydi = tutarlilik_kaydi_yukle(pdf_yolu)
+        tut_bloklari = tutarlilik_bloklari(tutarlilik_kaydi) if tutarlilik_kaydi is not None else None
         sayfa_listesi = [
             sayfa_verisi(belge[no - 1], [b for b in bloklar if b.sayfa_no == no], tespitler,
-                         yazim_bloklari, baglam)
+                         yazim_bloklari, baglam, tut_bloklari)
             for no in secili
         ]
 
@@ -193,6 +244,10 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         "toplam_tespit": len(tespit_listesi),
         "toplam_yazim": sum(len(v) for k, v in yazim_bloklari.items() if k[0] in set(secili)),
         "min_cumle": okunabilirlik.MIN_CUMLE,
+        "tutarlilik_var": tutarlilik_kaydi is not None,
+        "toplam_tutarlilik": sum(1 for k in (tutarlilik_kaydi or []) if k.get("guven")
+                                 and (k["a"]["sayfa_no"] in set(secili) or k["b"]["sayfa_no"] in set(secili))),
+        "tutarlilik_esikleri": list(tutarlilik.KOMSU_ESIKLERI),
         "yazim_esikleri": {"okuma_orani": yazim.OKUMA_SORUNU_ORANI, "blok_min": yazim.BLOK_MIN_KELIME,
                            "dusmus_harf": yazim.DUSMUS_HARF_ESIGI, "terim": yazim.TERIM_TEKRAR_ESIGI},
         "sayfalar": sayfa_listesi,

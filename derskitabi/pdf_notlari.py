@@ -16,7 +16,6 @@ Kullanım:
 """
 
 import argparse
-import json
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -24,12 +23,11 @@ from pathlib import Path
 import pymupdf
 
 from .gorsellestir import _ham_kelimeler, cumle_dikdortgenleri
-from .inceleyici import parca_kutulari, satirlari_birlestir, tutarlilik_kaydi_yukle
-from .kayit import bloklari_yukle, tespitleri_yukle
-from .kriterler import okunabilirlik, yazim
+from .inceleyici import parca_kutulari, satirlari_birlestir
 from .kriterler.okunabilirlik import cumlelere_bol
 from .model import Blok, Tespit
-from .pdf_cikarma import _OKUMA_AYARLARI, bloklari_cikar
+from .pdf_cikarma import _OKUMA_AYARLARI
+from .sonuclar import sonuclari_topla
 
 YAZAR = "Ders Kitabı İnceleme Sistemi"
 GOSTERIM_ESIGI = 0.5  # inceleyicideki gibi: altındakiler "düşük öncelik" (yazım hakemi, K25)
@@ -48,9 +46,13 @@ def konum_metni(sayfa_no: int, basili: str | None) -> str:
     return f"PDF s. {sayfa_no}" + (f" / kitap s. {basili}" if basili else "")
 
 
+def oncelik(g: float) -> str:
+    """Güven skorundan öncelik: yüksek (≥0,75), orta (≥0,5), düşük (yazım hakemi "muhtemelen doğru")."""
+    return "yüksek" if g >= 0.75 else "orta" if g >= GOSTERIM_ESIGI else "düşük"
+
+
 def guven_metni(g: float) -> str:
-    duzey = "yüksek" if g >= 0.75 else "orta" if g >= GOSTERIM_ESIGI else "düşük"
-    return f"{duzey} ({str(round(g, 2)).replace('.', ',')})"
+    return f"{oncelik(g)} ({str(round(g, 2)).replace('.', ',')})"
 
 
 def _kisalt(metin: str, n: int = 45) -> str:
@@ -300,35 +302,14 @@ def notlu_pdf_olustur(pdf_yolu, cikti_yolu, bloklar: list[Blok] | None = None, h
                       tutarlilik_tespitleri: list[Tespit] | None = None, tutarlilik_kaydi: list[dict] | None = None,
                       hakem: bool = False, dusuk_guven: bool = False, kapsam: str | None = None,
                       ilerleme=None) -> dict:
-    """Verilmeyen sonuçlar burada hesaplanır (yazım, okunabilirlik) ya da PDF'in yanındaki dosyadan
-    okunur (tutarlılık — yerel modeller gerekir, uzun sürer; dosya yoksa "çalıştırılmadı")."""
+    """Verilmeyen sonuçlar sonuclar.sonuclari_topla() ile hesaplanır ya da dosyadan okunur."""
     yaz = ilerleme or (lambda _m: None)
-    pdf_yolu = Path(pdf_yolu)
-    kok = pdf_yolu.with_suffix("")
-    if bloklar is None:
-        kayitli = Path(f"{kok}_bloklar.json")
-        bloklar = bloklari_yukle(kayitli) if kayitli.exists() else bloklari_cikar(pdf_yolu)
-    if okunabilirlik_tespitleri is None:
-        try:
-            okunabilirlik_tespitleri = okunabilirlik.analiz_et(bloklar, hedef_sinif)[1]
-        except ValueError:  # skorlanabilen paragraf yok
-            okunabilirlik_tespitleri = []
-    if yazim_tespitleri is None:
-        yaz("Yazım denetimi…")
-        yazim_tespitleri = yazim.analiz_et(bloklar)
-        if hakem:
-            from .kriterler.yazim_hakem import hakemle
-            onbellek_yolu = pdf_yolu.with_name("yazim_hakem_onbellek.json")
-            onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
-            try:
-                yazim_tespitleri = hakemle(yazim_tespitleri, bloklar, onbellek=onbellek, ilerleme=yaz)
-            finally:
-                onbellek_yolu.write_text(json.dumps(onbellek, ensure_ascii=False), encoding="utf-8")
-    if tutarlilik_tespitleri is None:
-        yol = Path(f"{kok}_tutarlilik_tespitler.json")
-        tutarlilik_tespitleri = tespitleri_yukle(yol) if yol.exists() else None
-    if tutarlilik_kaydi is None and tutarlilik_tespitleri:
-        tutarlilik_kaydi = tutarlilik_kaydi_yukle(pdf_yolu)
+    okunabilirlik_analizi = (None, okunabilirlik_tespitleri) if okunabilirlik_tespitleri is not None else None
+    s = sonuclari_topla(pdf_yolu, bloklar, hedef_sinif, yazim_tespitleri, okunabilirlik_analizi,
+                        tutarlilik_tespitleri, tutarlilik_kaydi, hakem, ilerleme)
+    bloklar, tutarlilik_kaydi = s.bloklar, s.tutarlilik_kaydi
+    yazim_tespitleri, okunabilirlik_tespitleri, tutarlilik_tespitleri = (
+        s.tespitler["yazim"], s.tespitler["okunabilirlik"], s.tespitler["tutarlilik"])
 
     yaz("Notlar PDF'e işleniyor…")
     with pymupdf.open(pdf_yolu) as belge:

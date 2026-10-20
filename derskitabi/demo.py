@@ -1,5 +1,6 @@
 """Sunum başlatıcısı: PDF seç -> tüm adımları çalıştır -> inceleme sayfasını tarayıcıda aç;
-ayrıca tespitler kitabın PDF'ine yorum notu olarak işlenir (notlu PDF, K26).
+ayrıca tespitler kitabın PDF'ine yorum notu olarak işlenir (notlu PDF, K26) ve editörün
+karar vereceği Excel raporu yazılır (K27).
 
 DEMO.bat'a çift tıklanarak (ya da PDF DEMO.bat'ın üzerine sürüklenerek) çalıştırılır.
 Çıktılar veri/demo/<kitap adı>/ klasörüne yazılır; seçilen PDF'e dokunulmaz.
@@ -24,6 +25,8 @@ from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet, tespitleri_y
 from .kriterler import okunabilirlik, tutarlilik, yazim, yazim_hakem
 from .model import BLOK_TURLERI
 from .pdf_notlari import KRITER_ADLARI, notlu_pdf_olustur
+from .rapor import rapor_olustur
+from .sonuclar import KitapSonuclari
 from .pdf_cikarma import MetinYokHatasi, bloklari_cikar
 
 PROJE_KOKU = Path(__file__).resolve().parent.parent
@@ -248,21 +251,29 @@ def main() -> None:
                           yazim_tespitleri=yazim_tespitleri, tutarlilik_kaydi=tutarlilik_kaydi)
     print(f"  {html} ({html.stat().st_size / 1e6:.1f} MB, {time.perf_counter() - t:.1f} sn)")
 
-    # 6. Notlu PDF (sayfa seçildiyse yalnız o sayfaların tespitleri; kitabın sayfa düzeni değişmez)
-    t = adim(6, "Tespitler kitabın PDF'ine yorum notu olarak işleniyor")
+    # 6. Notlu PDF + Excel raporu (sayfa seçildiyse yalnız o sayfaların tespitleri; kitabın sayfa düzeni değişmez)
+    t = adim(6, "Notlu PDF ve Excel raporu hazırlanıyor")
     sec = (lambda liste: [x for x in liste if x.sayfa_no in secili]) if secili else (lambda liste: liste)
+    sonuclar = KitapSonuclari(bloklar, {
+        "yazim": sec(yazim_tespitleri), "okunabilirlik": sec(analiz[1]),
+        "tutarlilik": sec(tutarlilik_tespitleri) if tutarlilik_tespitleri is not None else None},
+        analiz[0], tutarlilik_kaydi)
+    kapsam = f"Yalnız seçili {len(sayfalar)} sayfa incelendi." if sayfalar else None
     notlu = klasor / f"{pdf.stem}_notlu.pdf"
     sonuc = notlu_pdf_olustur(
-        pdf, notlu, bloklar=bloklar, yazim_tespitleri=sec(yazim_tespitleri),
-        okunabilirlik_tespitleri=sec(analiz[1]),
-        tutarlilik_tespitleri=sec(tutarlilik_tespitleri) if tutarlilik_tespitleri is not None else None,
-        tutarlilik_kaydi=tutarlilik_kaydi,
-        kapsam=f"Yalnız seçili {len(sayfalar)} sayfa incelendi." if sayfalar else None)
-    print("  " + " · ".join(f"{ad}: {sonuc[k]}" for k, ad in KRITER_ADLARI.items()))
+        pdf, notlu, bloklar=bloklar, yazim_tespitleri=sonuclar.tespitler["yazim"],
+        okunabilirlik_tespitleri=sonuclar.tespitler["okunabilirlik"],
+        tutarlilik_tespitleri=sonuclar.tespitler["tutarlilik"], tutarlilik_kaydi=tutarlilik_kaydi, kapsam=kapsam)
+    print("  Notlu PDF: " + " · ".join(f"{ad}: {sonuc[k]}" for k, ad in KRITER_ADLARI.items()))
     if sonuc["dusuk_atlanan"]:
-        print(f"  Düşük öncelikli {sonuc['dusuk_atlanan']} yazım tespiti eklenmedi.")
-    print(f"  {notlu} ({time.perf_counter() - t:.1f} sn)")
+        print(f"  Düşük öncelikli {sonuc['dusuk_atlanan']} yazım tespiti PDF'e eklenmedi (raporda var).")
+    print(f"  {notlu}")
     print("  Herhangi bir PDF okuyucuda açın: notlar Yorumlar panelinde, liste Yer İmleri panelinde.")
+    excel = klasor / f"{pdf.stem}_rapor.xlsx"
+    rapor_olustur(excel, sonuclar, pdf.name, sayfa_sayisi, kapsam)
+    print(f"  Excel raporu: {excel}")
+    print("  Editör sarı 'Editör kararı' sütununu doldurur; özet sayfası isabet oranını kendisi hesaplar.")
+    print(f"  ({time.perf_counter() - t:.1f} sn)")
 
     print("\nTarayıcıda açılıyor. Bir kutuya tıklayın: ayrıntılar sağda görünür.")
     webbrowser.open(html.as_uri())

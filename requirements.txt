@@ -3,3 +3,4 @@ pymupdf==1.28.2  # K5: PDF'ten blok + bbox çıkarma
 NlpToolkit-MorphologicalAnalysis==1.0.52  # K13: yazım, ana denetçi (Starlang)
 zemberek-python==0.2.3  # K13: yazım, ikinci görüş
 numpy==1.26.4  # zemberek-python NumPy 2.x ile çalışmıyor (OverflowError)
+openpyxl==3.1.5  # K27: Excel inceleme raporu (editör kararı sütunlu)

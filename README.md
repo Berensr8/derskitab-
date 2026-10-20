@@ -23,13 +23,17 @@ Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 
 **En kolay yol:** `DEMO.bat` dosyasına çift tıklayın (ya da bir PDF'i üzerine sürükleyin).
 PDF seçilir, altı adım çalışır (PDF, okunabilirlik, yazım, bilgi tutarsızlığı, inceleme,
-notlu PDF) ve inceleme sayfası tarayıcıda açılır. Çıktılar `veri/demo/<kitap adı>/` klasörüne yazılır.
+notlu PDF + Excel raporu) ve inceleme sayfası tarayıcıda açılır. Çıktılar `veri/demo/<kitap adı>/` klasörüne yazılır.
 
 - **Notlu PDF** (`<kitap>_notlu.pdf`): kitabın kendisi, tespitler üzerinde standart PDF yorum
   notu olarak (Acrobat, Edge, Foxit… her okuyucuda açılır; kitabın metni ve sayfa düzeni değişmez).
   Kırmızı dalgalı çizgi = yazım, turuncu çerçeve = dilsel karmaşıklık, mor vurgu = çelişen cümleler
   (kenardaki "↔ s. 45" etiketi karşı cümleye götürür). 1. sayfada özet notu; Yer İmleri panelinde
   kritere göre tespit listesi. Editör notlara yanıt yazabilir, "çözüldü" işaretleyebilir.
+- **Excel raporu** (`<kitap>_rapor.xlsx`): Özet sayfası (kriter başına tespit sayıları, kitabın
+  dilsel karmaşıklık puanları, sistemin ölçülmüş başarısı) ve Tespitler sayfası (her satır bir tespit;
+  filtreli). Sarı "Editör kararı" sütunu (Hata / Hata değil / Emin değilim) doldurulunca özet
+  isabet oranını kendisi hesaplar; dolu dosya `--oku` ile sisteme geri okunur.
 
 - **Bilgi tutarsızlığı** yerel modeller gerektirir. Kitabın önceden hesaplanmış tam kitap
   sonucu (`veri/<kitap>_tutarlilik_adaylar.json`) varsa o kullanılır; yoksa Ollama çalışıyorsa
@@ -65,6 +69,10 @@ Adımlar tek tek de çalıştırılabilir:
 #    Tutarlılık sonucu varsa (veri/kitap_tutarlilik_tespitler.json) o da eklenir.
 #    --dusuk-guven: hakemin "muhtemelen doğru" dediği yazım tespitleri de (gri) eklenir
 .venv\Scripts\python.exe -m derskitabi.pdf_notlari veri\kitap.pdf --hakem
+
+# Excel raporu -> veri/kitap_rapor.xlsx; editörün doldurduğu raporu okuyup isabet oranını yazmak: --oku
+.venv\Scripts\python.exe -m derskitabi.rapor veri\kitap.pdf --hakem
+.venv\Scripts\python.exe -m derskitabi.rapor --oku veri\kitap_rapor.xlsx
 
 # Sistemin gözünden PDF (geliştirici için): bloklar, cümleler ve tespitler kitabın üzerine çizilir
 .venv\Scripts\python.exe -m derskitabi.gorsellestir veri\kitap.pdf --sayfalar 28-35

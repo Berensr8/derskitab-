@@ -9,6 +9,7 @@ import unittest
 
 import numpy as np
 
+from derskitabi import yerel_model
 from derskitabi.kriterler import tutarlilik
 from derskitabi.kriterler.tutarlilik import aday_ciftler, analiz_et, bilgi_cumleleri, bilgi_cumlesi_mi
 from derskitabi.model import Blok
@@ -197,9 +198,9 @@ class YenidenDenemeTesti(unittest.TestCase):
         cevap = mock.MagicMock()
         cevap.__enter__.return_value = io.BytesIO(b'{"tamam": true}')
         hatalar = [urllib.error.URLError("connection reset"), cevap]
-        with mock.patch.object(tutarlilik, "YENIDEN_DENEME", (0, 0, 0)), \
+        with mock.patch.object(yerel_model, "YENIDEN_DENEME", (0, 0, 0)), \
              mock.patch("urllib.request.urlopen", side_effect=hatalar) as acici:
-            self.assertEqual(tutarlilik._istek("/api/chat", {"model": "x"}), {"tamam": True})
+            self.assertEqual(yerel_model.istek("/api/chat", {"model": "x"}), {"tamam": True})
         self.assertEqual(acici.call_count, 2)
 
     def test_kalici_hata_hemen_bildirilir(self):
@@ -208,10 +209,10 @@ class YenidenDenemeTesti(unittest.TestCase):
         from unittest import mock
 
         hata = urllib.error.HTTPError("u", 404, "yok", {}, io.BytesIO(b'{"error":"model not found"}'))
-        with mock.patch.object(tutarlilik, "YENIDEN_DENEME", (0, 0, 0)), \
+        with mock.patch.object(yerel_model, "YENIDEN_DENEME", (0, 0, 0)), \
              mock.patch("urllib.request.urlopen", side_effect=[hata]) as acici:
             with self.assertRaises(RuntimeError):
-                tutarlilik._istek("/api/chat", {"model": "x"})
+                yerel_model.istek("/api/chat", {"model": "x"})
         self.assertEqual(acici.call_count, 1)
 
 

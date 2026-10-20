@@ -10,13 +10,13 @@ Kullanım:
 import json
 import sys
 import time
-import urllib.request
 import webbrowser
 from collections import Counter
 from pathlib import Path
 
 import pymupdf
 
+from . import yerel_model
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
 from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet
@@ -87,10 +87,8 @@ def evet_mi(soru: str, varsayilan: bool = True) -> bool:
 
 def ollama_hazir_mi() -> str | None:
     """Ollama çalışıyor ve gereken modeller yüklü mü? Değilse sebebi döner."""
-    try:
-        with urllib.request.urlopen(tutarlilik.OLLAMA_URL + "/api/tags", timeout=3) as cevap:
-            modeller = {m["name"] for m in json.loads(cevap.read())["models"]}
-    except OSError:
+    modeller = yerel_model.yuklu_modeller()
+    if modeller is None:
         return "Ollama çalışmıyor (OLLAMA_BASLAT.bat ile başlatılabilir)"
     eksik = [m for m in (tutarlilik.GOMME_MODELI, tutarlilik.HAKEM_MODELI, tutarlilik.IKINCI_GORUS_MODELI)
              if m not in modeller and m + ":latest" not in modeller]

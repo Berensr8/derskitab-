@@ -25,20 +25,18 @@ import json
 import re
 import sys
 import time
-import urllib.error
-import urllib.request
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 
+from .. import yerel_model
 from ..kayit import bloklari_yukle, json_kaydet, tespitleri_kaydet
 from ..donanim import Bekci
 from ..model import Blok, Tespit
 from .okunabilirlik import cumlelere_bol
 
-OLLAMA_URL = "http://127.0.0.1:11434"
 GOMME_MODELI = "bge-m3"
 HAKEM_MODELI = "gemma4:12b-it-qat"
 IKINCI_GORUS_MODELI = "hf.co/ytu-ce-cosmos/Turkish-Gemma-9b-T1-GGUF:Q4_K_M"
@@ -164,81 +162,20 @@ def aday_ciftler(cumleler: list[Cumle], vektorler: np.ndarray) -> list[tuple[int
     return sorted(((i, j, s) for (i, j), s in ciftler.items()), key=lambda x: -x[2])
 
 
-# --- Ollama ---
-
-# Uzun çalıştırmalarda Ollama'nın model çalıştırıcısı ara sıra çöküp yeniden yükleniyor
-# ("model runner has unexpectedly stopped" — Biyoloji 10 değerlendirmesinde görüldü). Böyle
-# geçici hatalarda istek artan beklemeyle yeniden denenir; kalıcı hatalar hemen bildirilir.
-YENIDEN_DENEME = (5, 20, 60)  # saniye
-_GECICI = ("unexpectedly stopped", "connection", "forcibly closed", "timed out", "EOF", "terminated")
-
-
-def _istek(yol: str, govde: dict) -> dict:
-    for bekleme in (*YENIDEN_DENEME, None):
-        r = urllib.request.Request(OLLAMA_URL + yol, json.dumps(govde).encode("utf-8"),
-                                   {"Content-Type": "application/json"})
-        try:
-            with urllib.request.urlopen(r, timeout=300) as cevap:
-                return json.loads(cevap.read())
-        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
-            mesaj = e.read().decode(errors="ignore") if isinstance(e, urllib.error.HTTPError) else str(e)
-            # Sunucu hataları (5xx) geçicidir; mesaj metnine güvenilmez (Windows hatayı Türkçe
-            # verebiliyor: "Varolan bir bağlantı … zorla kapatıldı"). 4xx (ör. model yok) kalıcıdır.
-            gecici = (not isinstance(e, urllib.error.HTTPError) or e.code >= 500
-                      or any(g in mesaj for g in _GECICI))
-            if gecici and bekleme is not None:
-                time.sleep(bekleme)
-                continue
-            if isinstance(e, urllib.error.HTTPError):
-                raise RuntimeError(f"Ollama hatası ({govde.get('model')}): {mesaj}") from e
-            raise RuntimeError("Ollama'ya bağlanılamadı. Önce `ollama serve` çalıştırın.") from e
-
-
-_SON_MODEL: list[str | None] = [None]
-
-
-def _yalniz_bu_model(model: str) -> None:
-    """Model değişirken bellekteki diğer modelleri boşaltır. 8 GB ekran kartında gemma4 (~8,5 GB)
-    yüklüyken bge-m3 yüklenemeyip çalıştırıcı çöktü ("Load failed", 0xc0000409); her an tek
-    model bulunsun."""
-    if _SON_MODEL[0] == model:
-        return
-    try:
-        yuklu = [m["name"] for m in _istek_get("/api/ps").get("models", [])]
-    except (OSError, ValueError):  # sunucuya ulaşılamazsa boşaltmadan devam (asıl istek hatayı bildirir)
-        yuklu = []
-    for m in yuklu:
-        if m != model and m.split(":latest")[0] != model:
-            for yol, govde in (("/api/generate", {"model": m, "keep_alive": 0}),
-                               ("/api/embed", {"model": m, "input": "", "keep_alive": 0})):
-                try:
-                    _istek(yol, govde)
-                    break
-                except RuntimeError:
-                    continue  # gömme modeli /api/generate'i desteklemez
-    _SON_MODEL[0] = model
-
-
-def _istek_get(yol: str) -> dict:
-    with urllib.request.urlopen(OLLAMA_URL + yol, timeout=30) as cevap:
-        return json.loads(cevap.read())
-
+# --- Ollama (ortak istemci: derskitabi/yerel_model.py) ---
 
 def ollama_gomucu(metinler: list[str]) -> np.ndarray:
-    _yalniz_bu_model(GOMME_MODELI)
+    yerel_model.yalniz_bu_model(GOMME_MODELI)
     vektorler = []
     for i in range(0, len(metinler), 64):
-        vektorler += _istek("/api/embed", {"model": GOMME_MODELI, "input": metinler[i:i + 64]})["embeddings"]
+        vektorler += yerel_model.istek("/api/embed", {"model": GOMME_MODELI,
+                                                      "input": metinler[i:i + 64]})["embeddings"]
     V = np.array(vektorler, dtype=np.float32).reshape(len(metinler), -1)
     return V / np.linalg.norm(V, axis=1, keepdims=True)
 
 
-_DUSUNME_DESTEKLI: dict[str, bool] = {}
-
-
 def ollama_hakem(model: str, a: str, b: str, aciklamali: bool,
                  baglam: tuple[str, str] | None = None) -> dict:
-    _yalniz_bu_model(model)
     ozellikler = {"karar": {"type": "string", "enum": list(KARARLAR)}}
     if aciklamali:  # açıklama önce yazılır: model kararını gerekçesinden sonra verir
         ozellikler = {"aciklama": {"type": "string"}, **ozellikler}
@@ -247,29 +184,13 @@ def ollama_hakem(model: str, a: str, b: str, aciklamali: bool,
         soru = (f"Cümle 1: {a}\nCümle 1'in geçtiği yer: {baglam[0]}\n\n"
                 f"Cümle 2: {b}\nCümle 2'nin geçtiği yer: {baglam[1]}")
     sistem = SISTEM + (_BAGLAMLI if baglam else "") + (_ACIKLAMALI if aciklamali else _YALNIZ_KARAR)
-    govde = {"model": model, "stream": False,
-             "format": {"type": "object", "properties": ozellikler, "required": list(ozellikler)},
-             # Uzunluk sınırı: bir model bir çiftte durmadan açıklama yazdı (7.674 karakter)
-             # Hızlı turda kısa bağlam: ekran kartı belleği daha az dolsun (2026-10-20 çökmesi)
-             "options": {"temperature": 0, "num_ctx": 4096 if aciklamali else 2048,
-                         "num_predict": 400 if aciklamali else 20},
-             "messages": [{"role": "system", "content": sistem}, {"role": "user", "content": soru}]}
-    if _DUSUNME_DESTEKLI.get(model, True):
-        try:
-            cevap = _istek("/api/chat", {**govde, "think": False})
-        except RuntimeError as e:
-            if "think" not in str(e):
-                raise
-            _DUSUNME_DESTEKLI[model] = False  # model "düşünme" ayarını desteklemiyor
-            cevap = _istek("/api/chat", govde)
-    else:
-        cevap = _istek("/api/chat", govde)
-    icerik = re.sub(r"<think>.*?</think>", "", cevap["message"]["content"], flags=re.S)
-    try:
-        j = json.loads(icerik)
-        return {"karar": j["karar"] if j.get("karar") in KARARLAR else "?", "aciklama": j.get("aciklama", "")}
-    except json.JSONDecodeError:
-        return {"karar": "?", "aciklama": icerik[:300]}
+    # Uzunluk sınırı: bir model bir çiftte durmadan açıklama yazdı (7.674 karakter).
+    # Hızlı turda kısa bağlam: ekran kartı belleği daha az dolsun (2026-10-20 çökmesi).
+    j = yerel_model.sohbet(model, sistem, soru, ozellikler, num_predict=400 if aciklamali else 20,
+                           num_ctx=4096 if aciklamali else 2048)
+    if j is None:
+        return {"karar": "?", "aciklama": ""}
+    return {"karar": j["karar"] if j.get("karar") in KARARLAR else "?", "aciklama": j.get("aciklama", "")}
 
 
 # --- analiz ---

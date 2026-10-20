@@ -15,6 +15,7 @@ Kullanım:
 
 import json
 import random
+import statistics
 import sys
 
 from .degerlendirme import PROJE, set_yukle
@@ -29,6 +30,10 @@ EKLEME_YOLU = PROJE / "testseti" / "okunabilirlik_eklemeleri.json"
 EKLEME_SHA256 = "38a141fb4e1167752edb7d9c197f1f886b0b1f98ed1ba7929c98406613f5d56e"  # K24
 TOHUM = 20261020
 FORMULLER = {"atesman": True, "cetinkaya_uzun": True, "bezirci_yilmaz": False}  # True: düşük puan = zor
+# Aynı dersin farklı sınıf kitapları (MEB OGM, 2026-10-20 indirildi). Not: 9-10 Biyoloji ve 9 TDE
+# yeni programın "Tema" düzeninde, 11 Biyoloji ve 10-11 TDE "Ünite" düzeninde (eski program).
+DERS_SERILERI = {"Biyoloji": {"biyoloji9": 9, "biyoloji10": 10, "biyoloji11": 11},
+                 "Türk Dili ve Edebiyatı": {"turkdili9": 9, "turkdili10": 10, "turkdili11": 11}}
 
 
 def _bloklar(kitap: str) -> list[Blok]:
@@ -110,6 +115,26 @@ def main() -> None:
         oran = sum((b.sayfa_no, b.blok_no) in isaretli for b in grup) / len(grup)
         rapor["ekleme"][kitap] = round(oran, 3)
         print(f"  {KITAPLAR[kitap]}. sınıf ({kitap}) paragrafları: %{oran * 100:.1f} işaretlendi ({len(grup)} paragraf)")
+    # 4. Ders içi: aynı dersin farklı sınıf kitapları (ders farkı sınıf farkına karışmasın)
+    print("\n4. Ders içi karşılaştırma (aynı ders, farklı sınıf):")
+    rapor["ders_ici"] = {}
+    for ders, kitaplar in DERS_SERILERI.items():
+        mevcut = {k: s for k, s in kitaplar.items() if (PROJE / "veri" / f"{k}_bloklar.json").exists()}
+        if len(mevcut) < 2:
+            continue
+        p = {k: aday_paragraflar(_bloklar(k)) for k in mevcut}
+        ortanca = {k: {f: round(statistics.median(getattr(s, f) for _, s in p[k]), 1) for f in FORMULLER}
+                   for k in mevcut}
+        sirali = sorted(mevcut, key=mevcut.get)
+        aucler = {f"{b}>{a}": {f: round(auc([getattr(s, f) for _, s in p[b]], [getattr(s, f) for _, s in p[a]], dusuk), 3)
+                              for f, dusuk in FORMULLER.items()}
+                  for i, a in enumerate(sirali) for b in sirali[i + 1:]}
+        rapor["ders_ici"][ders] = {"ortanca": ortanca, "auc": aucler}
+        print(f"  {ders}:")
+        for k in sirali:
+            print(f"    {mevcut[k]:>2}. sınıf {k:12} ({len(p[k])} paragraf) ortanca {ortanca[k]}")
+        for cift, d in aucler.items():
+            print(f"    AUC {cift}: {d}")
     json_kaydet(rapor, PROJE / "veri" / "degerlendirme_okunabilirlik.json")
 
 

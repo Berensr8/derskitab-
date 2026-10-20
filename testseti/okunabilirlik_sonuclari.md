@@ -41,3 +41,27 @@ Puanlar sınıf sırasını izlemiyor: 11. sınıf Matematik formüllere göre e
 - Bu yüzden sistemin okunabilirlik çıktısı **"sınıfa uygunluk" değil, "dilsel karmaşıklık uyarısı"** olarak sunulmalı: kitabın kendi içinde belirgin şekilde uzun cümleli / uzun kelimeli paragrafları gösteriyor (sistem zaten "tek başına sınıfa uygun değil demek değildir" notunu gösteriyor).
 - **Sınırlama:** Farklı derslerin kitapları karşılaştırıldı; ders farkı (edebiyat, matematik, fen) sınıf farkıyla karışıyor. Daha adil test: aynı dersin farklı sınıf kitapları (ör. Sosyal Bilgiler 5–7, Türkçe 5–8).
 - **İyileştirme fikirleri (Faz 2):** terim yoğunluğu (morfolojinin tanımadığı / kitapta tekrar eden terimler), kelime sıklığı listeleri, sınıf ve ders başına MEB kitaplarından hesaplanan norm puanları, dil modeliyle sınıf düzeyi tahmini.
+
+## 4. Ders içi karşılaştırma (2026-10-20 eki)
+
+Ders farkının sınıf farkına karışmaması için aynı dersin farklı sınıf kitapları MEB OGM Materyal'den indirildi (Biyoloji 9 ve 11, TDE 10 ve 11). Ortancalar ≥3 cümleli paragraflar üzerinden.
+
+| Ders | Sınıf | Paragraf | Ateşman | Çetinkaya-Uzun | Bezirci-Yılmaz |
+|---|---|---|---|---|---|
+| Biyoloji | 9 | 389 | 45,2 | 28,7 | 16,7 |
+| Biyoloji | 10 | 382 | 45,7 | 29,2 | 16,9 |
+| Biyoloji | 11 | 442 | 52,0 | 32,3 | 14,3 |
+| TDE | 9 | 678 | 63,8 | 38,8 | 9,5 |
+| TDE | 10 | 470 | 74,5 | 44,4 | 6,3 |
+| TDE | 11 | 506 | 70,5 | 41,6 | 7,4 |
+
+| Karşılaştırma (üst sınıf "daha zor" olasılığı) | Ateşman | Çetinkaya-Uzun | Bezirci-Yılmaz |
+|---|---|---|---|
+| Biyoloji 10 > 9 | 0,49 | 0,48 | 0,52 |
+| Biyoloji 11 > 9 | 0,39 | 0,38 | 0,40 |
+| Biyoloji 11 > 10 | 0,40 | 0,40 | 0,38 |
+| TDE 10 > 9 | 0,41 | 0,42 | 0,41 |
+| TDE 11 > 9 | 0,45 | 0,45 | 0,45 |
+| TDE 11 > 10 | 0,54 | 0,54 | 0,55 |
+
+**Yorum:** Aynı ders içinde de formüller sınıf düzeyini ayırt etmiyor. Aynı öğretim programına ait kitaplar arasında (Biyoloji 9–10, ikisi de yeni programın "Tema" düzeninde; TDE 10–11, ikisi de "Ünite" düzeninde) fark yazı tura düzeyinde (AUC 0,49–0,55). Üst sınıfların "daha kolay" çıktığı karşılaştırmalar (Biyoloji 11, TDE 10) eski program ile yeni program arasında — yani formüllerin yakaladığı şey sınıf düzeyi değil, kitabın yazım üslubu (cümle ve kelime uzunluğu). K24 bulgusu güçlendi: çıktı "dilsel karmaşıklık uyarısı" olarak sunulmalı; sınıf düzeyi için kavramsal zorluğu (terimler, ön bilgi) ölçen yöntemler gerekir.

@@ -117,14 +117,20 @@ def zemberek_kok_sirasini_sabitle() -> None:
 
 
 @functools.cache
+def starlang_cozumleyici():
+    """Starlang biçimbilim çözümleyicisi (bir kez yüklenir; alıntı ayırma da özel adlar için kullanır)."""
+    from MorphologicalAnalysis.FsmMorphologicalAnalyzer import FsmMorphologicalAnalyzer
+    return FsmMorphologicalAnalyzer()
+
+
+@functools.cache
 def varsayilan_denetciler() -> tuple[Denetci, Denetci]:
     """(Starlang, Zemberek) denetçileri. Yüklemesi birkaç saniye sürdüğü için bir kez kurulur."""
     logging.getLogger("zemberek").setLevel(logging.ERROR)
-    from MorphologicalAnalysis.FsmMorphologicalAnalyzer import FsmMorphologicalAnalyzer
     from zemberek import TurkishMorphology
 
     zemberek_kok_sirasini_sabitle()  # TurkishMorphology kurulmadan önce
-    starlang = FsmMorphologicalAnalyzer()
+    starlang = starlang_cozumleyici()
     zemberek = TurkishMorphology.create_with_defaults()
     return (functools.cache(lambda k: starlang.morphologicalAnalysis(k).size() > 0),
             functools.cache(lambda k: len(zemberek.analyze(k).analysis_results) > 0))

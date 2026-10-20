@@ -19,6 +19,7 @@ from .. import yerel_model
 from ..donanim import Bekci
 from ..model import Blok, Tespit
 from . import yazim
+from .alinti import ALINTI_NOTU
 from .okunabilirlik import cumlelere_bol
 
 HAKEM_MODELI = "gemma4:12b-it-qat"
@@ -98,8 +99,8 @@ def hakemle(tespitler: list[Tespit], bloklar: list[Blok], hakem: Hakem | None = 
     denetciler = denetciler or yazim.varsayilan_denetciler()
     sonuc, soruldu, dusen = [], 0, 0
     for t in tespitler:
-        if t.alt_tur != "morfoloji" or not t.metin_parcasi:
-            sonuc.append(t)
+        if t.alt_tur != "morfoloji" or not t.metin_parcasi or ALINTI_NOTU in t.aciklama:
+            sonuc.append(t)  # alıntı (K28): model eski yazımı "düzeltmeye" kalkmasın, düşük öncelikte kalır
             continue
         cumle, onceki = baglam(metin.get((t.sayfa_no, t.blok_no), ""), t.metin_parcasi)
         anahtar = json.dumps([HAKEM_MODELI, t.metin_parcasi, cumle, onceki], ensure_ascii=False)

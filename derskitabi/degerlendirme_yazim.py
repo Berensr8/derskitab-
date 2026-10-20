@@ -28,7 +28,7 @@ from pathlib import Path
 
 from .degerlendirme import PROJE, celiskileri_uygula, set_yukle
 from .kayit import bloklari_yukle, json_kaydet
-from .kriterler import yazim, yazim_hakem
+from .kriterler import alinti, yazim, yazim_hakem
 from .model import Tespit
 
 SET_YOLU = PROJE / "testseti" / "yazim_hatalari.json"
@@ -66,10 +66,19 @@ def _anahtar(t: Tespit) -> tuple:
     return t.sayfa_no, t.blok_no, t.alt_tur, t.metin_parcasi
 
 
+def alinti_uygula(kitap: str, bloklar, tespitler: list[Tespit]) -> list[Tespit]:
+    """Alıntı ayırma (K28): alıntı bloklarındaki kelime tespitleri düşük önceliğe iner."""
+    bicimler = alinti.blok_bicimleri(PROJE / "veri" / f"{kitap}.pdf", bloklar)
+    return alinti.alintilari_isaretle(tespitler, alinti.alinti_bloklari(bloklar, bicimler))
+
+
 def recall_olc(ogeler: list[dict], bloklar, taban: list[Tespit], denetciler=None,
-               hakem_onbellegi: dict | None = None) -> dict:
+               hakem_onbellegi: dict | None = None, kitap: str | None = None) -> dict:
+    """kitap verilirse alıntı ayırma (K28) da uygulanır (PDF'ten yazı tipleri okunur)."""
     degismis = celiskileri_uygula(bloklar, ogeler)
     tespitler = yazim.analiz_et(degismis, denetciler, kitap_bloklari=degismis)
+    if kitap is not None:
+        tespitler = alinti_uygula(kitap, degismis, tespitler)
     if hakem_onbellegi is not None:
         tespitler = yazim_hakem.hakemle(tespitler, degismis, onbellek=hakem_onbellegi, ilerleme=print)
     sonuc = {o["id"]: {"guven": bulundu_mu(o, tespitler), "tur": o["tur"], "alt_tur": o["alt_tur"]}
@@ -85,26 +94,31 @@ def recall_olc(ogeler: list[dict], bloklar, taban: list[Tespit], denetciler=None
                                                for t in yeni]}
 
 
-def precision_olc(set_adi: str = "gelistirme", hakem_onbellegi: dict | None = None) -> dict | None:
+def precision_olc(set_adi: str = "gelistirme", hakem_onbellegi: dict | None = None,
+                  alinti_ayir: bool = False) -> dict | None:
     yol = ETIKET_YOLLARI[set_adi]
     if not yol.exists():
         return None
     etiketler = (set_yukle(yol, TEST_ETIKET_SHA256) if set_adi == "test"
                  else json.loads(yol.read_text(encoding="utf-8")))
-    if hakem_onbellegi is not None:  # etiketli tespitleri hakeme danış, güvenlerini güncelle
+    surec = hakem_onbellegi is not None or alinti_ayir
+    if surec:  # etiketli tespitlere alıntı ayırma (K28) ve/veya hakem (K25) uygulanır, güvenler güncellenir
         for kitap in sorted({x["kitap"] for x in etiketler}):
             e = [x for x in etiketler if x["kitap"] == kitap]
-            tespitler = [Tespit(x["sayfa_no"], x["blok_no"], (0, 0, 1, 1), "yazim", "", x["guven"],
-                                alt_tur=x["alt_tur"], metin_parcasi=x["parca"]) for x in e]
-            yeni = yazim_hakem.hakemle(tespitler, bloklari_yukle(PROJE / "veri" / f"{kitap}_bloklar.json"),
-                                       onbellek=hakem_onbellegi, ilerleme=print)
+            bloklar = bloklari_yukle(PROJE / "veri" / f"{kitap}_bloklar.json")
+            yeni = [Tespit(x["sayfa_no"], x["blok_no"], (0, 0, 1, 1), "yazim", "", x["guven"],
+                           alt_tur=x["alt_tur"], metin_parcasi=x["parca"]) for x in e]
+            if alinti_ayir:
+                yeni = alinti_uygula(kitap, bloklar, yeni)
+            if hakem_onbellegi is not None:
+                yeni = yazim_hakem.hakemle(yeni, bloklar, onbellek=hakem_onbellegi, ilerleme=print)
             for x, t in zip(e, yeni):
                 x["guven_once"], x["guven"] = x["guven"], t.guven_skoru
                 x["gosterilir"] = t.guven_skoru >= ESIK
     sonuc = {}
     for kitap in sorted({x["kitap"] for x in etiketler}):
         tum = [x for x in etiketler if x["kitap"] == kitap]
-        if hakem_onbellegi is not None:
+        if surec:
             kaybolan = [x["parca"] for x in tum if x["etiket"] == "gercek" and not x["gosterilir"]]
             tum = [x for x in tum if x["gosterilir"]]
         else:
@@ -128,6 +142,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Yazım değerlendirmesi (K23)")
     ap.add_argument("--set", choices=("gelistirme", "test"), required=True)
     ap.add_argument("--hakem", action="store_true", help="Yazım hakemiyle (dil modeli, K25)")
+    ap.add_argument("--alinti", action="store_true", help="Alıntı ayırmayla (K28)")
     arg = ap.parse_args()
     onbellek = _onbellek_yukle() if arg.hakem else None
 
@@ -138,7 +153,8 @@ def main() -> None:
         taban = [Tespit.sozlukten(t) for t in
                  json.loads((PROJE / "veri" / f"{kitap}_yazim_tespitler.json").read_text(encoding="utf-8"))]
         try:
-            r = recall_olc([o for o in ogeler if o["kitap"] == kitap], bloklar, taban, hakem_onbellegi=onbellek)
+            r = recall_olc([o for o in ogeler if o["kitap"] == kitap], bloklar, taban, hakem_onbellegi=onbellek,
+                           kitap=kitap if arg.alinti else None)
         finally:
             if onbellek is not None:
                 json_kaydet(onbellek, HAKEM_ONBELLEK)
@@ -146,8 +162,8 @@ def main() -> None:
         yeni_sahte += r["yeni_sahte"]
 
     n = len(maddeler)
-    esik = ESIK if arg.hakem else 1e-9
-    for m in maddeler.values():  # hakemli: düşük önceliğe inen (0,25) bulunmamış sayılır
+    esik = ESIK if (arg.hakem or arg.alinti) else 1e-9
+    for m in maddeler.values():  # hakemli / alıntılı: düşük önceliğe inen (0,25) bulunmamış sayılır
         m["bulundu"] = m["guven"] >= esik
     bulunan = sum(m["bulundu"] for m in maddeler.values())
     rapor = {"set": arg.set, "madde": n, "recall": round(bulunan / n, 3),
@@ -157,11 +173,12 @@ def main() -> None:
                            for t in sorted({m["alt_tur"] for m in maddeler.values()})},
              "yeni_sahte_tespit": yeni_sahte, "maddeler": maddeler}
     try:
-        rapor["precision"] = precision_olc(arg.set, onbellek)
+        rapor["precision"] = precision_olc(arg.set, onbellek, arg.alinti)
     finally:
         if onbellek is not None:
             json_kaydet(onbellek, HAKEM_ONBELLEK)
-    json_kaydet(rapor, PROJE / "veri" / f"degerlendirme_yazim_{arg.set}{'_hakem' if arg.hakem else ''}.json")
+    ek = ("_hakem" if arg.hakem else "") + ("_alinti" if arg.alinti else "")
+    json_kaydet(rapor, PROJE / "veri" / f"degerlendirme_yazim_{arg.set}{ek}.json")
 
     print(f"=== yazım {arg.set}: {n} madde ===")
     print(f"Recall {rapor['recall']} ({bulunan}/{n}), yüksek güven {rapor['recall_yuksek_guven']}")

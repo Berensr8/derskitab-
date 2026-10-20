@@ -1,0 +1,2 @@
+# Kilitli test seti: satır sonları git tarafından değiştirilmesin (SHA-256 kilidi bozulmasın, K20)
+testseti/*.json -text

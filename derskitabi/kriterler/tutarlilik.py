@@ -259,11 +259,12 @@ def analiz_et(bloklar: list[Blok], gomucu: Gomucu | None = None, hakem: Hakem | 
         gerekce = (iz["hakem"] if oylar[0] else iz["ikinci_gorus"])["aciklama"]
         kim = "iki model de (gemma4, Turkish-Gemma)" if all(oylar) else (
             "yalnız gemma4" if oylar[0] else "yalnız Turkish-Gemma")
+        iz["guven"] = 1.0 if all(oylar) else 0.5  # kayıtta da görünsün (değerlendirme bunu okur)
         tespitler.append(Tespit(
             sayfa_no=a.sayfa_no, blok_no=a.blok_no, bbox=a.bbox, kriter="tutarlilik",
             aciklama=(f"{_konum(a)}: \"{a.metin}\" ile {_konum(b)}: \"{b.metin}\" çelişiyor olabilir "
                       f"({kim}). {gerekce}"),
-            guven_skoru=1.0 if all(oylar) else 0.5, basili_sayfa_no=a.basili_sayfa_no,
+            guven_skoru=iz["guven"], basili_sayfa_no=a.basili_sayfa_no,
             alt_tur="kitap_ici_celiski", metin_parcasi=a.metin,
             ilgili_konumlar=[(b.sayfa_no, b.blok_no)]))
 

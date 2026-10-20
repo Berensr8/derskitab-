@@ -225,3 +225,12 @@ def alintilari_isaretle(tespitler: list[Tespit], alintilar: dict) -> list[Tespit
                              f" {ALINTI_NOTU} ({kaynak}): kelime yazarın kendi yazımı ya da eski yazım olabilir"
                              " — düşük öncelik."))
     return sonuc
+
+
+def pdf_ile_isaretle(pdf_yolu, bloklar: list[Blok], tespitler: list[Tespit]) -> list[Tespit]:
+    """Kelime tespiti olan sayfalarda alıntıları bulur ve işaretler (yazı tipleri PDF'ten okunur)."""
+    sayfalar = {t.sayfa_no for t in tespitler if t.alt_tur == "morfoloji"}
+    if not sayfalar:
+        return tespitler
+    ilgili = [b for b in bloklar if b.sayfa_no in sayfalar]
+    return alintilari_isaretle(tespitler, alinti_bloklari(ilgili, blok_bicimleri(pdf_yolu, ilgili)))

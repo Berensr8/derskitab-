@@ -12,7 +12,7 @@ from pathlib import Path
 
 from .inceleyici import tutarlilik_kaydi_yukle
 from .kayit import bloklari_yukle, tespitleri_yukle
-from .kriterler import okunabilirlik, yazim
+from .kriterler import alinti, okunabilirlik, yazim
 from .model import Blok, Tespit
 from .pdf_cikarma import bloklari_cikar
 
@@ -43,7 +43,7 @@ def sonuclari_topla(pdf_yolu, bloklar: list[Blok] | None = None, hedef_sinif: in
             okunabilirlik_analizi = (None, [])
     if yazim_tespitleri is None:
         yaz("Yazım denetimi…")
-        yazim_tespitleri = yazim.analiz_et(bloklar)
+        yazim_tespitleri = alinti.pdf_ile_isaretle(pdf_yolu, bloklar, yazim.analiz_et(bloklar))  # K28
         if hakem:
             from .kriterler.yazim_hakem import hakemle
             onbellek_yolu = pdf_yolu.with_name("yazim_hakem_onbellek.json")

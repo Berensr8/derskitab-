@@ -396,8 +396,9 @@ function ayrinti() {
   (b.yazim || []).forEach(y => parcalar.push(el("div", { class: "kart yazimKart" + (y.guven < 0.5 ? " dusuk" : "") },
     el("b", {}, `✎ Yazım tespiti (güven ${sayi(y.guven, 2)})  `), el("span", { class: "parca" }, y.parca), el("br"),
     y.aciklama,
-    y.guven < 0.5 ? el("div", { class: "kucuk", style: "margin-top:6px" },
-      "Düşük öncelik: dil modeli bu kelimenin muhtemelen doğru yazıldığını söyledi (terim, özel isim, alıntı ya da araçların bilmediği bir kelime). Yine de kontrol edebilirsiniz.")
+    y.guven < 0.5 ? el("div", { class: "kucuk", style: "margin-top:6px" }, y.aciklama.includes("Alıntı metin")
+      ? "Düşük öncelik: kelime başka bir yazardan alınmış bir metinde (şiir, eski metin, yazar parçası); yazarın kendi yazımı ya da eski yazım olabilir. Yine de kontrol edebilirsiniz."
+      : "Düşük öncelik: dil modeli bu kelimenin muhtemelen doğru yazıldığını söyledi (terim, özel isim, alıntı ya da araçların bilmediği bir kelime). Yine de kontrol edebilirsiniz.")
     : y.guven < 1 ? el("div", { class: "kucuk", style: "margin-top:6px" },
       "Düşük güven: araçlardan yalnız biri hata buldu ya da durum tasarım tercihi olabilir; kontrol edin.") : null)));
 

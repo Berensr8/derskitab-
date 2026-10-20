@@ -40,6 +40,9 @@ notlu PDF + Excel raporu) ve inceleme sayfası tarayıcıda açılır. Çıktıl
   seçili sayfalarda çalıştırmak için sorulur; ikisi de yoksa adım atlanır.
 - **Yazım hakemi:** Ollama hazırsa demo, kelime tespitlerinin dil modeline danışılmasını önerir;
   model "muhtemelen doğru" dediği tespitler (terim, alıntı) silinmez, soluk ve düşük öncelikli gösterilir.
+- **Alıntı ayırma (K28):** şiir, eski metin ve yazar parçalarındaki kelime tespitleri (imza satırından
+  ve eski dil işaretlerinden bulunur; yazı tipi PDF'ten okunur) silinmez, "alıntı metin" notuyla düşük
+  önceliğe iner — yazarın kendi yazımı ya da eski yazım olabilir. Excel raporunda türü "alıntı içinde".
 - **Test modu:** test setinde maddesi olan kitaplarda (Sosyal Bilgiler 6, Biyoloji 10) demo,
   bilerek çelişki eklenmiş metinle bir inceleme de gösterebilir (gerçek kitaplarda çelişki
   bulunmadığı için özelliği göstermenin yolu). Eklenen cümleler sayfa görüntüsünde görünmez.

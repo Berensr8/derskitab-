@@ -22,7 +22,7 @@ from . import yerel_model
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
 from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet, tespitleri_yukle
-from .kriterler import okunabilirlik, tutarlilik, yazim, yazim_hakem
+from .kriterler import alinti, okunabilirlik, tutarlilik, yazim, yazim_hakem
 from .model import BLOK_TURLERI
 from .pdf_notlari import KRITER_ADLARI, notlu_pdf_olustur
 from .rapor import rapor_olustur
@@ -220,6 +220,10 @@ def main() -> None:
     yazim_tespitleri = yazim.analiz_et(
         [b for b in bloklar if secili is None or b.sayfa_no in secili], atlananlar=atlananlar,
         kitap_bloklari=bloklar)
+    yazim_tespitleri = alinti.pdf_ile_isaretle(pdf, bloklar, yazim_tespitleri)  # alıntı ayırma (K28)
+    alintida = sum(alinti.ALINTI_NOTU in t_.aciklama for t_ in yazim_tespitleri)
+    if alintida:
+        print(f"  Alıntı metinlerde (şiir, eski metin, yazar parçası) {alintida} kelime tespiti düşük önceliğe indi")
     if (yazim_tespitleri and not ollama_hazir_mi()
             and evet_mi("  Kelime tespitleri dil modeline (gemma4) danışılsın mı? Terim ve alıntılar düşük önceliğe iner")):
         onbellek_yolu = PROJE_KOKU / "veri" / "yazim_hakem_onbellek.json"

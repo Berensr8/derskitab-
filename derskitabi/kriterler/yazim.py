@@ -414,6 +414,11 @@ def main() -> None:
     bloklar = bloklari_yukle(arg.bloklar_json)
     tespitler = analiz_et(bloklar, atlananlar=atlananlar)
     kok = arg.bloklar_json.with_name(arg.bloklar_json.stem.removesuffix("_bloklar"))
+    pdf = Path(f"{kok}.pdf")
+    if pdf.exists():  # alıntı ayırma (K28): yazı tipleri PDF'ten okunur
+        from .alinti import ALINTI_NOTU, pdf_ile_isaretle
+        tespitler = pdf_ile_isaretle(pdf, bloklar, tespitler)
+        print(f"Alıntı metinlerde {sum(ALINTI_NOTU in t.aciklama for t in tespitler)} kelime tespiti düşük önceliğe indi")
     if arg.hakem:
         import json
         from .yazim_hakem import hakemle

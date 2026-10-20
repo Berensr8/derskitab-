@@ -27,6 +27,7 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.worksheet.datavalidation import DataValidation
 
+from .kriterler.alinti import ALINTI_NOTU
 from .model import Tespit
 from .pdf_notlari import KRITER_ADLARI, KURAL_ADLARI, karsi_cumle, konum_metni, oncelik
 from .sonuclar import KitapSonuclari, sonuclari_topla
@@ -98,7 +99,8 @@ def tespit_satirlari(sonuclar: KitapSonuclari) -> list[dict]:
                 karsi = f"{yer}: {karsi_cumle(t, sonuclar.tutarlilik_kaydi) or '(cümle bulunamadı)'}"
             satirlar.append({
                 "sira": (t.sayfa_no, t.bbox[1], t.bbox[0]),
-                "Kriter": KRITER_ADLARI[kriter], "Tür": TUR_ADLARI.get(t.alt_tur, t.alt_tur or ""),
+                "Kriter": KRITER_ADLARI[kriter],
+                "Tür": TUR_ADLARI.get(t.alt_tur, t.alt_tur or "") + (" — alıntı içinde" if ALINTI_NOTU in t.aciklama else ""),
                 "PDF s.": t.sayfa_no, "Kitap s.": t.basili_sayfa_no or "", "İlgili metin": t.metin_parcasi or "",
                 "Açıklama": t.aciklama, "Öneri": oneri(t), "Karşı cümle (tutarlılık)": karsi,
                 "Güven": t.guven_skoru, "Öncelik": oncelik(t.guven_skoru), "Kimlik": kimlik(t),
@@ -199,7 +201,7 @@ def _ozet_sayfasi(ws, sonuclar: KitapSonuclari, kitap: str, sayfa_sayisi: int | 
         _hucre(ws, r, c, f"=SUM({harf}{r0 + 1}:{harf}{r - 1})", yazi=_yazi(kalin=True))
     _hucre(ws, r, 10, f'=IFERROR(F{r}/(F{r}+G{r}),"-")', yazi=_yazi(kalin=True), number_format="0%")
     _hucre(ws, r + 1, 1, "İsabet = Hata / (Hata + Hata değil): editörün baktığı tespitlerin gerçekten hata "
-           "olanların oranı. Öncelik: yüksek ≥ 0,75 güven, orta ≥ 0,5, düşük = dil modeli 'muhtemelen doğru' dedi.",
+           "olanların oranı. Öncelik: yüksek ≥ 0,75 güven, orta ≥ 0,5, düşük = alıntı metinde ya da dil modeli 'muhtemelen doğru' dedi.",
            yazi=_yazi(boyut=9, renk="595959"))
 
     # Okunabilirlik kitap puanları (sistemin hesabı)

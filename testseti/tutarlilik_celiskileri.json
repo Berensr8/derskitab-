@@ -1,0 +1,1175 @@
+[
+ {
+  "id": "S01",
+  "kitap": "kitap",
+  "tur": "tarih",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 155,
+    "blok_no": 1,
+    "parca": "1071 yılında Doğu Roma"
+   },
+   {
+    "sayfa_no": 164,
+    "blok_no": 5,
+    "parca": "26 Ağustos 1071"
+   },
+   {
+    "sayfa_no": 172,
+    "blok_no": 23,
+    "parca": "1071’de gerçekleşen Malazgirt"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 179,
+   "blok_no": 7,
+   "islem": "degistir",
+   "eski": "Böylece 1071 yılında iki ordu",
+   "yeni": "Böylece 1074 yılında iki ordu"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S02",
+  "kitap": "kitap",
+  "tur": "tarih",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 154,
+    "blok_no": 59,
+    "parca": "Pasinler Savaşı'nda (1048)"
+   },
+   {
+    "sayfa_no": 172,
+    "blok_no": 30,
+    "parca": "1048’de gerçekleşen Pasinler"
+   },
+   {
+    "sayfa_no": 179,
+    "blok_no": 2,
+    "parca": "1048’de Pasinler Ovası"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 162,
+   "blok_no": 7,
+   "islem": "degistir",
+   "eski": "1048’de Selçuklular ile",
+   "yeni": "1058’de Selçuklular ile"
+  },
+  "konum": "etkinlik_metni",
+  "set": "test"
+ },
+ {
+  "id": "S03",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 42,
+    "blok_no": 25,
+    "parca": "2 milyon 682 bin 673"
+   },
+   {
+    "sayfa_no": 83,
+    "blok_no": 8,
+    "parca": "2 milyon 682 bin 673"
+   },
+   {
+    "sayfa_no": 42,
+    "blok_no": 24,
+    "parca": "yaklaşık 2,7 milyon"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 84,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": "2 milyon 682 bin 673 kişi",
+   "yeni": "3 milyon 482 bin 673 kişi"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S04",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 45,
+    "blok_no": 2,
+    "parca": "yaklaşık yüzde 35'i"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 50,
+   "blok_no": 15,
+   "islem": "degistir",
+   "eski": "yaklaşık yüzde 35'i sofralara ulaşmadan",
+   "yeni": "yaklaşık yüzde 15'i sofralara ulaşmadan"
+  },
+  "konum": "etkinlik_metni",
+  "set": "gelistirme"
+ },
+ {
+  "id": "S05",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 71,
+    "blok_no": 64,
+    "parca": "yerel saat farkı 4 dakika"
+   },
+   {
+    "sayfa_no": 71,
+    "blok_no": 65,
+    "parca": "x 4 dakika"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 69,
+   "blok_no": 15,
+   "islem": "degistir",
+   "eski": "yerel saat farkı 4 dakikadır",
+   "yeni": "yerel saat farkı 15 dakikadır"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S06",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 45,
+    "blok_no": 2,
+    "parca": "12 milyon ekmek"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 50,
+   "blok_no": 15,
+   "islem": "degistir",
+   "eski": "yaklaşık 12 milyon ekmek",
+   "yeni": "yaklaşık 3 milyon ekmek"
+  },
+  "konum": "etkinlik_metni",
+  "set": "test"
+ },
+ {
+  "id": "S07",
+  "kitap": "kitap",
+  "tur": "isim",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 149,
+    "blok_no": 1,
+    "parca": "Kaşgarlı Mahmud tarafından yazılan Divanü"
+   },
+   {
+    "sayfa_no": 149,
+    "blok_no": 4,
+    "parca": "Kaşgarlı Mahmud tarafından yazılan Divanü"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 152,
+   "blok_no": 6,
+   "islem": "degistir",
+   "eski": "Kaşgarlı Mahmud’un Divanü Lügati't-Türk adlı",
+   "yeni": "Yusuf Has Hâcib’in Divanü Lügati't-Türk adlı"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "S08",
+  "kitap": "kitap",
+  "tur": "sozel",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 149,
+    "blok_no": 6,
+    "parca": "Türkçe konuşulmaya devam etmiştir"
+   },
+   {
+    "sayfa_no": 149,
+    "blok_no": 6,
+    "parca": "halk arasında Türkçe konuşulmaya"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 159,
+   "blok_no": 7,
+   "islem": "degistir",
+   "eski": "Türkçe konuşulmaya devam edilmiş ancak Arapça ve Farsça kelimeler dilimize girmeye başlamıştır.",
+   "yeni": "Bu dönemde Türkçe konuşulmaz olmuş, yerini tamamen Arapça ve Farsça almıştır."
+  },
+  "konum": "etkinlik_metni",
+  "set": "test"
+ },
+ {
+  "id": "S09",
+  "kitap": "kitap",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 130,
+    "blok_no": 21,
+    "parca": "622 yılında Mekke'den Medine'ye"
+   },
+   {
+    "sayfa_no": 134,
+    "blok_no": 11,
+    "parca": "hicret tarihi olan 622"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 29,
+   "blok_no": 2,
+   "islem": "ekle",
+   "yeni": "Hz. Muhammed'in (sav) Mekke'den Medine'ye hicreti 632 yılında gerçekleşmiştir.",
+   "hedef_paragraf_basi": "Din, insanların duygu ve düşüncelerini etkileyerek günlük hayatlarını ve yaşam tarzlarını şekillendirir. İslam dini, ins",
+   "elle_secildi": true
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S10",
+  "kitap": "kitap",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 95,
+    "blok_no": 8,
+    "parca": "Sovyet Rusya dağılmış (1991)"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 111,
+   "blok_no": 109,
+   "islem": "ekle",
+   "yeni": "1985 yılında Sovyetler Birliği'nin yıkılmasıyla Orta Asya'daki Türk devletleri bağımsızlıklarını kazandı.",
+   "hedef_paragraf_basi": "Tarihte bilinen ilk Türk devleti, Asya Hun Devleti’dir (Harita 3.2). MÖ 220 yılında Teoman tarafından kurulmuştur. Devle"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "S11",
+  "kitap": "kitap",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 24,
+    "blok_no": 4,
+    "parca": "2021 yılından itibaren"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 96,
+   "blok_no": 12,
+   "islem": "ekle",
+   "yeni": "Kültür ve Turizm Bakanlığının düzenlediği Kültür Yolu Festivalleri ilk kez 2015 yılında yapılmaya başlanmıştır.",
+   "hedef_paragraf_basi": "\"... 2024 İstanbul Kültür Yolu Festivali kapsamında enstitümüz ve Yahya Kemal Enstitüsü iş birliğiyle bir sergi hazırlan"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "S12",
+  "kitap": "kitap",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 98,
+    "blok_no": 7,
+    "parca": "Barış Manço, 1991'de devlet sanatçısı"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 31,
+   "blok_no": 6,
+   "islem": "ekle",
+   "yeni": "Şarkılarıyla kültür elçiliği yapan Barış Manço, 1985 yılında devlet sanatçısı unvanını almıştır.",
+   "hedef_paragraf_basi": "Bir millete ait sanat eserleri; o milletin kültürünü, dilini, inancını, tarihini ve değerlerini yansıtır. Her bir sanat "
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S13",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 40,
+    "blok_no": 8,
+    "parca": "6,6 milyon kişinin yaşadığı"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 35,
+   "blok_no": 9,
+   "islem": "ekle",
+   "yeni": "Fas'taki büyük depremden etkilenen bölgelerde yaklaşık 1,5 milyon kişi yaşamaktadır.",
+   "hedef_paragraf_basi": "AFAD (Afet ve Acil Durum Yönetimi Başkanlığı), sivil toplum kuruluşları, belediyeler, polisler, jandarmalar, askerler, ö"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S14",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 41,
+    "blok_no": 12,
+    "parca": "yaklaşık 7 milyon kişinin hayatını"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 44,
+   "blok_no": 117,
+   "islem": "ekle",
+   "yeni": "Dünyada hava kirliliği nedeniyle her yıl yaklaşık 700 bin kişi hayatını kaybetmektedir.",
+   "hedef_paragraf_basi": "\"...Her yıl milyarlarca ton gıda israf edilirken milyonlarca insan da açlıkla mücadele ediyor. Birleşmiş Milletler Çevre"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S15",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 90,
+    "blok_no": 14,
+    "parca": "%75'i Türkiye'dedir"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 85,
+   "blok_no": 81,
+   "islem": "ekle",
+   "yeni": "Dünyadaki fındık dikim alanlarının yaklaşık üçte biri ülkemizde bulunmaktadır.",
+   "hedef_paragraf_basi": "Su kaynaklarının ve yağışın fazla, yer şekillerinin engebeli, tarım arazisinin az ve parçalı olduğu bölgelerde evler bir",
+   "elle_secildi": true
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S16",
+  "kitap": "kitap",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 82,
+    "blok_no": 81,
+    "parca": "%18,3'ünün ikamet ettiği İstanbul"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 85,
+   "blok_no": 1,
+   "islem": "ekle",
+   "yeni": "Türkiye nüfusunun yaklaşık üçte biri İstanbul'da yaşamaktadır.",
+   "hedef_paragraf_basi": "Kilometrekareye düşen kişi sayısına nüfus yoğunluğu denir. Nüfus yoğunluğu Türkiye genelinde 112 kişi olurken İstanbul, "
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "S17",
+  "kitap": "kitap",
+  "tur": "isim",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 68,
+    "blok_no": 16,
+    "parca": "Londra yakınındaki Greenwhich"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 71,
+   "blok_no": 4,
+   "islem": "ekle",
+   "yeni": "Başlangıç meridyeni, Fransa'nın başkenti Paris'teki gözlemevinden geçen çizgi olarak kabul edilir.",
+   "hedef_paragraf_basi": "Türkiye, ekvatora göre kuzey yarım kürede ve başlangıç meridyenine göre doğu yarım kürede yer alır. Ülkemizin en güney n"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S18",
+  "kitap": "kitap",
+  "tur": "isim",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 62,
+    "blok_no": 6,
+    "parca": "Romanya'nın başkenti Bükreş"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 56,
+   "blok_no": 22,
+   "islem": "ekle",
+   "yeni": "Karadeniz kıyısındaki komşumuz Romanya'nın başkenti Köstence şehridir.",
+   "hedef_paragraf_basi": "Türkiye'nin kara sınırı komşuları Yunanistan, Bulgaristan, Gürcistan, Ermenistan, Azerbaycan (Nahçıvan), İran, Irak ve S"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "S19",
+  "kitap": "kitap",
+  "tur": "isim",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 61,
+    "blok_no": 10,
+    "parca": "Rusya Federasyonu'nun başkenti Moskova"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 57,
+   "blok_no": 81,
+   "islem": "ekle",
+   "yeni": "Kuzeydoğu komşularımızdan Rusya Federasyonu'nun başkenti St. Petersburg'dur.",
+   "hedef_paragraf_basi": "Ülkemiz; bor, demir, bakır gibi zengin yer altı kaynaklarına sahiptir. Ayrıca petrol ve doğal gaz rezervleri bakımından "
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "S20",
+  "kitap": "kitap",
+  "tur": "en_ilk",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 149,
+    "blok_no": 4,
+    "parca": "Türkçenin bilinen ilk sözlüğü"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 152,
+   "blok_no": 11,
+   "islem": "ekle",
+   "yeni": "Türkçenin bilinen ilk sözlüğü, Yusuf Has Hâcib'in yazdığı Kutadgu Bilig'dir.",
+   "hedef_paragraf_basi": "Yusuf Has Hâcib, Kutadgu Bilig (Görsel 3.50) adlı eserinde dönem hakkında önemli bilgiler vermiştir. Türklerde kut anlay"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S21",
+  "kitap": "kitap",
+  "tur": "en_ilk",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 146,
+    "blok_no": 8,
+    "parca": "en çok tercih edilen hayvan at idi"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 123,
+   "blok_no": 4,
+   "islem": "ekle",
+   "yeni": "Orta Asya Türklerinin hayvan yetiştiriciliğinde en çok tercih ettiği hayvan koyundu.",
+   "hedef_paragraf_basi": "(…) Eski Türk ekonomisi, hayvancılığa yani besiciliğe dayanıyordu. At ve koyun, bu ekonominin iki temel unsuruydu (Görse"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S22",
+  "kitap": "kitap",
+  "tur": "en_ilk",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 82,
+    "blok_no": 81,
+    "parca": "5 milyon 910 bin 320 kişi ile Ankara"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 87,
+   "blok_no": 7,
+   "islem": "ekle",
+   "yeni": "Nüfusu en kalabalık ikinci ilimiz İzmir'dir.",
+   "hedef_paragraf_basi": "Yer şekillerinin nüfus dağılışı üzerindeki etkisine dair ülkemizdeki en dikkat çekici örneklerden biri Doğu Karadeniz’di"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S23",
+  "kitap": "kitap",
+  "tur": "sozel",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 149,
+    "blok_no": 1,
+    "parca": "yazılı edebî eserler yaygınlaşmıştır"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 146,
+   "blok_no": 11,
+   "islem": "ekle",
+   "yeni": "İslamiyet'in kabulünden sonraki dönemde Türkler arasında yazılı edebiyat geriledi ve sözlü gelenek ön plana çıktı.",
+   "hedef_paragraf_basi": "İslamiyet’in kabulünden sonra Türkler, Arap ve İran kültüründen etkilenmiştir. Bu etkileşim, Türklerin isimlerine ve hük",
+   "elle_secildi": true
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S24",
+  "kitap": "kitap",
+  "tur": "sozel",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 155,
+    "blok_no": 1,
+    "parca": "Selçuklular tarafından kazanılmıştır"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 165,
+   "blok_no": 2,
+   "islem": "ekle",
+   "yeni": "Malazgirt'te Doğu Roma ordusunun galip gelmesi, Selçukluların Anadolu'ya ilerleyişini uzun süre durdurdu.",
+   "hedef_paragraf_basi": "Anadolu’da Malazgirt Zaferi’nden sonra başlayan Türk hâkimiyeti, yeni bir devir açmıştır (Görsel 3.68). İslami eserler v"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "S25",
+  "kitap": "kitap",
+  "tur": "sozel",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 92,
+    "blok_no": 196,
+    "parca": "Orta Asya'daki Türk boylarına dayanır"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 100,
+   "blok_no": 7,
+   "islem": "ekle",
+   "yeni": "Türk dünyasının kökeni, Balkanlarda yaşayan eski topluluklara uzanmaktadır.",
+   "hedef_paragraf_basi": "Türk milleti olarak geçmişten günümüze kurduğumuz büyük devletlerle Doğu Avrupa’dan Türkistan’a, Sibirya’dan Afrika'ya k"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B01",
+  "kitap": "biyoloji10",
+  "tur": "sayi",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 61,
+    "blok_no": 6,
+    "parca": "iki kez gerçekleşir"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 63,
+   "blok_no": 35,
+   "islem": "degistir",
+   "eski": "iki kez Krebs döngüsü gerçekleşir",
+   "yeni": "bir kez Krebs döngüsü gerçekleşir"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B02",
+  "kitap": "biyoloji10",
+  "tur": "sayi",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 60,
+    "blok_no": 6,
+    "parca": "2 adet piruvat"
+   },
+   {
+    "sayfa_no": 60,
+    "blok_no": 4,
+    "parca": "2 molekül piruvata"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 71,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": "2 ATP ve 2 piruvat",
+   "yeni": "2 ATP ve 4 piruvat"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B03",
+  "kitap": "biyoloji10",
+  "tur": "sayi",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 47,
+    "blok_no": 4,
+    "parca": "dört bölmeli mide"
+   },
+   {
+    "sayfa_no": 41,
+    "blok_no": 28,
+    "parca": "dört bölmeden"
+   },
+   {
+    "sayfa_no": 189,
+    "blok_no": 36,
+    "parca": "dört bölümlü midenin"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 47,
+   "blok_no": 11,
+   "islem": "degistir",
+   "eski": "işkembe, börkenek, kırkbayır ve şirden olmak üzere dört bölümden",
+   "yeni": "işkembe, börkenek ve şirden olmak üzere üç bölümden"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B04",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 119,
+    "blok_no": 10,
+    "parca": "aşamalı olarak değişmesine süksesyon"
+   },
+   {
+    "sayfa_no": 119,
+    "blok_no": 11,
+    "parca": "zamanla aşamalı olarak"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 185,
+   "blok_no": 16,
+   "islem": "degistir",
+   "eski": "zaman içinde aşamalı olarak değişmesi sürecidir",
+   "yeni": "kısa sürede ve aniden, tek seferde değişmesi sürecidir"
+  },
+  "konum": "etkinlik_metni",
+  "set": "test"
+ },
+ {
+  "id": "B05",
+  "kitap": "biyoloji10",
+  "tur": "isim",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 98,
+    "blok_no": 4,
+    "parca": "Ekoloji, bu karmaşık etkileşimleri"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 101,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": "bilim dalına ekoloji adı verilir",
+   "yeni": "bilim dalına etoloji adı verilir"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B06",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 51,
+    "blok_no": 19,
+    "parca": "Kalın bağırsakta sindirim gerçekleşmez"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 55,
+   "blok_no": 21,
+   "islem": "degistir",
+   "eski": "Kalın bağırsakta minerallerin (elektrolitlerin) ve suyun emilimi gerçekleşir.",
+   "yeni": "Kalın bağırsakta proteinlerin kimyasal sindirimi tamamlanır ve suyun emilimi gerçekleşir."
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B07",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 27,
+    "blok_no": 27,
+    "parca": "Işığın kullanılmadığı tepkimeler Calvin döngüsü"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 35,
+   "blok_no": 9,
+   "islem": "degistir",
+   "eski": "fotosentezin ışığın kullanılmadığı tepkimelerinde döngüsel",
+   "yeni": "fotosentezin ışığın kullanıldığı tepkimelerinde döngüsel"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B08",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 45,
+    "blok_no": 19,
+    "parca": "Heterotrof canlılar ise kendi besinlerini üretme yeteneğine sahip olmadığı"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 188,
+   "blok_no": 26,
+   "islem": "degistir",
+   "eski": "Kendi organik besinini üretemediği için bu besinleri dışarıdan almak zorunda olan canlılar.",
+   "yeni": "Kendi organik besinini ışık enerjisini kullanarak üretebilen canlılar."
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B09",
+  "kitap": "biyoloji10",
+  "tur": "isim",
+  "yontem": "tekrar_boz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 188,
+    "blok_no": 25,
+    "parca": "habitat: Bir canlı türünü"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 114,
+   "blok_no": 6,
+   "islem": "degistir",
+   "eski": "doğal yaşam ortamı habitat olarak adlandırılır",
+   "yeni": "doğal yaşam ortamı popülasyon olarak adlandırılır"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B10",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 60,
+    "blok_no": 4,
+    "parca": "hücrenin sitoplazmasında 2 molekül"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 26,
+   "blok_no": 24,
+   "islem": "ekle",
+   "yeni": "Ökaryot hücrelerde glikoliz tepkimeleri mitokondrinin iç zarında gerçekleşir.",
+   "hedef_paragraf_basi": "Ökaryot hücrelerde ışığın kullanıldığı tepkimeler, kloroplast organelinin granumlarında gerçekleşirken prokaryot hücrele"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B11",
+  "kitap": "biyoloji10",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 30,
+    "blok_no": 2,
+    "parca": "1883 yılında Theodore Engelmann"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 35,
+   "blok_no": 3,
+   "islem": "ekle",
+   "yeni": "Engelmann, ışığın dalga boyunun fotosenteze etkisini gösteren deneyini 1923 yılında yapmıştır.",
+   "hedef_paragraf_basi": "Jan Ingenhousz (Yan İngenhous), 1779 yılında bir dizi deney sonucunda su bitkilerindeki yeşil kısımların ışık olduğunda "
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B12",
+  "kitap": "biyoloji10",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 35,
+    "blok_no": 7,
+    "parca": "Robert Hill (Robert Hill), 1937"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 26,
+   "blok_no": 3,
+   "islem": "ekle",
+   "yeni": "Robert Hill'in fotosentezin ışığa bağlı tepkimeleri üzerindeki çalışmaları 1957 yılına aittir.",
+   "hedef_paragraf_basi": "Fotosentez, birbiriyle ilişkili iki temel aşamada gerçekleşir. Bu aşamalar, ışığın kullanıldığı tepkimeler ve ışığın kul"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B13",
+  "kitap": "biyoloji10",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 39,
+    "blok_no": 12,
+    "parca": "28 Nisan 1993 tarihinde"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 172,
+   "blok_no": 2,
+   "islem": "ekle",
+   "yeni": "Ümraniye Hekimbaşı çöplüğündeki metan gazı patlaması 2003 yılında yaşanmıştır.",
+   "hedef_paragraf_basi": "Bu alanlarda oluşan metan gazı da patlama, heyelan, hava kirliliği vb. problemlere yol açmaktadır. Söz konusu atıkların "
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B14",
+  "kitap": "biyoloji10",
+  "tur": "tarih",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 142,
+    "blok_no": 7,
+    "parca": "1998 yılında (260 km2lik kısmı) tabiat anıtı"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 99,
+   "blok_no": 8,
+   "islem": "ekle",
+   "yeni": "Meke Krater Gölü, 2008 yılında tabiat anıtı olarak koruma altına alınmıştır.",
+   "hedef_paragraf_basi": "(…) Daha önce tabiatı koruma alanlarından biriyken 2006 yılında millî parka dönüştürüldü. Sultan Sazlığı’nın en önemli ö"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B15",
+  "kitap": "biyoloji10",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 142,
+    "blok_no": 6,
+    "parca": "yaklaşık 5 milyon yıl önce"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 120,
+   "blok_no": 5,
+   "islem": "ekle",
+   "yeni": "Meke Gölü'nün ilk krateri yaklaşık 50 bin yıl önceki bir volkanik patlamayla oluşmuştur.",
+   "hedef_paragraf_basi": "Birincil süksesyon, yerleşik bir komünitenin ve gelişmiş toprağın bulunmadığı ortamlarda başlar. Volkanik patlamalar son"
+  },
+  "konum": "etkinlik_metni",
+  "set": "test"
+ },
+ {
+  "id": "B16",
+  "kitap": "biyoloji10",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 132,
+    "blok_no": 17,
+    "parca": "421 ppm’ye ulaştı"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 30,
+   "blok_no": 7,
+   "islem": "ekle",
+   "yeni": "Atmosferdeki karbondioksit miktarı günümüzde 300 ppm'nin altında seyretmektedir.",
+   "hedef_paragraf_basi": "Karbondioksit, fotosentezin ışığın kullanılmadığı tepkimelerinin gerçekleşmesi için gereklidir. Atmosferdeki CO2 oranı y"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B17",
+  "kitap": "biyoloji10",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 87,
+    "blok_no": 4,
+    "parca": "2.500-3.000 kalori"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 93,
+   "blok_no": 16,
+   "islem": "ekle",
+   "yeni": "Sağlıklı bir yetişkinin günlük enerji ihtiyacı ortalama 1.000 kalori kadardır.",
+   "hedef_paragraf_basi": "Gebelik öncesinde normal bir kadının günlük 2.000-2.100 kaloriye ihtiyacı varken gebelik döneminde enerji ihtiyacı 2.150"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B18",
+  "kitap": "biyoloji10",
+  "tur": "sayi",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 61,
+    "blok_no": 5,
+    "parca": "dört CO₂, altı NADH ve iki FADH₂"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 70,
+   "blok_no": 5,
+   "islem": "ekle",
+   "yeni": "İki Asetil-CoA molekülünün Krebs döngüsüne girmesiyle toplam iki NADH oluşur.",
+   "hedef_paragraf_basi": "Fermantasyon sonucunda organik bileşiklerin yanı sıra bazı durumlarda inorganik bileşikler de (örneğin karbondioksit) ol"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B19",
+  "kitap": "biyoloji10",
+  "tur": "en_ilk",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 64,
+    "blok_no": 9,
+    "parca": "en uzun mesafeyi kateden kuş türüdür"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 108,
+   "blok_no": 14,
+   "islem": "ekle",
+   "yeni": "Göç sırasında en uzun mesafeyi kateden kuş türü leyleklerdir.",
+   "hedef_paragraf_basi": "Lagünde kuş türlerinin yanı sıra Nil kaplumbağası, benekli kaplumbağa, nesli tükenmek üzere olan iribaş, deniz kaplumbağ"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B20",
+  "kitap": "biyoloji10",
+  "tur": "en_ilk",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 165,
+    "blok_no": 3,
+    "parca": "ilk olarak Ege Tarımsal Araştırma"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 182,
+   "blok_no": 5,
+   "islem": "ekle",
+   "yeni": "Ülkemizde alan dışı koruma çalışmaları ilk olarak Karadeniz Tarımsal Araştırma Enstitüsünde başlatılmıştır.",
+   "hedef_paragraf_basi": "Ulusal ve uluslararası düzeyde doğanın korunmasına ve doğal kaynakların sürdürülebilir kullanımına yönelik çalışmalar ya"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B21",
+  "kitap": "biyoloji10",
+  "tur": "en_ilk",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 24,
+    "blok_no": 9,
+    "parca": "besin zincirinin ilk halkasını oluşturur"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 130,
+   "blok_no": 3,
+   "islem": "ekle",
+   "yeni": "Su ekosistemlerinde besin zincirinin ilk halkasını balıklar gibi tüketiciler oluşturur.",
+   "hedef_paragraf_basi": "Bir ekosistemde canlılar, besin zinciri ve besin ağı içinde beslenme ilişkileri kurar ve bu ilişkilere göre trofik basam"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B22",
+  "kitap": "biyoloji10",
+  "tur": "en_ilk",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 46,
+    "blok_no": 5,
+    "parca": "Midenin ilk bölümünde bulunan bezli midede"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 49,
+   "blok_no": 12,
+   "islem": "ekle",
+   "yeni": "Kuşlarda besinler önce kaslı mideye (taşlık), ardından bezli mideye ulaşır.",
+   "hedef_paragraf_basi": "Benzer şekilde insan vücudunda da besinler ağızdan alındıktan sonra sindirim sisteminde aşamalı olarak parçalanır ve dah"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ },
+ {
+  "id": "B23",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 51,
+    "blok_no": 3,
+    "parca": "besin maddeleri ince bağırsakta emilir"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 54,
+   "blok_no": 3,
+   "islem": "ekle",
+   "yeni": "İnsanda besinlerin emiliminin büyük bölümü mide duvarından gerçekleşir.",
+   "hedef_paragraf_basi": "Sindirilmiş besinlerin sindirim kanalından kana geçişine emilim denir. Sindirilmiş besinler, su, mineraller ve iyonlar; "
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B24",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 105,
+    "blok_no": 2,
+    "parca": "organik maddeleri inorganik maddelere dönüştüren"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 190,
+   "blok_no": 10,
+   "islem": "ekle",
+   "yeni": "Ayrıştırıcılar, inorganik maddelerden organik madde üreten ototrof canlılardır.",
+   "hedef_paragraf_basi": "üretici canlı: Işık enerjisini veya kimyasal bağ enerjisini kullanarak inorganik maddelerden kendi besinini üreten canlı"
+  },
+  "konum": "duz_metin",
+  "set": "gelistirme"
+ },
+ {
+  "id": "B25",
+  "kitap": "biyoloji10",
+  "tur": "sozel",
+  "yontem": "yeniden_yaz",
+  "kaynaklar": [
+   {
+    "sayfa_no": 27,
+    "blok_no": 2,
+    "parca": "Fotoliz sonucu serbest kalan oksijen"
+   }
+  ],
+  "hedef": {
+   "sayfa_no": 36,
+   "blok_no": 20,
+   "islem": "ekle",
+   "yeni": "Fotolizde suyun parçalanmasıyla oluşan oksijen atmosfere verilmez, tamamı hücrede glikoz sentezinde kullanılır.",
+   "hedef_paragraf_basi": "Bilim insanları, ağır oksijen izotopu kullanarak fotosentezde üretilen oksijenlerin kaynağının CO2 değil H2O olduğunu is"
+  },
+  "konum": "duz_metin",
+  "set": "test"
+ }
+]

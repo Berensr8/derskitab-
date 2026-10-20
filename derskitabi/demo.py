@@ -1,4 +1,5 @@
-"""Sunum başlatıcısı: PDF seç -> tüm adımları çalıştır -> inceleme sayfasını tarayıcıda aç.
+"""Sunum başlatıcısı: PDF seç -> tüm adımları çalıştır -> inceleme sayfasını tarayıcıda aç;
+ayrıca tespitler kitabın PDF'ine yorum notu olarak işlenir (notlu PDF, K26).
 
 DEMO.bat'a çift tıklanarak (ya da PDF DEMO.bat'ın üzerine sürüklenerek) çalıştırılır.
 Çıktılar veri/demo/<kitap adı>/ klasörüne yazılır; seçilen PDF'e dokunulmaz.
@@ -19,9 +20,10 @@ import pymupdf
 from . import yerel_model
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
-from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet
+from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet, tespitleri_yukle
 from .kriterler import okunabilirlik, tutarlilik, yazim, yazim_hakem
 from .model import BLOK_TURLERI
+from .pdf_notlari import KRITER_ADLARI, notlu_pdf_olustur
 from .pdf_cikarma import MetinYokHatasi, bloklari_cikar
 
 PROJE_KOKU = Path(__file__).resolve().parent.parent
@@ -65,7 +67,7 @@ def sayfa_sor(sayfa_sayisi: int) -> list[int] | None:
 
 
 def adim(no: int, metin: str) -> float:
-    print(f"\n[{no}/5] {metin}...")
+    print(f"\n[{no}/6] {metin}...")
     return time.perf_counter()
 
 
@@ -95,24 +97,26 @@ def ollama_hazir_mi() -> str | None:
     return f"eksik model: {', '.join(eksik)}" if eksik else None
 
 
-def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> list | None:
+def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> tuple[list | None, list | None]:
     """Önceden hesaplanmış tam kitap sonucu varsa onu kullanır; yoksa (Ollama hazırsa ve
-    kullanıcı isterse) seçili sayfalarda çalıştırır; ikisi de olmazsa atlar."""
+    kullanıcı isterse) seçili sayfalarda çalıştırır; ikisi de olmazsa atlar.
+    Döner: (aday kaydı, tespitler) — atlandıysa (None, None)."""
     hazir = pdf.with_name(pdf.stem + "_tutarlilik_adaylar.json")
-    if hazir.exists():
+    hazir_tespitler = pdf.with_name(pdf.stem + "_tutarlilik_tespitler.json")
+    if hazir.exists() and hazir_tespitler.exists():
         kayit = json.loads(hazir.read_text(encoding="utf-8"))
         tespit = sum(1 for k in kayit if k.get("guven"))
         print(f"  Önceden hesaplanmış tam kitap sonucu kullanılıyor ({hazir.name}): "
               f"{len(kayit)} cümle çifti karşılaştırılmış, {tespit} bilgi tutarsızlığı tespiti.")
-        return kayit
+        return kayit, tespitleri_yukle(hazir_tespitler)
     sebep = ollama_hazir_mi()
     if sebep:
         print(f"  Atlandı: {sebep}. İnceleme sayfasında Tutarlılık sekmesi görünmeyecek.")
-        return None
+        return None, None
     kapsam = f"seçili {len(sayfalar)} sayfada" if sayfalar else "kitabın tamamında (uzun sürebilir: 15-45 dk)"
     if not evet_mi(f"  Tutarlılık yerel modellerle {kapsam} çalıştırılsın mı? Bilgisayar şarja takılı olmalı"):
         print("  Atlandı.")
-        return None
+        return None, None
     secili = set(sayfalar) if sayfalar else None
     onbellek_yolu = klasor / "tutarlilik_onbellek.json"
     onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
@@ -125,7 +129,7 @@ def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> list | None:
         json_kaydet(onbellek, onbellek_yolu)
     tespitleri_kaydet(tespitler, klasor / "tutarlilik_tespitler.json")
     json_kaydet(kayit, klasor / "tutarlilik_adaylar.json")
-    return kayit
+    return kayit, tespitler
 
 
 def test_modu_var_mi(pdf: Path) -> bool:
@@ -234,7 +238,7 @@ def main() -> None:
 
     # 4. Bilgi tutarsızlığı (yerel modeller; hazır sonuç yoksa isteğe bağlı)
     t = adim(4, "Bilgi tutarsızlığı (bge-m3 + gemma4 + Turkish-Gemma)")
-    tutarlilik_kaydi = tutarlilik_adimi(pdf, bloklar, sayfalar, klasor)
+    tutarlilik_kaydi, tutarlilik_tespitleri = tutarlilik_adimi(pdf, bloklar, sayfalar, klasor)
     print(f"  ({time.perf_counter() - t:.1f} sn)")
 
     # 5. İnceleme sayfası
@@ -243,6 +247,22 @@ def main() -> None:
     inceleme_html_olustur(pdf, html, sayfalar, bloklar=bloklar, analiz=analiz,
                           yazim_tespitleri=yazim_tespitleri, tutarlilik_kaydi=tutarlilik_kaydi)
     print(f"  {html} ({html.stat().st_size / 1e6:.1f} MB, {time.perf_counter() - t:.1f} sn)")
+
+    # 6. Notlu PDF (sayfa seçildiyse yalnız o sayfaların tespitleri; kitabın sayfa düzeni değişmez)
+    t = adim(6, "Tespitler kitabın PDF'ine yorum notu olarak işleniyor")
+    sec = (lambda liste: [x for x in liste if x.sayfa_no in secili]) if secili else (lambda liste: liste)
+    notlu = klasor / f"{pdf.stem}_notlu.pdf"
+    sonuc = notlu_pdf_olustur(
+        pdf, notlu, bloklar=bloklar, yazim_tespitleri=sec(yazim_tespitleri),
+        okunabilirlik_tespitleri=sec(analiz[1]),
+        tutarlilik_tespitleri=sec(tutarlilik_tespitleri) if tutarlilik_tespitleri is not None else None,
+        tutarlilik_kaydi=tutarlilik_kaydi,
+        kapsam=f"Yalnız seçili {len(sayfalar)} sayfa incelendi." if sayfalar else None)
+    print("  " + " · ".join(f"{ad}: {sonuc[k]}" for k, ad in KRITER_ADLARI.items()))
+    if sonuc["dusuk_atlanan"]:
+        print(f"  Düşük öncelikli {sonuc['dusuk_atlanan']} yazım tespiti eklenmedi.")
+    print(f"  {notlu} ({time.perf_counter() - t:.1f} sn)")
+    print("  Herhangi bir PDF okuyucuda açın: notlar Yorumlar panelinde, liste Yer İmleri panelinde.")
 
     print("\nTarayıcıda açılıyor. Bir kutuya tıklayın: ayrıntılar sağda görünür.")
     webbrowser.open(html.as_uri())

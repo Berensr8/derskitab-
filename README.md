@@ -22,8 +22,14 @@ Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 ## Kullanım
 
 **En kolay yol:** `DEMO.bat` dosyasına çift tıklayın (ya da bir PDF'i üzerine sürükleyin).
-PDF seçilir, beş adım çalışır (PDF, okunabilirlik, yazım, bilgi tutarsızlığı, inceleme) ve
-inceleme sayfası tarayıcıda açılır. Çıktılar `veri/demo/<kitap adı>/` klasörüne yazılır.
+PDF seçilir, altı adım çalışır (PDF, okunabilirlik, yazım, bilgi tutarsızlığı, inceleme,
+notlu PDF) ve inceleme sayfası tarayıcıda açılır. Çıktılar `veri/demo/<kitap adı>/` klasörüne yazılır.
+
+- **Notlu PDF** (`<kitap>_notlu.pdf`): kitabın kendisi, tespitler üzerinde standart PDF yorum
+  notu olarak (Acrobat, Edge, Foxit… her okuyucuda açılır; kitabın metni ve sayfa düzeni değişmez).
+  Kırmızı dalgalı çizgi = yazım, turuncu çerçeve = dilsel karmaşıklık, mor vurgu = çelişen cümleler
+  (kenardaki "↔ s. 45" etiketi karşı cümleye götürür). 1. sayfada özet notu; Yer İmleri panelinde
+  kritere göre tespit listesi. Editör notlara yanıt yazabilir, "çözüldü" işaretleyebilir.
 
 - **Bilgi tutarsızlığı** yerel modeller gerektirir. Kitabın önceden hesaplanmış tam kitap
   sonucu (`veri/<kitap>_tutarlilik_adaylar.json`) varsa o kullanılır; yoksa Ollama çalışıyorsa
@@ -55,7 +61,12 @@ Adımlar tek tek de çalıştırılabilir:
 #    -> veri/kitap_tutarlilik_tespitler.json (+ _adaylar.json: her aday çiftin kararları)
 .venv\Scripts\python.exe -m derskitabi.kriterler.tutarlilik veri\kitap_bloklar.json
 
-# Sistemin gözünden PDF: bloklar, cümleler ve tespitler kitabın üzerine çizilir
+# Notlu PDF (editör için): tespitler kitabın PDF'ine yorum notu olarak -> veri/kitap_notlu.pdf
+#    Tutarlılık sonucu varsa (veri/kitap_tutarlilik_tespitler.json) o da eklenir.
+#    --dusuk-guven: hakemin "muhtemelen doğru" dediği yazım tespitleri de (gri) eklenir
+.venv\Scripts\python.exe -m derskitabi.pdf_notlari veri\kitap.pdf --hakem
+
+# Sistemin gözünden PDF (geliştirici için): bloklar, cümleler ve tespitler kitabın üzerine çizilir
 .venv\Scripts\python.exe -m derskitabi.gorsellestir veri\kitap.pdf --sayfalar 28-35
 
 # Etkileşimli inceleyici (tarayıcıda açılan tek HTML dosyası): bloğa tıkla, ayrıntıyı gör;

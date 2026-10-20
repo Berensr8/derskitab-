@@ -1,0 +1,1442 @@
+[
+ {
+  "id": "YS01",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "aldğı",
+  "sayfa_no": 19,
+  "blok_no": 1,
+  "hedef": {
+   "sayfa_no": 19,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": "man içinde yer aldığı grupları ve gr",
+   "yeni": "man içinde yer aldğı grupları ve gr"
+  }
+ },
+ {
+  "id": "YS02",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "kalemllerden",
+  "sayfa_no": 21,
+  "blok_no": 1,
+  "hedef": {
+   "sayfa_no": 21,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": "ek için renkli kalemlerden yararlanınız. ",
+   "yeni": "ek için renkli kalemllerden yararlanınız. "
+  }
+ },
+ {
+  "id": "YS03",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "rolleirn",
+  "sayfa_no": 21,
+  "blok_no": 5,
+  "hedef": {
+   "sayfa_no": 21,
+   "blok_no": 5,
+   "islem": "degistir",
+   "eski": "bu gruplardaki rollerin zaman içindeki",
+   "yeni": "bu gruplardaki rolleirn zaman içindeki"
+  }
+ },
+ {
+  "id": "YS04",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "degerlendirme",
+  "sayfa_no": 22,
+  "blok_no": 1,
+  "hedef": {
+   "sayfa_no": 22,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": "ifade eden bir değerlendirme raporu yazınız",
+   "yeni": "ifade eden bir degerlendirme raporu yazınız"
+  }
+ },
+ {
+  "id": "YS05",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "bag_de_da_uyum",
+  "beklenen_alt_tur": "bag_de_da_uyum",
+  "aranan": "hem da",
+  "sayfa_no": 26,
+  "blok_no": 17,
+  "hedef": {
+   "sayfa_no": 26,
+   "blok_no": 17,
+   "islem": "degistir",
+   "eski": "hem de toplumsal",
+   "yeni": "hem da toplumsal"
+  }
+ },
+ {
+  "id": "YS06",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sözleiryle",
+  "sayfa_no": 27,
+  "blok_no": 3,
+  "hedef": {
+   "sayfa_no": 27,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": "zin önemini şu sözleriyle vurgular.",
+   "yeni": "zin önemini şu sözleiryle vurgular."
+  }
+ },
+ {
+  "id": "YS07",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "illetimiz,toplumsal",
+  "sayfa_no": 29,
+  "blok_no": 4,
+  "hedef": {
+   "sayfa_no": 29,
+   "blok_no": 4,
+   "islem": "degistir",
+   "eski": "illetimiz, toplumsal",
+   "yeni": "illetimiz,toplumsal"
+  }
+ },
+ {
+  "id": "YS08",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "baaşrı",
+  "sayfa_no": 30,
+  "blok_no": 7,
+  "hedef": {
+   "sayfa_no": 30,
+   "blok_no": 7,
+   "islem": "degistir",
+   "eski": "di, cephanesiz başarı sağlamak nered",
+   "yeni": "di, cephanesiz baaşrı sağlamak nered"
+  }
+ },
+ {
+  "id": "YS09",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "heybelree",
+  "sayfa_no": 31,
+  "blok_no": 10,
+  "hedef": {
+   "sayfa_no": 31,
+   "blok_no": 10,
+   "islem": "degistir",
+   "eski": "r kilimlere ve heybelere ilmek ilmek iş",
+   "yeni": "r kilimlere ve heybelree ilmek ilmek iş"
+  }
+ },
+ {
+  "id": "YS10",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "önreğinde",
+  "sayfa_no": 32,
+  "blok_no": 5,
+  "hedef": {
+   "sayfa_no": 32,
+   "blok_no": 5,
+   "islem": "degistir",
+   "eski": "Zimem defteri örneğinde olduğu gibi to",
+   "yeni": "Zimem defteri önreğinde olduğu gibi to"
+  }
+ },
+ {
+  "id": "YS11",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sorrunlarla",
+  "sayfa_no": 38,
+  "blok_no": 7,
+  "hedef": {
+   "sayfa_no": 38,
+   "blok_no": 7,
+   "islem": "degistir",
+   "eski": "bazı toplumsal sorunlarla karşılaşabilir",
+   "yeni": "bazı toplumsal sorrunlarla karşılaşabilir"
+  }
+ },
+ {
+  "id": "YS12",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sorunllara",
+  "sayfa_no": 46,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 46,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "a karşılaşılan sorunlara yönelik çözüm ",
+   "yeni": "a karşılaşılan sorunllara yönelik çözüm "
+  }
+ },
+ {
+  "id": "YS13",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "çeşitlli",
+  "sayfa_no": 49,
+  "blok_no": 16,
+  "hedef": {
+   "sayfa_no": 49,
+   "blok_no": 16,
+   "islem": "degistir",
+   "eski": "ıt, metal vb.) çeşitli fiziksel ve ki",
+   "yeni": "ıt, metal vb.) çeşitlli fiziksel ve ki"
+  }
+ },
+ {
+  "id": "YS14",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "birrlikteliğin",
+  "sayfa_no": 50,
+  "blok_no": 12,
+  "hedef": {
+   "sayfa_no": 50,
+   "blok_no": 12,
+   "islem": "degistir",
+   "eski": "acı, toplumsal birlikteliğin oluşmasında aş",
+   "yeni": "acı, toplumsal birrlikteliğin oluşmasında aş"
+  }
+ },
+ {
+  "id": "YS15",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "bitisik_ayri",
+  "beklenen_alt_tur": "bitisik_ayri",
+  "aranan": "her hangi",
+  "sayfa_no": 56,
+  "blok_no": 1,
+  "hedef": {
+   "sayfa_no": 56,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": " üzerindeki herhangi bir yerin b",
+   "yeni": " üzerindeki her hangi bir yerin b"
+  }
+ },
+ {
+  "id": "YS16",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sınifta",
+  "sayfa_no": 60,
+  "blok_no": 1,
+  "hedef": {
+   "sayfa_no": 60,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": " devletleri 5. sınıfta öğrenmiştiniz.",
+   "yeni": " devletleri 5. sınifta öğrenmiştiniz."
+  }
+ },
+ {
+  "id": "YS17",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "bag_de_da_uyum",
+  "beklenen_alt_tur": "bag_de_da_uyum",
+  "aranan": "denizlerde da",
+  "sayfa_no": 63,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 63,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "denizlerde de egemenlik",
+   "yeni": "denizlerde da egemenlik"
+  }
+ },
+ {
+  "id": "YS18",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "hairta",
+  "sayfa_no": 67,
+  "blok_no": 1,
+  "hedef": {
+   "sayfa_no": 67,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": "ildirimlerini, harita, kroki gibi ar",
+   "yeni": "ildirimlerini, hairta, kroki gibi ar"
+  }
+ },
+ {
+  "id": "YS19",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "özetleiniz",
+  "sayfa_no": 75,
+  "blok_no": 4,
+  "hedef": {
+   "sayfa_no": 75,
+   "blok_no": 4,
+   "islem": "degistir",
+   "eski": "a sözlü olarak özetleyiniz. Sözlü anlatım",
+   "yeni": "a sözlü olarak özetleiniz. Sözlü anlatım"
+  }
+ },
+ {
+  "id": "YS20",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "ya_da",
+  "beklenen_alt_tur": "ya_da",
+  "aranan": "yada",
+  "sayfa_no": 77,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 77,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "seçme ya da seçmeme",
+   "yeni": "seçme yada seçmeme"
+  }
+ },
+ {
+  "id": "YS21",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "iklim,ülkemizin",
+  "sayfa_no": 78,
+  "blok_no": 177,
+  "hedef": {
+   "sayfa_no": 78,
+   "blok_no": 177,
+   "islem": "degistir",
+   "eski": "iklim, ülkemizin",
+   "yeni": "iklim,ülkemizin"
+  }
+ },
+ {
+  "id": "YS22",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "geişiminde",
+  "sayfa_no": 85,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 85,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": " yerleşmelerin gelişiminde doğal ve beşer",
+   "yeni": " yerleşmelerin geişiminde doğal ve beşer"
+  }
+ },
+ {
+  "id": "YS23",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "ülkemizzin",
+  "sayfa_no": 89,
+  "blok_no": 1522,
+  "hedef": {
+   "sayfa_no": 89,
+   "blok_no": 1522,
+   "islem": "degistir",
+   "eski": "rin nüfusu ile ülkemizin doğal çevre öz",
+   "yeni": "rin nüfusu ile ülkemizzin doğal çevre öz"
+  }
+ },
+ {
+  "id": "YS24",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "bağları,örneklerde",
+  "sayfa_no": 100,
+  "blok_no": 8,
+  "hedef": {
+   "sayfa_no": 100,
+   "blok_no": 8,
+   "islem": "degistir",
+   "eski": "bağları, örneklerde",
+   "yeni": "bağları,örneklerde"
+  }
+ },
+ {
+  "id": "YS25",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "tarfaından",
+  "sayfa_no": 111,
+  "blok_no": 109,
+  "hedef": {
+   "sayfa_no": 111,
+   "blok_no": 109,
+   "islem": "degistir",
+   "eski": "yılında Teoman tarafından kurulmuştur. D",
+   "yeni": "yılında Teoman tarfaından kurulmuştur. D"
+  }
+ },
+ {
+  "id": "YS26",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "zayıflaıştır",
+  "sayfa_no": 112,
+  "blok_no": 210,
+  "hedef": {
+   "sayfa_no": 112,
+   "blok_no": 210,
+   "islem": "degistir",
+   "eski": "tli sebeplerle zayıflamıştır. Doğu ve batı ",
+   "yeni": "tli sebeplerle zayıflaıştır. Doğu ve batı "
+  }
+ },
+ {
+  "id": "YS27",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "etmeize",
+  "sayfa_no": 113,
+  "blok_no": 354,
+  "hedef": {
+   "sayfa_no": 113,
+   "blok_no": 354,
+   "islem": "degistir",
+   "eski": "i şekilde inşa etmemize yardımcı olur.",
+   "yeni": "i şekilde inşa etmeize yardımcı olur."
+  }
+ },
+ {
+  "id": "YS28",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "hakani",
+  "sayfa_no": 114,
+  "blok_no": 3,
+  "hedef": {
+   "sayfa_no": 114,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": "miş. Türklerin hakanı, Ötüken’de otu",
+   "yeni": "miş. Türklerin hakani, Ötüken’de otu"
+  }
+ },
+ {
+  "id": "YS29",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "akillı",
+  "sayfa_no": 114,
+  "blok_no": 4,
+  "hedef": {
+   "sayfa_no": 114,
+   "blok_no": 4,
+   "islem": "degistir",
+   "eski": " gösterip iyi, akıllı ve cesur kimse",
+   "yeni": " gösterip iyi, akillı ve cesur kimse"
+  }
+ },
+ {
+  "id": "YS30",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "külturel",
+  "sayfa_no": 116,
+  "blok_no": 10,
+  "hedef": {
+   "sayfa_no": 116,
+   "blok_no": 10,
+   "islem": "degistir",
+   "eski": " (ekonomik) ve kültürel bütün meselele",
+   "yeni": " (ekonomik) ve külturel bütün meselele"
+  }
+ },
+ {
+  "id": "YS31",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "bitisik_ayri",
+  "beklenen_alt_tur": "bitisik_ayri",
+  "aranan": "her hangi",
+  "sayfa_no": 133,
+  "blok_no": 8,
+  "hedef": {
+   "sayfa_no": 133,
+   "blok_no": 8,
+   "islem": "degistir",
+   "eski": " insanların herhangi bir ayrım y",
+   "yeni": " insanların her hangi bir ayrım y"
+  }
+ },
+ {
+  "id": "YS32",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "kelime_tekrari",
+  "beklenen_alt_tur": "kelime_tekrari",
+  "aranan": "ve ve",
+  "sayfa_no": 139,
+  "blok_no": 14,
+  "hedef": {
+   "sayfa_no": 139,
+   "blok_no": 14,
+   "islem": "degistir",
+   "eski": "dönmelerini ve detaylı",
+   "yeni": "dönmelerini ve ve detaylı"
+  }
+ },
+ {
+  "id": "YS33",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "bag_te_ta",
+  "beklenen_alt_tur": "bag_te_ta",
+  "aranan": "devletlerinde te",
+  "sayfa_no": 148,
+  "blok_no": 8,
+  "hedef": {
+   "sayfa_no": 148,
+   "blok_no": 8,
+   "islem": "degistir",
+   "eski": "devletlerinde de devam",
+   "yeni": "devletlerinde te devam"
+  }
+ },
+ {
+  "id": "YS34",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sosal",
+  "sayfa_no": 150,
+  "blok_no": 10,
+  "hedef": {
+   "sayfa_no": 150,
+   "blok_no": 10,
+   "islem": "degistir",
+   "eski": "et’i kabulüyle sosyal ve kültürel ha",
+   "yeni": "et’i kabulüyle sosal ve kültürel ha"
+  }
+ },
+ {
+  "id": "YS35",
+  "kitap": "kitap",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "bitisik_ayri",
+  "beklenen_alt_tur": "bitisik_ayri",
+  "aranan": "her hangi",
+  "sayfa_no": 155,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 155,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "en günümüze herhangi bir örnek u",
+   "yeni": "en günümüze her hangi bir örnek u"
+  }
+ },
+ {
+  "id": "YS36",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "plalandığı",
+  "sayfa_no": 163,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 163,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "ılan akınların planlandığı ve dönüşlerind",
+   "yeni": "ılan akınların plalandığı ve dönüşlerind"
+  }
+ },
+ {
+  "id": "YS37",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "kazandi",
+  "sayfa_no": 169,
+  "blok_no": 1,
+  "hedef": {
+   "sayfa_no": 169,
+   "blok_no": 1,
+   "islem": "degistir",
+   "eski": "büyük zaferini kazandı. Miryokefalon ",
+   "yeni": "büyük zaferini kazandi. Miryokefalon "
+  }
+ },
+ {
+  "id": "YS38",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "kaldirmıştır",
+  "sayfa_no": 172,
+  "blok_no": 24,
+  "hedef": {
+   "sayfa_no": 172,
+   "blok_no": 24,
+   "islem": "degistir",
+   "eski": "uğu'nu ortadan kaldırmıştır. Bunun üzerine",
+   "yeni": "uğu'nu ortadan kaldirmıştır. Bunun üzerine"
+  }
+ },
+ {
+  "id": "YS39",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "harekkete",
+  "sayfa_no": 172,
+  "blok_no": 29,
+  "hedef": {
+   "sayfa_no": 172,
+   "blok_no": 29,
+   "islem": "degistir",
+   "eski": "sı için tekrar harekete geçirmiş",
+   "yeni": "sı için tekrar harekkete geçirmiş"
+  }
+ },
+ {
+  "id": "YS40",
+  "kitap": "kitap",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "cami,medrese",
+  "sayfa_no": 174,
+  "blok_no": 9,
+  "hedef": {
+   "sayfa_no": 174,
+   "blok_no": 9,
+   "islem": "degistir",
+   "eski": "cami, medrese",
+   "yeni": "cami,medrese"
+  }
+ },
+ {
+  "id": "YB01",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "metabolizmasi",
+  "sayfa_no": 19,
+  "blok_no": 14,
+  "hedef": {
+   "sayfa_no": 19,
+   "blok_no": 14,
+   "islem": "degistir",
+   "eski": "rılamaz. Hücre metabolizması için gerekli A",
+   "yeni": "rılamaz. Hücre metabolizmasi için gerekli A"
+  }
+ },
+ {
+  "id": "YB02",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "etmitşir",
+  "sayfa_no": 34,
+  "blok_no": 19,
+  "hedef": {
+   "sayfa_no": 34,
+   "blok_no": 19,
+   "islem": "degistir",
+   "eski": "ttığını tespit etmiştir. Toprağı kurut",
+   "yeni": "ttığını tespit etmitşir. Toprağı kurut"
+  }
+ },
+ {
+  "id": "YB03",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "kontrrollü",
+  "sayfa_no": 35,
+  "blok_no": 19,
+  "hedef": {
+   "sayfa_no": 35,
+   "blok_no": 19,
+   "islem": "degistir",
+   "eski": "entezle ilgili kontrollü bir deney tasa",
+   "yeni": "entezle ilgili kontrrollü bir deney tasa"
+  }
+ },
+ {
+  "id": "YB04",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "uzaklaştırrılması",
+  "sayfa_no": 45,
+  "blok_no": 19,
+  "hedef": {
+   "sayfa_no": 45,
+   "blok_no": 19,
+   "islem": "degistir",
+   "eski": "m ve atıkların uzaklaştırılması şeklinde gerçe",
+   "yeni": "m ve atıkların uzaklaştırrılması şeklinde gerçe"
+  }
+ },
+ {
+  "id": "YB05",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "monosakkaritlere,yağlar",
+  "sayfa_no": 46,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 46,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "monosakkaritlere, yağlar",
+   "yeni": "monosakkaritlere,yağlar"
+  }
+ },
+ {
+  "id": "YB06",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "üretimi,büyüme",
+  "sayfa_no": 50,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 50,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "üretimi, büyüme",
+   "yeni": "üretimi,büyüme"
+  }
+ },
+ {
+  "id": "YB07",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "safarnın",
+  "sayfa_no": 51,
+  "blok_no": 13,
+  "hedef": {
+   "sayfa_no": 51,
+   "blok_no": 13,
+   "islem": "degistir",
+   "eski": "ğerde üretilen safranın depolandığı ve",
+   "yeni": "ğerde üretilen safarnın depolandığı ve"
+  }
+ },
+ {
+  "id": "YB08",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "süreçlrini",
+  "sayfa_no": 65,
+  "blok_no": 3,
+  "hedef": {
+   "sayfa_no": 65,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": " enerji eldesi süreçlerini karşılaştırabi",
+   "yeni": " enerji eldesi süreçlrini karşılaştırabi"
+  }
+ },
+ {
+  "id": "YB09",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "içreen",
+  "sayfa_no": 67,
+  "blok_no": 5,
+  "hedef": {
+   "sayfa_no": 67,
+   "blok_no": 5,
+   "islem": "degistir",
+   "eski": "ek olarak azot içeren atık maddeler ",
+   "yeni": "ek olarak azot içreen atık maddeler "
+  }
+ },
+ {
+  "id": "YB10",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sürmüştu",
+  "sayfa_no": 72,
+  "blok_no": 6,
+  "hedef": {
+   "sayfa_no": 72,
+   "blok_no": 6,
+   "islem": "degistir",
+   "eski": "aklaşık üç gün sürmüştü. İnsanların uz",
+   "yeni": "aklaşık üç gün sürmüştu. İnsanların uz"
+  }
+ },
+ {
+  "id": "YB11",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "çalışmasi",
+  "sayfa_no": 74,
+  "blok_no": 22,
+  "hedef": {
+   "sayfa_no": 74,
+   "blok_no": 22,
+   "islem": "degistir",
+   "eski": "si, organların çalışması, vücut ısısını",
+   "yeni": "si, organların çalışmasi, vücut ısısını"
+  }
+ },
+ {
+  "id": "YB12",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "oğrencilere",
+  "sayfa_no": 77,
+  "blok_no": 11,
+  "hedef": {
+   "sayfa_no": 77,
+   "blok_no": 11,
+   "islem": "degistir",
+   "eski": " ihtiyacı olan öğrencilere yemek, kırtasi",
+   "yeni": " ihtiyacı olan oğrencilere yemek, kırtasi"
+  }
+ },
+ {
+  "id": "YB13",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "kelime_tekrari",
+  "beklenen_alt_tur": "kelime_tekrari",
+  "aranan": "ve ve",
+  "sayfa_no": 81,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 81,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "kullanıldığı ve ışığın",
+   "yeni": "kullanıldığı ve ve ışığın"
+  }
+ },
+ {
+  "id": "YB14",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "dönüşebilmessi",
+  "sayfa_no": 87,
+  "blok_no": 9,
+  "hedef": {
+   "sayfa_no": 87,
+   "blok_no": 9,
+   "islem": "degistir",
+   "eski": "ların enerjiye dönüşebilmesi sürecinde besi",
+   "yeni": "ların enerjiye dönüşebilmessi sürecinde besi"
+  }
+ },
+ {
+  "id": "YB15",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "alanlar,yağmur",
+  "sayfa_no": 99,
+  "blok_no": 6,
+  "hedef": {
+   "sayfa_no": 99,
+   "blok_no": 6,
+   "islem": "degistir",
+   "eski": "alanlar, yağmur",
+   "yeni": "alanlar,yağmur"
+  }
+ },
+ {
+  "id": "YB16",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "birimllerdir",
+  "sayfa_no": 101,
+  "blok_no": 6,
+  "hedef": {
+   "sayfa_no": 101,
+   "blok_no": 6,
+   "islem": "degistir",
+   "eski": "şenleri içeren birimlerdir. Bir ekosistem",
+   "yeni": "şenleri içeren birimllerdir. Bir ekosistem"
+  }
+ },
+ {
+  "id": "YB17",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "bitisik_ayri",
+  "beklenen_alt_tur": "bitisik_ayri",
+  "aranan": "her hangi",
+  "sayfa_no": 101,
+  "blok_no": 9,
+  "hedef": {
+   "sayfa_no": 101,
+   "blok_no": 9,
+   "islem": "degistir",
+   "eski": "İklim herhangi bir bölgede",
+   "yeni": "İklim her hangi bir bölgede"
+  }
+ },
+ {
+  "id": "YB18",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "kaynkalarını",
+  "sayfa_no": 114,
+  "blok_no": 3,
+  "hedef": {
+   "sayfa_no": 114,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": "lanların besin kaynaklarını korumak için r",
+   "yeni": "lanların besin kaynkalarını korumak için r"
+  }
+ },
+ {
+  "id": "YB19",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "bag_de_da_uyum",
+  "beklenen_alt_tur": "bag_de_da_uyum",
+  "aranan": "türün da",
+  "sayfa_no": 115,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 115,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "türün de birey",
+   "yeni": "türün da birey"
+  }
+ },
+ {
+  "id": "YB20",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "alğarını",
+  "sayfa_no": 124,
+  "blok_no": 11,
+  "hedef": {
+   "sayfa_no": 124,
+   "blok_no": 11,
+   "islem": "degistir",
+   "eski": "karmaşık besin ağlarını oluşturur. Bes",
+   "yeni": "karmaşık besin alğarını oluşturur. Bes"
+  }
+ },
+ {
+  "id": "YB21",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "genelelmeler",
+  "sayfa_no": 125,
+  "blok_no": 17,
+  "hedef": {
+   "sayfa_no": 125,
+   "blok_no": 17,
+   "islem": "degistir",
+   "eski": "akışı hakkında genellemeler yapınız. Bu sü",
+   "yeni": "akışı hakkında genelelmeler yapınız. Bu sü"
+  }
+ },
+ {
+  "id": "YB22",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "gruplala",
+  "sayfa_no": 125,
+  "blok_no": 21,
+  "hedef": {
+   "sayfa_no": 125,
+   "blok_no": 21,
+   "islem": "degistir",
+   "eski": "ramidini diğer gruplarla paylaşınız ve ",
+   "yeni": "ramidini diğer gruplala paylaşınız ve "
+  }
+ },
+ {
+  "id": "YB23",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "bag_de_da_uyum",
+  "beklenen_alt_tur": "bag_de_da_uyum",
+  "aranan": "hem da",
+  "sayfa_no": 131,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 131,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "hem de ekosistemdeki",
+   "yeni": "hem da ekosistemdeki"
+  }
+ },
+ {
+  "id": "YB24",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "moleküllern",
+  "sayfa_no": 137,
+  "blok_no": 3,
+  "hedef": {
+   "sayfa_no": 137,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": ", vitamin gibi moleküllerin yapısına katıl",
+   "yeni": ", vitamin gibi moleküllern yapısına katıl"
+  }
+ },
+ {
+  "id": "YB25",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sürdüülebilirliğin",
+  "sayfa_no": 140,
+  "blok_no": 6,
+  "hedef": {
+   "sayfa_no": 140,
+   "blok_no": 6,
+   "islem": "degistir",
+   "eski": "derek ekolojik sürdürülebilirliğin önemine dair b",
+   "yeni": "derek ekolojik sürdüülebilirliğin önemine dair b"
+  }
+ },
+ {
+  "id": "YB26",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "gereğği",
+  "sayfa_no": 145,
+  "blok_no": 9,
+  "hedef": {
+   "sayfa_no": 145,
+   "blok_no": 9,
+   "islem": "degistir",
+   "eski": "bir sorumluluk gereği ve vatandaşlık",
+   "yeni": "bir sorumluluk gereğği ve vatandaşlık"
+  }
+ },
+ {
+  "id": "YB27",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "noktalama_bosluk",
+  "beklenen_alt_tur": "noktalama_bosluk",
+  "aranan": "birleşerek,toprağı",
+  "sayfa_no": 151,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 151,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "birleşerek, toprağı",
+   "yeni": "birleşerek,toprağı"
+  }
+ },
+ {
+  "id": "YB28",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "seebiyle",
+  "sayfa_no": 152,
+  "blok_no": 11,
+  "hedef": {
+   "sayfa_no": 152,
+   "blok_no": 11,
+   "islem": "degistir",
+   "eski": "im değişikliği sebebiyle deniz seviyesi",
+   "yeni": "im değişikliği seebiyle deniz seviyesi"
+  }
+ },
+ {
+  "id": "YB29",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "sıalandığı",
+  "sayfa_no": 156,
+  "blok_no": 8,
+  "hedef": {
+   "sayfa_no": 156,
+   "blok_no": 8,
+   "islem": "degistir",
+   "eski": "yüklüğüne göre sıralandığı tablo hazırlay",
+   "yeni": "yüklüğüne göre sıalandığı tablo hazırlay"
+  }
+ },
+ {
+  "id": "YB30",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "değğişikliğe",
+  "sayfa_no": 157,
+  "blok_no": 7,
+  "hedef": {
+   "sayfa_no": 157,
+   "blok_no": 7,
+   "islem": "degistir",
+   "eski": "am tarzlarında değişikliğe gitmeleri ve t",
+   "yeni": "am tarzlarında değğişikliğe gitmeleri ve t"
+  }
+ },
+ {
+  "id": "YB31",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "ikileme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "azzaltarak",
+  "sayfa_no": 157,
+  "blok_no": 10,
+  "hedef": {
+   "sayfa_no": 157,
+   "blok_no": 10,
+   "islem": "degistir",
+   "eski": "rın tüketimini azaltarak enerji verimli",
+   "yeni": "rın tüketimini azzaltarak enerji verimli"
+  }
+ },
+ {
+  "id": "YB32",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "ya_da",
+  "beklenen_alt_tur": "ya_da",
+  "aranan": "yada",
+  "sayfa_no": 160,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 160,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "altında ya da hassas",
+   "yeni": "altında yada hassas"
+  }
+ },
+ {
+  "id": "YB33",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "bitisik_ayri",
+  "beklenen_alt_tur": "bitisik_ayri",
+  "aranan": "her hangi",
+  "sayfa_no": 168,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 168,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "a açısından herhangi bir olumsuz",
+   "yeni": "a açısından her hangi bir olumsuz"
+  }
+ },
+ {
+  "id": "YB34",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "yer_degisme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "atıklaırn",
+  "sayfa_no": 172,
+  "blok_no": 3,
+  "hedef": {
+   "sayfa_no": 172,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": "i olup organik atıkların kontrollü şart",
+   "yeni": "i olup organik atıklaırn kontrollü şart"
+  }
+ },
+ {
+  "id": "YB35",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "dusme",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "gönderiln",
+  "sayfa_no": 173,
+  "blok_no": 20,
+  "hedef": {
+   "sayfa_no": 173,
+   "blok_no": 20,
+   "islem": "degistir",
+   "eski": "me tesislerine gönderilen atık miktarını",
+   "yeni": "me tesislerine gönderiln atık miktarını"
+  }
+ },
+ {
+  "id": "YB36",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "düşuşün",
+  "sayfa_no": 175,
+  "blok_no": 4,
+  "hedef": {
+   "sayfa_no": 175,
+   "blok_no": 4,
+   "islem": "degistir",
+   "eski": "an sayısındaki düşüşün ardından düşer",
+   "yeni": "an sayısındaki düşuşün ardından düşer"
+  }
+ },
+ {
+  "id": "YB37",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "büyumesini",
+  "sayfa_no": 178,
+  "blok_no": 3,
+  "hedef": {
+   "sayfa_no": 178,
+   "blok_no": 3,
+   "islem": "degistir",
+   "eski": "n eşit şekilde büyümesini sağladı. 12 yı",
+   "yeni": "n eşit şekilde büyumesini sağladı. 12 yı"
+  }
+ },
+ {
+  "id": "YB38",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kural",
+  "alt_tur": "bag_te_ta",
+  "beklenen_alt_tur": "bag_te_ta",
+  "aranan": "sürdürmeleri te",
+  "sayfa_no": 178,
+  "blok_no": 4,
+  "hedef": {
+   "sayfa_no": 178,
+   "blok_no": 4,
+   "islem": "degistir",
+   "eski": "sürdürmeleri de önemli",
+   "yeni": "sürdürmeleri te önemli"
+  }
+ },
+ {
+  "id": "YB39",
+  "kitap": "biyoloji10",
+  "set": "gelistirme",
+  "tur": "kelime",
+  "alt_tur": "tr_karakter",
+  "beklenen_alt_tur": "morfoloji",
+  "aranan": "bakimından",
+  "sayfa_no": 190,
+  "blok_no": 2,
+  "hedef": {
+   "sayfa_no": 190,
+   "blok_no": 2,
+   "islem": "degistir",
+   "eski": "abilecek ve ad bakımından ayrı olmaya ha",
+   "yeni": "abilecek ve ad bakimından ayrı olmaya ha"
+  }
+ },
+ {
+  "id": "YB40",
+  "kitap": "biyoloji10",
+  "set": "test",
+  "tur": "kural",
+  "alt_tur": "bitisik_ayri",
+  "beklenen_alt_tur": "bitisik_ayri",
+  "aranan": "her hangi",
+  "sayfa_no": 190,
+  "blok_no": 8,
+  "hedef": {
+   "sayfa_no": 190,
+   "blok_no": 8,
+   "islem": "degistir",
+   "eski": "ığında veya herhangi bir yolla e",
+   "yeni": "ığında veya her hangi bir yolla e"
+  }
+ }
+]

@@ -1,0 +1,1282 @@
+[
+ {
+  "id": "ES01",
+  "kitap": "kitap",
+  "sayfa_no": 12,
+  "blok_no": 4,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "katılacağınıizı",
+  "baglam": " bu gruplardaki rollerinizi tanıtacağınız bir kompozisyon yarışmasına katılacağınıizı düşününüz. Yarışma için bir ön hazırlık yapabilmek için aşağıdaki tab"
+ },
+ {
+  "id": "ES02",
+  "kitap": "kitap",
+  "sayfa_no": 12,
+  "blok_no": 29,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "iye katlandı.Takım arkada",
+  "baglam": "yaşarken beden eğitimi öğretmenimizden aldığım bir haberle sevincim ikiye katlandı.Takım arkadaşlarımla sahaya çıkacak olmak beni şimdiden çok heyecanlandırıyor."
+ },
+ {
+  "id": "ES03",
+  "kitap": "kitap",
+  "sayfa_no": 14,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "kisisel",
+  "baglam": "roller üstleniriz. Dâhil olduğumuz bu gruplarda üstlendiğimiz roller; kisisel gelisimimiz, sosyal becerilerimiz ve toplumsal uyumumuzu etkiler."
+ },
+ {
+  "id": "ES04",
+  "kitap": "kitap",
+  "sayfa_no": 14,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "gelisimimiz",
+  "baglam": "stleniriz. Dâhil olduğumuz bu gruplarda üstlendiğimiz roller; kisisel gelisimimiz, sosyal becerilerimiz ve toplumsal uyumumuzu etkiler."
+ },
+ {
+  "id": "ES05",
+  "kitap": "kitap",
+  "sayfa_no": 15,
+  "blok_no": 1,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "r alabiliriz.Öğrenci rolü",
+  "baglam": "r (Görsel 1.9). Sınıfımızda öğrenci, nöbetçi, sınıf başkanı gibi roller alabiliriz.Öğrenci rolüyle bilgi edinir, kendimizi geliştiririz. Okulda edindiğimiz deneyimle"
+ },
+ {
+  "id": "ES06",
+  "kitap": "kitap",
+  "sayfa_no": 26,
+  "blok_no": 19,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 0.5,
+  "parca": "edilmektedir.(…)",
+  "baglam": "illet yapan, ayakta tutan ve birliğini sağlayan değerler olarak kabul edilmektedir.(…)"
+ },
+ {
+  "id": "ES07",
+  "kitap": "kitap",
+  "sayfa_no": 26,
+  "blok_no": 21,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "nesile",
+  "baglam": "at ile gelenek-görenek gibi kültürel bağlarımız aracılığıyla nesilden nesile aktarmış, böylece hem millî kimliğini korumuş hem de toplumsal birlik"
+ },
+ {
+  "id": "ES08",
+  "kitap": "kitap",
+  "sayfa_no": 27,
+  "blok_no": 8,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "tüzlük",
+  "baglam": "yazılan Kutadgu-Bilig incelendiği zaman Türk töresi könilik (adalet), tüzlük (eşitlik), uzluk (iyilik- faydalılık) ve kişilik (insanlık ve hoşgörü"
+ },
+ {
+  "id": "ES09",
+  "kitap": "kitap",
+  "sayfa_no": 29,
+  "blok_no": 10,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "hoşgörülükte",
+  "baglam": "e asabiyette ölü gibi ol, tevazu ve alçakgönüllülükte toprak gibi ol, hoşgörülükte deniz gibi ol\" sözleriyle engin hoşgörüsünü ifade etmiştir. Herkese \""
+ },
+ {
+  "id": "ES10",
+  "kitap": "kitap",
+  "sayfa_no": 29,
+  "blok_no": 10,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 0.5,
+  "parca": "nı çizmiştir.(…)",
+  "baglam": "yle gel\" diyerek herkesin olduğu gibi kabul edilmesi gerektiğinin altını çizmiştir.(…)"
+ },
+ {
+  "id": "ES11",
+  "kitap": "kitap",
+  "sayfa_no": 31,
+  "blok_no": 15,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 0.5,
+  "parca": "ne gelmiştir.(…) En sık r",
+  "baglam": "rine bağlayan kağıt) olarak tarihsel süreçte geleneksel bir sanat hâline gelmiştir.(…) En sık rastlanan desenler ise çiçekler, yapraklar, süslemeler ve ayın ilk dörd"
+ },
+ {
+  "id": "ES12",
+  "kitap": "kitap",
+  "sayfa_no": 31,
+  "blok_no": 15,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 0.5,
+  "parca": "güçlendirir.(…)",
+  "baglam": "ır, bu kültürler arasındaki iletişimi kolaylaştırır ve sosyal bağları güçlendirir.(…)"
+ },
+ {
+  "id": "ES13",
+  "kitap": "kitap",
+  "sayfa_no": 35,
+  "blok_no": 1,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "omuza",
+  "baglam": "e girişimiyle karşı karşıya kalan ülkemiz, milleti ve devletiyle omuz omuza vererek birlik ve beraberlik içinde tüm dünyaya örnek olacak bir dire"
+ },
+ {
+  "id": "ES14",
+  "kitap": "kitap",
+  "sayfa_no": 35,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "omuza",
+  "baglam": " topyekûn bir mücadele içine girdi. Tarihinde de pek çok zorluğu omuz omuza atlatan Türkiye, asrın felaketi karşısında tek yürek olup büyük bir d"
+ },
+ {
+  "id": "ES15",
+  "kitap": "kitap",
+  "sayfa_no": 46,
+  "blok_no": 12,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "listeleyi",
+  "baglam": "Her grubun toplumsal sorunun nedenlerine yönelik hazırladığı listeleyi sınıfla paylaşmasını"
+ },
+ {
+  "id": "ES16",
+  "kitap": "kitap",
+  "sayfa_no": 62,
+  "blok_no": 2,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "grivnadır",
+  "baglam": "alan Ukrayna'nın başkenti Kiev'dir. Resmî dili Ukraynaca, para birimi grivnadır."
+ },
+ {
+  "id": "ES17",
+  "kitap": "kitap",
+  "sayfa_no": 80,
+  "blok_no": 141,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "hanbeyl",
+  "baglam": "Ci hanbeyl i Pl at osu"
+ },
+ {
+  "id": "ES18",
+  "kitap": "kitap",
+  "sayfa_no": 86,
+  "blok_no": 14,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "sürdürülebirliğe",
+  "baglam": "Haber metninden yararlanarak temizliğin çevresel sürdürülebirliğe katkısı için siz neler yapardınız? Düşüncelerinizi söyleyiniz."
+ },
+ {
+  "id": "ES19",
+  "kitap": "kitap",
+  "sayfa_no": 99,
+  "blok_no": 19,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "ithafen",
+  "baglam": "(TÜRKSOY) kuruluşunun 30. yılı ve Türkiye Cumhuriyeti’nin 100. yılına ithafen düzenlenen “TÜRKSOY Ressamlar Buluşması” kapsamında “Kuzey Makedonya’"
+ },
+ {
+  "id": "ES20",
+  "kitap": "kitap",
+  "sayfa_no": 100,
+  "blok_no": 5,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "kler veriniz.Verilen örne",
+  "baglam": "Siz de kültürel zenginliklerimize örnekler veriniz.Verilen örnek haberi dikkate alarak bu değerleri tanıtma, koruma ve geliştirme çab"
+ },
+ {
+  "id": "ES21",
+  "kitap": "kitap",
+  "sayfa_no": 100,
+  "blok_no": 7,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "devletl",
+  "baglam": "Türk milleti olarak geçmişten günümüze kurduğumuz büyük devletlerle Doğu Avrupa’dan Türkistan’a, Sibirya’dan Afrika'ya kadar dünyanın"
+ },
+ {
+  "id": "ES22",
+  "kitap": "kitap",
+  "sayfa_no": 101,
+  "blok_no": 10,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "icraatlar",
+  "baglam": "“... Rakamlar ve icraatlar incelendiğinde Türkiye’nin her zaman Filistin’in yanında olduğu ve ya"
+ },
+ {
+  "id": "ES23",
+  "kitap": "kitap",
+  "sayfa_no": 103,
+  "blok_no": 20,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "El Yazıları,S. 23; s.375",
+  "baglam": "1930 (Afet İnan, Medeni Bilgiler ve M.K.Atatürk’ün El Yazıları,S. 23; s.375-376)"
+ },
+ {
+  "id": "ES24",
+  "kitap": "kitap",
+  "sayfa_no": 109,
+  "blok_no": 11,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "i yapıyorlar.Eylül ayının",
+  "baglam": "nı mayalıyor, peynirlerini yapıyorlar.Eylül ayının"
+ },
+ {
+  "id": "ES25",
+  "kitap": "kitap",
+  "sayfa_no": 109,
+  "blok_no": 13,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "başlıyorlar.Gittikleri h",
+  "baglam": "göçe başlıyorlar.Gittikleri her yeni yerde aynı işleri"
+ },
+ {
+  "id": "ES26",
+  "kitap": "kitap",
+  "sayfa_no": 110,
+  "blok_no": 1,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "görlen",
+  "baglam": "layabiliriz. Türkistan'ın iklim özellikleri Anadolu'nun iç kısmındaki görlen iklim koşullarına benzerlik göstermektedir. Türkistan'ın yaklaşık kon"
+ },
+ {
+  "id": "ES27",
+  "kitap": "kitap",
+  "sayfa_no": 113,
+  "blok_no": 191,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "Koço,Hoço",
+  "baglam": "Koço,Hoço"
+ },
+ {
+  "id": "ES28",
+  "kitap": "kitap",
+  "sayfa_no": 116,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "oğula",
+  "baglam": "tay adı verilen mecliste alınmaktaydı. Hükümdarlık genellikle babadan oğula geçerdi ancak hanedanın diğer erkek üyelerinin de hükümdar olma hakkı"
+ },
+ {
+  "id": "ES29",
+  "kitap": "kitap",
+  "sayfa_no": 118,
+  "blok_no": 10,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "jandama",
+  "baglam": "cadelede motorlu taşıtların kullanılmadığı alanlarda görev yapan atlı jandama timleri, Nevşehir'deki Jandarma At ve Köpek Eğitim Merkezinde (JAKEM)"
+ },
+ {
+  "id": "ES30",
+  "kitap": "kitap",
+  "sayfa_no": 118,
+  "blok_no": 13,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "tümenbaşı",
+  "baglam": "liklere ayrılmaktaydı. Bu birliklerin başlarında da derecelerine göre tümenbaşı, binbaşı, yüzbaşı, onbaşı gibi ünvanlar taşıyan birer komutan bulunma"
+ },
+ {
+  "id": "ES31",
+  "kitap": "kitap",
+  "sayfa_no": 119,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "kallanmaları",
+  "baglam": "hilal veya turan taktiği (Görsel 3.13) adları verilen savaş taktiğini kallanmaları önemli etkiye sahiptir. Bu savaş taktiğinde ordular, sahte bir geri ç"
+ },
+ {
+  "id": "ES32",
+  "kitap": "kitap",
+  "sayfa_no": 120,
+  "blok_no": 14,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "oguş",
+  "baglam": "(…) Aile (oguş) sosyal hayatın en küçük birimini oluşturuyordu. Ailelerin birleşmesi"
+ },
+ {
+  "id": "ES33",
+  "kitap": "kitap",
+  "sayfa_no": 121,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "tüzlük",
+  "baglam": "ikle değişmezdi. Bunlar könilik (adalet), uzluk (iyilik, faydalılık), tüzlük (eşitlik), kişilik (insanlık) idi. (…) Gök Türk Devleti'nde yüksek de"
+ },
+ {
+  "id": "ES34",
+  "kitap": "kitap",
+  "sayfa_no": 121,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "yargu",
+  "baglam": "k (insanlık) idi. (…) Gök Türk Devleti'nde yüksek devlet mahkemesine \"yargu\"denirdi. Yine kaynaklar araştırıldığında, Gök Türk Devleti'nde bir ad"
+ },
+ {
+  "id": "ES35",
+  "kitap": "kitap",
+  "sayfa_no": 122,
+  "blok_no": 8,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "kadarıyla",
+  "baglam": "sayısı kadar balbal dikilir diye ifade vardır. En çok balbal gördüğüm kadarıyla Bilge Kağan, Kül Tegin ve Tonyukuk anıt alanlarında dikilmiştir. (…)"
+ },
+ {
+  "id": "ES36",
+  "kitap": "kitap",
+  "sayfa_no": 123,
+  "blok_no": 8,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "değiştokuş",
+  "baglam": "(…) Eski Türk topluluklarında ve devletlerinde ticaret, büyük ölçüde “değiştokuş” esasına dayanıyordu. Başka bir ifade ile söylemek gerekirse, alınan "
+ },
+ {
+  "id": "ES37",
+  "kitap": "kitap",
+  "sayfa_no": 125,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "karekod",
+  "baglam": "İncelediğiniz kaynaklarla karekod ile verilen dijital kaynaktaki bilgileri karşılaştırınız. Aşağıda ver"
+ },
+ {
+  "id": "ES38",
+  "kitap": "kitap",
+  "sayfa_no": 131,
+  "blok_no": 212,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "mevali",
+  "baglam": "Afrika, Müslümanların eline geçti. Emeviler Arap olmayan Müslümanları mevali (azatlı köle/yarı köle) olarak adlandırmış ve Arap olan Müslümanları "
+ },
+ {
+  "id": "ES39",
+  "kitap": "kitap",
+  "sayfa_no": 131,
+  "blok_no": 212,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "mevaliden",
+  "baglam": " (azatlı köle/yarı köle) olarak adlandırmış ve Arap olan Müslümanları mevaliden üstün görmüştür. Arap milliyetçiliğini pekiştiren bu düşünce biçimi İ"
+ },
+ {
+  "id": "ES40",
+  "kitap": "kitap",
+  "sayfa_no": 131,
+  "blok_no": 213,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "mevali",
+  "baglam": "r, devletin başkentini Şam'dan Bağdat'a taşıdı. Emevilerin uyguladığı mevali politikasına son vererek Müslümanlar arasındaki eşitsizliği ortadan k"
+ },
+ {
+  "id": "ES41",
+  "kitap": "kitap",
+  "sayfa_no": 132,
+  "blok_no": 4,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "suffe",
+  "baglam": "üslümanların barınabilecekleri ve aynı zamanda ilim öğrenebilecekleri suffe adı verilen bir bölüm yapılmıştır. Burada eğitim alan öğrencilere öze"
+ },
+ {
+  "id": "ES42",
+  "kitap": "kitap",
+  "sayfa_no": 133,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "kutsundaki",
+  "baglam": "Bilgi kutsundaki ifadeleri Hz. Muhammed'in (sav) hangi sözleriyle ilişkilendirebilirsi"
+ },
+ {
+  "id": "ES43",
+  "kitap": "kitap",
+  "sayfa_no": 134,
+  "blok_no": 4,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "muhâfazasına",
+  "baglam": "(…) Kur’ân’ın muhâfazasına yönelik Müslüman dünyada hâkim olan kanaat, ‘Kur’ân-ı Kerîm’in Hz. Pe"
+ },
+ {
+  "id": "ES44",
+  "kitap": "kitap",
+  "sayfa_no": 134,
+  "blok_no": 8,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "imâre",
+  "baglam": "n çekirdeğini teşkil eden en önemli fizikî unsurlar “cami” ve “dâru’l-imâre”dir. Bu iki yapıdan özellikle cami, her zaman şehir çekirdeğinde yer "
+ },
+ {
+  "id": "ES45",
+  "kitap": "kitap",
+  "sayfa_no": 134,
+  "blok_no": 11,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "katib",
+  "baglam": "n bu şehirlere, mevcut şehirlerin yönetim tarzında olduğu gibi; vali, katib, divan katibi, kadı ve askerlikten, güvenlikten, vergiden ve maliyede"
+ },
+ {
+  "id": "ES46",
+  "kitap": "kitap",
+  "sayfa_no": 134,
+  "blok_no": 11,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "icraatlardan",
+  "baglam": "lebilirlik ilkeleri doğrultusunda faaliyet göstermek için ilk yaptığı icraatlardan birisi beytülmal teşkilatını kurmak olmuştur. (…)"
+ },
+ {
+  "id": "ES47",
+  "kitap": "kitap",
+  "sayfa_no": 135,
+  "blok_no": 4,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "küttâbların",
+  "baglam": " ve öğretim faaliyetlerinde önemli gelişmeler yaşandı. Ülkede bulunan küttâbların sayısı artırıldı. Büyük camiler, mescitler, âlimlerin evleri ve saray"
+ },
+ {
+  "id": "ES48",
+  "kitap": "kitap",
+  "sayfa_no": 135,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "icraatlarından",
+  "baglam": "(…) Abdülmelik devrinin en önemli icraatlarından birisi müstakil İslâm paralarının bastırılmasıdır. (…) Para reformuyl"
+ },
+ {
+  "id": "ES49",
+  "kitap": "kitap",
+  "sayfa_no": 135,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "divânların",
+  "baglam": "ara reformunu gerçekleştirdikten sonra yine bununla bağlantılı olarak divânların Arapçalaştırılması hareketine girişmiş ve Abdülmelik’in reformuyla bö"
+ },
+ {
+  "id": "ES50",
+  "kitap": "kitap",
+  "sayfa_no": 135,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "tezhib",
+  "baglam": "da harmanlandığı alanlardan biri olan kitap sanatlarından, hüsnü hat, tezhib, cilt sanatı Müslümanların ilgi duyduğu sanatlar arasında yer almıştı"
+ },
+ {
+  "id": "ES51",
+  "kitap": "kitap",
+  "sayfa_no": 137,
+  "blok_no": 5,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 0.5,
+  "parca": "e atılmıştır.(…)",
+  "baglam": " çalışmalar yapmışlardır. Günümüz bilimlerinin temeli bu çalışmalar ile atılmıştır.(…)"
+ },
+ {
+  "id": "ES52",
+  "kitap": "kitap",
+  "sayfa_no": 138,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "ihdâs",
+  "baglam": "n kurucuları olarak, birçok İslâm devletine tesiri bulunan yenilikler ihdâs etmişlerdir. Bunlardan birisi olan kâdı’l-kudâtlık (başkadı) kurumunu"
+ },
+ {
+  "id": "ES53",
+  "kitap": "kitap",
+  "sayfa_no": 138,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "kudâtlık",
+  "baglam": "ri bulunan yenilikler ihdâs etmişlerdir. Bunlardan birisi olan kâdı’l-kudâtlık (başkadı) kurumunun teşekkülü, devletin adalet teşkilatında önemli bi"
+ },
+ {
+  "id": "ES54",
+  "kitap": "kitap",
+  "sayfa_no": 138,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "başkadı",
+  "baglam": " yenilikler ihdâs etmişlerdir. Bunlardan birisi olan kâdı’l-kudâtlık (başkadı) kurumunun teşekkülü, devletin adalet teşkilatında önemli bir gelişme"
+ },
+ {
+  "id": "ES55",
+  "kitap": "kitap",
+  "sayfa_no": 138,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "başkadılık",
+  "baglam": "Abbasiler Dönemi'nde adalet işlerinden sorumlu olan başkadılık makamının yaptığı görevi günümüzde hangi kurum yapmaktadır? Söyleyini"
+ },
+ {
+  "id": "ES56",
+  "kitap": "kitap",
+  "sayfa_no": 143,
+  "blok_no": 1,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "resfebe",
+  "baglam": "İslamiyet ile ilgili bazı kavramlar resfebe şeklinde aşağıda verilmiştir. Kavramları bularak resfebenin altına ya"
+ },
+ {
+  "id": "ES57",
+  "kitap": "kitap",
+  "sayfa_no": 143,
+  "blok_no": 1,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "resfebenin",
+  "baglam": "zı kavramlar resfebe şeklinde aşağıda verilmiştir. Kavramları bularak resfebenin altına yazınız ve soruları cevaplayınız."
+ },
+ {
+  "id": "ES58",
+  "kitap": "kitap",
+  "sayfa_no": 144,
+  "blok_no": 5,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 0.5,
+  "parca": "kurulmuştur.(...)",
+  "baglam": "ıştır. Araştırmacılara göre Bozkır (Türk) kültürü at ve demir üzerine kurulmuştur.(...)"
+ },
+ {
+  "id": "ES59",
+  "kitap": "kitap",
+  "sayfa_no": 145,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "sembolize",
+  "baglam": "neğin aslan ve kartal gücü, kurt özgürlüğü, kaplumbağa ise sonsuzluğu sembolize etmiştir."
+ },
+ {
+  "id": "ES60",
+  "kitap": "kitap",
+  "sayfa_no": 146,
+  "blok_no": 7,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "mefkûresi",
+  "baglam": ". Türkistan’da kurulan ilk Türk devletlerindeki Türk cihan hâkimiyeti mefkûresi (düşüncesi) ile İslam’daki cihat anlayışı birbirine benzemektedir. Bu"
+ },
+ {
+  "id": "ES61",
+  "kitap": "kitap",
+  "sayfa_no": 147,
+  "blok_no": 8,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "ribatlar",
+  "baglam": "Türk-İslam devletleri, ticaret yolları üzerinde ribatlar (kervansaraylar) inşa ederek kervanların güvenliğini sağlamayı ve tic"
+ },
+ {
+  "id": "ES62",
+  "kitap": "kitap",
+  "sayfa_no": 151,
+  "blok_no": 107,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "ting",
+  "baglam": "Pei-ting Beşbalık"
+ },
+ {
+  "id": "ES63",
+  "kitap": "kitap",
+  "sayfa_no": 152,
+  "blok_no": 3,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 0.5,
+  "parca": "alan yoktur.(...)",
+  "baglam": "anlardan oluşur. Otların tabii olarak büyüdüğü meralardan başka yeşil alan yoktur.(...)"
+ },
+ {
+  "id": "ES64",
+  "kitap": "kitap",
+  "sayfa_no": 154,
+  "blok_no": 57,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "ribatlar",
+  "baglam": "şıldadı, köyler camiler ve mescitlerle süslendi. Ardından medreseler, ribatlar ve zaviyeler kuruldu. Vakıflarla donatılan bu topraklarda âlimlerin s"
+ },
+ {
+  "id": "ES65",
+  "kitap": "kitap",
+  "sayfa_no": 154,
+  "blok_no": 59,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "önemlileriden",
+  "baglam": "luğu (Bizans) ile askerî mücadeleler başlamıştır. Bu mücadelelerin en önemlileriden biri olan Pasinler Savaşı'nda (1048) Doğu Roma İmparatorluğu yenilgiy"
+ },
+ {
+  "id": "ES66",
+  "kitap": "kitap",
+  "sayfa_no": 156,
+  "blok_no": 4,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "ithafen",
+  "baglam": "etli yapısıyla dikkat çeken caminin dört minaresi Malazgirt Zaferi’ne ithafen 107,1 metre, iki minaresi ise 90 metre yüksekliğindedir. Caminin 34 m"
+ },
+ {
+  "id": "ES67",
+  "kitap": "kitap",
+  "sayfa_no": 159,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "ribat",
+  "baglam": "3. Medrese, ribat, cami, hastane gibi yapılar inşa edilmiştir."
+ },
+ {
+  "id": "ES68",
+  "kitap": "kitap",
+  "sayfa_no": 159,
+  "blok_no": 12,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "kullanmışladır",
+  "baglam": "9. Yapıları süslerken geometrik şekilleri ve bitki motiflerini kullanmışladır."
+ },
+ {
+  "id": "ES69",
+  "kitap": "kitap",
+  "sayfa_no": 160,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "planınında",
+  "baglam": "Konya şehir planınında konumu ve görselleri verilen Türkiye Selçuklu Devleti'ne ait eserleri"
+ },
+ {
+  "id": "ES70",
+  "kitap": "kitap",
+  "sayfa_no": 160,
+  "blok_no": 98,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "planınında",
+  "baglam": "Konya şehir planınında verilen eserler hangi amaçlarla yapılmış olabilir? Bu eserler Anadolu"
+ },
+ {
+  "id": "ES71",
+  "kitap": "kitap",
+  "sayfa_no": 169,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "istilâsına",
+  "baglam": "Türkiye Selçuklu Devleti, Sultan I. Alâeddin Keykubad'dan sonra Moğol istilâsına maruz kaldı. Türkiye Selçuklu tahtında bulunan Sultan II. Gıyâseddîn "
+ },
+ {
+  "id": "ES72",
+  "kitap": "kitap",
+  "sayfa_no": 174,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "tıbba",
+  "baglam": "Selçuklu sultanları ve devlet adamları tıbba da çok önem vermiş ve birçok şehirde “darüşşifa” adı verilen hastanel"
+ },
+ {
+  "id": "ES73",
+  "kitap": "kitap",
+  "sayfa_no": 178,
+  "blok_no": 12,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "suffe",
+  "baglam": "anlar ibadetlerini yerine getirirken bu yapının içerisinde bulunan ve suffe adı verilen odalarda öğrencilere dersler verilmiştir."
+ },
+ {
+  "id": "ES74",
+  "kitap": "kitap",
+  "sayfa_no": 180,
+  "blok_no": 12,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "hadisişerif",
+  "baglam": "hadis: Hz. Muhammed’in sözleri, hadisişerif."
+ },
+ {
+  "id": "ES75",
+  "kitap": "kitap",
+  "sayfa_no": 180,
+  "blok_no": 16,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "şünme",
+  "baglam": "hürriyet: Herhangi bir kısıtlamaya, zorlamaya bağlı olmaksızın dü şünme veya davranma, herhangi bir şarta bağlı olmama durumu; azadelik."
+ },
+ {
+  "id": "ES76",
+  "kitap": "kitap",
+  "sayfa_no": 181,
+  "blok_no": 22,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "nanometre",
+  "baglam": "nanoteknoloji: 1-100 nanometre boyutundaki yapıların farklı alanlarda belirli bir amaca hizmet etmes"
+ },
+ {
+  "id": "ES77",
+  "kitap": "kitap",
+  "sayfa_no": 181,
+  "blok_no": 37,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "ashabıkiram",
+  "baglam": "Hz. Muhammed’i görmüş ve onun sohbetinde bulunmuş Müslümanlar; ashap, ashabıkiram."
+ },
+ {
+  "id": "ES78",
+  "kitap": "kitap",
+  "sayfa_no": 183,
+  "blok_no": 17,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "kudâtlık",
+  "baglam": "GÖL, Y. S. (2018). Abbâsîler Döneminde Kâdı'l-kudâtlık,.Trabzon İlahiyat Dergisi, 5(1), 12-59."
+ },
+ {
+  "id": "EB01",
+  "kitap": "biyoloji10",
+  "sayfa_no": 4,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "vecd",
+  "baglam": "O zaman vecd ile bin secde eder -varsa- taşm, Her cerîhamdan İlâhî, boşanp kanl"
+ },
+ {
+  "id": "EB02",
+  "kitap": "biyoloji10",
+  "sayfa_no": 4,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "cerîhamdan",
+  "baglam": "O zaman vecd ile bin secde eder -varsa- taşm, Her cerîhamdan İlâhî, boşanp kanl yaşm, Fşkrr ruh- mücerret gibi yerden na’ş"
+ },
+ {
+  "id": "EB03",
+  "kitap": "biyoloji10",
+  "sayfa_no": 4,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "arşa",
+  "baglam": "yaşm, Fşkrr ruh- mücerret gibi yerden na’şm; O zaman yükselerek arşa değer belki başm."
+ },
+ {
+  "id": "EB04",
+  "kitap": "biyoloji10",
+  "sayfa_no": 4,
+  "blok_no": 10,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "va’dettiği",
+  "baglam": "ma sakn; Siper et gövdeni, dursun bu hayâszca akn. Doğacaktr sana va’dettiği günler Hakk’n; Kim bilir, belki yarn, belki yarndan da yakn"
+ },
+ {
+  "id": "EB05",
+  "kitap": "biyoloji10",
+  "sayfa_no": 5,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "ymetli",
+  "baglam": "kymetli hazinendir. İstikbalde dahi, seni bu hazineden mahrum etmek"
+ },
+ {
+  "id": "EB06",
+  "kitap": "biyoloji10",
+  "sayfa_no": 5,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "hâricî",
+  "baglam": "isteyecek dâhilî ve hâricî bedhahlarn olacaktr. Bir gün, istiklâl ve cumhuriyeti"
+ },
+ {
+  "id": "EB07",
+  "kitap": "biyoloji10",
+  "sayfa_no": 20,
+  "blok_no": 2,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "nükleotidine",
+  "baglam": "olarak RNA molekülündeki adenin nükleotidine benzer. ATP’nin RNA’da bulunan adenin nükleotidinden farkı, yapısında"
+ },
+ {
+  "id": "EB08",
+  "kitap": "biyoloji10",
+  "sayfa_no": 20,
+  "blok_no": 13,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "monofosfat",
+  "baglam": "Adenozin monofosfat (AMP)"
+ },
+ {
+  "id": "EB09",
+  "kitap": "biyoloji10",
+  "sayfa_no": 25,
+  "blok_no": 17,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "karoten",
+  "baglam": "ülür. Bitkilerde klorofilden başka ışık enerjisini soğuran ksantofil, karoten, likopen gibi yardımcı pigmentler de bulunur."
+ },
+ {
+  "id": "EB10",
+  "kitap": "biyoloji10",
+  "sayfa_no": 28,
+  "blok_no": 22,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "sükroz",
+  "baglam": " organik bileşiğin sentezinde temel rol oynar. PGAL; doğrudan glikoz, sükroz, diğer polisakkaritler gibi enerji sağlayıcı temel karbohidratların ü"
+ },
+ {
+  "id": "EB11",
+  "kitap": "biyoloji10",
+  "sayfa_no": 29,
+  "blok_no": 12,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "soğurulan",
+  "baglam": "oyundaki ışıklarda daha hızlıdır. Klorofil tarafından çok az miktarda soğurulan yeşil ışıkta fotosentez en düşük hızda gerçekleşir (Grafik 1.2). Foto"
+ },
+ {
+  "id": "EB12",
+  "kitap": "biyoloji10",
+  "sayfa_no": 33,
+  "blok_no": 18,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "arkadaşlarınzla",
+  "baglam": "i fotosentez ile ilişkilendiriniz. Çıkarımlarınızı sözlü olarak sınıf arkadaşlarınzla paylaşınız."
+ },
+ {
+  "id": "EB13",
+  "kitap": "biyoloji10",
+  "sayfa_no": 34,
+  "blok_no": 17,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "şöyledir",
+  "baglam": "sinin suyun etkisiyle gerçekleştiğini açıklamıştır. Helmont’un deneyi şöyledir:"
+ },
+ {
+  "id": "EB14",
+  "kitap": "biyoloji10",
+  "sayfa_no": 39,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "arkeler",
+  "baglam": "ak bulunduğu ortamlardır. Örneğin çöplüklerde yaşayan ve metan üreten arkeler, güneş ışığı olmadan inorganik maddelerden besin sentezler ve bu sıra"
+ },
+ {
+  "id": "EB15",
+  "kitap": "biyoloji10",
+  "sayfa_no": 49,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "deneyimleyen",
+  "baglam": " gözlendi. Zihinden çarpma işlemi yapmak gibi yoğun düşünsel süreçler deneyimleyen katılımcıların beyin taramalarındaysa beyne alınan glikoz düzeyinde a"
+ },
+ {
+  "id": "EB16",
+  "kitap": "biyoloji10",
+  "sayfa_no": 52,
+  "blok_no": 2,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "nötral",
+  "baglam": "itler ve disakkaritler, monosakkaritlere; proteinler, amino asitlere; nötral yağlar ise yağ asitlerine ve gliserole parçalanır (Tablo 1.2)."
+ },
+ {
+  "id": "EB17",
+  "kitap": "biyoloji10",
+  "sayfa_no": 52,
+  "blok_no": 17,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "nötralize",
+  "baglam": " bir çözeltidir ve mideden ince bağırsağa geçen asitli mide içeriğini nötralize eder. Bu salgılar; aynı zamanda yağ, karbohidrat, nükleik asit ve pro"
+ },
+ {
+  "id": "EB18",
+  "kitap": "biyoloji10",
+  "sayfa_no": 52,
+  "blok_no": 18,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "bilirubin",
+  "baglam": "anın içeriğinde su, bikarbonat iyonları, safra tuzları, kolesterol ve bilirubin bulunur. Safrada sindirim enzimi bulunmaz. Safra tuzları, besinlerdek"
+ },
+ {
+  "id": "EB19",
+  "kitap": "biyoloji10",
+  "sayfa_no": 55,
+  "blok_no": 2,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "trigliseritler",
+  "baglam": "asidi ve gliserol, bağırsak epitel hücrelerine geçtikten sonra tekrar trigliseritler hâline getirilir. Protein ve kolesterolle kaplanan trigliseritler, şi"
+ },
+ {
+  "id": "EB20",
+  "kitap": "biyoloji10",
+  "sayfa_no": 57,
+  "blok_no": 7,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "alveollerinde",
+  "baglam": "Akciğer alveollerinde gaz değişimi"
+ },
+ {
+  "id": "EB21",
+  "kitap": "biyoloji10",
+  "sayfa_no": 60,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "nikotinamid",
+  "baglam": "NAD+ (nikotinamid adenin dinükleotit), solunum metabolizmasında görev alan ve elektron "
+ },
+ {
+  "id": "EB22",
+  "kitap": "biyoloji10",
+  "sayfa_no": 63,
+  "blok_no": 22,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "metanojenik",
+  "baglam": "Bazı bakteri ve metanojenik arkelerde"
+ },
+ {
+  "id": "EB23",
+  "kitap": "biyoloji10",
+  "sayfa_no": 65,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "grid",
+  "baglam": "• Etkinlik sonunda cevaplayacağınız yapılandırılmış grid, öğretmeniniz tarafından Yapılandırılmış Grid Puanlama Anahtarı ile d"
+ },
+ {
+  "id": "EB24",
+  "kitap": "biyoloji10",
+  "sayfa_no": 68,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "enzimatik",
+  "baglam": "ganizmaların kullanıldığı ve kontrollü olarak büyümesinin sağlandığı; enzimatik işlemlerle bir ham maddeden üretilen yiyecek veya içecekler olarak ta"
+ },
+ {
+  "id": "EB25",
+  "kitap": "biyoloji10",
+  "sayfa_no": 68,
+  "blok_no": 10,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "ülseratif",
+  "baglam": "ler; probiyotik özellikleri sayesinde bağırsak sağlığını geliştirerek ülseratif kolit (bağırsak iltihabı), hazımsızlık, şişkinlik, crohn [kron (kroni"
+ },
+ {
+  "id": "EB26",
+  "kitap": "biyoloji10",
+  "sayfa_no": 75,
+  "blok_no": 2,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "anabolik",
+  "baglam": "entezle karbohidrat, protein, vitamin gibi organik besin sentezlemesi anabolik tepkime örneğidir. Büyük moleküllerden daha küçük moleküllerin oluştu"
+ },
+ {
+  "id": "EB27",
+  "kitap": "biyoloji10",
+  "sayfa_no": 75,
+  "blok_no": 15,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "li rol oynar.Yağlar; katı",
+  "baglam": "Uzun süreli enerji depolamada önemli rol oynar.Yağlar; katı ve sıvı yağlar, etler, süt ürünleri ile bitkilerde bulunur."
+ },
+ {
+  "id": "EB28",
+  "kitap": "biyoloji10",
+  "sayfa_no": 87,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "gluten",
+  "baglam": "i çeşitli nedenlerle (alerjik, bağışıklık sistemine bağlı olarak veya gluten etkisiyle) villuslar hasar görebilir. Bu durum sağlık açısından sorun"
+ },
+ {
+  "id": "EB29",
+  "kitap": "biyoloji10",
+  "sayfa_no": 106,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "lupus",
+  "baglam": "Biyolojik Çeşitlilik İzleme Memeli Türleri: Kurt (Canis lupus) popülasyon yoğunluğundaki değişim izleme çalışmasının ilk aşamasında"
+ },
+ {
+  "id": "EB30",
+  "kitap": "biyoloji10",
+  "sayfa_no": 108,
+  "blok_no": 14,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "gelengisi",
+  "baglam": "rüngen türleri; gece ve toprak kurbağası gibi iki yaşamlılar; Anadolu gelengisi, Avrasya su samuru, vaşak, yaban keçisi ve yarasa gibi memeli hayvanl"
+ },
+ {
+  "id": "EB31",
+  "kitap": "biyoloji10",
+  "sayfa_no": 114,
+  "blok_no": 7,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "kaudatum",
+  "baglam": "ecium aurelia (Paramesyum aurelya) ve Paramecium caudatum (Paramesyum kaudatum) türleri arasındaki rekabeti gözlemlemek için deney tasarlamıştır. De"
+ },
+ {
+  "id": "EB32",
+  "kitap": "biyoloji10",
+  "sayfa_no": 116,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "hiflerine",
+  "baglam": "le oluşturduğu organik molekülleri ve oksijeni kendisini saran mantar hiflerine verir. Mantarlar hifleriyle ortamdan aldığı su ve mineralleri ise alg"
+ },
+ {
+  "id": "EB33",
+  "kitap": "biyoloji10",
+  "sayfa_no": 118,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "parazitik",
+  "baglam": "ır ve genellikle çok hücrelidir. Bağırsak solucanları, bitler ve bazı parazitik bitkiler bu tür parazitlere örnek verilebilir."
+ },
+ {
+  "id": "EB34",
+  "kitap": "biyoloji10",
+  "sayfa_no": 125,
+  "blok_no": 19,
+  "alt_tur": "noktalama_bosluk",
+  "guven": 1.0,
+  "parca": "r almaktadır?Açıklayınız.",
+  "baglam": "luşturduğunuz enerji piramidinde trofik basamaklarda hangi canlılar yer almaktadır?Açıklayınız."
+ },
+ {
+  "id": "EB35",
+  "kitap": "biyoloji10",
+  "sayfa_no": 126,
+  "blok_no": 4,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "larda",
+  "baglam": "da bulunan eski bir balıkçı köyüdür. Minamata hastalığı, 1950 ve 1960’larda Japonya’daki Minamata ve komşu topluluklarda meydana gelen büyük ölçe"
+ },
+ {
+  "id": "EB36",
+  "kitap": "biyoloji10",
+  "sayfa_no": 126,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "itai",
+  "baglam": "İtai itai hastalığı, kadmiyum zehirlenmesine bağlı olduğu saptanan ilk hastalık"
+ },
+ {
+  "id": "EB37",
+  "kitap": "biyoloji10",
+  "sayfa_no": 126,
+  "blok_no": 9,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "itai",
+  "baglam": "İtai itai hastalığı, kadmiyum zehirlenmesine bağlı olduğu saptanan ilk hastalık"
+ },
+ {
+  "id": "EB38",
+  "kitap": "biyoloji10",
+  "sayfa_no": 132,
+  "blok_no": 17,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "ppm’ye",
+  "baglam": "ında yaklaşık 291 ppm iken bu değer 2023 yılında yüzde 45 artışla 421 ppm’ye ulaştı…"
+ },
+ {
+  "id": "EB39",
+  "kitap": "biyoloji10",
+  "sayfa_no": 137,
+  "blok_no": 18,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "denitrifikasyon",
+  "baglam": "erilir. Azotun topraktan tekrar atmosfere geçmesini sağlayan bu olaya denitrifikasyon denir."
+ },
+ {
+  "id": "EB40",
+  "kitap": "biyoloji10",
+  "sayfa_no": 137,
+  "blok_no": 18,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "nitrifikasyon",
+  "baglam": "r tarafından önce nitrite (NO2¯) sonra nitrata dönüştürülür. Bu olaya nitrifikasyon denir. Topraktaki nitrat ve nitrit tuzları bazı bakteriler tarafından"
+ },
+ {
+  "id": "EB41",
+  "kitap": "biyoloji10",
+  "sayfa_no": 137,
+  "blok_no": 18,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "nitrite",
+  "baglam": "⁺) dönüştürülür. Amonyak, toprakta bulunan bakteriler tarafından önce nitrite (NO2¯) sonra nitrata dönüştürülür. Bu olaya nitrifikasyon denir. Topr"
+ },
+ {
+  "id": "EB42",
+  "kitap": "biyoloji10",
+  "sayfa_no": 139,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "salımının",
+  "baglam": "’nın ortalama sıcaklığındaki artışın sınırlandırılması için sera gazı salımının azaltılarak sıfıra ulaşılması için Paris Anlaşması ile konulan bir he"
+ },
+ {
+  "id": "EB43",
+  "kitap": "biyoloji10",
+  "sayfa_no": 142,
+  "blok_no": 6,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "maar",
+  "baglam": "ulunan bir krater gölüdür. Volkanik patlamalar sonucu oluşmuş göllere maar gölleri denmektedir. Meke Gölü, iç içe iki krater gölünü barındırmakt"
+ },
+ {
+  "id": "EB44",
+  "kitap": "biyoloji10",
+  "sayfa_no": 147,
+  "blok_no": 4,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "kloroflorokarbonlar",
+  "baglam": "n ve ozon moleküllerinin parçalanmasına neden olan maddelerin başında kloroflorokarbonlar (CFC) gelir. Bu moleküller, kolaylıkla atmosferin üst katmalarına ula"
+ },
+ {
+  "id": "EB45",
+  "kitap": "biyoloji10",
+  "sayfa_no": 155,
+  "blok_no": 16,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "nelerin",
+  "baglam": "2. Ekolojik ayak izinizi hesaplarken nelerin değerlendirildiğini aşağıya listeleyiniz."
+ },
+ {
+  "id": "EB46",
+  "kitap": "biyoloji10",
+  "sayfa_no": 162,
+  "blok_no": 18,
+  "alt_tur": "morfoloji",
+  "guven": 0.5,
+  "parca": "taksonu",
+  "baglam": "Türkiye’de tanımlanmış 12.150 adet damarlı bitki taksonu bulunmaktadır. Bu bitkilerin 3.496’sı ise endemiktir. Avrupa kıtasını"
+ },
+ {
+  "id": "EB47",
+  "kitap": "biyoloji10",
+  "sayfa_no": 179,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "permakültür",
+  "baglam": "Kaz Dağları’nda yer alan bir ekolojik köy, permakültür (sürdürülebilir tarım) felsefesini uygulamaktadır. Bu köyde yerel toh"
+ },
+ {
+  "id": "EB48",
+  "kitap": "biyoloji10",
+  "sayfa_no": 180,
+  "blok_no": 5,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "mikroplastik",
+  "baglam": "tikler, fiziksel aşınmaya maruz kaldığında kademeli olarak parçalanıp mikroplastik denen çok daha küçük parçalara bölünür. Suda süzülen mikroplastik atı"
+ },
+ {
+  "id": "EB49",
+  "kitap": "biyoloji10",
+  "sayfa_no": 181,
+  "blok_no": 3,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "lardan",
+  "baglam": "Küresel Ayak İzi Ağı (GFN), 1960’lardan beri insanların bir yılda tükettiği ve dünyanın bir yılda ürettiği do"
+ },
+ {
+  "id": "EB50",
+  "kitap": "biyoloji10",
+  "sayfa_no": 189,
+  "blok_no": 24,
+  "alt_tur": "morfoloji",
+  "guven": 1.0,
+  "parca": "mikrofloranın",
+  "baglam": "probiyotik: Sindirim kanalındaki mikrofloranın ekolojik dengesini sağlamak üzere besinlerle (yoğurt vb.) birlikte al"
+ }
+]

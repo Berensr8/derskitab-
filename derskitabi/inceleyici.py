@@ -200,16 +200,38 @@ def sayfa_verisi(sayfa: pymupdf.Page, bloklar: list[Blok], tespitler: dict,
     }
 
 
+def _test_modu_hazirla(pdf_yolu, bloklar: list[Blok], set_adi: str):
+    """Kilitli test setinin (K20) bu kitaba ait maddelerini bloklara uygular ve değerlendirmenin
+    kaydettiği aday kaydını okur. Eklenen cümleler PDF görüntüsünde yoktur; inceleyici bunu
+    sayfanın başında açıkça yazar."""
+    from .degerlendirme import celiskileri_uygula, set_yukle, test_modu_kaydi_yolu
+    kitap = Path(pdf_yolu).stem
+    ogeler = [o for o in set_yukle() if o["set"] == set_adi and o["kitap"] == kitap]
+    if not ogeler:
+        raise ValueError(f"Test setinde '{kitap}' kitabı için '{set_adi}' maddesi yok.")
+    kayit_yolu = test_modu_kaydi_yolu(kitap, set_adi)
+    if not kayit_yolu.exists():
+        raise ValueError(f"{kayit_yolu.name} yok: önce 'python -m derskitabi.degerlendirme --set {set_adi}' çalıştırın.")
+    sayfalar = sorted({k["sayfa_no"] for o in ogeler for k in o["kaynaklar"]} | {o["hedef"]["sayfa_no"] for o in ogeler})
+    bilgi = {"set": set_adi, "madde_sayisi": len(ogeler), "eklenenler": [o["hedef"]["yeni"] for o in ogeler]}
+    return (celiskileri_uygula(bloklar, ogeler), json.loads(kayit_yolu.read_text(encoding="utf-8")),
+            bilgi, sayfalar)
+
+
 def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = None,
                           hedef_sinif: int | None = None, bloklar: list[Blok] | None = None,
                           analiz: tuple | None = None,
                           yazim_tespitleri: list[Tespit] | None = None,
-                          tutarlilik_kaydi: list[dict] | None = None) -> None:
+                          tutarlilik_kaydi: list[dict] | None = None, test_modu: str | None = None) -> None:
     """bloklar, analiz (ozet, tespitler) ve yazım tespitleri önceden hesaplandıysa
     verilebilir (demo.py); verilmezse burada hesaplanır. Tutarlılık burada hesaplanmaz
     (yerel modeller gerekir, uzun sürer): verilmezse PDF'in yanındaki aday kaydı okunur."""
     if bloklar is None:
         bloklar = bloklari_cikar(pdf_yolu)
+    test_bilgisi = None
+    if test_modu:  # K20 test setindeki çelişkiler eklenmiş metinle (gösterim için)
+        bloklar, tutarlilik_kaydi, test_bilgisi, varsayilan_sayfalar = _test_modu_hazirla(pdf_yolu, bloklar, test_modu)
+        sayfalar = sayfalar or varsayilan_sayfalar
     if analiz is None:
         try:
             analiz = okunabilirlik.analiz_et(bloklar, hedef_sinif)
@@ -245,6 +267,7 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         "toplam_yazim": sum(len(v) for k, v in yazim_bloklari.items() if k[0] in set(secili)),
         "min_cumle": okunabilirlik.MIN_CUMLE,
         "tutarlilik_var": tutarlilik_kaydi is not None,
+        "test_modu": test_bilgisi,
         "toplam_tutarlilik": sum(1 for k in (tutarlilik_kaydi or []) if k.get("guven")
                                  and (k["a"]["sayfa_no"] in set(secili) or k["b"]["sayfa_no"] in set(secili))),
         "tutarlilik_esikleri": list(tutarlilik.KOMSU_ESIKLERI),
@@ -264,15 +287,18 @@ def main() -> None:
     ap.add_argument("pdf", type=Path)
     ap.add_argument("--sayfalar", help='Ör. "10-35,89" (verilmezse tüm kitap; büyük dosya olur)')
     ap.add_argument("--sinif", type=int, help="Hedef sınıf (verilmezse kapaktan bulunur)")
+    ap.add_argument("--test-modu", nargs="?", const="gelistirme", choices=("gelistirme", "test"),
+                    help="Test setindeki bilerek eklenmiş çelişkilerle göster (sayfa verilmezse ilgili sayfalar)")
     arg = ap.parse_args()
 
     with pymupdf.open(arg.pdf) as belge:
         sayfa_sayisi = len(belge)
     sayfalar = sayfa_araligi_coz(arg.sayfalar, sayfa_sayisi) if arg.sayfalar else None
-    cikti = arg.pdf.with_name(arg.pdf.stem + "_inceleme.html")
-    inceleme_html_olustur(arg.pdf, cikti, sayfalar, arg.sinif)
+    ek = "_test_modu" if arg.test_modu else ""
+    cikti = arg.pdf.with_name(arg.pdf.stem + ek + "_inceleme.html")
+    inceleme_html_olustur(arg.pdf, cikti, sayfalar, arg.sinif, test_modu=arg.test_modu)
     boyut = cikti.stat().st_size / 1e6
-    print(f"{len(sayfalar) if sayfalar else sayfa_sayisi} sayfa -> {cikti} ({boyut:.1f} MB)")
+    print(f"{len(sayfalar) if sayfalar else 'ilgili'} sayfa -> {cikti} ({boyut:.1f} MB)")
     print("Dosyaya çift tıklayarak tarayıcıda açabilirsiniz.")
 
 

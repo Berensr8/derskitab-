@@ -34,6 +34,10 @@ KITAPLAR = {"kitap": PROJE / "veri" / "kitap_bloklar.json", "biyoloji10": PROJE 
 ASAMALAR = ("cumle", "aday", "hizli", "tespit")
 
 
+def test_modu_kaydi_yolu(kitap: str, set_adi: str) -> Path:
+    return PROJE / "veri" / f"{kitap}_degerlendirme_{set_adi}_adaylar.json"
+
+
 def set_yukle(yol: Path = SET_YOLU, kilit: str | None = KILIT_SHA256) -> list[dict]:
     veri = Path(yol).read_bytes()
     if kilit and hashlib.sha256(veri).hexdigest() != kilit:
@@ -137,6 +141,8 @@ def main() -> None:
             tutarlilik.analiz_et(bloklar, kayit=kayit, onbellek=onbellek, ilerleme=lambda m: print(" ", m, flush=True))
         finally:
             json_kaydet(onbellek, onbellek_yolu)
+        # Tam kayıt: inceleyicinin test modu bunu gösterir (python -m derskitabi.inceleyici … --test-modu)
+        json_kaydet(kayit, test_modu_kaydi_yolu(kitap, arg.set))
         kayit = [{**k, "a": {"metin": k["a"]["metin"], "sayfa_no": k["a"]["sayfa_no"]},
                   "b": {"metin": k["b"]["metin"], "sayfa_no": k["b"]["sayfa_no"]},
                   **{alan: k[alan]["karar"] for alan in ("hakem", "ikinci_gorus") if alan in k}} for k in kayit]

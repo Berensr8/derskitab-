@@ -112,6 +112,8 @@
   .kelimeIz.parlak { stroke-width: 3; fill-opacity: .3; }
   .akis { margin: 6px 0 0 18px; padding: 0; } .akis li { margin: 3px 0; }
   .rozet.celiski { background: var(--celiski); }
+  .testBandi { background: #fff4d6; border-bottom: 2px solid #e0b400; padding: 8px 16px; font-size: 13.5px; }
+  .eklendi { background: #fff0b8; border-radius: 999px; padding: 0 7px; font-size: 11.5px; color: #6b5200; }
   .celiskiKutu { fill: var(--celiski); fill-opacity: .16; stroke: var(--celiski); stroke-width: 1.2;
        stroke-dasharray: 4 2; cursor: pointer; }
   .celiskiKutu:hover, .celiskiKutu.parlak { fill-opacity: .32; stroke-width: 2.2; }
@@ -203,6 +205,12 @@ const sayfa = () => VERI.sayfalar[durum.sayfa];
 // --- üst bilgi ---
 function ustBilgi() {
   document.getElementById("kitapAdi").textContent = VERI.kitap;
+  if (VERI.test_modu) document.body.insertBefore(el("div", { class: "testBandi" },
+    el("b", {}, "🧪 TEST MODU: "),
+    `Bu inceleme, sistemi ölçmek için kitaba bilerek ${VERI.test_modu.madde_sayisi} çelişki eklenmiş metinle üretildi `,
+    `(${VERI.test_modu.set === "gelistirme" ? "geliştirme" : "test"} seti, K20). Eklenen ya da değiştirilen cümleler sayfa görüntüsünde `,
+    el("b", {}, "görünmez"), "; sağ paneldeki Tutarlılık sekmesinde metin olarak ve ", el("span", { class: "eklendi" }, "test için eklendi"),
+    " etiketiyle gösterilir. Gerçek kitapta çelişki bulunmadı."), document.body.firstChild);
   const o = VERI.ozet, kutu = document.getElementById("ozet");
   if (!o) { kutu.append(el("span", { class: "cip" }, "Okunabilirlik özeti yok")); return; }
   kutu.append(
@@ -535,6 +543,9 @@ function yazimPaneli(b) {
 const KARAR_AD = { celiski: "çelişki", uyumlu: "uyumlu", ilgisiz: "ilgisiz", "?": "cevap yok" };
 const sayfaSirasi = no => VERI.sayfalar.findIndex(s => s.no === no);
 const sy = (no, basili) => `s. ${basili ?? no}`;
+// Test modunda bu cümle kitaba bizim eklediğimiz/değiştirdiğimiz ifade mi?
+const eklendiMi = m => (VERI.test_modu?.eklenenler || []).some(e => m.includes(e) || (m.length >= 25 && e.includes(m)));
+const eklendiEtiketi = m => eklendiMi(m) ? el("span", { class: "eklendi" }, "test için eklendi") : null;
 
 function karsiyaGit(k) {  // çelişkinin diğer tarafına geç: sayfayı aç, bloğu seç, tutarlılık sekmesi
   const i = sayfaSirasi(k.karsi.sayfa_no);
@@ -557,8 +568,9 @@ function celiskiKarti(b, k) {
   return el("div", { class: "kart celiskiKart" },
     el("b", {}, `⇄ Olası bilgi tutarsızlığı (güven ${sayi(k.guven, 1)})`),
     el("div", { class: "ikiCumle" },
-      el("div", { class: "alinti" }, el("div", { class: "kucuk" }, el("span", {}, `Bu blok · ${sy(sayfa().no, sayfa().basili)}`)), k.ben),
+      el("div", { class: "alinti" }, el("div", { class: "kucuk" }, el("span", {}, `Bu blok · ${sy(sayfa().no, sayfa().basili)}`), eklendiEtiketi(k.ben)), k.ben),
       el("div", { class: "alinti" }, el("div", { class: "kucuk" }, el("span", {}, sy(k.karsi.sayfa_no, k.karsi.basili)),
+        eklendiEtiketi(k.karsi.metin),
         varMi ? el("button", { onclick: () => karsiyaGit(k) }, "O sayfaya git →")
               : el("span", {}, "(bu incelemeye alınmamış sayfa)")), k.karsi.metin)),
     el("div", { class: "adimBaslik" }, el("span", { class: "adimNo" }, "1"), "Neden karşılaştırıldı?"),

@@ -7,8 +7,10 @@ Kullanım:
     python -m derskitabi.demo [kitap.pdf]
 """
 
+import json
 import sys
 import time
+import urllib.request
 import webbrowser
 from collections import Counter
 from pathlib import Path
@@ -18,7 +20,7 @@ import pymupdf
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
 from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet
-from .kriterler import okunabilirlik, yazim
+from .kriterler import okunabilirlik, tutarlilik, yazim
 from .model import BLOK_TURLERI
 from .pdf_cikarma import MetinYokHatasi, bloklari_cikar
 
@@ -63,8 +65,89 @@ def sayfa_sor(sayfa_sayisi: int) -> list[int] | None:
 
 
 def adim(no: int, metin: str) -> float:
-    print(f"\n[{no}/4] {metin}...")
+    print(f"\n[{no}/5] {metin}...")
     return time.perf_counter()
+
+
+def evet_mi(soru: str, varsayilan: bool = True) -> bool:
+    """Yalnız e/evet/h/hayır (ya da Enter = varsayılan) kabul edilir; yanlış tuş tekrar sorulur."""
+    while True:
+        try:
+            cevap = input(f"{soru} ({'E/h' if varsayilan else 'e/H'}): ").strip().lstrip("﻿").lower()
+        except EOFError:  # girdi yok (ör. otomatik çalıştırma): varsayılan
+            return varsayilan
+        if not cevap:
+            return varsayilan
+        if cevap in ("e", "evet"):
+            return True
+        if cevap in ("h", "hayır", "hayir"):
+            return False
+        print("  Lütfen 'e' ya da 'h' yazın (Enter = varsayılan).")
+
+
+def ollama_hazir_mi() -> str | None:
+    """Ollama çalışıyor ve gereken modeller yüklü mü? Değilse sebebi döner."""
+    try:
+        with urllib.request.urlopen(tutarlilik.OLLAMA_URL + "/api/tags", timeout=3) as cevap:
+            modeller = {m["name"] for m in json.loads(cevap.read())["models"]}
+    except OSError:
+        return "Ollama çalışmıyor (OLLAMA_BASLAT.bat ile başlatılabilir)"
+    eksik = [m for m in (tutarlilik.GOMME_MODELI, tutarlilik.HAKEM_MODELI, tutarlilik.IKINCI_GORUS_MODELI)
+             if m not in modeller and m + ":latest" not in modeller]
+    return f"eksik model: {', '.join(eksik)}" if eksik else None
+
+
+def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> list | None:
+    """Önceden hesaplanmış tam kitap sonucu varsa onu kullanır; yoksa (Ollama hazırsa ve
+    kullanıcı isterse) seçili sayfalarda çalıştırır; ikisi de olmazsa atlar."""
+    hazir = pdf.with_name(pdf.stem + "_tutarlilik_adaylar.json")
+    if hazir.exists():
+        kayit = json.loads(hazir.read_text(encoding="utf-8"))
+        tespit = sum(1 for k in kayit if k.get("guven"))
+        print(f"  Önceden hesaplanmış tam kitap sonucu kullanılıyor ({hazir.name}): "
+              f"{len(kayit)} cümle çifti karşılaştırılmış, {tespit} bilgi tutarsızlığı tespiti.")
+        return kayit
+    sebep = ollama_hazir_mi()
+    if sebep:
+        print(f"  Atlandı: {sebep}. İnceleme sayfasında Tutarlılık sekmesi görünmeyecek.")
+        return None
+    kapsam = f"seçili {len(sayfalar)} sayfada" if sayfalar else "kitabın tamamında (uzun sürebilir: 15-45 dk)"
+    if not evet_mi(f"  Tutarlılık yerel modellerle {kapsam} çalıştırılsın mı? Bilgisayar şarja takılı olmalı"):
+        print("  Atlandı.")
+        return None
+    secili = set(sayfalar) if sayfalar else None
+    onbellek_yolu = klasor / "tutarlilik_onbellek.json"
+    onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
+    kayit = []
+    try:
+        tespitler = tutarlilik.analiz_et([b for b in bloklar if secili is None or b.sayfa_no in secili],
+                                         kayit=kayit, onbellek=onbellek,
+                                         ilerleme=lambda m: print(" ", m, flush=True))
+    finally:
+        json_kaydet(onbellek, onbellek_yolu)
+    tespitleri_kaydet(tespitler, klasor / "tutarlilik_tespitler.json")
+    json_kaydet(kayit, klasor / "tutarlilik_adaylar.json")
+    return kayit
+
+
+def test_modu_var_mi(pdf: Path) -> bool:
+    from .degerlendirme import set_yukle, test_modu_kaydi_yolu
+    try:
+        return (any(o["kitap"] == pdf.stem for o in set_yukle())
+                and test_modu_kaydi_yolu(pdf.stem, "gelistirme").exists())
+    except (OSError, ValueError):
+        return False
+
+
+def test_modu_goster(pdf: Path, klasor: Path) -> None:
+    print("\nTEST MODU: kitaba bilerek eklenmiş çelişkiler (geliştirme seti, K20) ile inceleme hazırlanıyor.")
+    print("Eklenen cümleler sayfa görüntüsünde görünmez; Tutarlılık sekmesinde metin olarak gösterilir.")
+    t = time.perf_counter()
+    html = klasor / "inceleme_test_modu.html"
+    inceleme_html_olustur(pdf, html, test_modu="gelistirme")
+    print(f"  {html} ({html.stat().st_size / 1e6:.1f} MB, {time.perf_counter() - t:.1f} sn)")
+    print("\nTarayıcıda açılıyor. Sol listede mor rozetli sayfalara bakın.")
+    webbrowser.open(html.as_uri())
 
 
 def main() -> None:
@@ -81,13 +164,16 @@ def main() -> None:
         print(f"Dosya bulunamadı: {pdf}")
         return
     print(f"Seçilen kitap: {pdf.name}")
+    klasor = PROJE_KOKU / "veri" / "demo" / pdf.stem
+    klasor.mkdir(parents=True, exist_ok=True)
+    if test_modu_var_mi(pdf) and not evet_mi(
+            "Normal inceleme mi? (Hayır derseniz: bilerek çelişki eklenmiş TEST MODU gösterilir)"):
+        test_modu_goster(pdf, klasor)
+        return
 
     with pymupdf.open(pdf) as belge:
         sayfa_sayisi = len(belge)
     sayfalar = sayfa_sor(sayfa_sayisi)
-
-    klasor = PROJE_KOKU / "veri" / "demo" / pdf.stem
-    klasor.mkdir(parents=True, exist_ok=True)
 
     # 1. PDF çıkarma
     t = adim(1, "PDF'ten metin blokları çıkarılıyor")
@@ -138,11 +224,16 @@ def main() -> None:
     print(f"  Sahte hata önlemiyle denetim dışı bırakılan kelime: {sum(atlananlar.values())} "
           f"(özel isim, kısaltma, bölünmüş parça…)")
 
-    # 4. İnceleme sayfası
-    t = adim(4, "İnceleme sayfası hazırlanıyor")
+    # 4. Bilgi tutarsızlığı (yerel modeller; hazır sonuç yoksa isteğe bağlı)
+    t = adim(4, "Bilgi tutarsızlığı (bge-m3 + gemma4 + Turkish-Gemma)")
+    tutarlilik_kaydi = tutarlilik_adimi(pdf, bloklar, sayfalar, klasor)
+    print(f"  ({time.perf_counter() - t:.1f} sn)")
+
+    # 5. İnceleme sayfası
+    t = adim(5, "İnceleme sayfası hazırlanıyor")
     html = klasor / "inceleme.html"
     inceleme_html_olustur(pdf, html, sayfalar, bloklar=bloklar, analiz=analiz,
-                          yazim_tespitleri=yazim_tespitleri)
+                          yazim_tespitleri=yazim_tespitleri, tutarlilik_kaydi=tutarlilik_kaydi)
     print(f"  {html} ({html.stat().st_size / 1e6:.1f} MB, {time.perf_counter() - t:.1f} sn)")
 
     print("\nTarayıcıda açılıyor. Bir kutuya tıklayın: ayrıntılar sağda görünür.")

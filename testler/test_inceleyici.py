@@ -84,6 +84,23 @@ class YazimIziTesti(unittest.TestCase):
         self.assertIsNone(yazim_izi(b, [], {}, ham=[]))
 
 
+class TutarlilikVerisiTesti(unittest.TestCase):
+    def kayit(self, a, b, hizli="uyumlu", guven=None, benzerlik=0.8):
+        return {"a": {"metin": a[2], "sayfa_no": a[0], "blok_no": a[1]},
+                "b": {"metin": b[2], "sayfa_no": b[0], "blok_no": b[1], "basili_sayfa_no": "9"},
+                "benzerlik": benzerlik, "hizli": hizli, "guven": guven,
+                **({"hakem": {"karar": "celiski", "aciklama": "Yıllar farklı."}} if guven else {})}
+
+    def test_cift_iki_tarafin_blogunda_da_gorunur_tespit_once(self):
+        from derskitabi.inceleyici import tutarlilik_bloklari
+        d = tutarlilik_bloklari([
+            self.kayit((1, 1, "A1"), (9, 2, "B1"), benzerlik=0.9),
+            self.kayit((1, 1, "A2"), (5, 3, "C1"), hizli="celiski", guven=1.0, benzerlik=0.7)])
+        self.assertEqual([k["karsi"]["metin"] for k in d[(1, 1)]], ["C1", "B1"])  # tespit önce
+        self.assertEqual(d[(9, 2)][0]["karsi"]["metin"], "A1")  # diğer tarafta da var
+        self.assertEqual(d[(9, 2)][0]["ben"], "B1")
+
+
 @unittest.skipUnless(FONT.exists(), "Arial fontu bulunamadı")
 class InceleyiciHtmlTesti(unittest.TestCase):
     def test_html_veriyi_ve_secilen_sayfalari_icerir(self):

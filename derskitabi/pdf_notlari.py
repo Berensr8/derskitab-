@@ -69,11 +69,17 @@ def _not(annot, kriter: str, baslik: str, icerik: str, renk=None) -> None:
 
 
 class _Sayfalar:
-    """Sayfa başına kelime listesini bir kez okur (aynı sayfada birçok not olabilir)."""
+    """Sayfa başına kelime listesini bir kez okur (aynı sayfada birçok not olabilir) ve
+    konan etiketleri tutar (etiketler birbirinin üstüne binmesin)."""
 
     def __init__(self, belge: pymupdf.Document):
         self.belge = belge
         self._kelimeler = {}
+        self.etiketler = defaultdict(list)
+
+    def dolu(self, no: int) -> list[pymupdf.Rect]:
+        """Etiket konamayacak yerler: sayfadaki kelimeler ve önceki etiketler."""
+        return [pymupdf.Rect(k[:4]) for k in self.kelimeler(no)] + self.etiketler[no]
 
     def sayfa(self, no: int) -> pymupdf.Page:
         return self.belge[no - 1]
@@ -123,15 +129,20 @@ def cumle_kutulari(s: _Sayfalar, blok: Blok, cumle: str) -> list[pymupdf.Rect]:
 ETIKET_GENISLIGI, ETIKET_YUKSEKLIGI = 38, 11
 
 
-def etiket_kutusu(sayfa_genisligi: float, bbox, ust: float) -> pymupdf.Rect:
-    """"↔ s. 45" etiketinin yeri: bloğun hemen dışında, boşluğu daha geniş olan kenarda
-    (kitabın metninin üstüne binmesin). Boşluk yetmezse sayfa kenarına dayanır."""
-    sol_bosluk, sag_bosluk = bbox[0], sayfa_genisligi - bbox[2]
-    if sag_bosluk >= sol_bosluk:
-        x0 = min(bbox[2] + 3, sayfa_genisligi - ETIKET_GENISLIGI - 2)
-    else:
-        x0 = max(bbox[0] - 3 - ETIKET_GENISLIGI, 2)
-    return pymupdf.Rect(x0, ust, x0 + ETIKET_GENISLIGI, ust + ETIKET_YUKSEKLIGI)
+def etiket_kutusu(sayfa_genisligi: float, bbox, ust: float, dolu=()) -> pymupdf.Rect:
+    """"↔ s. 45" etiketinin yeri: kitabın yazısının ve önceki etiketlerin (dolu) üstüne binmeyen
+    ilk konum. Sıra: bloğun boşluğu geniş yanı, öbür yanı, sayfanın sağ/sol kenarı; aynı hizada
+    yer yoksa birkaç satır aşağı/yukarı. Hiç yer yoksa bloğun yanı (kenar boşlukları da yazı dolu)."""
+    g, y = ETIKET_GENISLIGI, ETIKET_YUKSEKLIGI
+    sag, sol = min(bbox[2] + 3, sayfa_genisligi - g - 2), max(bbox[0] - 3 - g, 2)
+    xler = [sag, sol] if sayfa_genisligi - bbox[2] >= bbox[0] else [sol, sag]
+    xler += [sayfa_genisligi - g - 2, 2]
+    for dy in (0, y, 2 * y, -y, 3 * y):
+        for x in xler:
+            r = pymupdf.Rect(x, ust + dy, x + g, ust + dy + y)
+            if not any(r.intersects(d) for d in dolu):
+                return r
+    return pymupdf.Rect(xler[0], ust, xler[0] + g, ust + y)
 
 
 def _celiski_tarafi(s: _Sayfalar, blok: Blok, cumle: str, karsi: dict, icerik: str) -> tuple[float, float]:
@@ -146,7 +157,8 @@ def _celiski_tarafi(s: _Sayfalar, blok: Blok, cumle: str, karsi: dict, icerik: s
         annot = sayfa.add_rect_annot(kutular[0])
         annot.set_border(width=1.2, dashes=[3, 2])
         _not(annot, "tutarlilik", "Bilgi tutarsızlığı", icerik)
-    etiket = etiket_kutusu(sayfa.rect.width, blok.bbox, kutular[0].y0)
+    etiket = etiket_kutusu(sayfa.rect.width, blok.bbox, kutular[0].y0, s.dolu(blok.sayfa_no))
+    s.etiketler[blok.sayfa_no].append(etiket)
     yazi = sayfa.add_freetext_annot(etiket, f"↔ s. {karsi['basili'] or karsi['sayfa_no']}", fontsize=7,
                                     text_color=RENKLER["tutarlilik"], fill_color=(1, 1, 1),
                                     align=pymupdf.TEXT_ALIGN_CENTER)

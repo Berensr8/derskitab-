@@ -136,6 +136,16 @@ class NotluPdfTesti(unittest.TestCase):
         dar = etiket_kutusu(595, (10, 100, 590, 200), 120)  # boşluk yok: sayfanın içinde kalır
         self.assertLessEqual(dar.x1, 595)
 
+    def test_etiket_yazinin_ve_onceki_etiketin_ustune_binmez(self):
+        # Sol kenarda yan kutu yazısı var (Biyoloji 10 s.60'ta görüldü): etiket sağa geçer
+        yan_kutu = pymupdf.Rect(30, 115, 160, 130)
+        r = etiket_kutusu(595, (175, 100, 550, 200), 120, [yan_kutu])
+        self.assertFalse(r.intersects(yan_kutu))
+        self.assertGreaterEqual(r.x0, 550)
+        # Aynı satırdan ikinci etiket: birincinin üstüne binmez
+        r2 = etiket_kutusu(595, (175, 100, 550, 200), 120, [yan_kutu, r])
+        self.assertFalse(r2.intersects(r) or r2.intersects(yan_kutu))
+
     def test_guven_metni(self):
         self.assertEqual(guven_metni(1.0), "yüksek (1,0)")
         self.assertEqual(guven_metni(0.5), "orta (0,5)")

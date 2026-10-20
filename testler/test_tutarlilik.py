@@ -92,6 +92,15 @@ class CumleSecimiTesti(unittest.TestCase):
         c = bilgi_cumleleri([blok(171, 1, "Anadolu korundu. I. Haçlı Saldırısı sonucunda Haçlılar Urfa ve Kudüs gibi şehirleri ele geçirmiştir.")])
         self.assertTrue(c[-1].metin.startswith("I. Haçlı"))
 
+    def test_karakter_konusmasi_kitabin_iddiasi_degil(self):
+        konusma = blok(88, 5, "Ahmet: Enerji üretimi canlılarda ortaktır ancak tüm canlılar oksijenli solunum yapamazlar.")
+        baslik = blok(88, 6, "Not: Oksijenli solunum bazı prokaryotlarda ve tüm ökaryot canlılarda gerçekleşir.")
+        self.assertEqual([c.sayfa_no * 10 + c.blok_no for c in bilgi_cumleleri([konusma, baslik])], [886])
+
+    def test_st_kisaltmasi_cumleyi_bolmez(self):
+        c = bilgi_cumleleri([blok(61, 1, "Rusya Federasyonu'nun başkenti St. Petersburg değil, Moskova şehridir.")])
+        self.assertIn("St. Petersburg", c[0].metin)
+
     def test_tekrar_eden_cumle_bir_kez(self):
         c = "Malazgirt Savaşı 1071 yılında Selçuklular ile Bizans arasında yapılmıştır."
         self.assertEqual(len(bilgi_cumleleri([blok(1, 1, c), blok(9, 1, c)])), 1)

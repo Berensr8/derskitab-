@@ -72,6 +72,17 @@ _YALNIZ_KARAR = "\nYalnız kararını ver."
 _YONERGE = re.compile(r"[ıiuü]n[ıiuü]z")
 # Test şıkkı: "C) Dağlar genellikle denize paralel uzanmaktadır." kitabın iddiası değil
 _SIK = re.compile(r"^\s*[A-EİI]\s*\)")
+# Karakter konuşması ("Ayşe: …", "Ahmet: …"): sorulardaki öğrenci karakterleri bilerek farklı
+# görüşler savunur; kitabın iddiası değildir (K20 tanımı). Biyoloji 10, s.88'de iki karakterin
+# sözleri "çelişki" diye işaretlendi. "Not:", "Örnek:" gibi başlıklar konuşma sayılmaz.
+_KONUSMA = re.compile(r"^\s*([A-ZÇĞİÖŞÜ][a-zçğıöşü]{2,})\s*:\s")
+_KONUSMA_DEGIL = {"Not", "Örnek", "Sonuç", "Tanım", "Uyarı", "Bilgi", "Kaynak", "Cevap", "Açıklama",
+                  "Hatırlatma", "Dikkat", "Etkinlik", "Amaç", "Süre", "Adı", "Konu", "Soru", "Yanıt"}
+
+
+def konusma_mi(metin: str) -> bool:
+    m = _KONUSMA.match(metin)
+    return bool(m) and m.group(1) not in _KONUSMA_DEGIL
 # Etkinlik yönergesi: altındaki cümleler bilerek yanlış olabilir ("doğru ise ✔ yanlış ise X")
 _ETKINLIK = re.compile(r"doğru ise|yanlış ise|işaretleyiniz|eşleştiriniz|boşluklara|doğru mu yanlış mı", re.I)
 
@@ -121,7 +132,7 @@ def bilgi_cumleleri(bloklar: list[Blok]) -> list[Cumle]:
     """Paragraflardaki bilgi cümleleri; kitapta aynen tekrar eden cümle bir kez alınır."""
     gorulen, sonuc = set(), []
     for k, b in enumerate(bloklar):
-        if b.tur != "paragraf":
+        if b.tur != "paragraf" or konusma_mi(b.metin):
             continue
         for c in cumlelere_bol(b.metin):
             if bilgi_cumlesi_mi(c) and c not in gorulen:

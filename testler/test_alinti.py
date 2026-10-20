@@ -26,8 +26,9 @@ class AdTesti(unittest.TestCase):
             raise unittest.SkipTest(f"morfoloji araçları kurulu değil: {e}")
 
     def test_yazar_imzalari(self):
-        for imza in ("Hüseyin Nihal Atsız", "Bedri Rahmi Eyüboğlu, Karadut", "Neclâ Pekolcay",
-                     "Anonim (haz.: Mutlu Güleryüzlü)", "Karacaoğlan", "Mehmet Kaplan, Şiir Tahlilleri"):
+        for imza in ("Hüseyin Nihal Atsız", "Bedri Rahmi Eyüboğlu, Karadut", "Neclâ Pekolcay", "Fuzûlî",
+                     "Anonim (haz.: Mutlu Güleryüzlü)", "Karacaoğlan", "Mehmet Kaplan, Şiir Tahlilleri",
+                     "Âşık Ali İzzet"):
             self.assertTrue(ad_gibi_mi(imza), imza)
 
     def test_bilinen_sinirlama_iki_kelimesi_de_siradan_olabilen_ad(self):
@@ -42,11 +43,27 @@ class AdTesti(unittest.TestCase):
     def test_imza_konumu_ve_puntosu(self):
         ust = blok(1, (183, 600, 306, 687), SIIR)
         imza = blok(2, (255, 700, 384, 715), "Bedri Rahmi Eyüboğlu, Karadut", "kisa")
-        self.assertTrue(imza_mi(imza, ust, ("Avenir-Roman", 9), ("Avenir-Roman", 10)))
-        # Aynı punto: imza değil (başlık ya da metnin devamı olabilir)
-        self.assertFalse(imza_mi(imza, ust, ("Avenir-Roman", 10), ("Avenir-Roman", 10)))
+        self.assertTrue(imza_mi(imza, ust, [ust], ("Avenir-Roman", 9), ("Avenir-Roman", 10)))
         # Harita etiketi kadar küçük yazı: imza değil
-        self.assertFalse(imza_mi(imza, ust, ("Arial", 3), ("Avenir-Roman", 10)))
+        self.assertFalse(imza_mi(imza, ust, [ust], ("Arial", 3), ("Avenir-Roman", 10)))
+        # Metinden büyük punto: imza değil (başlık)
+        self.assertFalse(imza_mi(imza, ust, [ust], ("Avenir-Roman", 12), ("Avenir-Roman", 10)))
+
+    def test_ayni_puntoda_imza_yalniz_alintinin_sag_kenarina_uzanirsa(self):
+        ust = blok(1, (65, 63, 522, 171), SIIR)
+        sagda = blok(2, (466, 175, 522, 192), "Peyami Safa", "kisa")
+        ortada = blok(3, (200, 175, 300, 192), "Peyami Safa", "kisa")
+        bicim = ("Charter-Roman", 10)
+        self.assertTrue(imza_mi(sagda, ust, [ust], bicim, bicim))
+        self.assertFalse(imza_mi(ortada, ust, [ust], bicim, bicim))
+
+    def test_siirde_her_dize_ayri_blok_kelimeler_alintinin_tamaminda_sayilir(self):
+        dizeler = [blok(i, (65, 100 + 18 * i, 260, 115 + 18 * i), d) for i, d in enumerate(
+            ["Şühedâ gövdesi, bir baksana dağlar taşlar...", "O, rükû olmasa, dünyada eğilmez başlar,",
+             "Vurulup tertemiz alnından, uzanmış yatıyor,"], start=1)]
+        imza = blok(9, (180, 172, 260, 184), "Mehmet Akif Ersoy", "kisa")
+        bicim = {(1, i): ("Charter-Roman", 10) for i in range(1, 4)} | {(1, 9): ("Charter-Roman", 9)}
+        self.assertEqual(set(alinti_bloklari(dizeler + [imza], bicim)), {(1, 1), (1, 2), (1, 3)})
 
     def test_imzanin_ustundeki_ayni_bicimli_bloklar_alinti(self):
         bloklar = [blok(1, (60, 100, 500, 130), METIN), blok(2, (183, 150, 384, 300), SIIR),

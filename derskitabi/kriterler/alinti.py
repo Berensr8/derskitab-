@@ -80,6 +80,17 @@ _SOYADI = re.compile(r"(?:oğlu|oğlan|zade)$")
 
 
 @functools.cache
+def _cozumler(kelime: str) -> list[str] | None:
+    """Starlang çözümleri; Starlang bazı kelimelerde kendi içinde hata veriyor (TxtWord.removeFlag,
+    TDE 11'de görüldü) — o zaman None (kelime ad sayılmaz: belirsizlikte tespit gizlenmez)."""
+    try:
+        c = yazim.starlang_cozumleyici().morphologicalAnalysis(kelime)
+        return [c.getFsmParse(i).transitionList() for i in range(c.size())]
+    except (ValueError, IndexError, KeyError):
+        return None
+
+
+@functools.cache
 def _ad_turu(kelime: str) -> str:
     """"kesin": yalnız özel ad (Mustafa, Tahir, Cezmi) ya da soyadı eki (Eyüboğlu, Karacaoğlan,
     Recaizade); "olabilir": sıradan kelime de olabilen ad (Kemal, Kaplan) ya da sözlükte olmayan
@@ -89,10 +100,11 @@ def _ad_turu(kelime: str) -> str:
         return "degil"
     if _SOYADI.search(kelime):
         return "kesin"
-    cozumler = yazim.starlang_cozumleyici().morphologicalAnalysis(kelime)
-    if cozumler.size() == 0:
+    parcalar = _cozumler(kelime)
+    if parcalar is None:
+        return "degil"
+    if not parcalar:
         return "olabilir"
-    parcalar = [cozumler.getFsmParse(i).transitionList() for i in range(cozumler.size())]
     if any("+P3SG+NOM" in c or "+P3PL+NOM" in c for c in parcalar):
         return "tamlama"
     prop = ["+PROP" in c for c in parcalar]
@@ -121,8 +133,7 @@ def ad_gibi_mi(metin: str) -> bool:
     kelimeler = [k for k in kelimeler if k not in _UNVANLAR] or kelimeler
     if len(kelimeler) == 1:
         k = kelimeler[0]
-        return bool(_SOYADI.search(k)) or (_ad_turu(k) == "olabilir" and bool(_SAPKALI.search(k))
-                                           and yazim.starlang_cozumleyici().morphologicalAnalysis(k).size() == 0)
+        return bool(_SOYADI.search(k)) or (bool(_SAPKALI.search(k)) and _cozumler(k) == [])
     turler = [_ad_turu(k) for k in kelimeler]
     if turler[-1] == "tamlama":  # yer ve başlık adı ("Altay Dağları"); "Bedri Rahmi" gibi adlar ilk kelimelerde
         return False

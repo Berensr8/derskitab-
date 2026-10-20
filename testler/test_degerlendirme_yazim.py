@@ -2,7 +2,6 @@
 
 import unittest
 
-from derskitabi.degerlendirme import SET_YOLU  # noqa: F401  (aynı paket yolları)
 from derskitabi.degerlendirme_yazim import KILIT_SHA256, SET_YOLU as YAZIM_SET, bulundu_mu
 from derskitabi.degerlendirme import set_yukle
 from derskitabi.model import Tespit

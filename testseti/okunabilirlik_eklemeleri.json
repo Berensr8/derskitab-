@@ -1,0 +1,422 @@
+[
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 124,
+  "blok_no": 11,
+  "metin": "4. “Besin zincirleri, üreticiden son tüketiciye doğru tek yönlü olup basit görünürlüktedir. Ekosistem içinde örtüşen çok sayıda besin zinciri karmaşık besin ağlarını oluşturur. Besin ağları habitattaki tüm organizmalar arasındaki enerji aktarımını gösterir.” bilgisinden yola çıkarak aşağıda verilen farklı türleri (üretici, tüketici, ayrıştırıcı) içeren listeleri inceleyiniz. Ekosistemlerdeki enerji akışını daha iyi anlamak için bu süreçte termodinamiğin 1. ve 2. yasaları ile ilişki kurunuz."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 191,
+  "blok_no": 5,
+  "metin": "Urry, L. A., Cain, M. L., Wasserman, S. A., Minorsky, P. V., ve Orr, R. B. (2022). Campbell Biyoloji. (12. Baskı). (E. Gündüz, & İ. Türkan, Çeviri Editörleri:) Palme Yayıncılık."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 170,
+  "blok_no": 18,
+  "metin": "Atık Yönetimi Yönetmeliği’ne göre atıkların üretim, kullanım veya bertaraf aşamalarında çevreye zarar vermeyecek veya en az zarar verecek şekilde uygun işlem ve yöntemlerin kullanılması gerekmektedir. Bu süreçte doğal kaynakların olabildiğince az kullanıldığı temiz teknolojilerin geliştirilmesi ve kullanılması önemlidir. Farklı türdeki atıkların kaynağında ayrı toplanması ve atıkların en yakın ve en uygun olan tesiste uygun yöntem ve teknolojiler kullanılarak bertaraf edilmesi gerekmektedir. Bu yönetmelikte ayrıca atıkların ayrılması, toplanması, taşınması, geri kazanılması ve bertarafı sırasında su, hava, toprak, bitki ve hayvanlar için risk yaratmayacak; çevre ve insan sağlığına zarar vermeyecek yöntemlerin kullanılması gerektiği belirtilmektedir. Yönetmeliğe göre her türlü faaliyet sırasında doğal kaynakların ve enerjinin verimli kullanılması amacıyla atık oluşumunu kaynağında azaltan ve atıkların geri kazanılmasını sağlayan, çevreyle uyumlu teknolojilerin kullanılmasının gerekliliği ifade edilmiştir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 89,
+  "blok_no": 11,
+  "metin": "40. Berna tasarladığı oksijenli solunum modelinde oksijenin kullanıldığı aşamayı ayrıca belirtmemiştir. Modeli inceleyen öğretmeni, bunun bir hata ya da eksiklik olmadığını ifade etmiştir. Ancak Berna’dan modelinde oksijenin hangi aşamada kullanıldığına ve nasıl bir görevi olduğuna dair bir açıklama yapmasını istemiştir. Buna göre Berna’nın öğretmenine yapacağı doğru açıklama ne olabilir?"
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 60,
+  "blok_no": 17,
+  "metin": "Glikoliz sırasında oluşan üç karbonlu piruvat molekülleri, ökaryot hücrede enerji üretim sürecinin bir sonraki aşamasına geçmek üzere mitokondriye taşınır. Piruvat molekülleri doğrudan Krebs döngüsüne katılamaz. Bunun için her bir piruvat molekülü, bir molekül CO₂ çıkışı ve NADH oluşumu ile Krebs döngüsünü başlatacak olan iki karbonlu Asetil-CoA (Asetil koenzim A) bileşiğine dönüşür (Görsel 1.25). Glikoliz ile Krebs döngüsü arasındaki bağlantıyı kuran bu olaya piruvatın oksidasyonu denir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 129,
+  "blok_no": 12,
+  "metin": "Üreticilerle beslenen otçul (herbivor) canlılara birincil tüketici, birincil tüketicilerle beslenen canlılara ikincil tüketici, ikincil tüketicilerle beslenen canlılara ise üçüncül tüketici adı verilir. Bir canlının besin zincirindeki trofik düzeyi, yalnızca beslenme biçimine değil hangi düzeydeki canlılarla beslendiğine bağlıdır. Bu nedenle hepçil (omnivor) canlılar besin zincirine göre birincil, ikincil ya da üçüncül tüketici olarak yer alabilir. Etçil (karnivor) canlılar da besin zincirinin yapısına göre ikincil, üçüncül hatta dördüncül tüketici konumunda bulunabilir. Her besin zincirinde bitkisel ve hayvansal kalıntıları topraktaki humus ve minerallere dönüştürebilen ayrıştırıcılar bulunur."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 26,
+  "blok_no": 26,
+  "metin": "NADP+, elektron ve proton alarak NADPH’a dönüşen yükseltgenmiş formdur. NADPH, fotosentezde ışık reaksiyonları sırasında üretilen bir enerji taşıyıcısıdır. Işık enerjisiyle su moleküllerinden serbest kalan elektronlar, NADP+"
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 131,
+  "blok_no": 5,
+  "metin": "Besin zinciri boyunca üst trofik basamaklara çıkıldıkça canlıların vücudunda biriken zehirli madde miktarı artar. Çevrenin kurşun, cıva gibi ağır metaller, pestisitler, radyoaktif maddeler, endüstriyel atıklarla kirlenmesi önemli bir sorundur. Örneğin biyolojik birikime neden olan DDT (Dikloro Difenil Trikloroetan), 20. yüzyılın ikinci yarısında tarım zararlıları ve sıtma taşıyan sivrisineklere karşı yaygın olarak kullanılan bir pestisittir. Ancak yapılan bilimsel çalışmalar, DDT’nin besin zincirleri yoluyla ekosistemde taşındığını ve canlı dokularında biriktiğini göstermektedir. DDT’nin çevrede yaklaşık 10 yıl boyunca kalabildiği ve fiziksel etkenlerle kolayca parçalanmadığı belirlenmiştir. DDT kullanımı 1980’li yıllardan itibaren birçok ülkede yasaklanmıştır."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 29,
+  "blok_no": 12,
+  "metin": "Fotosentez, 380-750 nm dalga boyu aralığında bulunan spektrumdaki görünür ışıkta gerçekleşir. Fotosentezin başlayabilmesi için öncelikle ışığın klorofil tarafından soğurulması gerekir. Klorofil; mor, mavi ve kırmızı dalga boyundaki ışıkları daha çok soğurduğu için fotosentez bu dalga boyundaki ışıklarda daha hızlıdır. Klorofil tarafından çok az miktarda soğurulan yeşil ışıkta fotosentez en düşük hızda gerçekleşir (Grafik 1.2). Fotosentez hızı; kızılötesi, morötesi, radyo dalgaları ve X ışınlarında sıfırdır."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 46,
+  "blok_no": 18,
+  "metin": "Hepçiller (omnivor) -örneğin insan, ayı ve fare- hem bitkisel hem de hayvansal besinleri tüketmeye uyum sağlamıştır. Yetişkin bir insanın ağzında toplam 32 diş bulunur. Ağzın her iki yanında önden arkaya doğru sırasıyla dört kesici diş (ısırmak için), iki köpek dişi (koparmak için), dört azı dişi (öğütmek için) ve altı büyük azı dişi (ezmek için) yer alır."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 20,
+  "blok_no": 16,
+  "metin": "ATP molekülünün fosfat grupları arasındaki bağlar hidroliz edildiğinde kopar. Bir molekül ATP’nin hidrolizi sonucunda adenozin difosfat (ADP), inorganik fosfat (Pi) ve serbest enerji açığa çıkar. Açığa çıkan bu enerji çeşitli metabolik faaliyetlerde kullanılır."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 98,
+  "blok_no": 4,
+  "metin": "Canlı organizmalar, birbirleri ve çevreleri ile sürekli bir etkileşim hâlindedir. Her canlı, hayatta kalmak ve yaşamsal faaliyetlerini sürdürebilmek için diğer canlılara ihtiyaç duyar. Ekoloji, bu karmaşık etkileşimleri inceleyen bir bilim dalıdır ve canlı organizmaların çevreleriyle olan ilişkilerini araştırır. Ekolojinin temel birimi ise ekosistemdir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 135,
+  "blok_no": 3,
+  "metin": "Ekosistemde bulunan maddeler canlı ve cansız ortamlar arasında sürekli bir döngü hâlindedir. Canlılar, yaşamsal faaliyetlerini sürdürebilmek için bulundukları ortamdan ihtiyaç duydukları organik ve inorganik maddeleri alır. Canlıların yapısına katılan bu maddeler, canlının ölümü ve metabolik atıkları ile tekrar dış ortama verilir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 59,
+  "blok_no": 5,
+  "metin": "Oksijen varlığında enzimler ve ETS yardımıyla organik moleküllerin karbondioksit ve su moleküllerine kadar parçalanması sonucunda ATP üretilmesine oksijenli solunum (aerobik solunum) denir. Oksijenli solunumda son elektron alıcısı oksijendir. Oksijenli solunumda glikoliz sonucu oluşan piruvat; CO2, H2O gibi inorganik maddelere kadar parçalandığı için diğer hücresel solunum çeşitlerine göre daha fazla ATP üretilir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 26,
+  "blok_no": 28,
+  "metin": "molekülünü indirger ve NA-DPH’a dönüşmesini sağlar. NADPH, fotosentezin ışığın kullanılmadığı tepkimelerinde kullanılır; karbondioksidi glikoza dönüştürmek için gereken enerji ve elektronları sağlar. Bu şekilde NADPH, bitkilerin enerji üretiminde ve büyümesinde önemli bir rol oynar."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 67,
+  "blok_no": 7,
+  "metin": "Aşağıda birbiri ile bağlantılı, doğru/yanlış ifadeler içeren tanılayıcı dallanmış ağaç verilmiştir. Soldaki ilk ifadeden başlayarak, söz konusu ifadelerin doğru (D) ya da yanlış (Y) olduğuna karar vererek ilerleyiniz. Sonuçta ulaştığınız çıkışı işaretleyiniz. Tek bir çıkışı işaretleyebileceğinizi unutmayınız."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 119,
+  "blok_no": 2,
+  "metin": "Dış parazitler; yaşadıkları konağın kan, deri, saç gibi dokuları ile beslenir. Konağın üzerinde sürekli ya da geçici olarak bulunabilir. Taşıdıkları hastalık etkenlerini kan yoluyla konağa bulaştırarak hastalığa neden olabilir. Bit, pire, kene, sülük, sivrisinek gibi canlılar dış parazit örnekleridir (Görsel 2.22 a, b, c)."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 31,
+  "blok_no": 14,
+  "metin": "Fotosentezde su; oksijen, elektron ve hidrojen kaynağı olarak kullanılır. Su miktarının belirli oranda artışı fotosentez hızını artırır. Fakat yeterli suyun bulunduğu ortamda su miktarının artması tek başına fotosentez hızını etkilemez. Su miktarı azaldıkça fotosentez hızı azalır. Su miktarının belli bir değerin altında olması fotosentezle ilişkili enzimlerin yapısını ve işlevini bozarak fotosentez sürecini yavaşlatabilir veya durdurabilir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 147,
+  "blok_no": 2,
+  "metin": "Havaya karışan kirleticilerin insanlarca solunması; kronik bronşit, nefes darlığı, üst solunum yolu enfeksiyonları gibi rahatsızlıklara neden olur. Havadan toprak, bitki, hayvan ve diğer çevresel ortamlara geçerek biriken kirleticiler içme suyu ve besin zincirine karışır. Bu sebeple vücuda giren kimyasalların birikimi ve emilimi canlı sağlığını olumsuz etkiler. Özellikle şehirlerde ısınma, trafik ve sanayiden kaynaklanan hava kirliliğinin son yıllarda artmasıyla sağlık problemlerinde de artış görülmektedir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 61,
+  "blok_no": 32,
+  "metin": "Bir glikozun oksijenli solunumla parçalanması sırasında kazanılan ATP’lerin büyük bir kısmı ETS evresinde üretilir. ETS evresi, prokaryotlarda hücre zarının iç yüzeyinde; ökaryot hücrelerde ise mitokondrinin krista adı verilen kıvrımlı iç zarlarında gerçekleşir. Elektron taşıma zincirini oluşturan elektron taşıyıcı moleküllerin çoğu protein yapılıdır ve zar üzerinde konumlanmıştır."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 165,
+  "blok_no": 3,
+  "metin": "Türkiye’de alan dışı koruma çalışmaları ilk olarak Ege Tarımsal Araştırma Enstitüsünün kurulmasıyla başlamıştır. Enstitü kapsamında ulusal tohum gen bankası oluşturulmuştur. Bu kapsamda 3.339 türe ait 55.000’den fazla tohum örneği korunmaktadır. Korunan tohum örnekleri içerisinde Türkiye kökenli bitkilere ait yerel ve ıslah edilmiş çeşitler ile yabani ve endemik türler bulunmaktadır. Ayrıca Ankara’da bulunan Tarla Bitkileri Merkez Araştırma Enstitüsü Müdürlüğü bünyesinde Türkiye Tohum Gen Bankası da bulunmaktadır. Bu merkezde günümüzde koruma altına alınmış tohum sayısı 51.000’dir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 176,
+  "blok_no": 9,
+  "metin": "9. Bahçesindeki bitkileri yaprak bitlerinden arındırmak isteyen bahçıvan yılda birkaç kez bitkilere böcek ilacı sıkar. Yağmur suları, bitkinin yaprak dökmesi gibi nedenlerle toprağa karışan böcek ilaçları zamanla bitkiye geçer. Biyolojik birikime neden olan böcek ilaçları besin zinciri yolu ile diğer canlılara aktarılır. Yukarıdaki görselde böyle bir durum olduğu varsayıldığında en fazla biyolojik birikimin hangi canlıda görüleceğini belirtiniz. Bu durumun nedenini açıklayınız."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 137,
+  "blok_no": 18,
+  "metin": "+) ve nitrat (NO3¯) olarak aldıkları azotu, protein gibi önemli organik moleküllerin üretiminde kullanır. Hayvanlarsa azot ihtiyaçlarını bitki ya da diğer hayvanlarla beslenme yoluyla elde eder. Bitki ve hayvanların ölümleri ya da metabolik faaliyetleri sonucu oluşan atıklardaki azotlu organik bileşikler; bakteri, mantar gibi ayrıştırıcı canlılar tarafından parçalanarak amonyak (NH₃) ve amonyuma (NH₄⁺) dönüştürülür. Amonyak, toprakta bulunan bakteriler tarafından önce nitrite (NO2¯) sonra nitrata dönüştürülür. Bu olaya nitrifikasyon denir. Topraktaki nitrat ve nitrit tuzları bazı bakteriler tarafından azot gazına çevrilerek yeniden atmosfere verilir. Azotun topraktan tekrar atmosfere geçmesini sağlayan bu olaya denitrifikasyon denir."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 61,
+  "blok_no": 2,
+  "metin": "Krebs döngüsü tepkimeleri, Alman bilim insanı Hans Krebs (Hans Krebs) tarafından 1937 yılında açıklanmıştır. Hans Krebs’in çalışmaları, bu tepkimelerin döngü şeklinde tekrarlandığını göstermiştir. Krebs döngüsü, oksijenli solunum tepkimelerinin ikinci aşamasıdır. Asetil-CoA moleküllerinden her biri, Krebs döngüsünün son aşamasında oluşan dört karbonlu bileşikle tepkimeye girerek altı karbonlu bir molekül oluşturur."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 48,
+  "blok_no": 2,
+  "metin": "Beslenme şeklindeki farklılık, sindirim kanalının uzunluğunda da belirgin olarak görülür. Otçul ve hepçillerin sindirim kanalları, vücut boyutlarına göre etçillerden daha uzundur. Otçul olan tavşan ile etçil olan tilki karşılaştırıldığında tavşanın boyutuna göre daha uzun bağırsağa sahip olması bu duruma örnek gösterilebilir (Görsel 1.19). Bitkisel besinler selüloz içerdiğinden bu besinlerin sindirimi ete oranla daha zordur. Otçul canlılarda sindirim kanalının uzun olması, sindirim için onlara daha fazla zaman kazandırır ve besin maddelerinin emilimi için daha geniş yüzey alanı sağlar."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 24,
+  "blok_no": 9,
+  "metin": "Fotosentez, yalnızca karasal ortamlarda değil su ekosistemlerinde de gerçekleşir. Okyanuslarda, denizlerde, göllerde, akarsularda yaşayan algler ve siyanobakteriler bu sucul ortamlarda fotosentez yaparak enerji ve organik maddeler üretir. Bu sucul fotosentetik organizmalar, su ekosistemlerinin enerji ve besin zincirinin ilk halkasını oluşturur."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 22,
+  "blok_no": 5,
+  "metin": "Aşağıdaki ifadeleri dikkatle okuyunuz. Her ifadenin doğru ya da yanlış olduğuna karar veriniz. Verdiğiniz karara göre ilgili oku takip ederek ulaştığınız çıkış numarasını işaretleyiniz."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 49,
+  "blok_no": 12,
+  "metin": "Benzer şekilde insan vücudunda da besinler ağızdan alındıktan sonra sindirim sisteminde aşamalı olarak parçalanır ve daha küçük yapı taşlarına ayrılır. Bu süreç sonucunda oluşan glikoz, amino asit, yağ asidi gibi maddeler ince bağırsaktan emilerek kana geçer. Kana geçen bu besin maddeleri, dolaşım sistemi aracılığıyla vücudun farklı bölgelerine taşınır. Nasıl ki metro hattı, yolcuları farklı duraklara ulaştırıyorsa kan damarları da besin maddelerini ihtiyaç duyulan hücrelere taşır."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 39,
+  "blok_no": 3,
+  "metin": "azı prokaryotlar ekstrem çevre koşullarında yaşayarak güneş ışığına ihtiyaç duymadan enerji üretebilme özelliğine sahiptir. Derin denizler, okyanus ve bataklık diplerindeki oksijensiz çamur tabakaları, çöplükler, lağım çamuru işleme kazanları ve sabit vücut sıcaklığına sahip bazı memelilerin sindirim sistemleri bu organizmaların yaygın olarak bulunduğu ortamlardır. Örneğin çöplüklerde yaşayan ve metan üreten arkeler, güneş ışığı olmadan inorganik maddelerden besin sentezler ve bu sırada metan gazı açığa çıkar. Metan gazı; renksiz, kokusuz ve patlayıcı bir gazdır."
+ },
+ {
+  "kaynak_kitap": "biyoloji10",
+  "sinif": 10,
+  "sayfa_no": 191,
+  "blok_no": 2,
+  "metin": "Simon, E.J., Dickey, J.L., Hogan, K.A. ve Reece, J.B. (2017). Campbell Temel Biyoloji (Fizyoloji İlaveli) (5. Baskı Baskı Çeviri Editörleri Gündüz, E."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 159,
+  "blok_no": 8,
+  "metin": "O zaman gördü ki, küçük çocuk, memleketlisi minimini yavru ağlıyor... Sessizce, titreye titreye ağlıyor. Yanaklarından gözyaşları birbiri arkasına, temiz vagon pencerelerindeki yağmur damlaları; dışarının rengini geçilen manzaraları içine alarak nasıl acele acele, sarsıla çarpışa dökülürse öyle, bağrının sarsıntılarıyla yerlerinden oynayarak, vuruşarak içlerinde güneşli mavi gök, pırıl pırıl akıyor."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 262,
+  "blok_no": 4,
+  "metin": "Yazar, hadiseleri objektif değil, sübjektif olarak anlatmak suretiyle, onlara, anne ve kızının heyecan, korku, ümit, hulya, safiyet ve isyanlarını da katıyor. Bu bir vak’a hikâyesi değil, bir “yaşantı hikâyesi”dir. Hikâyeci vak’aları hikâye etmiyor, “yaşanırken” başka bir deyimle dramatik olarak gösteriyor. Hikâyede konuşmaya geniş yer verilmesinin sebebi budur. Hayat bize, korkulu, endişeli, ümitli annenin konuşmaları arasından veriliyor. Hikâyede asıl tesirli olan annenin, bütün ruh hallerini aksettiren konuşma tonudur."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 236,
+  "blok_no": 6,
+  "metin": "Ortalık yeni ağarıyordu. Köşk, daha uykudaydı. Kâmran, odanın pancurlarından birini ittiği vakit, Feride’yi bahçede gördü. Pencerenin açıldığını o da fark etmişti. Başını kaldırdı, yeni doğan güneşe karşı elini gözlerine siper ederek:"
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 165,
+  "blok_no": 6,
+  "metin": "Cumhuriyet’in ilk yıllarında hikâyelerde Millî Mücadele, cumhuriyetle başlayan siyasi ve sosyal değişim, Anadolu coğrafyası ve insanı gibi konular işlenir. 1930’lardan sonra hikâyelerde konu çeşitliliği artar. Sabahattin Ali, Kenan Hulusi Koray, Memduh Şevket Esendal, Sait Faik Abasıyanık bu dönemin ünlü hikâye yazarlarıdır."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 114,
+  "blok_no": 24,
+  "metin": "tu. Eski gazeteler varsa okuyacağını söyledi. Kapının önünde gazın altında gazeteyi okuyup gidiyor. Şimdi beni çok seviyor ve her akşam kızını anlatıyor. Bu sene mektepte nakış..."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 253,
+  "blok_no": 22,
+  "metin": "nasibini Taptuk'tan al. Ona bağlan, yolunda yürü! (Dervişlerine döner.) Ve dervişlerim, tasavvuf her iyi huyu almak, her kötü huyu bırakmak yoludur."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 72,
+  "blok_no": 9,
+  "metin": "İkinci temaya başlamadan önce bir hikâye belirleyip okuyunuz. Belirlediğiniz hikâyede Türk milletinin bölünmez bütünlüğüne; millî, manevi, kültürel ve ahlaki değerlerine aykırı unsurlar yer almamalıdır. Metinlerde ayrıştırıcı, bölücü, siyasi ve ideolojik ifadelere yer verilmemelidir. Bu temada amaçlanan bilgi ve becerileri kazanabilmeniz için sorumluluklarınızı eksiksiz yerine getirmeniz beklenmektedir."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 186,
+  "blok_no": 4,
+  "metin": "Şimdi iptidaî bir bahçeler geçidi olan bu yolda beş on dakika yürüdükten sonra, Erenkuş burnuna varırsınız: Karşınızda engin, yanınızda dar deniz, düşer sular, portakal bahçeleri ve onun sonunda 3500 metre yüksekliğinde dağlar! Otomobille bir saatte sıfırdan bulutlara çıkabilirsiniz. Sıcak Anadolu kıyılarının bir hususiyeti de, kısa mesafelerle Boğaziçi serinliğinde yaylalara kavuşulabilmesidir."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 114,
+  "blok_no": 20,
+  "metin": "— Yüzüme bir tuhaf baktı. Galiba gözlerinde yaş vardı. “Kızım bu parayı niçin veriyorsun, kabak çekirde-"
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 78,
+  "blok_no": 11,
+  "metin": "Fakat köylüler bu bahar onda tuhaf bir değişiklik keşfediyorlardı. Hayır hayır, bu sade yapraklanmaktan ileri gelen o her yılki mutat değişiklik değildi. Bu öyle kolay kolay anlaşılmayan, kati olarak tespit edilemeyen ve ancak sezilebilen bir bambaşka, bir acayip gelişme idi."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 314,
+  "blok_no": 25,
+  "metin": "Cemiloğlu, M. (2001). Anadilimiz Türkçe. Türk Yurdu, 21(83), 162-163."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 314,
+  "blok_no": 28,
+  "metin": "Çelik, A. (2008). Türk Halk Şiiri Antolojisi. İstanbul: Timaş Yayınları."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 48,
+  "blok_no": 11,
+  "metin": "Dünyada hiçbir dost insana kitaptan daha yakın değildir. Sıkıntımızı unutmak, donuk hayatımıza biraz renk, biraz ışık vermek, daracık dünyamızda bulamadığımız şeyleri yaşamak için, tek çaremiz, kitaplara sarılmaktır. Bırakınız ıssız bir adaya gitmeyi, herhangi bir yolculuğa çıkarken bile hangi okur-yazar, yanına bir iki roman, bir iki şiir kitabı almayı düşünmez! Yolculukta, çoğu zaman olduğu gibi çevremize bakıp dalmaktan, yanımıza aldığımız kitapları okuyamazsak bile, onları gene de elimiz altında bulundurmak isteriz. Çünkü onların can yoldaşı olduğunu biliriz. Düşünüyorum da, şu dünyadan kitaplar yokoluverse yaşamak ne kadar güçleşir, çekilmez bir ağırlık olur. Romancı veya şair için yazmak nasıl dayanılmaz bir ihtiyaçsa, okuyucu için de yazılanları okumak, öyledir. En kötümser zamanlarımızda yardıma onlar koşar. Ataç, ölüm yatağında, kendisini görmeğe gelen Sabahattin Teoman'a: “Hastalıkta ağrıları dindirici en iyi ilâç şiirmiş. Boyuna şiir okuyorum,” dememiş miydi?"
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 278,
+  "blok_no": 6,
+  "metin": "Türkçenin yetiştirdiği büyük hikâyecilerden, büyük edebiyatçılardan biri olan Sait Faik “Bir insanı sevmekle başlar her şey” der. Ondan yola çıkarak biz de her şey Türkçeyi sevmekle başlar diyebiliriz. Gerçekten de insanın ana dilini, konuştuğu dilin güzelliklerini sevmesi vatanını ve milletini sevmekle eş değerdedir. Hattâ ve çoğunlukla Türkçe sevgisi zamanla millî benliğin oluşmasını sağlayan en önemli kavramlardan biri olarak gösterilmektedir. Çünkü Türkçe, yâni ana dilimiz gerçekten bugün dünyada konuşulmakta olan, beş dilden biri olduğu gibi coğrafi yaygınlık dolayısıyla da milyonlarca kilometre karelik çok geniş bir alanda anlaşma aracı olarak kullanılmaktadır."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 259,
+  "blok_no": 9,
+  "metin": "“Ben sanatlarda tedahüle taraftar değilim. Şiiri şiir, resmi resim, müziği müzik olarak kabul etmelidir. Her sanatın kendine ait hususiyetleri ve ifade vasıtaları vardır. Meramı bu vasıtalarla anlatmak ve şu hususiyetlerin içinde kapalı kalmak hem sanatın hakikî kıymetlerine hürmetkâr olmak; hem de bir cehde bir emeğe yer vermek demektir. Güzel olanı temin edecek güçlük herhalde bu olmalıdır. Şiirde müzik, müzikte resim ve resimde edebiyat bu güçlüğü yenemeyen insanların müracaat ettikleri birer hileden başka birşey değildir. Bundan maada (dolayı) bu sanatlar, öteki sanatların içine girince hakikî değerlerinden pek çok şey kaybetmektedirler.”"
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 118,
+  "blok_no": 20,
+  "metin": "O günler ne samimi, ne heyecanlı günlerdi. O şiir, milletin o günkü heyecanının bir ifadesidir. Binbir fecayi karşısında bunalan ruhların ıstıraplar içinde halâs dakikalarını beklediği bir zamanda yazılan o marş, o günlerin kıymetli bir hâtırasıdır. O şiir bir daha yazılamaz… Onu kimse yazamaz... Onu ben de yazamam… Onu yazmak için o günleri yaşamak lâzım. O şiir artık benim değildir. O, milletin malıdır. Benim milletime karşı en kıymetli hediyem budur…"
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 186,
+  "blok_no": 12,
+  "metin": "1. Ucu bucağı görünmeyecek kadar geniş, çok geniş. Sağda, körfezi çeviren büyük dağ yığını 3000 metre ve bulutlar üstünden engin Akdeniz’e bakıyor. 2. Açık deniz."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 103,
+  "blok_no": 20,
+  "metin": "1. Çok utanıp sıkılmak. Mağazalarını düşman bayraklarıyla donatıp “Zito Verizelos!” diye haykıran hainler, sanki birdenbire yerin dibine batmışlardı. 2. Görünmez olmak, kaybolmak."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 180,
+  "blok_no": 34,
+  "metin": "Durak, hece ölçüsü kullanılan şiirlerde ahengi artırmak için dizelerin bazı bölümlerinde anlam gereği yapılan duraklamalardır. Hece ölçüsü ile yazılan şiirlerde 4+3, 4+4, 6+5, 4+4+3 gibi duraklar kullanılabilir. Hece ölçüsüyle yazılmış, söylenmiş her şiirde durak bulunmak zorunda değildir."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 314,
+  "blok_no": 13,
+  "metin": "Âşık Veysel (2001). Dostlar Beni Hatırlasın. İstanbul: İnkılap Yayınları."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 315,
+  "blok_no": 7,
+  "metin": "Kamu, K. (2015). Bingöl Çobanları. İstanbul: Ötüken Neşriyat."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 92,
+  "blok_no": 5,
+  "metin": "İstanbul’da doğar. Lise eğitimi sırasında İsmail Habip Sevük, Halit Fahri Ozansoy gibi önemli edebiyatçılardan dersler alır. İstanbul Üniversitesi Edebiyat Fakültesinden mezun olur. Viyana’da felsefe ve tiyatro eğitimi alır."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 48,
+  "blok_no": 3,
+  "metin": "Deneme, yazarın seçtiği bir konu üzerinde kesin sonuçlara varmadan kişisel görüş ve düşüncelerini anlattığı metin türüdür. Denemede yazar; sanat, edebiyat, doğa, yaşam, dünya görüşü gibi insan ve insanla ilgili konulara değinir. Deneme yazarı, gözlemlerinden ve deneyimlerinden yararlanır; kendisiyle konuşur gibi içten ve yapmacıksız bir anlatımı yeğler."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 211,
+  "blok_no": 5,
+  "metin": "16. Bu şiiri inceleyen bir eleştirmen, şiirle ilgili şunları söylemiştir: “Şair, bu şiirle basit gündelik olayları kullandığı imge ve çağrışımlarla etkileyici bir şiir diline dönüştürmeyi başarmıştır. Okurun duygusal katılımını sağlamıştır.” Sizce bu eleştirmen, görüşünü desteklemek için metindeki hangi ifadelerden yararlanmıştır? Yazınız."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 78,
+  "blok_no": 16,
+  "metin": "Yaprakları bile şimdi bir başka yeşil görünüyordu. Daha munis, daha sıcak, adeta gülümseyen bir yeşil. Rüzgârdan hışırdayışları bile bir başka türlüydü. Ağaç, yapraklarıyla dile gelmişti sanki. Durgun havalarda bir fısıldayış, rüzgârda mırıldanış, fırtınada ise homurdanış halini alan bir şeyler anlatmak istiyor gibiydi. Ne söylediği anlaşılamıyordu gerçi... Fakat onu tanıyanlar bu esrarlı hışırtılarda ihtiyarın sesini, konuşma tarzını, hatta cümle yapısını tanımakta güçlük çekmiyorlardı."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 112,
+  "blok_no": 8,
+  "metin": "Neydi dünkü kar! Durmamacasına yağdı. Önce bir keyif veriyor, sonra iç sıkıyor. Kitap bile okuyamadım. Gözlerim hep penceredeydi. \"Şu bir dinse!\" diye bakıyordum. Ama o sessiz sessiz dökülüyor, hiç dinmeyecekmiş gibi geliyor insana. Hani Yahya Kemal Bey: \"Bin yıl sürecek zannedilen kar sesidir bu\" diyor, sesi bir yana bırakın, doğru, bin yıl sürecek sanılan sessizlik bunaltıyor. Bugün de sokaklarda yürüyebilirsen yürü! Korkunçtur Ankara'nın donu! Kaldırımlarda buz, demir kesilir sanki. Düşünce de bir yandan acısı, bir yandan ötekinin, berikinin gülmesi. Düşüvermek beklenmedik bir şeymiş de onun için güldürürmüş. İnanamıyorum buna. Gülenler kötülüklerinden gülüyorlar. Kendileri de bilmiyorlar belki yüreklerinin kötü olduğunu ama var içlerinde bir kötülük. Bir kimsenin, bir yanı acıdı diye gülüyorlar. Ben düşmedim, yavaş yavaş, dikkatli dikkatli yürüdüm. Öyle yürümek, canımızın pek kıymetli olduğunu düşünmek de insanı kendi gözünde gülünç ediyor."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 78,
+  "blok_no": 9,
+  "metin": "Böylece yaz geçti, güz geçti, kış geçti. (...) Kırlar kokularını süründü. Deniz aniden duruldu. O sakin mavisini yeniden buldu."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 232,
+  "blok_no": 4,
+  "metin": "İnsan tarih boyunca duygu ve düşüncelerini ifade etmek için çeşitli edebî türler kullanır. Farklı toplumların edebiyat tarihlerine bakıldığı zaman insanın kendini ifade etmek için kullandığı ilk türün destan olduğu söylenebilir. Destanı masal, efsane, halk hikâyesi gibi türler takip eder. Bu türlerden sonra da roman ortaya çıkar."
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 112,
+  "blok_no": 3,
+  "metin": "Türk pehlivanları! Ulusumuzu sevindiriniz. Sağ ve kuvvetli olun!"
+ },
+ {
+  "kaynak_kitap": "turkdili9",
+  "sinif": 9,
+  "sayfa_no": 22,
+  "blok_no": 5,
+  "metin": "İstanbul’da dünyaya gelir. Kayseri, Ankara ve İstanbul’da edebiyat öğretmenliği yapar; 1946’da milletvekili seçilir. Orhan Seyfi Orhon, Enis Behiç Koryürek, Halit Fahri Ozansoy ve Yusuf Ziya Ortaç ile Beş Hececiler (Hecenin Beş Şairi) olarak adlandırılan grupta yer alır. İlk şiirlerinde sıklıkla kullandığı aşk temasını, memleket edebiyatı idealiyle yazdığı eserlerinde memleket sevgisiyle birleştirir."
+ }
+]

@@ -1,0 +1,1016 @@
+[
+ {
+  "id": "T11-01",
+  "kitap": "turkdili11",
+  "sayfa_no": 5,
+  "blok_no": 6,
+  "parca": "hâricî",
+  "guven": 0.5,
+  "baglam": "isteyecek dâhilî ve hâricî bedhahlarn olacaktr. Bir gün, istiklâl ve cumhuriyeti",
+  "yakin": [
+   "kymetli hazinendir. İstikbalde dahi, seni bu hazineden mahrum etmek",
+   "müdafaa mecburiyetine düşersen, vazifeye atlmak için, içinde bulunaca",
+   "vaziyetin imkân ve şeraitini düşünmeyeceksin! Bu imkân ve şerait, çok"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-02",
+  "kitap": "turkdili11",
+  "sayfa_no": 5,
+  "blok_no": 7,
+  "parca": "lmak",
+  "guven": 1.0,
+  "baglam": "müdafaa mecburiyetine düşersen, vazifeye atlmak için, içinde bulunacağn",
+  "yakin": [
+   "isteyecek dâhilî ve hâricî bedhahlarn olacaktr. Bir gün, istiklâl ve",
+   "vaziyetin imkân ve şeraitini düşünmeyeceksin! Bu imkân ve şerait, çok",
+   "namüsait bir mahiyette tezahür edebilir. İstiklâl ve cumhuriyetine kas"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-03",
+  "kitap": "turkdili11",
+  "sayfa_no": 21,
+  "blok_no": 9,
+  "parca": "malûmat",
+  "guven": 0.5,
+  "baglam": "HACİVAT — Git, evden zurnanı al da gel! Ben de gideyim eve malûmat vereyim.",
+  "yakin": [
+   "KARAGÖZ — Var.",
+   "(Giderler; Karagöz evden zurnasını alır, Hacivat da evine haber verir,",
+   "(...)"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-04",
+  "kitap": "turkdili11",
+  "sayfa_no": 22,
+  "blok_no": 6,
+  "parca": "dehânım",
+  "guven": 0.5,
+  "baglam": "ll. HANIM — Yazın efendim: “Gonce-dehânım”...",
+  "yakin": [
+   "HALAYIK — Budala herif! Yorgancı kalfası mısın, yoksa yazıcı mı?",
+   "KARAGÖZ — “Pencerede hanım”.",
+   "HALAYIK — Nasıl “hanım”, ne “pencerede”?"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-05",
+  "kitap": "turkdili11",
+  "sayfa_no": 22,
+  "blok_no": 12,
+  "parca": "paba",
+  "guven": 1.0,
+  "baglam": "LÂZ — Merhaba, paba!",
+  "yakin": [
+   "(...)",
+   "KARAGÖZ — Merhaba, sakalı kaba!",
+   "LÂZ — Nasulsun? Eyu musun, hoş musun? (...) Dolu musun, poş musun? Yaş"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-06",
+  "kitap": "turkdili11",
+  "sayfa_no": 22,
+  "blok_no": 17,
+  "parca": "söyliyeyim",
+  "guven": 1.0,
+  "baglam": "KARAGÖZ — Bana nöbet gelmedi söyliyeyim.",
+  "yakin": [
+   "LÂZ — (...) Pir pen söyliyeyum, pir sen söyle. Pir pen söyliyeyum sen ",
+   "LÂZ — Puradan kaktuh, gittuh Trabzan’a. Pir gemi funduh alduh, pir gem",
+   "(...)"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-07",
+  "kitap": "turkdili11",
+  "sayfa_no": 22,
+  "blok_no": 24,
+  "parca": "gönderecum",
+  "guven": 1.0,
+  "baglam": "LÂZ — Memleketten geldum, memlekete mektup gönderecum.",
+  "yakin": [
+   "KARAGÖZ — Sen böyle nereden gelip nereye gidiyorsun?",
+   "KARAGÖZ — Yazıcı mı istiyorsun?",
+   "LÂZ — Evet, yazıcu isterum."
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-08",
+  "kitap": "turkdili11",
+  "sayfa_no": 24,
+  "blok_no": 2,
+  "parca": "beyt",
+  "guven": 0.5,
+  "baglam": "ÇELEBİ — Nerede iskân-ı beyt edersiniz?",
+  "yakin": [
+   "Bir Diyeceğim Var!",
+   "KARAGÖZ — İskelede bitleniyorum.",
+   "ÇELEBİ — Anlıyamadınız, efendim. Yani, nerede oturursunuz?"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-09",
+  "kitap": "turkdili11",
+  "sayfa_no": 25,
+  "blok_no": 8,
+  "parca": "hemân",
+  "guven": 0.5,
+  "baglam": "Gideyim, sahibine haber vereyim hemân! (Gider.)",
+  "yakin": [
+   "HACİVAT — Yıktın perdeyi, eyledin vîrân!",
+   "KARAGÖZ — Şöyle olsun, Hacivat, geçersen nasîbinden!",
+   "Her ne kadar sürc-i lisân ettikse afola!"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-10",
+  "kitap": "turkdili11",
+  "sayfa_no": 25,
+  "blok_no": 9,
+  "parca": "nasîbinden",
+  "guven": 0.5,
+  "baglam": "KARAGÖZ — Şöyle olsun, Hacivat, geçersen nasîbinden!",
+  "yakin": [
+   "Gideyim, sahibine haber vereyim hemân! (Gider.)",
+   "Her ne kadar sürc-i lisân ettikse afola!",
+   "Yarın akşam “...” oyununda yakan elime geçerse, bak, ben de sana neler"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-11",
+  "kitap": "turkdili11",
+  "sayfa_no": 25,
+  "blok_no": 16,
+  "parca": "cangâh",
+  "guven": 1.0,
+  "baglam": "nâle-i cangâh: Can evinden gelen inilti, feryat.",
+  "yakin": [
+   "meh-i tâbân: Parlak ay, ışıltılı ay; yüzü ay gibi parlayan.",
+   "zıll-i câzib: Çekici gölge.",
+   "sûz-i hecr: Ayrılık acısı, ayrılığın yakıcı ateşi."
+  ],
+  "etiket": "alinti_kelime",
+  "gercek_hata": false,
+  "not": "metindeki eski kelimelerin sözlükçesi"
+ },
+ {
+  "id": "T11-12",
+  "kitap": "turkdili11",
+  "sayfa_no": 25,
+  "blok_no": 17,
+  "parca": "câzib",
+  "guven": 1.0,
+  "baglam": "zıll-i câzib: Çekici gölge.",
+  "yakin": [
+   "nâle-i cangâh: Can evinden gelen inilti, feryat.",
+   "sûz-i hecr: Ayrılık acısı, ayrılığın yakıcı ateşi.",
+   "hayâlât-i acâib: Acayip hayaller, garip düşünceler."
+  ],
+  "etiket": "alinti_kelime",
+  "gercek_hata": false,
+  "not": "metindeki eski kelimelerin sözlükçesi"
+ },
+ {
+  "id": "T11-13",
+  "kitap": "turkdili11",
+  "sayfa_no": 27,
+  "blok_no": 5,
+  "parca": "söyliyerek",
+  "guven": 1.0,
+  "baglam": "HACİVAT — (Şarkı söyliyerek perdeye gelir.)",
+  "yakin": [
+   "1. Mukaddime (Giriş): Hacivat bir semai söyleyerek perdeye gelir. “Yâr",
+   "Sözü canlar bağışlar bir bizim cânânımız vardır",
+   "Yüzü hurşîde benzer bir meh-i tâbânımız vardır"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-14",
+  "kitap": "turkdili11",
+  "sayfa_no": 29,
+  "blok_no": 9,
+  "parca": "sütlâçım",
+  "guven": 1.0,
+  "baglam": "KARAGÖZ — Mahallebi değilim, sütlâçım.",
+  "yakin": [
+   "ÇELEBİ — İşte bendeniz de bunu söylüyorum ya! Bu mahalleli misiniz?",
+   "ÇELEBİ — Nerede iskân-ı beyt edersiniz?",
+   "KARAGÖZ — İskelede bitleniyorum."
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-15",
+  "kitap": "turkdili11",
+  "sayfa_no": 30,
+  "blok_no": 5,
+  "parca": "kuşam",
+  "guven": 0.5,
+  "baglam": "yle Ortaoyunu kişileri birbirlerine benzedikleri için birisi için söylenecek ötekisi için de geçerlidir. Kişiler giyim, kuşam, tavır, davranış, sözlerle belirlendiği gibi belli bir bölgenin, belirli bir uğraşın (...) zorunluluğuyla da dille",
+  "yakin": [
+   "100 Soruda Türk Tiyatrosu Tarihi",
+   "Eksen Kişiler: Bunlar Karagöz oyununda Karagöz ve Hacivat, Ortaoyunund",
+   "Karagöz ve Kavuklu dışa dönük, iç tepkilerini hemen açığa vuran, olduğ"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-16",
+  "kitap": "turkdili11",
+  "sayfa_no": 30,
+  "blok_no": 7,
+  "parca": "gözüpektir",
+  "guven": 0.5,
+  "baglam": "ze gülücülüğü olmadığı için sürekli geçim tasasındadır. Parasızlıktan istemediği işleri yapmak zorunda kalır. Cesurdur, gözüpektir. Dolantılara, dolaplara pek aklı ermez. (...) Hacivat veya Pişekâr’a gelince, onun herkesin huyuna göre konuş",
+  "yakin": [
+   "Eksen Kişiler: Bunlar Karagöz oyununda Karagöz ve Hacivat, Ortaoyunund",
+   "Metin And, 100 Soruda Türk Tiyatrosu Tarihi",
+   "1. Hacivat ve Karagöz’ün kişilik özellikleri, eğitim durumları, kültür"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-17",
+  "kitap": "turkdili11",
+  "sayfa_no": 38,
+  "blok_no": 12,
+  "parca": "yazalıdan",
+  "guven": 1.0,
+  "baglam": " pek aldırmayan ben, yalnız senin hükümlerinden korkuyorum. Belki senin beni en iyi bilmenden böyle oluyor. Sana mektup yazalıdan beri günlerim sakin, derin azabı olmadan geçti. Fakülte’de imtihanlar başladı. Behice’nin dersleriyle biraz me",
+  "yakin": [
+   "Âli,",
+   "Behice’den de memnunum. O çok değişti. Beraberce okuyacağız, çalışacağ"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-18",
+  "kitap": "turkdili11",
+  "sayfa_no": 39,
+  "blok_no": 2,
+  "parca": "medhedecek",
+  "guven": 1.0,
+  "baglam": "Kendi kabiliyetin, ümitsizliğin hakkında söylediklerin hoşuma gitmedi: medhedecek değilim. Fakat cesaretsizliği yenebilirsen iyi, güzel şeyler verebileceğine kaniim. Çünkü roman ve yazı, bir ",
+  "yakin": [
+   "1. Tema",
+   "(...)",
+   "Hamdi Bey’le yine sathî bir samimiyetimiz var. (...) Anlatıyor. Daima "
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-19",
+  "kitap": "turkdili11",
+  "sayfa_no": 50,
+  "blok_no": 7,
+  "parca": "aytu",
+  "guven": 1.0,
+  "baglam": "iligdin sẹlam köngül aytu bitig",
+  "yakin": [
+   "Bu hükümdarın selam ve hatır sorma mektubudur;",
+   "bunu esenlik dileğiyle yazdım, ey zeki insan.",
+   "bitidim esenlik öze ay tetig"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-20",
+  "kitap": "turkdili11",
+  "sayfa_no": 50,
+  "blok_no": 13,
+  "parca": "yüder",
+  "guven": 1.0,
+  "baglam": "negü teg yüder erki ödlek yükin Yusuf Has Hacib, Kutadgu Bilig (çev.: Reşid Rahmeti Arat)",
+  "yakin": [
+   "devran yükünü acaba nasıl yükleniyor.",
+   "2. Metin",
+   "Mehmed’im, sevinin, başlar yüksekte!"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-21",
+  "kitap": "turkdili11",
+  "sayfa_no": 63,
+  "blok_no": 8,
+  "parca": "göresledim",
+  "guven": 1.0,
+  "baglam": "Bedir, Sevgili Bedir, nasılsın?.. Kardeşlik gönderilir bir şey olsaydı, ondan sana yığın yığın gönderseydim. O kadar göresledim ki seni. Bana bir resmini gönder emi.",
+  "yakin": [
+   "Ben gene geç kaldım. Olur şey değil... Belki, Bedrim, her zaman berabe",
+   "Trabzon’dan epey zamandır mektup alamıyorum. Ramazan ve bayram yorgunl",
+   "Ferit bile yazmıyor. Hatta çok zamandan beri. İhtimal yakında bütün me"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-22",
+  "kitap": "turkdili11",
+  "sayfa_no": 75,
+  "blok_no": 8,
+  "parca": "unutduğum",
+  "guven": 1.0,
+  "baglam": "ilmeli, bu söze şu cevap diye düşünüyordum. Yani zihnen boyuna cevap verdim. Yalnız bir gün verdiğim cevabı ertesi günü unutduğum için, cevapların hepsi gürültüye gitdi. Şimdi mektubunu önüme koydum. Yazdıklarına birer birer cevap vereceğim",
+  "yakin": [
+   "Merhaba Efendim Merhaba!",
+   "Azra Erhat, Mektuplarıyla Halikarnas Balıkçısı",
+   "1. Metinde yazar, aldığı mektuba cevap vermekte geciktiğini belirtmekt"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-23",
+  "kitap": "turkdili11",
+  "sayfa_no": 75,
+  "blok_no": 8,
+  "parca": "gazetada",
+  "guven": 0.5,
+  "baglam": "zıyorsun. Yahu hediye filan değil. Sen vardığın neticeyi o gece bana söyledin. Haklı olduğun küçük bir nokta vardı. Ben gazetada Homer İlyada’da “Palamed”den bahsediyor demişdim. İlyada’da Homer bahsetmiyor, dedin. Söylediğin şu itibarla do",
+  "yakin": [
+   "Merhaba Efendim Merhaba!",
+   "Azra Erhat, Mektuplarıyla Halikarnas Balıkçısı",
+   "1. Metinde yazar, aldığı mektuba cevap vermekte geciktiğini belirtmekt"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-24",
+  "kitap": "turkdili11",
+  "sayfa_no": 75,
+  "blok_no": 21,
+  "parca": "gitdi",
+  "guven": 1.0,
+  "baglam": "5. Metinde geçen bazı kelimelerin (unutduğum, gitdi, demişdim, gazetada vb.) yazımı günümüzdeki yazımlarından farklılık göstermektedir.",
+  "yakin": [
+   "4. Metinde sözü edilen iletişim araçlarını (telgraf, mektup, konferans",
+   "a) Bu farklılıklar dilin zaman içinde geçirdiği değişimin hangi yönünü",
+   "b) Günümüzde dijital iletişimde (sosyal medya, mesajlaşma uygulamaları"
+  ],
+  "etiket": "alinti_kelime",
+  "gercek_hata": false,
+  "not": "kitabın sorusu, metindeki eski yazımları anıyor"
+ },
+ {
+  "id": "T11-25",
+  "kitap": "turkdili11",
+  "sayfa_no": 77,
+  "blok_no": 5,
+  "parca": "nerelerde",
+  "guven": 0.5,
+  "baglam": "e bulundurarak karşı tarafa aktarabileceğiniz ek belgeleri (müzik, video, resim, metin vb.) belirleyiniz. Bu belgelerin nerelerde ve hangi amaçlarla kullanılabileceği hakkında tahminlerde bulununuz.",
+  "yakin": [
+   "1. Dinleme / izleme metnini inceleme sürecinde iletişim ve e-posta kon",
+   "......................................................................",
+   "......................................................................"
+  ],
+  "etiket": "kitap_metni",
+  "gercek_hata": false,
+  "not": "kitabın kendi metni, doğru kelime"
+ },
+ {
+  "id": "T11-26",
+  "kitap": "turkdili11",
+  "sayfa_no": 90,
+  "blok_no": 21,
+  "parca": "bulud",
+  "guven": 1.0,
+  "baglam": "bulut bulud bulut bulut bulut bult bulut su buharının yoğunlaşma-",
+  "yakin": [
+   "bala bala bala bala bala bala bala çocuk",
+   "sıyla oluşan kütle",
+   "deniz dəniz deŋiz dengiz deŋiz teŋiz deŋiz büyük, tuzlu su kütlesi"
+  ],
+  "etiket": "alinti_kelime",
+  "gercek_hata": false,
+  "not": "kitabın tablosu: Türk lehçelerinde kelime biçimleri"
+ },
+ {
+  "id": "T11-27",
+  "kitap": "turkdili11",
+  "sayfa_no": 97,
+  "blok_no": 27,
+  "parca": "küzetşisi",
+  "guven": 1.0,
+  "baglam": "Ar, uyattın bir aqı-küzetşisi.",
+  "yakin": [
+   "Dostluk, düşmanlık hepsi de yürek işi,",
+   "Ar, utanmanın akıl bekçisi.",
+   "Ar men uyat sınbasa, özge qılıq,"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-28",
+  "kitap": "turkdili11",
+  "sayfa_no": 98,
+  "blok_no": 25,
+  "parca": "bolup",
+  "guven": 1.0,
+  "baglam": "Mukam bolup tuyulidu u,",
+  "yakin": [
+   "Makam gibi gelir bana o,",
+   "Öldüğümde duysam mezarda.",
+   "Añlap yatsam ölginimde ta!"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-29",
+  "kitap": "turkdili11",
+  "sayfa_no": 107,
+  "blok_no": 11,
+  "parca": "gelimi",
+  "guven": 0.5,
+  "baglam": " kişilerin temsil ettiği kavramların, düşünce ve değerlerin olay örgüsündeki dolaşımıdır, denilebilir. Bu değerler, söz gelimi bir kişilik özelliği, bir psikolojik sorun, bir toplumsal konum, bir insanî durum, bir kavram vs. olabilir. Bu ba",
+  "yakin": [
+   "Çatışma",
+   "(...)",
+   "Ayrıca, ’çatışma’nın ana amacı, olay akışını sıradanlığın ötesine geçi"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-30",
+  "kitap": "turkdili11",
+  "sayfa_no": 107,
+  "blok_no": 11,
+  "parca": "içedönüklük",
+  "guven": 0.5,
+  "baglam": " özelliği, bir psikolojik sorun, bir toplumsal konum, bir insanî durum, bir kavram vs. olabilir. Bu bağlamda söz gelimi içedönüklük, baba-oğul karşıtlığı, işçi sınıfının sendikal hakları, mutluluk, eşitlik, özgürlük romanda ’çatışma’yı oluş",
+  "yakin": [
+   "Çatışma",
+   "(...)",
+   "Ayrıca, ’çatışma’nın ana amacı, olay akışını sıradanlığın ötesine geçi"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-31",
+  "kitap": "turkdili11",
+  "sayfa_no": 109,
+  "blok_no": 23,
+  "parca": "idâre",
+  "guven": 0.5,
+  "baglam": "Kalpakçılar Caddesi’ndeki bu dar ve derin dükkânı idâre eden Bahaeddin Efendi isminde, orta yaşlı, orta boylu, güler yüzlü, cana yakın yarı tezgâhtar, yarı patron havasın",
+  "yakin": [
+   "Bu dürüst ve zengin tüccarın, Kapalıçarşı’da bir de şûbesi vardı ki, b",
+   "Mintanının üstüne dâima “haydâriye” giydiğine göre, derviş meşrep bir ",
+   "Ölçüde eli çabuk idi. Müşterinin paketini hazırlayıp eline uzatır ve s"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-32",
+  "kitap": "turkdili11",
+  "sayfa_no": 110,
+  "blok_no": 18,
+  "parca": "hâtıradan",
+  "guven": 0.5,
+  "baglam": "amazan eğlenceleri, bayram şenlikleri, çocuklara mahsus bayram yerleri de, artık târihin derinliklerine saklanmış birer hâtıradan ibârettir.",
+  "yakin": [
+   "Gene bir atın iki yanından sarkan ve rutûbetten yeşillenmiş büyük hort",
+   "(...)",
+   "Eski devirlerde, her ev, aşağı yukarı bir akademi havası taşırdı. Kimi"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-33",
+  "kitap": "turkdili11",
+  "sayfa_no": 110,
+  "blok_no": 22,
+  "parca": "üstadlarından",
+  "guven": 1.0,
+  "baglam": "Devleşmiş bu sanat erbâbına ancak saygı gösterilir. Çıraklıkta kalmış eli kalem tutanlar ise, üstadlarından söz edemez, olsa olsa kalemlerini yontuş tarzından, kullandıkları yerli mürekkebi bizzat nasıl îmal ettikl",
+  "yakin": [
+   "Türklerde bütün İslâm âlemine parmak ısırtan hat sanatı ve hattatlara ",
+   "İstanbul’un daha eski devirlerinde günlük hayâtı benek benek ziynetley"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-34",
+  "kitap": "turkdili11",
+  "sayfa_no": 110,
+  "blok_no": 23,
+  "parca": "ziyâfetler",
+  "guven": 0.5,
+  "baglam": "nlük hayâtı benek benek ziynetleyen âdet ve eğlencelerden, cirit atmalar, ok atmalar, Erbâin’i müteakip verilen ârifâne ziyâfetler, helva sohbetleri tandır altında yârenlikler olurmuş.",
+  "yakin": [
+   "Devleşmiş bu sanat erbâbına ancak saygı gösterilir. Çıraklıkta kalmış "
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-35",
+  "kitap": "turkdili11",
+  "sayfa_no": 111,
+  "blok_no": 4,
+  "parca": "mes’eleleri",
+  "guven": 0.5,
+  "baglam": " hanımları ve kızları ile aynı mahalle ve sokakta bulunarak komşuluk ettiğimiz âilelerin kadınları arasında ne memleket mes’eleleri konuşulur ne de bir mâneviyat alış-verişi olurdu.",
+  "yakin": [
+   "(...)",
+   "Dedikodudan hiç hoşlanmayan büyüklerim, bu insanlarla ne konuşurlardı?",
+   "Halbuki, her akşam annesini ziyâret ettikten sonra evine giden ortanca"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-36",
+  "kitap": "turkdili11",
+  "sayfa_no": 111,
+  "blok_no": 10,
+  "parca": "mukâyese",
+  "guven": 0.5,
+  "baglam": "Çocuk yaşıma rağmen, ihtiyarsız, hatta farkında dahi olmadan, iki tarafı birbiri ile karşılaştırıp, aklımca mukâyese etmekten kurtulamamakta idim.",
+  "yakin": [
+   "Bu seviye ve bu irtifâda bir konuşmayı, selâmlık odasında da, hanımlar",
+   "Dokuz yaşıma geldiğimde, hemen ilk defa, hanımlar arasında kopan bir f",
+   "Fakat günün birinde, Hacopulu’nun, Yunanistan’a bir harp gemisi satın "
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-37",
+  "kitap": "turkdili11",
+  "sayfa_no": 116,
+  "blok_no": 12,
+  "parca": "katıġdı",
+  "guven": 1.0,
+  "baglam": "bu sabımın edgüti eşid katıġdı tıngla:",
+  "yakin": [
+   "biriki oġuşum budunum biriye şadpıt begler yırıya tarkat buyruk begler",
+   "İlgerü kün toġsık[k]a birigerü kün ortusıngaru kurıġaru kün batsıkınga",
+   "[kop] m[ang]a k[örür]. [Bunç]a budun 3 kop itdim. Ol amtı anyıġ yok. T"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-38",
+  "kitap": "turkdili11",
+  "sayfa_no": 116,
+  "blok_no": 23,
+  "parca": "koordinatörlüğünü",
+  "guven": 0.5,
+  "baglam": "da doğdu. Önemli bir fikir adamı olan Muharrem Ergin, Millî ve Milletlerarası Türkoloji Kongrelerinin uzun yıllar genel koordinatörlüğünü yürüttü ve bu kongrelerin dünya çapında tanınmasını sağladı. Türk Kültürünü Araştırma Enstitüsünün kur",
+  "yakin": [
+   "YAZARIN BİYOGRAFİSİ",
+   "Türk Dil Bilgisi, Orhun Âbideleri, Dede Korkut Kitabı, Oğuz Kağan Dest",
+   "MUHARREM ERGİN"
+  ],
+  "etiket": "kitap_metni",
+  "gercek_hata": false,
+  "not": "kitabın kendi metni (yazar biyografisi), doğru kelime"
+ },
+ {
+  "id": "T11-39",
+  "kitap": "turkdili11",
+  "sayfa_no": 127,
+  "blok_no": 17,
+  "parca": "bolup",
+  "guven": 1.0,
+  "baglam": "bo.yda ūlug bilge bolup bilgi.ŋ ǖle",
+  "yakin": [
+   "Bunların dışında sadece iki işarete",
+   "başvurulmuştur:",
+   "Diyor ki: Ey oğlum, benden öğüt al ve terbiyeye talip ol ki kavmin büy"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-40",
+  "kitap": "turkdili11",
+  "sayfa_no": 127,
+  "blok_no": 38,
+  "parca": "kelgü",
+  "guven": 1.0,
+  "baglam": "tumlug yana kelgü.sü.z",
+  "yakin": [
+   "uçma.k yeri körüldi",
+   "Baharı tasvir ederek diyor ki: Türlü çiçekler açıldı. Sanki ipek halı ",
+   "(...) Kâşgarlı Mahmud, Dîvânu Lugâti’t-Türk"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-41",
+  "kitap": "turkdili11",
+  "sayfa_no": 142,
+  "blok_no": 5,
+  "parca": "sovırıp",
+  "guven": 1.0,
+  "baglam": "ri, saz şairi olarak nitelendirilen âşıklar; Azerbaycan Türklerinde ozan, âşık, el şairi, Kazak Türklerinde halk akını, sovırıp salma akın, aytısger; Kırgız Türklerinde halk akını, aytışçı; Türkmen ve Özbek Türklerinde akın, ahun, bahsi, şa",
+  "yakin": [
+   "Türk Dünyası Âşıklık Geleneğinin Geleceğe Taşınması",
+   "(...)",
+   "Kültürel miras, sürdürülebilir kalkınma ve barışın garantisidir. Âşıkl"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-42",
+  "kitap": "turkdili11",
+  "sayfa_no": 142,
+  "blok_no": 5,
+  "parca": "aşuk",
+  "guven": 1.0,
+  "baglam": "tısger; Kırgız Türklerinde halk akını, aytışçı; Türkmen ve Özbek Türklerinde akın, ahun, bahsi, şair; Uygurlarda bahsi, aşuk, goşakçı; Karakalpaklarda akın, aytısger; Başkurtlarda sâsân; Tatarlarda çaçan olarak nitelendirilmektedir. Türkiye",
+  "yakin": [
+   "Türk Dünyası Âşıklık Geleneğinin Geleceğe Taşınması",
+   "(...)",
+   "Kültürel miras, sürdürülebilir kalkınma ve barışın garantisidir. Âşıkl"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-43",
+  "kitap": "turkdili11",
+  "sayfa_no": 142,
+  "blok_no": 5,
+  "parca": "aytısger",
+  "guven": 1.0,
+  "baglam": " nitelendirilen âşıklar; Azerbaycan Türklerinde ozan, âşık, el şairi, Kazak Türklerinde halk akını, sovırıp salma akın, aytısger; Kırgız Türklerinde halk akını, aytışçı; Türkmen ve Özbek Türklerinde akın, ahun, bahsi, şair; Uygurlarda bahsi",
+  "yakin": [
+   "Türk Dünyası Âşıklık Geleneğinin Geleceğe Taşınması",
+   "(...)",
+   "Kültürel miras, sürdürülebilir kalkınma ve barışın garantisidir. Âşıkl"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-44",
+  "kitap": "turkdili11",
+  "sayfa_no": 142,
+  "blok_no": 5,
+  "parca": "sâsân",
+  "guven": 0.5,
+  "baglam": "zbek Türklerinde akın, ahun, bahsi, şair; Uygurlarda bahsi, aşuk, goşakçı; Karakalpaklarda akın, aytısger; Başkurtlarda sâsân; Tatarlarda çaçan olarak nitelendirilmektedir. Türkiye’de kalem şairi olarak ifade edilen halk şairlerine, Kırgız ",
+  "yakin": [
+   "Türk Dünyası Âşıklık Geleneğinin Geleceğe Taşınması",
+   "(...)",
+   "Kültürel miras, sürdürülebilir kalkınma ve barışın garantisidir. Âşıkl"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-45",
+  "kitap": "turkdili11",
+  "sayfa_no": 159,
+  "blok_no": 7,
+  "parca": "gayıp",
+  "guven": 1.0,
+  "baglam": "Çalış gayıp etme devletin, varın,",
+  "yakin": [
+   "Ne arıyan olur (vallah) ne soran olur.",
+   "Ne arıyan olur (vallah) ne soran olur.",
+   "Tersine döner de yığvalın, zarın,"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-46",
+  "kitap": "turkdili11",
+  "sayfa_no": 159,
+  "blok_no": 29,
+  "parca": "biştikten",
+  "guven": 1.0,
+  "baglam": "A) Bu gönlüm ateşe biştikten sonra,",
+  "yakin": [
+   "Buna göre verilen âşık atışmasında ayak uydurma sırası gelen âşık, atı",
+   "B) Derdim sazdan başka kimse anlamaz,",
+   "Deryada yolunu şaştıktan sonra."
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-47",
+  "kitap": "turkdili11",
+  "sayfa_no": 168,
+  "blok_no": 4,
+  "parca": "aksisadaların",
+  "guven": 1.0,
+  "baglam": " fecir kızlarının ellerindeki meşalelerle maddesiz aynalarda bir sedef rüyası içinde yüzdükleri sabahların, garip, içli aksisadaların diyarıydı.",
+  "yakin": [
+   "(…)",
+   "Zaten Boğaz’da her şey bir akisti. Işık akisti, ses akisti; burada ins",
+   "Mümtaz, çok küçüklük hatıralarına eğilip de vapur düdüklerinin bu tepe"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-48",
+  "kitap": "turkdili11",
+  "sayfa_no": 169,
+  "blok_no": 4,
+  "parca": "musıkînin",
+  "guven": 1.0,
+  "baglam": "Yalnız uzak minarelerin tepelerinde gecikmiş kuşlar gibi bir iki beyaz uçuş vardı. Karşı kıyıyı saran ışık dalgası, bir musıkînin son akisleri hâlinde sallanıyorlardı.",
+  "yakin": [
+   "— O kadar ki akşamın bahçesinden sarkmış gibisiniz... O söner sönmez, ",
+   "Mümtaz, gece ilerledikçe havada, hâlâ kıştan bir şeyin bulunduğunu sez",
+   "— Kışın Boğaz başka türlü güzel oluyor, dedi. Garip bir yalnızlığı var"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-49",
+  "kitap": "turkdili11",
+  "sayfa_no": 170,
+  "blok_no": 10,
+  "parca": "musıkîdeydi",
+  "guven": 1.0,
+  "baglam": "Mümtaz’a göre İstanbul peyzajı, bütün medeniyetimiz, kirimiz, pasımız, güzel taraflarımız, hepsi musıkîdeydi. Garbın bizi anlamaması, aramızda yabancı olarak gezmesi de yine onu anlamamaktan geliyordu. Bu o kadar böyl",
+  "yakin": [
+   "— İster istemez onların bir parçasıyız. Eski musıkîmizi seviyoruz, iyi",
+   "— Kaldı ki sanat, sanat eseri, bizatihi kıymet olan şey, altını musıkî",
+   "Bazen genç kadına bu eski şeylerin meftunu çocuğun kendisini zorla bir"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-50",
+  "kitap": "turkdili11",
+  "sayfa_no": 172,
+  "blok_no": 13,
+  "parca": "musıkîsinden",
+  "guven": 1.0,
+  "baglam": "yüzde birini bilmiyoruz, diyor. Biri çıksa da şunları tanıtsa, notaları neşredilse, diskleri yapılsa, hulâsa, şu piyasa musıkîsinden bir parça kurtulsak! Düşün bir kere, Dede gibi bir adamı yetiştirmişsin, Seyid Nuh, Ebubekir Ağa, Hafız Pos",
+  "yakin": [
+   "— Plakları buldun mu?",
+   "Sabih, Nuran’a döndü:",
+   "— Siz, Mümtaz’ın eski musıkîmize merak sardığını biliyor muydunuz?"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-51",
+  "kitap": "turkdili11",
+  "sayfa_no": 176,
+  "blok_no": 2,
+  "parca": "ayırdedilebilen",
+  "guven": 0.5,
+  "baglam": "ay, üslûpları kolayca tanınacak kadar şekillenmiş yazarlardır. (…) Türk şiirinde, anlatış yoluyla öbür şairlerden iyice ayırdedilebilen üslûp sahibi şairlerimiz Yunus Emre, Fuzulî, Bâkî, Nedim, Şeyh Galib ve Tevfik Fikret’tir.",
+  "yakin": [
+   "Yaşamın İzinde",
+   "L. Sami Akalın, Edebiyat Terimleri Sözlüğü",
+   "Betimleme"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-52",
+  "kitap": "turkdili11",
+  "sayfa_no": 184,
+  "blok_no": 12,
+  "parca": "hâdise",
+  "guven": 0.5,
+  "baglam": "sene evvel olsaydı muhakkak ki, Mümtaz bugün, yahut yarın, herhalde ilk görüşünde, bir vesile uydurur, merak ettiği bir hâdise için istihareye yatmak istediğini ve bu altı ismi yedi defa okuduktan sonra gördüğü rüyayı anlatırdı. Bu hikâyele",
+  "yakin": [
+   "Aşağıdaki parçalardan hareketle soruları cevaplayınız.",
+   "Bütün bunları şimdi hatırlamak, hazin oluyordu.",
+   "Düşüncesinin bu noktasında birdenbire durdu. “Bu adamlarla ne diye ala"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-53",
+  "kitap": "turkdili11",
+  "sayfa_no": 186,
+  "blok_no": 4,
+  "parca": "eksilmiyen",
+  "guven": 1.0,
+  "baglam": "fevkalâdelik hâlini ilân etmiş, evin içinde korkudan, telâştan, üzüntüden, bir türlü ağızlardan düşmeyen ve bakışlardan eksilmiyen temennilerden saltanatını, o yıkım psikolojisini kurmuştu.",
+  "yakin": [
+   "Mümtaz, ekmek ufaklarını pencerenin kenarına koydu, camı kapattı."
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-54",
+  "kitap": "turkdili11",
+  "sayfa_no": 191,
+  "blok_no": 4,
+  "parca": "daussılası",
+  "guven": 1.0,
+  "baglam": "i, o cazip ve mazi hulyası adlı sokakları, İstanbul akşamlarının hakikî ziyafet sofraları gibi gördükçe, garip bir mazi daussılası onu yakalıyordu.",
+  "yakin": [
+   "Huzur romanından alınan aşağıdaki parçadan faydalanarak romanın yapı, ",
+   "— İstanbul, İstanbul, diyordu. İstanbul’u tanımadıkça kendimizi bulama",
+   "Nuran bilhassa camii ve onun akşam saatlerindeki loşluğunu seviyordu. "
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-55",
+  "kitap": "turkdili11",
+  "sayfa_no": 249,
+  "blok_no": 11,
+  "parca": "psikososyal",
+  "guven": 0.5,
+  "baglam": " itilmiş isteklerin sanat yoluyla açıklanmasının baskılardan kurtulmayı sağladığını söylüyorlar. (...) Tiyatro sanatına psikososyal açıdan eğilenler ise, onun kolektif bilinci ortaya koyucu, birlik ve düzen getirici işlevine değiniyorlar. B",
+  "yakin": [
+   "Tiyatro Sanatının İşlevi",
+   "Tiyatro gerçekleri tanıtır: Tiyatronun, insanın bilme ve öğrenme isteğ",
+   "Tiyatro düşünme yeteneğini geliştirir: Yaşamın sahne üzerinde canlandı"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-56",
+  "kitap": "turkdili11",
+  "sayfa_no": 254,
+  "blok_no": 8,
+  "parca": "yarabbi",
+  "guven": 0.5,
+  "baglam": "Aman yarabbi! Kendi kendimi ele verdim. Öfke başıma vurmuş olmalı. Ağzımdan bir şeyler kaçırdım galiba düşünürken. Ne o, hayr",
+  "yakin": [
+   "(İki kardeş birbirleriyle konuşarak girerler.)",
+   "CLÉANTE: Bir şey yok, baba.",
+   "HARPAGON: Çoktan beri mi buradasınız?"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-57",
+  "kitap": "turkdili11",
+  "sayfa_no": 265,
+  "blok_no": 6,
+  "parca": "fikşın",
+  "guven": 1.0,
+  "baglam": "Dünya edebiyatında “flash fiction (flaş fikşın)”,",
+  "yakin": [
+   "“Küçürek” veya “Minimal Öykü”",
+   "“short-short story (şort şort sitori)” Türk edebiyatında ise “küçürek”",
+   "öykü olarak bilinir. Sınırlı sayıda sözcükle yazılan bu öykülerin en ç"
+  ],
+  "etiket": "kitap_metni",
+  "gercek_hata": false,
+  "not": "kitabın kendi metni, yabancı terimin okunuşu"
+ },
+ {
+  "id": "T11-58",
+  "kitap": "turkdili11",
+  "sayfa_no": 265,
+  "blok_no": 7,
+  "parca": "story",
+  "guven": 0.5,
+  "baglam": "“short-short story (şort şort sitori)” Türk edebiyatında ise “küçürek” veya “minimal”",
+  "yakin": [
+   "Dünya edebiyatında “flash fiction (flaş fikşın)”,",
+   "öykü olarak bilinir. Sınırlı sayıda sözcükle yazılan bu öykülerin en ç",
+   "......................................................................"
+  ],
+  "etiket": "kitap_metni",
+  "gercek_hata": false,
+  "not": "kitabın kendi metni, yabancı terim"
+ },
+ {
+  "id": "T11-59",
+  "kitap": "turkdili11",
+  "sayfa_no": 279,
+  "blok_no": 15,
+  "parca": "felsefî",
+  "guven": 0.5,
+  "baglam": "çu felsefenin bakış açısı ile ortaya koyar. Toplumu ve toplumdaki bireyi konumlandırmaya çalışır. İnsan davranışlarının felsefî bir modelini oluşturan yazar, bu şekilde anlamlar meydana getirir. Yoğunlaştırarak anlatım, okurun aktif katılım",
+  "yakin": [
+   "Ferit Edgü’nün Merdiven Adlı Küçürek Öyküsünün Ontolojik Tahlil Metodu",
+   "Ferit Edgü’nün açık yapıt niteliğindeki hikâyelerinde göstergeler ve s",
+   "Ahmet Uslu, Ontolojik Tahlil Metoduyla Ferit Edgü’nün “Merdiven” Adlı "
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ },
+ {
+  "id": "T11-60",
+  "kitap": "turkdili11",
+  "sayfa_no": 285,
+  "blok_no": 8,
+  "parca": "içtimaî",
+  "guven": 0.5,
+  "baglam": "sa da toplumsal bir olgudur. Cemil Meriç’in ifadesiyle, “her edebi eser sosyal bir olaydır. Ferdin eseridir, ama ferdin içtimaî eseridir”. Şöyle ki, edebiyatın ortaya çıkışı insanın toplumsallaşma süreci ile başlar. Bu nedenle edebiyat ve t",
+  "yakin": [
+   "Hayat ve Edebiyat",
+   "Edebiyat var olduğundan beri hep hayatla iç içe olmuş, temel dayanak o",
+   "(...)"
+  ],
+  "etiket": "alinti",
+  "gercek_hata": false,
+  "not": ""
+ }
+]

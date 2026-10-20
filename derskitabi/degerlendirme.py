@@ -27,9 +27,10 @@ from .kayit import bloklari_yukle, json_kaydet
 from .kriterler import tutarlilik
 from .model import Blok
 
-SET_YOLU = Path("testseti/tutarlilik_celiskileri.json")
+PROJE = Path(__file__).resolve().parents[1]
+SET_YOLU = PROJE / "testseti" / "tutarlilik_celiskileri.json"
 KILIT_SHA256 = "740101f40e2a0ea78e2acbae78bb069ba65e8d8057c22a8f9a4a8469fa300df0"  # K20 eki
-KITAPLAR = {"kitap": Path("veri/kitap_bloklar.json"), "biyoloji10": Path("veri/biyoloji10_bloklar.json")}
+KITAPLAR = {"kitap": PROJE / "veri" / "kitap_bloklar.json", "biyoloji10": PROJE / "veri" / "biyoloji10_bloklar.json"}
 ASAMALAR = ("cumle", "aday", "hizli", "tespit")
 
 
@@ -65,19 +66,35 @@ def eslesir(oge: dict, a: str, b: str) -> bool:
     return any(eklenen in x and any(p in y for p in kaynak) for x, y in ((a, b), (b, a)))
 
 
+def _iceriyor(oge: dict, k: dict) -> bool:
+    """Aday çiftin bir tarafı bu maddenin eklenen (yanlış) ifadesi mi?"""
+    return oge["hedef"]["yeni"] in k["a"]["metin"] or oge["hedef"]["yeni"] in k["b"]["metin"]
+
+
 def puanla(ogeler: list[dict], cumleler: list[str], kayit: list[dict]) -> dict:
-    """Her maddenin ulaştığı son aşama + eklenmemiş (fazladan) tespitler."""
+    """Her maddenin ulaştığı son aşama + eklenmemiş (fazladan) tespitler.
+
+    Eklenen yanlış cümle bir tespitte yer alıyorsa madde bulunmuş sayılır — karşı taraf bizim
+    yazdığımız kaynak cümle olmasa da (geliştirme setinde görüldü: "bir kez Krebs" kitabın başka
+    bir cümlesiyle de gerçekten çelişiyor). Karşı tarafın kaynak olup olmadığı ayrıca kaydedilir.
+    Aday aşaması ise kaynakla eşleşmeye bakar (aday bulmanın asıl ölçüsü).
+    """
     sonuc = {}
     for o in ogeler:
         eklenen_var = any(o["hedef"]["yeni"] in c for c in cumleler)
         kaynak_var = any(k["parca"] in c for k in o["kaynaklar"] for c in cumleler)
-        eslesen = [k for k in kayit if eslesir(o, k["a"]["metin"], k["b"]["metin"])]
-        guven = max((k.get("guven") or 0 for k in eslesen), default=0)
-        asama = ("tespit" if guven else "hizli" if any(k["hizli"] == "celiski" for k in eslesen)
-                 else "aday" if eslesen else "cumle" if eklenen_var and kaynak_var else "yok")
+        ilgili = [k for k in kayit if _iceriyor(o, k)]
+        kaynakli = [k for k in ilgili if eslesir(o, k["a"]["metin"], k["b"]["metin"])]
+        tespitler = [k for k in ilgili if k.get("guven")]
+        guven = max((k["guven"] for k in tespitler), default=0)
+        asama = ("tespit" if tespitler else "hizli" if any(k["hizli"] == "celiski" for k in ilgili)
+                 else "aday" if kaynakli else "cumle" if eklenen_var and kaynak_var else "yok")
         sonuc[o["id"]] = {"asama": asama, "guven": guven, "tur": o["tur"], "konum": o["konum"],
-                          "yontem": o["yontem"], "benzerlik": max((k["benzerlik"] for k in eslesen), default=None)}
-    fazladan = [k for k in kayit if k.get("guven") and not any(eslesir(o, k["a"]["metin"], k["b"]["metin"]) for o in ogeler)]
+                          "yontem": o["yontem"],
+                          "kaynakla_bulundu": any(eslesir(o, k["a"]["metin"], k["b"]["metin"]) for k in tespitler),
+                          "benzerlik": max((k["benzerlik"] for k in kaynakli), default=None),
+                          "oylar": [(k.get("hakem"), k.get("ikinci_gorus")) for k in tespitler]}
+    fazladan = [k for k in kayit if k.get("guven") and not any(_iceriyor(o, k) for o in ogeler)]
     return {"maddeler": sonuc, "fazladan": fazladan}
 
 
@@ -114,7 +131,8 @@ def main() -> None:
         finally:
             json_kaydet(onbellek, onbellek_yolu)
         kayit = [{**k, "a": {"metin": k["a"]["metin"], "sayfa_no": k["a"]["sayfa_no"]},
-                  "b": {"metin": k["b"]["metin"], "sayfa_no": k["b"]["sayfa_no"]}} for k in kayit]
+                  "b": {"metin": k["b"]["metin"], "sayfa_no": k["b"]["sayfa_no"]},
+                  **{alan: k[alan]["karar"] for alan in ("hakem", "ikinci_gorus") if alan in k}} for k in kayit]
         cumleler = [c.metin for c in tutarlilik.bilgi_cumleleri(bloklar)]
         p = puanla(kitap_ogeleri, cumleler, kayit)
         rapor["kitaplar"][kitap] = {"ozet": ozet(p["maddeler"], len(p["fazladan"])), **p}
@@ -125,7 +143,7 @@ def main() -> None:
     for alan in ("tur", "konum", "yontem"):
         rapor[f"{alan}_gore"] = {d: ozet({k: m for k, m in tum_maddeler.items() if m[alan] == d}, 0)["recall"]
                                  for d in sorted({m[alan] for m in tum_maddeler.values()})}
-    json_kaydet(rapor, f"veri/degerlendirme_tutarlilik_{arg.set}.json")
+    json_kaydet(rapor, PROJE / "veri" / f"degerlendirme_tutarlilik_{arg.set}.json")
 
     print(f"\n=== {arg.set}: {rapor['genel']['madde']} madde ===")
     print("Aşamaya ulaşan:", rapor["genel"]["asamaya_ulasan"])
@@ -134,9 +152,9 @@ def main() -> None:
     for alan in ("tur", "konum", "yontem"):
         print(f"{alan}e göre recall:", rapor[f"{alan}_gore"])
     for k, m in sorted(tum_maddeler.items()):
-        print(f"  {k}: {m['asama']:7} güven {m['guven']} benzerlik {m['benzerlik']} ({m['tur']}, {m['konum']})")
+        print(f"  {k}: {m['asama']:7} güven {m['guven']} kaynakla {m['kaynakla_bulundu']} benzerlik {m['benzerlik']} oylar {m['oylar']} ({m['tur']}, {m['konum']})")
     for k in tum_fazladan:
-        print(f"  FAZLADAN [{k['guven']}] s.{k['a']['sayfa_no']} \"{k['a']['metin'][:70]}\" / s.{k['b']['sayfa_no']} \"{k['b']['metin'][:70]}\"")
+        print(f"  FAZLADAN [{k['guven']}] gemma4={k.get('hakem')} TG={k.get('ikinci_gorus')} s.{k['a']['sayfa_no']} \"{k['a']['metin'][:70]}\" / s.{k['b']['sayfa_no']} \"{k['b']['metin'][:70]}\"")
 
 
 if __name__ == "__main__":

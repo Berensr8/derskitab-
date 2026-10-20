@@ -33,13 +33,15 @@ def yillar(m):
     return set(re.findall(r"\b1\d{3}\b", m))
 
 
-def sahte_hakem(ikinci_gorus_katiliyor=True):
+def sahte_hakem(ikinci_gorus_katiliyor=True, hakem_aciklamada_katiliyor=True):
     cagrilar = []
 
     def hakem(model, a, b, aciklamali, baglam=None):
         cagrilar.append((model, aciklamali, baglam))
         celiski = bool(yillar(a)) and bool(yillar(b)) and yillar(a) != yillar(b)
         if model == tutarlilik.IKINCI_GORUS_MODELI and not ikinci_gorus_katiliyor:
+            celiski = False
+        if model == tutarlilik.HAKEM_MODELI and aciklamali and not hakem_aciklamada_katiliyor:
             celiski = False
         return {"karar": "celiski" if celiski else "uyumlu", "aciklama": "Yıllar farklı." if celiski else ""}
     hakem.cagrilar = cagrilar
@@ -124,6 +126,17 @@ class AnalizTesti(unittest.TestCase):
         self.assertIn("1071", t.aciklama)
         self.assertIn("1072", t.aciklama)
 
+    def test_ikinci_gorus_tek_basina_tespit_uretmez(self):
+        # K22 düzeltmesi: gemma4 açıklamalı turda "çelişki" demezse Turkish-Gemma'nın oyu yetmez
+        self.assertEqual(analiz_et(KITAP, sahte_gomucu, sahte_hakem(hakem_aciklamada_katiliyor=False)), [])
+
+    def test_kademeli_esik_birinci_komsu_daha_dusuk_benzerlikle_aday(self):
+        # 0. ve 1. cümle birbirinin 1. komşusu, benzerlik 0,62: tek eşikte (0,70) elenirdi
+        V = np.array([[1.0, 0.0, 0.0], [0.62, 0.785, 0.0], [0.0, 0.0, 1.0]])
+        V /= np.linalg.norm(V, axis=1, keepdims=True)
+        cumleler = [tutarlilik.Cumle(f"c{i}", i * 10, 1, None, (0, 0, 1, 1)) for i in range(3)]
+        self.assertEqual([(i, j) for i, j, _ in aday_ciftler(cumleler, V)], [(0, 1)])
+
     def test_yalniz_biri_celiski_derse_guven_yarim(self):
         tespitler = analiz_et(KITAP, sahte_gomucu, sahte_hakem(ikinci_gorus_katiliyor=False))
         self.assertEqual([t.guven_skoru for t in tespitler], [0.5])
@@ -151,6 +164,34 @@ class AnalizTesti(unittest.TestCase):
         kayit = []
         analiz_et(KITAP, sahte_gomucu, sahte_hakem(), kayit=kayit)
         self.assertEqual(sorted(k["hizli"] for k in kayit), ["celiski", "uyumlu"])
+
+
+
+class YenidenDenemeTesti(unittest.TestCase):
+    def test_gecici_hatada_yeniden_dener(self):
+        import io
+        import urllib.error
+        from unittest import mock
+
+        cevap = mock.MagicMock()
+        cevap.__enter__.return_value = io.BytesIO(b'{"tamam": true}')
+        hatalar = [urllib.error.URLError("connection reset"), cevap]
+        with mock.patch.object(tutarlilik, "YENIDEN_DENEME", (0, 0, 0)), \
+             mock.patch("urllib.request.urlopen", side_effect=hatalar) as acici:
+            self.assertEqual(tutarlilik._istek("/api/chat", {"model": "x"}), {"tamam": True})
+        self.assertEqual(acici.call_count, 2)
+
+    def test_kalici_hata_hemen_bildirilir(self):
+        import io
+        import urllib.error
+        from unittest import mock
+
+        hata = urllib.error.HTTPError("u", 404, "yok", {}, io.BytesIO(b'{"error":"model not found"}'))
+        with mock.patch.object(tutarlilik, "YENIDEN_DENEME", (0, 0, 0)), \
+             mock.patch("urllib.request.urlopen", side_effect=[hata]) as acici:
+            with self.assertRaises(RuntimeError):
+                tutarlilik._istek("/api/chat", {"model": "x"})
+        self.assertEqual(acici.call_count, 1)
 
 
 if __name__ == "__main__":

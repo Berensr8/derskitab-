@@ -58,17 +58,24 @@ def celiskileri_uygula(bloklar: list[Blok], ogeler: list[dict]) -> list[Blok]:
     return yeni
 
 
+def eklenen_mi(oge: dict, cumle: str) -> bool:
+    """Cümle bu maddenin eklenen (yanlış) ifadesini taşıyor mu? Cümle bölücü eklenen cümleyi
+    bölebilir ("Hz. Muhammed'in…" → "Muhammed'in…", test koşusunda görüldü): bu yüzden cümlenin
+    eklenen ifadenin uzun bir parçası olması da yeterli."""
+    eklenen = oge["hedef"]["yeni"]
+    return eklenen in cumle or (len(cumle) >= 25 and cumle in eklenen)
+
+
 def eslesir(oge: dict, a: str, b: str) -> bool:
     """(a, b) cümle çifti bu maddenin çelişkisi mi: bir taraf eklenen ifadeyi, diğeri kaynaklardan
     birini içeriyor."""
-    eklenen = oge["hedef"]["yeni"]
     kaynak = [k["parca"] for k in oge["kaynaklar"]]
-    return any(eklenen in x and any(p in y for p in kaynak) for x, y in ((a, b), (b, a)))
+    return any(eklenen_mi(oge, x) and any(p in y for p in kaynak) for x, y in ((a, b), (b, a)))
 
 
 def _iceriyor(oge: dict, k: dict) -> bool:
     """Aday çiftin bir tarafı bu maddenin eklenen (yanlış) ifadesi mi?"""
-    return oge["hedef"]["yeni"] in k["a"]["metin"] or oge["hedef"]["yeni"] in k["b"]["metin"]
+    return eklenen_mi(oge, k["a"]["metin"]) or eklenen_mi(oge, k["b"]["metin"])
 
 
 def puanla(ogeler: list[dict], cumleler: list[str], kayit: list[dict]) -> dict:
@@ -81,7 +88,7 @@ def puanla(ogeler: list[dict], cumleler: list[str], kayit: list[dict]) -> dict:
     """
     sonuc = {}
     for o in ogeler:
-        eklenen_var = any(o["hedef"]["yeni"] in c for c in cumleler)
+        eklenen_var = any(eklenen_mi(o, c) for c in cumleler)
         kaynak_var = any(k["parca"] in c for k in o["kaynaklar"] for c in cumleler)
         ilgili = [k for k in kayit if _iceriyor(o, k)]
         kaynakli = [k for k in ilgili if eslesir(o, k["a"]["metin"], k["b"]["metin"])]

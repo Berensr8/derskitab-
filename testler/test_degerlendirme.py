@@ -44,6 +44,13 @@ class PuanlamaTesti(unittest.TestCase):
         self.assertTrue(eslesir(DEGISTIR, b, a))
         self.assertFalse(eslesir(DEGISTIR, a, "Başka bir cümle."))
 
+    def test_bolunmus_eklenen_cumle_de_eslesir(self):
+        # "Hz." kısaltması cümleyi bölünce tespit "Muhammed'in…" diye başlıyor
+        oge = {**EKLE, "hedef": {**EKLE["hedef"], "yeni": "Hz. Muhammed'in hicreti 632 yılında gerçekleşmiştir."},
+               "kaynaklar": [{"sayfa_no": 1, "blok_no": 1, "parca": "622 yılında"}]}
+        self.assertTrue(eslesir(oge, "Muhammed'in hicreti 632 yılında gerçekleşmiştir.", "Müslümanlar 622 yılında hicret etti."))
+        self.assertFalse(eslesir(oge, "Hz.", "Müslümanlar 622 yılında hicret etti."))  # kısa parça sayılmaz
+
     def test_asamalar_ve_fazladan_tespit(self):
         cumleler = ["Malazgirt Savaşı 1071 yılında yapıldı.", "Böylece 1074 yılında iki ordu karşılaştı.",
                     "Romanya'nın başkenti Bükreş'tir.", "Romanya'nın başkenti Köstence şehridir."]

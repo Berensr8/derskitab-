@@ -195,6 +195,19 @@ class GercekAraclarTesti(unittest.TestCase):
                             "farklı gruplarda çeşitli roller üstleniriz.")], self.denetciler)
         self.assertEqual(t, [])
 
+    def test_yumusama_ve_ikizlesme_sirasi_sabit(self):
+        # "tıp" kökü: önce yumuşama (p→b), sonra ikizleşme (bb). Sıra hash tohumuna bağlıyken
+        # bu kelimeler bazı çalıştırmalarda geçersiz sayılıyordu (zemberek_kok_sirasini_sabitle).
+        zemberek = self.denetciler[1]
+        for kelime in ("tıbba", "tıbbın", "hakka", "hakkın"):
+            self.assertTrue(zemberek(kelime), kelime)
+
+    def test_ozellikler_tanim_sirasiyla_dolasilir(self):
+        from zemberek.core.turkish import RootAttribute
+        from derskitabi.kriterler.yazim import _TanimSirasiylaKume
+        kume = _TanimSirasiylaKume({RootAttribute.Doubling, RootAttribute.Voicing})
+        self.assertEqual(list(kume), [RootAttribute.Voicing, RootAttribute.Doubling])
+
 
 if __name__ == "__main__":
     unittest.main()

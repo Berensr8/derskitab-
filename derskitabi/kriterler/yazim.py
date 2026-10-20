@@ -83,6 +83,39 @@ def son_unlu(k: str) -> str | None:
 
 # --- 1. Kelime denetimi ---
 
+class _TanimSirasiylaKume(set):
+    """Kök özelliklerini (RootAttribute) tanım sırasıyla dolaşan küme."""
+
+    def __iter__(self):
+        return iter(sorted(set.__iter__(self), key=lambda a: a.value))
+
+
+def zemberek_kok_sirasini_sabitle() -> None:
+    """zemberek-python'daki bir sıra hatasını giderir (K26 eki).
+
+    Kökün özellikleri bir kümeden okunup sırayla uygulanıyor; kümenin sırası Python'un her
+    çalıştırmada değişen hash tohumuna bağlı. "tıp" kökünde yumuşama (p→b) ikizleşmeden (b→bb)
+    önce gelirse "tıbb-" doğru üretiliyor, sonra gelirse "tıpb-" çıkıyor ve "tıbba", "tıbbın"
+    bazı çalıştırmalarda geçersiz sayılıyordu (aynı kitap 77 ya da 78 tespit veriyordu).
+    Java'daki asıl Zemberek özellikleri tanım sırasıyla uygular; burada da öyle yapılır.
+    Paketin dosyasına dokunulmaz (yeniden kurulumda kaybolmasın)."""
+    from zemberek.morphology.morphotactics.turkish_morphotactics import StemTransitionsBase
+    if getattr(StemTransitionsBase, "_sira_sabit", False):
+        return
+    asil = StemTransitionsBase.generate_modified_root_nodes
+
+    def tanim_sirasiyla(self, dic_item):
+        eski = dic_item.attributes
+        dic_item.attributes = _TanimSirasiylaKume(eski)
+        try:
+            return asil(self, dic_item)
+        finally:
+            dic_item.attributes = eski
+
+    StemTransitionsBase.generate_modified_root_nodes = tanim_sirasiyla
+    StemTransitionsBase._sira_sabit = True
+
+
 @functools.cache
 def varsayilan_denetciler() -> tuple[Denetci, Denetci]:
     """(Starlang, Zemberek) denetçileri. Yüklemesi birkaç saniye sürdüğü için bir kez kurulur."""
@@ -90,6 +123,7 @@ def varsayilan_denetciler() -> tuple[Denetci, Denetci]:
     from MorphologicalAnalysis.FsmMorphologicalAnalyzer import FsmMorphologicalAnalyzer
     from zemberek import TurkishMorphology
 
+    zemberek_kok_sirasini_sabitle()  # TurkishMorphology kurulmadan önce
     starlang = FsmMorphologicalAnalyzer()
     zemberek = TurkishMorphology.create_with_defaults()
     return (functools.cache(lambda k: starlang.morphologicalAnalysis(k).size() > 0),

@@ -146,6 +146,18 @@ class AnalizTesti(unittest.TestCase):
         cumleler = [tutarlilik.Cumle(f"c{i}", i * 10, 1, None, (0, 0, 1, 1)) for i in range(3)]
         self.assertEqual([(i, j) for i, j, _ in aday_ciftler(cumleler, V)], [(0, 1)])
 
+    def test_cevap_vermeyen_cift_isi_durdurmaz_ve_onbellege_yazilmaz(self):
+        normal = sahte_hakem()
+
+        def bozuk(model, a, b, aciklamali, baglam=None):
+            if "Lübnan" in a:
+                raise RuntimeError("Ollama hatası: llama-server terminated")
+            return normal(model, a, b, aciklamali, baglam)
+        onbellek = {}
+        tespitler = analiz_et(KITAP, sahte_gomucu, bozuk, onbellek=onbellek)
+        self.assertEqual(len(tespitler), 1)  # Malazgirt çifti yine bulundu
+        self.assertFalse(any("Lübnan" in k for k in onbellek))
+
     def test_yalniz_biri_celiski_derse_guven_yarim(self):
         tespitler = analiz_et(KITAP, sahte_gomucu, sahte_hakem(ikinci_gorus_katiliyor=False))
         self.assertEqual([t.guven_skoru for t in tespitler], [0.5])

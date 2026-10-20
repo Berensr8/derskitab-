@@ -182,7 +182,10 @@ def _istek(yol: str, govde: dict) -> dict:
                 return json.loads(cevap.read())
         except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
             mesaj = e.read().decode(errors="ignore") if isinstance(e, urllib.error.HTTPError) else str(e)
-            gecici = not isinstance(e, urllib.error.HTTPError) or any(g in mesaj for g in _GECICI)
+            # Sunucu hataları (5xx) geçicidir; mesaj metnine güvenilmez (Windows hatayı Türkçe
+            # verebiliyor: "Varolan bir bağlantı … zorla kapatıldı"). 4xx (ör. model yok) kalıcıdır.
+            gecici = (not isinstance(e, urllib.error.HTTPError) or e.code >= 500
+                      or any(g in mesaj for g in _GECICI))
             if gecici and bekleme is not None:
                 time.sleep(bekleme)
                 continue
@@ -288,13 +291,22 @@ def analiz_et(bloklar: list[Blok], gomucu: Gomucu | None = None, hakem: Hakem | 
     onbellek = {} if onbellek is None else onbellek
     yaz = ilerleme or (lambda _m: None)
 
+    hatalar = []
+
     def sor(model, a, b, aciklamali, baglam=None):
         anahtar = json.dumps([model, aciklamali, a.metin, b.metin] + (list(baglam) if baglam else []),
                              ensure_ascii=False)
         if anahtar not in onbellek:
             if bekci:
                 bekci.adim()
-            onbellek[anahtar] = hakem(model, a.metin, b.metin, aciklamali, baglam)
+            try:
+                onbellek[anahtar] = hakem(model, a.metin, b.metin, aciklamali, baglam)
+            except RuntimeError as e:
+                # Yeniden denemelere rağmen model bu çifte cevap veremedi (çalıştırıcı çöktü):
+                # bütün iş durmasın; çift "?" sayılır, önbelleğe yazılmaz (sonra yeniden denenir)
+                hatalar.append(f"s.{a.sayfa_no}/s.{b.sayfa_no}: {str(e)[:120]}")
+                yaz(f"  ⚠ Model bu çifte cevap veremedi, atlandı ({len(hatalar)}): {str(e)[:100]}")
+                return {"karar": "?", "aciklama": ""}
         return onbellek[anahtar]
 
     cumleler = bilgi_cumleleri(bloklar)
@@ -343,7 +355,8 @@ def analiz_et(bloklar: list[Blok], gomucu: Gomucu | None = None, hakem: Hakem | 
     if kayit is not None:
         for iz in izler:
             kayit.append({**iz, "a": vars(iz["a"]), "b": vars(iz["b"])})
-    yaz(f"{len(tespitler)} çelişki tespiti ({time.perf_counter() - t:.0f} sn)")
+    yaz(f"{len(tespitler)} çelişki tespiti ({time.perf_counter() - t:.0f} sn)"
+        + (f"; ⚠ {len(hatalar)} çift modele sorulamadı (yeniden çalıştırınca denenecek)" if hatalar else ""))
     return tespitler
 
 

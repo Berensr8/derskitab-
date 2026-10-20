@@ -28,6 +28,8 @@ inceleme sayfası tarayıcıda açılır. Çıktılar `veri/demo/<kitap adı>/` 
 - **Bilgi tutarsızlığı** yerel modeller gerektirir. Kitabın önceden hesaplanmış tam kitap
   sonucu (`veri/<kitap>_tutarlilik_adaylar.json`) varsa o kullanılır; yoksa Ollama çalışıyorsa
   seçili sayfalarda çalıştırmak için sorulur; ikisi de yoksa adım atlanır.
+- **Yazım hakemi:** Ollama hazırsa demo, kelime tespitlerinin dil modeline danışılmasını önerir;
+  model "muhtemelen doğru" dediği tespitler (terim, alıntı) silinmez, soluk ve düşük öncelikli gösterilir.
 - **Test modu:** test setinde maddesi olan kitaplarda (Sosyal Bilgiler 6, Biyoloji 10) demo,
   bilerek çelişki eklenmiş metinle bir inceleme de gösterebilir (gerçek kitaplarda çelişki
   bulunmadığı için özelliği göstermenin yolu). Eklenen cümleler sayfa görüntüsünde görünmez.
@@ -45,6 +47,9 @@ Adımlar tek tek de çalıştırılabilir:
 
 # 3. Yazım (Starlang + Zemberek, TDK kuralları) -> veri/kitap_yazim_tespitler.json
 .venv\Scripts\python.exe -m derskitabi.kriterler.yazim veri\kitap_bloklar.json
+#    --hakem: kelime tespitleri yerel dil modeline danışılır (Ollama); terim ve alıntılar
+#    silinmez, düşük önceliğe iner (K25)
+.venv\Scripts\python.exe -m derskitabi.kriterler.yazim veri\kitap_bloklar.json --hakem
 
 # 4. Bilgi tutarsızlığı (bge-m3 + gemma4 + Turkish-Gemma, Ollama ile yerel; önce: ollama serve)
 #    -> veri/kitap_tutarlilik_tespitler.json (+ _adaylar.json: her aday çiftin kararları)
@@ -61,7 +66,11 @@ Adımlar tek tek de çalıştırılabilir:
 # Test modu: bilerek çelişki eklenmiş metinle (önce değerlendirme çalıştırılmış olmalı)
 .venv\Scripts\python.exe -m derskitabi.inceleyici veri\kitap.pdf --test-modu
 
-# Değerlendirme (K20): kilitli test setiyle recall/precision; ayar yaparken yalnız geliştirme seti
+# Değerlendirme: kilitli test setleri; ayar yaparken yalnız geliştirme seti
+# (sonuçlar: testseti/*_sonuclari.md)
+.venv\Scripts\python.exe -m derskitabi.degerlendirme_yazim --set gelistirme --hakem
+.venv\Scripts\python.exe -m derskitabi.degerlendirme_okunabilirlik
+# Tutarlılık (K20)
 .venv\Scripts\python.exe -m derskitabi.degerlendirme --set gelistirme
 ```
 

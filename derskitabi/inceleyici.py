@@ -107,7 +107,11 @@ def yazim_izi(blok: Blok, blok_tespitleri: list[Tespit], baglam: dict, ham) -> d
         if k["starlang"] and k["zemberek"]:
             d["d"] = "gecerli"
         elif k["kelime"] in hatali:
-            d["d"] = "hata" if hatali[k["kelime"]] >= 1 else "supheli"
+            g = hatali[k["kelime"]]
+            if g < 0.5:  # yazım hakemi (K25): muhtemelen doğru, düşük öncelik
+                d["d"], d["not"] = "atlandi", "dil modeli muhtemelen doğru yazıldığını söyledi (düşük öncelik)"
+            else:
+                d["d"] = "hata" if g >= 0.75 else "supheli"
         elif iz["blok_durumu"] != "denetlendi":
             d["d"] = "okuma"
         elif k["sebep"]:

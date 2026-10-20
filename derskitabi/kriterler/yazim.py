@@ -366,11 +366,23 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description="Yazım ve dil kriteri")
     ap.add_argument("bloklar_json", type=Path)
+    ap.add_argument("--hakem", action="store_true",
+                    help="Kelime tespitlerini yerel dil modeline danış (K25; Ollama gerekir)")
     arg = ap.parse_args()
 
     atlananlar = Counter()
-    tespitler = analiz_et(bloklari_yukle(arg.bloklar_json), atlananlar=atlananlar)
+    bloklar = bloklari_yukle(arg.bloklar_json)
+    tespitler = analiz_et(bloklar, atlananlar=atlananlar)
     kok = arg.bloklar_json.with_name(arg.bloklar_json.stem.removesuffix("_bloklar"))
+    if arg.hakem:
+        import json
+        from .yazim_hakem import hakemle
+        onbellek_yolu = arg.bloklar_json.with_name("yazim_hakem_onbellek.json")
+        onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
+        try:
+            tespitler = hakemle(tespitler, bloklar, onbellek=onbellek, ilerleme=print)
+        finally:
+            onbellek_yolu.write_text(json.dumps(onbellek, ensure_ascii=False), encoding="utf-8")
     tespitleri_kaydet(tespitler, f"{kok}_yazim_tespitler.json")
 
     print(f"{len(tespitler)} yazım tespiti (güven 1,0: {sum(t.guven_skoru == 1.0 for t in tespitler)})")

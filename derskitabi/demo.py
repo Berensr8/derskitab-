@@ -20,7 +20,7 @@ from . import yerel_model
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
 from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet
-from .kriterler import okunabilirlik, tutarlilik, yazim
+from .kriterler import okunabilirlik, tutarlilik, yazim, yazim_hakem
 from .model import BLOK_TURLERI
 from .pdf_cikarma import MetinYokHatasi, bloklari_cikar
 
@@ -213,10 +213,20 @@ def main() -> None:
     yazim_tespitleri = yazim.analiz_et(
         [b for b in bloklar if secili is None or b.sayfa_no in secili], atlananlar=atlananlar,
         kitap_bloklari=bloklar)
+    if (yazim_tespitleri and not ollama_hazir_mi()
+            and evet_mi("  Kelime tespitleri dil modeline (gemma4) danışılsın mı? Terim ve alıntılar düşük önceliğe iner")):
+        onbellek_yolu = PROJE_KOKU / "veri" / "yazim_hakem_onbellek.json"
+        onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
+        try:
+            yazim_tespitleri = yazim_hakem.hakemle(yazim_tespitleri, bloklar, onbellek=onbellek,
+                                                   ilerleme=lambda m: print(" ", m, flush=True))
+        finally:
+            json_kaydet(onbellek, onbellek_yolu)
     tespitleri_kaydet(yazim_tespitleri, klasor / "yazim_tespitler.json")
-    yuksek = sum(t_.guven_skoru == 1.0 for t_ in yazim_tespitleri)
-    print(f"  {len(yazim_tespitleri)} yazım tespiti (yüksek güven {yuksek}, "
-          f"düşük güven {len(yazim_tespitleri) - yuksek}) ({time.perf_counter() - t:.1f} sn)")
+    yuksek = sum(t_.guven_skoru >= 0.75 for t_ in yazim_tespitleri)
+    dusuk_oncelik = sum(t_.guven_skoru < 0.5 for t_ in yazim_tespitleri)
+    print(f"  {len(yazim_tespitleri)} yazım tespiti (yüksek güven {yuksek}, düşük öncelik {dusuk_oncelik}) "
+          f"({time.perf_counter() - t:.1f} sn)")
     for tur, n in Counter(t_.alt_tur for t_ in yazim_tespitleri).most_common():
         print(f"    {tur}: {n}")
     print(f"  Sahte hata önlemiyle denetim dışı bırakılan kelime: {sum(atlananlar.values())} "

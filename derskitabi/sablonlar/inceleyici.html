@@ -39,6 +39,7 @@
   .yazimCizgi { fill: var(--bozuk); pointer-events: none; }
   .yazimZemin { fill: var(--bozuk); opacity: .14; pointer-events: none; }
   .yazimKart { border-color: var(--bozuk); background: #fff1f1; }
+  .yazimKart.dusuk { opacity: .62; border-style: dashed; }
   .parca { font-family: ui-monospace, Consolas, monospace; background: #ffd9d9; border-radius: 4px; padding: 0 4px; }
   .arac { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .arac button { border: 1px solid var(--cizgi); background: var(--kart); border-radius: 6px;
@@ -242,7 +243,8 @@ function lejant() {
   if (VERI.tutarlilik_var) kutu.append(el("label", { style: "cursor:default" }, el("span", { style: "width:13px" }),
     el("span", { class: "kare", style: "background:#f3dcf7;border:1.5px dashed var(--celiski)" }), "Bilgi tutarsızlığı"));
 }
-const yazimSayisi = s => s.bloklar.reduce((n, b) => n + (b.yazim?.length || 0), 0);
+const gosterilenYazim = b => (b.yazim || []).filter(y => y.guven >= 0.5);
+const yazimSayisi = s => s.bloklar.reduce((n, b) => n + gosterilenYazim(b).length, 0);
 const celiskiler = b => (b.tutarlilik || []).filter(k => k.guven);
 const celiskiSayisi = s => s.bloklar.reduce((n, b) => n + celiskiler(b).length, 0);
 function sayfaListesi() {
@@ -311,7 +313,7 @@ function sayfaCiz() {
     zemin.addEventListener("click", e => { e.stopPropagation(); durum.sekme = "yazim"; blokSec(bi, y.parca); });
     k.append(zemin);
     k.append(svg("rect", { class: "yazimCizgi", x: x0 - 1, y: y1 - 0.4, width: x1 - x0 + 2,
-      height: 1.6, opacity: y.guven >= 1 ? 1 : 0.55 }));
+      height: 1.6, opacity: y.guven >= 1 ? 1 : y.guven >= 0.5 ? 0.55 : 0.2 }));
   })));
   // Bilgi tutarsızlığı: çelişen cümle mor kesikli kutuyla; tıklanınca karşılaştırma açılır
   s.bloklar.forEach((b, bi) => celiskiler(b).forEach((c, ci) => (c.kutular || []).forEach(([x0, y0, x1, y1]) => {
@@ -335,7 +337,7 @@ function blokListesi() {
     el("span", { class: "kare", style: `background:${TURLER[b.rapor.tur].renk}` }),
     el("b", {}, `b${b.rapor.blok_no}`),
     b.tespit ? el("span", { class: "rozet" }, "!") : null,
-    b.yazim?.length ? el("span", { class: "rozet yazim" }, b.yazim.length) : null,
+    gosterilenYazim(b).length ? el("span", { class: "rozet yazim" }, gosterilenYazim(b).length) : null,
     celiskiler(b).length ? el("span", { class: "rozet celiski" }, celiskiler(b).length) : null,
     el("span", { class: "m" }, b.rapor.metin))));
 }
@@ -390,11 +392,13 @@ function ayrinti() {
     el("b", {}, `⚠ Okunabilirlik tespiti (güven ${sayi(b.tespit.guven, 2)})`), el("br"),
     b.tespit.aciklama.split(". Ateşman")[0] + ".",
     el("div", { class: "kucuk", style: "margin-top:6px" },
-      "Not: Bu, paragrafın kitabın geri kalanına göre belirgin şekilde zor olduğunu söyler; tek başına \"sınıfa uygun değil\" demek değildir.")));
-  (b.yazim || []).forEach(y => parcalar.push(el("div", { class: "kart yazimKart" },
-    el("b", {}, `✎ Yazım tespiti (güven ${sayi(y.guven, 1)})  `), el("span", { class: "parca" }, y.parca), el("br"),
+      "Not: Bu bir dilsel karmaşıklık uyarısıdır: paragrafın cümle ve kelime uzunluğu bakımından kitabın geri kalanından belirgin şekilde ağır olduğunu söyler. Formüllerin sınıf düzeyini ayırt etmediği ölçüldü (K24); tek başına \"sınıfa uygun değil\" demek değildir.")));
+  (b.yazim || []).forEach(y => parcalar.push(el("div", { class: "kart yazimKart" + (y.guven < 0.5 ? " dusuk" : "") },
+    el("b", {}, `✎ Yazım tespiti (güven ${sayi(y.guven, 2)})  `), el("span", { class: "parca" }, y.parca), el("br"),
     y.aciklama,
-    y.guven < 1 ? el("div", { class: "kucuk", style: "margin-top:6px" },
+    y.guven < 0.5 ? el("div", { class: "kucuk", style: "margin-top:6px" },
+      "Düşük öncelik: dil modeli bu kelimenin muhtemelen doğru yazıldığını söyledi (terim, özel isim, alıntı ya da araçların bilmediği bir kelime). Yine de kontrol edebilirsiniz.")
+    : y.guven < 1 ? el("div", { class: "kucuk", style: "margin-top:6px" },
       "Düşük güven: araçlardan yalnız biri hata buldu ya da durum tasarım tercihi olabilir; kontrol edin.") : null)));
 
   const tutSekmesi = VERI.tutarlilik_var && b.tutarlilik;

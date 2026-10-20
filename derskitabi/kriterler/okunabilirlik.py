@@ -36,7 +36,7 @@ _UNLULER = set("aeıioöuüâîûAEIİOÖUÜÂÎÛ")
 # Sonundaki nokta cümle bitirmeyen kısaltmalar: bilinen kısaltmalar ve ardışık büyük
 # harf baş harfleri ("T.B.M.M.", "A.B.D.")
 _KISALTMA = re.compile(
-    r"\b(?:[A-ZÇĞİÖŞÜ]\.){2,}|\b(M\.Ö|M\.S|vb|vs|bkz|bk|örn|Dr|Prof|Doç|yy|sf|s|No|St)\."
+    r"\b(?:[A-ZÇĞİÖŞÜ]\.){2,}|\b(M\.Ö|M\.S|vb|vs|bkz|bk|örn|Dr|Prof|Doç|yy|sf|s|No|St|Hz)."
     # Roma rakamıyla sıra: "I. Haçlı Saldırısı", "II. Mahmut", "XV. yüzyıl" (Sosyal 6, s.171)
     r"|\b(?=[IVX])X{0,3}(?:IX|IV|V?I{0,3})\.(?=\s)"
 )

@@ -5,6 +5,8 @@ sonra güç kaynağı pile geçince dizüstü bilgisayar aniden kapandı. Bekçi
 kontrol eder:
   - bilgisayar pildeyse iş duraklar, şarja takılınca kendiliğinden devam eder;
   - ekran kartı SICAKLIK_UST'ü geçerse SICAKLIK_DEVAM'a inene kadar bekler;
+  - boş RAM BOS_RAM_ALT_GB'ın altına düşerse BOS_RAM_DEVAM_GB'a çıkana kadar bekler (yazım hakemi
+    testinde bellek tükenince hem Python hem Ollama çöktü — MemoryError);
   - her DINLENME_ARALIGI istekte bir kısa mola verir.
 Kontrol yapılamazsa (Windows dışı, nvidia-smi yok) iş durdurulmaz.
 """
@@ -21,6 +23,8 @@ DINLENME_SN = 15
 SICAKLIK_UST = 83  # °C
 SICAKLIK_DEVAM = 72  # °C
 BEKLEME_SN = 30
+BOS_RAM_ALT_GB = 1.5
+BOS_RAM_DEVAM_GB = 3.0
 
 
 class _GucDurumu(ctypes.Structure):
@@ -39,6 +43,24 @@ def prizde_mi() -> bool | None:
     return {0: False, 1: True}.get(durum.ACLineStatus)
 
 
+class _BellekDurumu(ctypes.Structure):
+    _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+
+
+def bos_ram_gb() -> float | None:
+    if sys.platform != "win32":
+        return None
+    durum = _BellekDurumu()
+    durum.dwLength = ctypes.sizeof(_BellekDurumu)
+    if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(durum)):
+        return None
+    return durum.ullAvailPhys / 1024 ** 3
+
+
 def gpu_sicakligi() -> int | None:
     try:
         cikti = subprocess.run(["nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"],
@@ -52,8 +74,9 @@ class Bekci:
     """Her istekten önce adim() çağrılır; gerekirse bekletir."""
 
     def __init__(self, yaz: Callable[[str], None] = print, uyku: Callable[[float], None] = time.sleep,
-                 prizde=prizde_mi, sicaklik=gpu_sicakligi):
+                 prizde=prizde_mi, sicaklik=gpu_sicakligi, bos_ram=bos_ram_gb):
         self.n, self.yaz, self.uyku, self.prizde, self.sicaklik = 0, yaz, uyku, prizde, sicaklik
+        self.bos_ram = bos_ram
 
     def adim(self) -> None:
         self.n += 1
@@ -72,3 +95,9 @@ class Bekci:
             while (t := self.sicaklik()) is not None and t > SICAKLIK_DEVAM:
                 self.uyku(BEKLEME_SN)
             self.yaz("  Soğudu, devam ediliyor.")
+        ram = self.bos_ram()
+        if ram is not None and ram < BOS_RAM_ALT_GB:
+            self.yaz(f"  ⚠ Boş bellek {ram:.1f} GB: diğer programları kapatın; {BOS_RAM_DEVAM_GB} GB boşalınca devam edecek.")
+            while (ram := self.bos_ram()) is not None and ram < BOS_RAM_DEVAM_GB:
+                self.uyku(BEKLEME_SN)
+            self.yaz("  Bellek yeterli, devam ediliyor.")

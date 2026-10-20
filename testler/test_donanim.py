@@ -11,7 +11,7 @@ class BekciTesti(unittest.TestCase):
         self.uyumalar, self.mesajlar = [], []
         sicaklik = iter(sicakliklar)
         return Bekci(yaz=self.mesajlar.append, uyku=self.uyumalar.append,
-                     prizde=prizde, sicaklik=lambda: next(sicaklik, 40))
+                     prizde=prizde, sicaklik=lambda: next(sicaklik, 40), bos_ram=lambda: 10.0)
 
     def test_normal_durumda_beklemez(self):
         b = self.kur(lambda: True, [])
@@ -39,9 +39,19 @@ class BekciTesti(unittest.TestCase):
             b.adim()
         self.assertEqual(self.uyumalar, [donanim.DINLENME_SN])
 
+    def test_bellek_azsa_bosalana_kadar_bekler(self):
+        b = self.kur(lambda: True, [])
+        ram = iter([1.0, 2.0, 5.0])
+        b.bos_ram = lambda: next(ram, 5.0)
+        for _ in range(donanim.KONTROL_ARALIGI):
+            b.adim()
+        self.assertEqual(self.uyumalar, [donanim.BEKLEME_SN])  # 2,0 < 3,0 bekledi; 5,0'te devam
+        self.assertIn("bellek", self.mesajlar[0].lower())
+
     def test_kontrol_edilemezse_durdurmaz(self):
         b = self.kur(lambda: None, [])
         b.sicaklik = lambda: None
+        b.bos_ram = lambda: None
         for _ in range(donanim.KONTROL_ARALIGI):
             b.adim()
         self.assertEqual(self.uyumalar, [])

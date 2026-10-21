@@ -54,13 +54,15 @@ class TerimTesti(unittest.TestCase):
         self.assertTrue({"aken", "kitâbe"} <= maddeler)
         self.assertNotIn("bu", maddeler)
         self.assertEqual(terim.sozlukte_mi("akenlerin", maddeler), "aken")
+        # Ek almış hâl yalnız araçların tanımadığı maddede: bilinen "etme" ile "etmeize" terim olmaz
+        self.assertIsNone(terim.sozlukte_mi("etmeize", {"etme"}, bilinen=lambda m: m == "etme"))
 
     def test_italik_ad_ve_okunusu(self):
         metin = "Diken kelebeği [Vanessa cardui (vanesa karduyi)] türü"
         self.assertEqual(terim.okunus_kelimeleri(metin, {"vanessa", "cardui"}), {"vanesa", "karduyi"})
         bloklar = [blok(1, metin)]
         sonuc = terim.isaretle([tespit(1, "cardui"), tespit(1, "karduyi"), tespit(1, "kelebeği")], bloklar,
-                               {(1, 1): {"vanessa", "cardui"}})
+                               {(1, 1): {"vanessa", "cardui"}}, SAHTE_ARAC)
         self.assertEqual([t.guven_skoru for t in sonuc], [terim.DUSUK_GUVEN, terim.DUSUK_GUVEN, 1.0])
 
 

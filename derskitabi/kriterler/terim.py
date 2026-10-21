@@ -24,6 +24,10 @@ TERIM_NOTU = "Terim"
 EN_KISA_KOK = 4  # sözlük maddesinin ek almış hâli: madde en az bu uzunlukta olmalı
 _MADDE = re.compile(r"^\s*([a-zçğıöşüâîû][^\W\d_]*(?:[ -][^\W\d_]+){0,3})\s*(?:\([^)]{1,40}\)\s*)?:\s+\S")
 _ITALIK = 2  # PyMuPDF span bayrağı
+# Bloğun bu oranından fazlası italikse italik bir işaret değil, bloğun biçimidir (başlık, yönerge): o
+# bloktaki kelimeler italik diye terim sayılmaz (Biyoloji 11'in italik kazanım başlığındaki
+# "sorumluklar" yazım hatası terim sanıldı — K29 testi)
+ITALIK_EN_FAZLA_ORAN = 0.6
 
 
 def sozluk_maddeleri(bloklar: list[Blok]) -> set[str]:
@@ -35,15 +39,20 @@ def sozluk_maddeleri(bloklar: list[Blok]) -> set[str]:
     return maddeler
 
 
-def sozlukte_mi(kelime: str, maddeler: set[str]) -> str | None:
+def sozlukte_mi(kelime: str, maddeler: set[str], bilinen=None) -> str | None:
+    """Kelime bir sözlük maddesi ya da ek almış hâli mi? Ek almış hâl yalnız araçların tanımadığı
+    maddelerde aranır (bilinen: kelime -> araç tanıyor mu): bilinen bir kelimenin ekli hâli zaten
+    geçerli olurdu; "etme" maddesi "etmeize" yazım hatasını terim yapıyordu (K23 recall seti)."""
     k = yazim.tr_kucuk(kelime)
     if k in maddeler:
         return k
-    return next((k[:i] for i in range(len(k) - 1, EN_KISA_KOK - 1, -1) if k[:i] in maddeler), None)
+    return next((k[:i] for i in range(len(k) - 1, EN_KISA_KOK - 1, -1)
+                 if k[:i] in maddeler and not (bilinen and bilinen(k[:i]))), None)
 
 
 def italik_kelimeler(pdf_yolu, bloklar: list[Blok], sayfalar: set[int]) -> dict:
-    """{(sayfa_no, blok_no): italik yazılmış kelimeler} — yalnız verilen sayfalar okunur."""
+    """{(sayfa_no, blok_no): italik yazılmış kelimeler} — yalnız verilen sayfalar okunur. Çoğu italik
+    olan bloklar (ITALIK_EN_FAZLA_ORAN) alınmaz."""
     sonuc = defaultdict(set)
     with pymupdf.open(pdf_yolu) as belge:
         for no in sorted(sayfalar):
@@ -52,10 +61,16 @@ def italik_kelimeler(pdf_yolu, bloklar: list[Blok], sayfalar: set[int]) -> dict:
                 blok_no = kutular.get(tuple(round(v) for v in bl["bbox"]))
                 if blok_no is None:
                     continue
+                italik, toplam, kelimeler = 0, 0, set()
                 for satir in bl.get("lines", []):
                     for s in satir["spans"]:
+                        n = len(s["text"].strip())
+                        toplam += n
                         if s["flags"] & _ITALIK or re.search(r"italic|oblique", s["font"], re.I):
-                            sonuc[(no, blok_no)] |= {yazim.tr_kucuk(k) for k in yazim._KELIME.findall(s["text"])}
+                            italik += n
+                            kelimeler |= {yazim.tr_kucuk(k) for k in yazim._KELIME.findall(s["text"])}
+                if kelimeler and italik <= ITALIK_EN_FAZLA_ORAN * toplam:
+                    sonuc[(no, blok_no)] |= kelimeler
     return sonuc
 
 
@@ -68,9 +83,11 @@ def okunus_kelimeleri(metin: str, italikler: set[str]) -> set[str]:
     return sonuc
 
 
-def isaretle(tespitler: list[Tespit], bloklar: list[Blok], italikler: dict | None = None) -> list[Tespit]:
+def isaretle(tespitler: list[Tespit], bloklar: list[Blok], italikler: dict | None = None,
+             denetciler=None) -> list[Tespit]:
     """Terim olan kelime tespitlerini düşük önceliğe indirir; yeni liste döner.
     italikler: italik_kelimeler() çıktısı (verilmezse yalnız sözlük kullanılır)."""
+    denetciler = denetciler or yazim.varsayilan_denetciler()
     maddeler = sozluk_maddeleri(bloklar)
     metin = {(b.sayfa_no, b.blok_no): b.metin for b in bloklar}
     italikler = italikler or {}
@@ -80,7 +97,7 @@ def isaretle(tespitler: list[Tespit], bloklar: list[Blok], italikler: dict | Non
         if t.alt_tur == "morfoloji" and t.metin_parcasi:
             k = yazim.tr_kucuk(t.metin_parcasi)
             italik = italikler.get((t.sayfa_no, t.blok_no), set())
-            if (madde := sozlukte_mi(t.metin_parcasi, maddeler)):
+            if (madde := sozlukte_mi(t.metin_parcasi, maddeler, lambda m: yazim._gecerli(denetciler[0], m))):
                 sebep = f"kitabın sözlüğünde açıklanmış ('{madde}')"
             elif k in italik:
                 sebep = "italik yazılmış (bilimsel ad ya da yabancı kelime)"

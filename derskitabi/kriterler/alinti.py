@@ -47,6 +47,9 @@ KONUSMACI = re.compile(r"^\s*((?:[A-ZÇĞİÖŞÜÂÎÛl]{1,3}\.\s*)?[A-ZÇĞİ�
                        r"(?:\s[A-ZÇĞİÖŞÜÂÎÛ][A-ZÇĞİÖŞÜÂÎÛ’']+){0,2})\s*(?:—|:)\s+(.*)", re.S)
 KONUSMA_CIZGISI = re.compile(r"^\s*—\s*\S")
 REPLIK_EN_AZ = 3  # sayfada bu kadar replik bloğu olmalı
+# Alıntı bölgesi yukarı çıkarken bu kadar puntodan büyük boş aralıkta durur (şiirde kıta arası ~22 punto;
+# TDE 12 s.96'da şiirin sağ sütunu 80 punto yukarıdaki soruya ulaşıp onu da alıntı sayıyordu — K29 testi)
+BOLGE_EN_FAZLA_BOSLUK = 36
 ALINTI_EN_FAZLA_SAYFA = 6  # imzalı bir alıntı geriye doğru en fazla bu kadar sayfaya yayılır (Huzur parçası: 4)
 _KALIN = re.compile(r"bold|semibold|demi|black|heavy|medium", re.I)
 
@@ -166,7 +169,9 @@ def alinti_bolgesi(ust: Blok, sayfa_bloklari: list[Blok], bicimler: dict, alinti
             bolge.append(ust)
         elif not ATLAMA.match(ust.metin.strip()):
             break
-        ust = _ustteki(ust, sayfa_bloklari)
+        onceki, ust = ust, _ustteki(ust, sayfa_bloklari)
+        if ust is not None and onceki.bbox[1] - ust.bbox[3] > BOLGE_EN_FAZLA_BOSLUK:
+            break
     return bolge
 
 

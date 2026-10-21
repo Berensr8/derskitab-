@@ -32,7 +32,7 @@ def isaretle(pdf_yolu, bloklar: list[Blok], tespitler: list[Tespit], denetciler=
     tespitler = pdf_parcasi.isaretle(tespitler, bloklar, denetciler)
     sayfalar = {t.sayfa_no for t in tespitler if t.alt_tur == "morfoloji" and sebep(t) is None}
     italikler = terim.italik_kelimeler(pdf_yolu, bloklar, sayfalar) if pdf_yolu else None
-    tespitler = _yalniz_isaretsizlere(lambda ts: terim.isaretle(ts, bloklar, italikler), tespitler)
+    tespitler = _yalniz_isaretsizlere(lambda ts: terim.isaretle(ts, bloklar, italikler, denetciler), tespitler)
     if pdf_yolu:
         tespitler = _yalniz_isaretsizlere(lambda ts: alinti.pdf_ile_isaretle(pdf_yolu, bloklar, ts), tespitler)
     return tespitler

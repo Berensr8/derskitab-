@@ -3,7 +3,7 @@
 import unittest
 
 from derskitabi.kriterler.alinti import (ALINTI_NOTU, DUSUK_GUVEN, ad_gibi_mi, alinti_bloklari,
-                                         alintilari_isaretle, eski_dil_mi, imza_mi)
+                                         alintilari_isaretle, eski_dil_mi, imza_mi, replik_bloklari)
 from derskitabi.model import Blok, Tespit
 
 SIIR = "Ah bu türküler köy türküleri Karanlık kuyularda açılmış çiçekler gibi Kiminin reyhasından geçilmez"
@@ -75,6 +75,30 @@ class AdTesti(unittest.TestCase):
         self.assertEqual(set(al), {(1, 2), (1, 4)})  # "(...)" atlanır, farklı biçimli açıklama alıntı değil
         self.assertEqual(al[(1, 2)], "Bedri Rahmi Eyüboğlu, Karadut")
 
+    def test_v3_ayni_puntoda_kalin_yazar_eser_imzasi(self):
+        ust = blok(1, (56, 268, 262, 344), SIIR)
+        imza = blok(2, (56, 347, 311, 360), "Necip Fazıl Kısakürek, Çile", "kisa")
+        normal, kalin = ("MyriadPro-Regular", 10), ("MyriadPro-Semibold", 10)
+        self.assertTrue(imza_mi(imza, ust, [ust], kalin, normal))
+        # Altında alıntının yazı tipiyle metin devam ediyorsa başlıktır
+        self.assertFalse(imza_mi(imza, ust, [ust], kalin, normal, alt_bicim=normal))
+        # Virgülsüz kalın ad başlık olabilir ("Mavi Vatan", Sosyal 6)
+        self.assertFalse(imza_mi(blok(3, (56, 347, 200, 360), "Mavi Vatan", "kisa"), ust, [ust], kalin, normal))
+
+    def test_v3_eser_adinda_rakam_olabilir(self):
+        self.assertTrue(ad_gibi_mi("Metin And, 100 Soruda Türk Tiyatrosu Tarihi"))
+        self.assertFalse(ad_gibi_mi("Görsel 1.19"))
+
+    def test_v3_alinti_onceki_sayfalara_uzanir(self):
+        def b(sayfa, no, bbox, metin, tur="paragraf"):
+            return Blok(sayfa, no, bbox, metin, str(sayfa), tur)
+        bloklar = [b(1, 1, (51, 68, 365, 95), "1. Okuma Metni (Ana Metin) HUZUR"), b(1, 2, (57, 123, 512, 700), SIIR),
+                   b(2, 1, (57, 30, 120, 42), "3. Tema", "kisa"), b(2, 2, (57, 63, 512, 600), SIIR),
+                   b(2, 3, (372, 694, 505, 707), "Ahmet Hamdi Tanpınar, Huzur", "kisa")]
+        bicim = {(1, 1): ("MyriadPro-Bold", 11), (1, 2): ("MyriadPro-Regular", 10), (2, 1): ("MyriadPro-Regular", 10),
+                 (2, 2): ("MyriadPro-Regular", 10), (2, 3): ("MyriadPro-Bold", 10)}
+        self.assertEqual(set(alinti_bloklari(bloklar, bicim)), {(1, 2), (2, 1), (2, 2)})  # başlıkta durur
+
     def test_eski_dil(self):
         from derskitabi.kriterler.yazim import varsayilan_denetciler
         den = varsayilan_denetciler()
@@ -82,6 +106,28 @@ class AdTesti(unittest.TestCase):
         self.assertTrue(eski_dil_mi(blok(1, (0, 0, 1, 1), "Niçeler tâc u tahtı mâl u mülkü koyup uryân olupdur"), den))
         # Modern metin, özel adda kısa çizgi: eski dil değil
         self.assertFalse(eski_dil_mi(blok(1, (0, 0, 1, 1), "Hacı Bayram-ı Velî Ankara'da yaşamış bir şairdir."), den))
+
+
+class ReplikTesti(unittest.TestCase):
+    def test_tiyatro_ve_hikaye_replikleri(self):
+        oyun = [blok(i, (57, 100 + 20 * i, 300, 112 + 20 * i), m) for i, m in enumerate(
+            ["KARAGÖZ — Bunu böyle söylesene!", "HACİVAT — Efendim, geçen gün evde otururken",
+             "KARAGÖZ — Boza içerken genzine tarçın mı gitti?", "ll. HANIM — Bize bir mektup yazacaksınız."], start=1)]
+        self.assertEqual(set(replik_bloklari(oyun)), {(1, 1), (1, 2), (1, 3), (1, 4)})
+        hikaye = [blok(i, (57, 100 + 20 * i, 300, 112 + 20 * i), m) for i, m in enumerate(
+            ["— Hangi kapıya gidecekmişiz peki?", "— Neler sorarlar içerde ağabeyim?", "— Sen gidince örtecek o mu?"], start=1)]
+        self.assertEqual(len(replik_bloklari(hikaye)), 3)
+
+    def test_icindekiler_ve_kisaltmalar_replik_degil(self):
+        icindekiler = [blok(i, (57, 100 + 20 * i, 300, 112 + 20 * i), m) for i, m in enumerate(
+            ["OKUMA: ŞİİR 15", "OKUMA: HİKÂYE 75", "EDEBİYAT ATÖLYESİ: YAZMA 51"], start=1)]
+        hormonlar = [blok(i, (57, 100 + 20 * i, 300, 112 + 20 * i), m) for i, m in enumerate(
+            ["ACTH: Böbrek üstü bezini uyarır.", "ADH: Su geri emilimini artırır.", "FSH: Folikülü olgunlaştırır."], start=1)]
+        iki_replik = [blok(1, (57, 100, 300, 112), "HARPAGON: Paramı çaldılar!"),
+                      blok(2, (57, 120, 300, 132), "VALÈRE: Ne oldu efendim?")]
+        self.assertEqual(replik_bloklari(icindekiler), {})
+        self.assertEqual(replik_bloklari(hormonlar), {})  # her etiket bir kez: tanım listesi (Biyoloji 11)
+        self.assertEqual(replik_bloklari(iki_replik), {})  # sayfada en az 3 replik
 
 
 class IsaretlemeTesti(unittest.TestCase):

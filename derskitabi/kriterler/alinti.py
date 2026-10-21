@@ -11,6 +11,14 @@ Bir blok iki yoldan alıntı sayılır:
      blok olabilir — kelime sayısı alıntının tamamında hesaplanır).
   2. Eski dil: blokta Farsça tamlama ("kandîl-i sipihr") ya da "u/ü" bağlacı ("tâc u taht") var
      ve araçların tanımadığı en az 2 küçük harfli kelime geçiyor.
+  3. Replik (v3, K29): tiyatro ve hikâye diyalogları. Sayfada büyük harfli konuşmacı adıyla başlayan
+     ("KARAGÖZ — …", "HARPAGON: …") ya da konuşma çizgisiyle başlayan ("— Neler sorarlar?") en az
+     3 blok varsa bunlar alıntıdır (konuşmacılı biçimde en az 2 farklı konuşmacı, biri tekrar konuşuyor,
+     söz küçük harf içeriyor: içindekiler satırları — "OKUMA: ŞİİR" — ve tanım listeleri — "ADH: …" — elenir).
+v3 (K29): imzalı alıntı sayfanın başına kadar çıkıyorsa önceki sayfaların sonundan aynı yazı tipiyle
+devam eder (roman ve hikâye parçaları sayfalarca sürer; imza son sayfadadır). İmza metinle aynı puntoda olabilir, daha kalın yazılmış ve "Yazar, Eser" biçimindeyse
+("Necip Fazıl Kısakürek, Çile" yarı kalın, şiir normal) — altında alıntının yazı tipinde devam eden
+metin yoksa (başlık değil).
 Yazı tipi ve punto PDF'ten okunur (her sayfa bir kez).
 """
 
@@ -35,6 +43,12 @@ BAGLAC = re.compile(r"[^\W\d_]\s[uü]\s[^\W\d_]")
 ATLAMA = re.compile(r"^\(?\s*(?:…|\.\.\.)\s*\)?$")
 KUCUK_KELIME = re.compile(r"(?<![\w’'])[a-zçğıöşüâîû][^\W\d_]{2,}")
 ALINTI_NOTU = "Alıntı metin"
+KONUSMACI = re.compile(r"^\s*((?:[A-ZÇĞİÖŞÜÂÎÛl]{1,3}\.\s*)?[A-ZÇĞİÖŞÜÂÎÛ][A-ZÇĞİÖŞÜÂÎÛ’']+"
+                       r"(?:\s[A-ZÇĞİÖŞÜÂÎÛ][A-ZÇĞİÖŞÜÂÎÛ’']+){0,2})\s*(?:—|:)\s+(.*)", re.S)
+KONUSMA_CIZGISI = re.compile(r"^\s*—\s*\S")
+REPLIK_EN_AZ = 3  # sayfada bu kadar replik bloğu olmalı
+ALINTI_EN_FAZLA_SAYFA = 6  # imzalı bir alıntı geriye doğru en fazla bu kadar sayfaya yayılır (Huzur parçası: 4)
+_KALIN = re.compile(r"bold|semibold|demi|black|heavy|medium", re.I)
 
 
 def sayfa_bicimleri(sayfa: pymupdf.Page) -> dict:
@@ -117,14 +131,14 @@ _SAPKALI = re.compile(r"[âîûÂÎÛ]")
 
 def ad_gibi_mi(metin: str) -> bool:
     """Yazar adı gibi mi ("Hüseyin Nihal Atsız", "Bedri Rahmi Eyüboğlu, Karadut", "Anonim (haz.: …)").
-    Virgülden önceki ad kısmı (unvanlar — Âşık, Şeyh, Hacı — atılır): rakam yok, en fazla 5 kelime, hepsi
+    Virgülden önceki ad kısmı (unvanlar — Âşık, Şeyh, Hacı — atılır): rakam yok (v3: yalnız ad kısmında), en fazla 5 kelime, hepsi
     büyük harfle başlıyor, son kelime iyelik ekli değil; kelimelerin hepsi ad olabilir ya da en fazla
     biri sıradan ve en az biri kesin ad. Tek kelimelik imza: "Anonim", soyadı (Karacaoğlan) ya da
     sözlükte olmayan şapkalı mahlas (Fuzûlî, Bâkî, Necâtî).
     Elenenler: "Görsel 1.19", "Bilgi Kutusu", "Altay Dağları", "Ergenekon Destanı", "Trabzon"."""
-    if any(c.isdigit() for c in _PARANTEZ.sub(" ", metin)):
-        return False
     ad = _PARANTEZ.sub(" ", metin).split(",")[0]
+    if any(c.isdigit() for c in ad):  # eser adında rakam olabilir ("Metin And, 100 Soruda Türk Tiyatrosu")
+        return False
     kelimeler = [k.split("’")[0].split("-")[0] for k in ad.split() if k not in _BAGLACLAR]
     if not kelimeler or len(kelimeler) > 5 or not all(k[:1].isupper() for k in kelimeler):
         return False
@@ -141,10 +155,10 @@ def ad_gibi_mi(metin: str) -> bool:
     return turler.count("degil") == 0 or (turler.count("degil") == 1 and "kesin" in turler)
 
 
-def alinti_bolgesi(ust: Blok, sayfa_bloklari: list[Blok], bicimler: dict) -> list[Blok]:
-    """İmzanın üstünden yukarı: imzanın hemen üstündeki bloğun biçimindeki bloklar ("(...)" atlama
-    işaretleri araya girebilir; şiirde her dize ayrı blok olabilir)."""
-    alinti_bicimi = bicimler.get((ust.sayfa_no, ust.blok_no))
+def alinti_bolgesi(ust: Blok, sayfa_bloklari: list[Blok], bicimler: dict, alinti_bicimi=None) -> list[Blok]:
+    """İmzanın üstünden yukarı: imzanın hemen üstündeki bloğun (ya da verilen) biçimdeki bloklar
+    ("(...)" atlama işaretleri araya girebilir; şiirde her dize ayrı blok olabilir)."""
+    alinti_bicimi = alinti_bicimi or bicimler.get((ust.sayfa_no, ust.blok_no))
     bolge = []
     while ust is not None:
         ust_bicim = bicimler.get((ust.sayfa_no, ust.blok_no))
@@ -156,8 +170,9 @@ def alinti_bolgesi(ust: Blok, sayfa_bloklari: list[Blok], bicimler: dict) -> lis
     return bolge
 
 
-def imza_mi(b: Blok, ust: Blok | None, bolge: list[Blok], bicim, ust_bicim) -> bool:
-    """b, üstündeki alıntı bölgesinin imzası mı?"""
+def imza_mi(b: Blok, ust: Blok | None, bolge: list[Blok], bicim, ust_bicim, alt_bicim=None) -> bool:
+    """b, üstündeki alıntı bölgesinin imzası mı? alt_bicim: b'nin hemen altındaki bloğun biçimi
+    (aynı puntodaki kalın ad satırı başlık mı imza mı ayırmak için)."""
     metin = b.metin.strip()
     if ust is None or not bolge or not bicim or not ust_bicim or not ad_gibi_mi(metin):
         return False
@@ -172,10 +187,16 @@ def imza_mi(b: Blok, ust: Blok | None, bolge: list[Blok], bicim, ust_bicim) -> b
         return False
     sol, sag = min(x.bbox[0] for x in bolge), max(x.bbox[2] for x in bolge)
     girintili = b.bbox[0] - sol >= 30
-    if bicim[1] == ust_bicim[1]:  # metinle aynı punto: girintili ve alıntının sağ kenarına kadar uzanıyor
-        return girintili and b.bbox[2] >= sag - 6
-    # Küçük punto: metnin sağına girintili (çoğu imza) ya da sola hizalı ve hemen altında (iki sütunlu şiirler)
     sola_hizali_altta = abs(b.bbox[0] - ust.bbox[0]) <= 5 and b.bbox[1] - ust.bbox[3] <= IMZA_EN_FAZLA_BOSLUK
+    if bicim[1] == ust_bicim[1]:  # metinle aynı punto: girintili ve alıntının sağ kenarına kadar uzanıyor
+        if girintili and b.bbox[2] >= sag - 6:
+            return True
+        # ya da metinden kalın ve "Yazar, Eser" biçiminde (v3). Kalın tek ad başlık olabilir ("Mavi Vatan",
+        # "Divanü Lügati't-Türk" — Sosyal 6'da kitabın kendi metninin altında); altında alıntının yazı
+        # tipiyle devam eden metin varsa da başlıktır
+        kalin = bool(_KALIN.search(bicim[0])) and not _KALIN.search(ust_bicim[0])
+        return kalin and "," in metin and alt_bicim != ust_bicim and (girintili or sola_hizali_altta)
+    # Küçük punto: metnin sağına girintili (çoğu imza) ya da sola hizalı ve hemen altında (iki sütunlu şiirler)
     return girintili or sola_hizali_altta
 
 
@@ -187,6 +208,54 @@ def eski_dil_mi(b: Blok, denetciler) -> bool:
     taninmayan = [k for k in KUCUK_KELIME.findall(b.metin)
                   if not (yazim._gecerli(denetciler[0], k) and yazim._gecerli(denetciler[1], k))]
     return len(taninmayan) >= 2
+
+
+def _alttaki(b: Blok, sayfa_bloklari: list[Blok]) -> Blok | None:
+    """Aynı sütunda hemen alttaki blok (en fazla IMZA_EN_FAZLA_BOSLUK uzaklıkta)."""
+    adaylar = [x for x in sayfa_bloklari if x is not b and b.bbox[3] - 6 <= x.bbox[1] <= b.bbox[3] + IMZA_EN_FAZLA_BOSLUK
+               and x.bbox[0] < b.bbox[2] and x.bbox[2] > b.bbox[0]]
+    return min(adaylar, key=lambda x: x.bbox[1]) if adaylar else None
+
+
+def replik_bloklari(sayfa_bloklari: list[Blok]) -> dict:
+    """{(sayfa_no, blok_no): sebep} — sayfadaki tiyatro/hikâye replikleri (en az REPLIK_EN_AZ blok)."""
+    konusmali, konusmacilar = [], Counter()
+    for b in sayfa_bloklari:
+        m = KONUSMACI.match(b.metin)
+        if m and any(c.islower() for c in m.group(2)):
+            konusmali.append(b)
+            konusmacilar[m.group(1).split(".")[-1].strip()] += 1
+    sonuc = {}
+    # Diyalogda en az iki konuşmacı olur ve biri tekrar konuşur (her biri bir kez geçen etiketler —
+    # "ACTH: …, ADH: …, FSH: …" — kitabın kendi tanım listesidir, Biyoloji 11)
+    if len(konusmali) >= REPLIK_EN_AZ and len(konusmacilar) >= 2 and max(konusmacilar.values()) >= 2:
+        sonuc |= {(b.sayfa_no, b.blok_no): "tiyatro repliği" for b in konusmali}
+    cizgili = [b for b in sayfa_bloklari if KONUSMA_CIZGISI.match(b.metin)]
+    if len(cizgili) >= REPLIK_EN_AZ:
+        sonuc |= {(b.sayfa_no, b.blok_no): "diyalog" for b in cizgili if (b.sayfa_no, b.blok_no) not in sonuc}
+    return sonuc
+
+
+def onceki_sayfalara_uzat(bolge: list[Blok], sayfalar: dict, bicimler: dict) -> list[Blok]:
+    """Bölge sayfanın başına kadar çıkıyorsa önceki sayfanın sonundaki (aynı sütun, aynı yazı tipi)
+    bloktan yukarı devam eder; yazı tipi değişen bir blokta (başlık, yönerge) durur."""
+    ek, ust = [], bolge[-1]
+    alinti_bicimi = bicimler.get((bolge[0].sayfa_no, bolge[0].blok_no))
+    sol, sag = min(x.bbox[0] for x in bolge), max(x.bbox[2] for x in bolge)
+    for _ in range(ALINTI_EN_FAZLA_SAYFA - 1):
+        if _ustteki(ust, sayfalar.get(ust.sayfa_no, [])) is not None:
+            break  # bölge bu sayfada bir başlıkta durdu
+        onceki = [x for x in sayfalar.get(ust.sayfa_no - 1, [])
+                  if x.bbox[0] < sag and x.bbox[2] > sol and not x.metin.strip().isdigit()]  # sayfa numarası değil
+        if not onceki:
+            break
+        alt = max(onceki, key=lambda x: x.bbox[3])
+        if bicimler.get((alt.sayfa_no, alt.blok_no)) != alinti_bicimi:
+            break
+        parca = alinti_bolgesi(alt, onceki, bicimler, alinti_bicimi)
+        ek += parca
+        ust = parca[-1]
+    return ek
 
 
 def alinti_bloklari(bloklar: list[Blok], bicimler: dict, denetciler=None) -> dict:
@@ -202,9 +271,13 @@ def alinti_bloklari(bloklar: list[Blok], bicimler: dict, denetciler=None) -> dic
             if ust is None:
                 continue
             bolge = alinti_bolgesi(ust, sayfa_bloklari, bicimler)
-            if imza_mi(b, ust, bolge, bicimler.get((b.sayfa_no, b.blok_no)), bicimler.get((ust.sayfa_no, ust.blok_no))):
-                for x in bolge:
+            alt = _alttaki(b, sayfa_bloklari)
+            if imza_mi(b, ust, bolge, bicimler.get((b.sayfa_no, b.blok_no)), bicimler.get((ust.sayfa_no, ust.blok_no)),
+                       bicimler.get((alt.sayfa_no, alt.blok_no)) if alt else None):
+                for x in bolge + onceki_sayfalara_uzat(bolge, sayfalar, bicimler):
                     sonuc[(x.sayfa_no, x.blok_no)] = b.metin.strip()
+        for anahtar, sebep in replik_bloklari(sayfa_bloklari).items():
+            sonuc.setdefault(anahtar, sebep)
         for b in sayfa_bloklari:
             if (b.sayfa_no, b.blok_no) not in sonuc and b.tur in ("paragraf", "kisa") and eski_dil_mi(b, denetciler):
                 sonuc[(b.sayfa_no, b.blok_no)] = "eski dil"
@@ -220,7 +293,8 @@ def alintilari_isaretle(tespitler: list[Tespit], alintilar: dict) -> list[Tespit
         if t.alt_tur != "morfoloji" or sebep is None:
             sonuc.append(t)
             continue
-        kaynak = "eski Türkçe ya da edebî dil işaretleri var" if sebep == "eski dil" else f"kaynak: {sebep}"
+        kaynak = {"eski dil": "eski Türkçe ya da edebî dil işaretleri var", "tiyatro repliği": "tiyatro repliği",
+                  "diyalog": "hikâye diyaloğu"}.get(sebep, f"kaynak: {sebep}")
         sonuc.append(replace(t, guven_skoru=min(t.guven_skoru, DUSUK_GUVEN), aciklama=t.aciklama +
                              f" {ALINTI_NOTU} ({kaynak}): kelime yazarın kendi yazımı ya da eski yazım olabilir"
                              " — düşük öncelik."))
@@ -228,9 +302,11 @@ def alintilari_isaretle(tespitler: list[Tespit], alintilar: dict) -> list[Tespit
 
 
 def pdf_ile_isaretle(pdf_yolu, bloklar: list[Blok], tespitler: list[Tespit]) -> list[Tespit]:
-    """Kelime tespiti olan sayfalarda alıntıları bulur ve işaretler (yazı tipleri PDF'ten okunur)."""
-    sayfalar = {t.sayfa_no for t in tespitler if t.alt_tur == "morfoloji"}
-    if not sayfalar:
+    """Kelime tespiti olan sayfalarda alıntıları bulur ve işaretler (yazı tipleri PDF'ten okunur).
+    İmzası sonraki sayfalarda olabileceği için tespitli sayfaların ardındaki sayfalar da okunur."""
+    tespitli = {t.sayfa_no for t in tespitler if t.alt_tur == "morfoloji"}
+    if not tespitli:
         return tespitler
+    sayfalar = {s + i for s in tespitli for i in range(ALINTI_EN_FAZLA_SAYFA)}
     ilgili = [b for b in bloklar if b.sayfa_no in sayfalar]
     return alintilari_isaretle(tespitler, alinti_bloklari(ilgili, blok_bicimleri(pdf_yolu, ilgili)))

@@ -9,8 +9,12 @@ hangi sınıfın kitabından geldiği. Üç ölçüm:
                     bunları "en zor %10" içinde işaretleme oranı, kitabın kendi paragraflarınınkiyle
                     karşılaştırılır. Eklenen paragrafların listesi kilitlidir.
 
+Kavramsal yük (K30, --kavramsal): formüllerin ölçmediği nadir kelime ve terim işaretleri aynı dersin
+sınıflarını ayırt ediyor mu? (ölçüt önceden sabit: aynı programın kitapları arasında AUC ≥ 0,60 ve
+bütün çiftlerde ≥ 0,55)
+
 Kullanım:
-    python -m derskitabi.degerlendirme_okunabilirlik
+    python -m derskitabi.degerlendirme_okunabilirlik [--kavramsal]
 """
 
 import json
@@ -20,7 +24,7 @@ import sys
 
 from .degerlendirme import PROJE, set_yukle
 from .kayit import bloklari_yukle, json_kaydet
-from .kriterler import okunabilirlik
+from .kriterler import kavramsal, okunabilirlik
 from .model import Blok
 
 KITAPLAR = {"kitap": 6, "turkdili9": 9, "biyoloji10": 10, "matematik11": 11}
@@ -33,7 +37,10 @@ FORMULLER = {"atesman": True, "cetinkaya_uzun": True, "bezirci_yilmaz": False}  
 # Aynı dersin farklı sınıf kitapları (MEB OGM, 2026-10-20 indirildi). Not: 9-10 Biyoloji ve 9 TDE
 # yeni programın "Tema" düzeninde, 11 Biyoloji ve 10-11 TDE "Ünite" düzeninde (eski program).
 DERS_SERILERI = {"Biyoloji": {"biyoloji9": 9, "biyoloji10": 10, "biyoloji11": 11},
-                 "Türk Dili ve Edebiyatı": {"turkdili9": 9, "turkdili10": 10, "turkdili11": 11}}
+                 "Türk Dili ve Edebiyatı": {"turkdili9": 9, "turkdili10": 10, "turkdili11": 11, "turkdili12": 12}}
+# Aynı öğretim programının kitapları (K24 eki): program farkı sınıf farkına karışmasın
+AYNI_PROGRAM = [("biyoloji9", "biyoloji10"), ("turkdili10", "turkdili11")]
+KAVRAMSAL = ("nadir_oran", "ort_log_sira", "terim_orani")  # hepsinde yüksek = zor
 
 
 def _bloklar(kitap: str) -> list[Blok]:
@@ -69,8 +76,40 @@ def eklemeleri_olustur() -> list[dict]:
     return secilen
 
 
+def kavramsal_olc() -> dict:
+    """K30: kavramsal işaretlerin ve formüllerin ders içi AUC'leri; önceden sabit ölçüte göre karar."""
+    rapor = {}
+    for ders, kitaplar in DERS_SERILERI.items():
+        mevcut = {k: s for k, s in kitaplar.items() if (PROJE / "veri" / f"{k}_bloklar.json").exists()}
+        skorlar = {}
+        for k in mevcut:
+            ps = aday_paragraflar(_bloklar(k))
+            skorlar[k] = [(s, ks) for b, s in ps if (ks := kavramsal.skorla(b.metin))]
+            print(f"  {k}: {len(skorlar[k])} paragraf", flush=True)
+        sirali = sorted(mevcut, key=mevcut.get)
+        for i, a in enumerate(sirali):
+            for b in sirali[i + 1:]:
+                d = {f: round(auc([getattr(ks, f) for _, ks in skorlar[b]], [getattr(ks, f) for _, ks in skorlar[a]], False), 3)
+                     for f in KAVRAMSAL}
+                d |= {f: round(auc([getattr(s, f) for s, _ in skorlar[b]], [getattr(s, f) for s, _ in skorlar[a]], dusuk), 3)
+                      for f, dusuk in FORMULLER.items()}
+                rapor[f"{b}>{a}"] = d
+                print(f"  AUC {b} > {a}: {d}", flush=True)
+    karar = {}
+    for f in KAVRAMSAL:
+        ayni = [rapor[f"{b}>{a}"][f] for a, b in AYNI_PROGRAM]
+        hepsi = [v[f] for v in rapor.values()]
+        karar[f] = {"ayni_program_en_az": min(ayni), "tum_ciftler_en_az": min(hepsi),
+                    "basarili": min(ayni) >= 0.60 and min(hepsi) >= 0.55}
+    print("Karar (önceden sabit ölçüt):", karar)
+    return {"auc": rapor, "karar": karar}
+
+
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
+    if "--kavramsal" in sys.argv:
+        json_kaydet(kavramsal_olc(), PROJE / "veri" / "degerlendirme_kavramsal.json")
+        return
     rapor = {"kitap_duzeyi": {}, "auc": {}, "ekleme": {}}
 
     # 1. Kitap düzeyi

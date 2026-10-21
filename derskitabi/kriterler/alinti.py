@@ -43,8 +43,10 @@ BAGLAC = re.compile(r"[^\W\d_]\s[uü]\s[^\W\d_]")
 ATLAMA = re.compile(r"^\(?\s*(?:…|\.\.\.)\s*\)?$")
 KUCUK_KELIME = re.compile(r"(?<![\w’'])[a-zçğıöşüâîû][^\W\d_]{2,}")
 ALINTI_NOTU = "Alıntı metin"
-KONUSMACI = re.compile(r"^\s*((?:[A-ZÇĞİÖŞÜÂÎÛl]{1,3}\.\s*)?[A-ZÇĞİÖŞÜÂÎÛ][A-ZÇĞİÖŞÜÂÎÛ’']+"
-                       r"(?:\s[A-ZÇĞİÖŞÜÂÎÛ][A-ZÇĞİÖŞÜÂÎÛ’']+){0,2})\s*(?:—|:)\s+(.*)", re.S)
+# Konuşmacı adı büyük harfle (yabancı harfler de: "CLÉANTE", "ÉLISE"; büyük harf denetimi kodda);
+# önünde "II." gibi sıra olabilir (PDF'te "ll." okunuyor)
+KONUSMACI = re.compile(r"^\s*((?:[^\W\d_]{1,3}\.\s*)?[^\W\d_][^\W\d_’']+(?:\s[^\W\d_][^\W\d_’']+){0,2})"
+                       r"\s*(?:—|:)\s+(.*)", re.S)
 KONUSMA_CIZGISI = re.compile(r"^\s*—\s*\S")
 REPLIK_EN_AZ = 3  # sayfada bu kadar replik bloğu olmalı
 # Alıntı bölgesi yukarı çıkarken bu kadar puntodan büyük boş aralıkta durur (şiirde kıta arası ~22 punto;
@@ -183,6 +185,11 @@ def imza_mi(b: Blok, ust: Blok | None, bolge: list[Blok], bicim, ust_bicim, alt_
         return False
     if len(metin) > IMZA_EN_FAZLA_KARAKTER or metin[-1] in ".:?!;,*":
         return False
+    # Ad, üstündeki metnin içinde aynen geçiyorsa metnin konusunun etiketidir, yazarı değil ("Mavi
+    # Vatan’ın korunması…" altında "Mavi Vatan", Sosyal 6; K20 maddelerinin kaynak cümlesini gizliyordu)
+    ad = _PARANTEZ.sub(" ", metin).split(",")[0].strip()
+    if ad and ad in " ".join(x.metin for x in bolge):
+        return False
     if not IMZA_EN_KUCUK_PUNTO <= bicim[1] <= ust_bicim[1]:
         return False
     # Alıntı gerçek bir metin olmalı: toplam en az 8 kelime, kelimelerin en az %40'ı küçük harfle
@@ -227,9 +234,10 @@ def replik_bloklari(sayfa_bloklari: list[Blok]) -> dict:
     konusmali, konusmacilar = [], Counter()
     for b in sayfa_bloklari:
         m = KONUSMACI.match(b.metin)
-        if m and any(c.islower() for c in m.group(2)):
+        ad = m.group(1).split(".")[-1].strip() if m else ""
+        if m and ad.isupper() and any(c.islower() for c in m.group(2)):
             konusmali.append(b)
-            konusmacilar[m.group(1).split(".")[-1].strip()] += 1
+            konusmacilar[ad] += 1
     sonuc = {}
     # Diyalogda en az iki konuşmacı olur ve biri tekrar konuşur (her biri bir kez geçen etiketler —
     # "ACTH: …, ADH: …, FSH: …" — kitabın kendi tanım listesidir, Biyoloji 11)

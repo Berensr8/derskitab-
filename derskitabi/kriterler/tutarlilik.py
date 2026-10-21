@@ -126,11 +126,22 @@ def _baglam(bloklar: list[Blok], k: int, cumle: str) -> str:
     return " | ".join(onceki + [paragraf])
 
 
-def bilgi_cumleleri(bloklar: list[Blok]) -> list[Cumle]:
-    """Paragraflardaki bilgi cümleleri; kitapta aynen tekrar eden cümle bir kez alınır."""
+def alinti_haric(bloklar: list[Blok], pdf_yolu=None) -> set:
+    """Çelişki aramasının dışında tutulacak alıntı blokları (K29): tiyatro/hikâye replikleri her
+    zaman; imzalı alıntılar (şiir, roman parçası) PDF verilirse (yazı biçimleri PDF'ten okunur).
+    Alıntı kitabın kendi iddiası değildir (K20 tanımı): TDE 11'de Cimri oyunundaki iki replik
+    ("HARPAGON: …") çelişki sanılmıştı."""
+    from . import alinti
+    bicimler = alinti.blok_bicimleri(pdf_yolu, bloklar) if pdf_yolu and Path(pdf_yolu).exists() else {}
+    return set(alinti.alinti_bloklari(bloklar, bicimler))
+
+
+def bilgi_cumleleri(bloklar: list[Blok], haric: set | None = None) -> list[Cumle]:
+    """Paragraflardaki bilgi cümleleri; kitapta aynen tekrar eden cümle bir kez alınır.
+    haric: alınmayacak bloklar {(sayfa_no, blok_no)} (alıntılar, alinti_haric())."""
     gorulen, sonuc = set(), []
     for k, b in enumerate(bloklar):
-        if b.tur != "paragraf" or konusma_mi(b.metin):
+        if b.tur != "paragraf" or konusma_mi(b.metin) or (haric and (b.sayfa_no, b.blok_no) in haric):
             continue
         for c in cumlelere_bol(b.metin):
             if bilgi_cumlesi_mi(c) and c not in gorulen:
@@ -201,8 +212,10 @@ def _konum(c: Cumle) -> str:
 
 def analiz_et(bloklar: list[Blok], gomucu: Gomucu | None = None, hakem: Hakem | None = None,
               kayit: list | None = None, onbellek: dict | None = None,
-              ilerleme: Callable[[str], None] | None = None, bekci: Bekci | None = None) -> list[Tespit]:
+              ilerleme: Callable[[str], None] | None = None, bekci: Bekci | None = None,
+              haric: set | None = None) -> list[Tespit]:
     """kayit verilirse her aday çiftin bütün kararları buraya yazılır (inceleme için).
+    haric: karşılaştırılmayacak alıntı blokları (alinti_haric()).
     onbellek: önceki çalıştırmaların hakem cevapları (aynı çift yeniden sorulmaz).
     bekci: gerçek modellerle çalışırken bilgisayarı korur (pil, sıcaklık, mola; donanim.py)."""
     gomucu = gomucu or ollama_gomucu
@@ -230,7 +243,7 @@ def analiz_et(bloklar: list[Blok], gomucu: Gomucu | None = None, hakem: Hakem | 
                 return {"karar": "?", "aciklama": ""}
         return onbellek[anahtar]
 
-    cumleler = bilgi_cumleleri(bloklar)
+    cumleler = bilgi_cumleleri(bloklar, haric)
     if len(cumleler) < 2:
         return []
     t = time.perf_counter()
@@ -298,8 +311,8 @@ def main() -> None:
     onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
     kayit = []
     try:
-        tespitler = analiz_et(bloklar, kayit=kayit, onbellek=onbellek,
-                              ilerleme=lambda m: print(m, flush=True))
+        tespitler = analiz_et(bloklar, kayit=kayit, onbellek=onbellek, ilerleme=lambda m: print(m, flush=True),
+                              haric=alinti_haric(bloklar, Path(f"{kok}.pdf")))
     finally:  # yarıda kesilse bile sorulan çiftler kaybolmasın
         json_kaydet(onbellek, onbellek_yolu)
     tespitleri_kaydet(tespitler, f"{kok}_tutarlilik_tespitler.json")

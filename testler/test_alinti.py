@@ -85,6 +85,12 @@ class AdTesti(unittest.TestCase):
         # Virgülsüz kalın ad başlık olabilir ("Mavi Vatan", Sosyal 6)
         self.assertFalse(imza_mi(blok(3, (56, 347, 200, 360), "Mavi Vatan", "kisa"), ust, [ust], kalin, normal))
 
+    def test_v3_metnin_icinde_gecen_ad_konu_etiketidir(self):
+        ust = blok(1, (57, 478, 499, 559), "Karahanlı Dönemi’nden kalan bir diğer önemli eser, Kâşgarlı Mahmud’un "
+                   "yazdığı Divanü Lügati't-Türk adlı eserdir ve Türkçenin ilk sözlüğüdür.")
+        etiket = blok(2, (374, 584, 454, 596), "Divanü Lügati't-Türk", "kisa")
+        self.assertFalse(imza_mi(etiket, ust, [ust], ("ArialMT", 9), ("ArialMT", 11)))
+
     def test_v3_eser_adinda_rakam_olabilir(self):
         self.assertTrue(ad_gibi_mi("Metin And, 100 Soruda Türk Tiyatrosu Tarihi"))
         self.assertFalse(ad_gibi_mi("Görsel 1.19"))
@@ -117,6 +123,9 @@ class ReplikTesti(unittest.TestCase):
         hikaye = [blok(i, (57, 100 + 20 * i, 300, 112 + 20 * i), m) for i, m in enumerate(
             ["— Hangi kapıya gidecekmişiz peki?", "— Neler sorarlar içerde ağabeyim?", "— Sen gidince örtecek o mu?"], start=1)]
         self.assertEqual(len(replik_bloklari(hikaye)), 3)
+        yabanci = [blok(i, (57, 100 + 20 * i, 300, 112 + 20 * i), m) for i, m in enumerate(
+            ["HARPAGON: Çoktan beri mi buradasınız?", "ÉLISE: Hayır şimdi geldik.", "HARPAGON: Duydunuz ama şimdi dediğimi..."], start=1)]
+        self.assertEqual(len(replik_bloklari(yabanci)), 3)
 
     def test_icindekiler_ve_kisaltmalar_replik_degil(self):
         icindekiler = [blok(i, (57, 100 + 20 * i, 300, 112 + 20 * i), m) for i, m in enumerate(

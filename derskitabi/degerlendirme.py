@@ -137,8 +137,10 @@ def main() -> None:
         onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
         kayit = []
         print(f"## {kitap}: {len(kitap_ogeleri)} madde eklendi", flush=True)
+        haric = tutarlilik.alinti_haric(bloklar, yol.with_name(f"{kitap}.pdf"))  # alıntılar (K29)
         try:
-            tutarlilik.analiz_et(bloklar, kayit=kayit, onbellek=onbellek, ilerleme=lambda m: print(" ", m, flush=True))
+            tutarlilik.analiz_et(bloklar, kayit=kayit, onbellek=onbellek, ilerleme=lambda m: print(" ", m, flush=True),
+                                 haric=haric)
         finally:
             json_kaydet(onbellek, onbellek_yolu)
         # Tam kayıt: inceleyicinin test modu bunu gösterir (python -m derskitabi.inceleyici … --test-modu)
@@ -146,7 +148,7 @@ def main() -> None:
         kayit = [{**k, "a": {"metin": k["a"]["metin"], "sayfa_no": k["a"]["sayfa_no"]},
                   "b": {"metin": k["b"]["metin"], "sayfa_no": k["b"]["sayfa_no"]},
                   **{alan: k[alan]["karar"] for alan in ("hakem", "ikinci_gorus") if alan in k}} for k in kayit]
-        cumleler = [c.metin for c in tutarlilik.bilgi_cumleleri(bloklar)]
+        cumleler = [c.metin for c in tutarlilik.bilgi_cumleleri(bloklar, haric)]
         p = puanla(kitap_ogeleri, cumleler, kayit)
         rapor["kitaplar"][kitap] = {"ozet": ozet(p["maddeler"], len(p["fazladan"])), **p}
         tum_maddeler.update(p["maddeler"])

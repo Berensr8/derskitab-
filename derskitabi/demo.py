@@ -127,7 +127,8 @@ def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> tuple[list |
     try:
         tespitler = tutarlilik.analiz_et([b for b in bloklar if secili is None or b.sayfa_no in secili],
                                          kayit=kayit, onbellek=onbellek,
-                                         ilerleme=lambda m: print(" ", m, flush=True))
+                                         ilerleme=lambda m: print(" ", m, flush=True),
+                                         haric=tutarlilik.alinti_haric(bloklar, pdf))  # alıntılar (K29)
     finally:
         json_kaydet(onbellek, onbellek_yolu)
     tespitleri_kaydet(tespitler, klasor / "tutarlilik_tespitler.json")

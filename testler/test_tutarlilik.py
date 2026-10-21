@@ -89,6 +89,16 @@ class CumleSecimiTesti(unittest.TestCase):
     def test_test_sikki_bilgi_cumlesi_degil(self):
         self.assertFalse(bilgi_cumlesi_mi("C) Dağlar genellikle denize paralel uzanmaktadır."))
 
+    def test_tiyatro_replikleri_karsilastirilmaz(self):
+        # TDE 11, Cimri: iki replik "çelişki" sanılmıştı (K29); replikler alıntıdır, kitabın iddiası değil
+        oyun = [blok(254, i, m) for i, m in enumerate(
+            ["HARPAGON: Belalı şey evinde büyük para saklamak, belalı şey ve on bin altın bahçede gömülü duruyor.",
+             "ÉLISE: Hayır baba, şimdi geldik ve hiçbir şey duymadık, inanın bize.",
+             "HARPAGON: Ah, keşke olsa, on bin altınım olsa ve bütün dertlerim bitse!"], start=1)]
+        bilgi = blok(255, 1, "Molière, Cimri oyununda insanın paraya düşkünlüğünü güldürü yoluyla eleştirir.")
+        haric = tutarlilik.alinti_haric(oyun + [bilgi])  # PDF'siz: replikler metinden bulunur
+        self.assertEqual({(c.sayfa_no, c.blok_no) for c in bilgi_cumleleri(oyun + [bilgi], haric)}, {(255, 1)})
+
     def test_roma_rakami_cumleyi_bolmez(self):
         c = bilgi_cumleleri([blok(171, 1, "Anadolu korundu. I. Haçlı Saldırısı sonucunda Haçlılar Urfa ve Kudüs gibi şehirleri ele geçirmiştir.")])
         self.assertTrue(c[-1].metin.startswith("I. Haçlı"))

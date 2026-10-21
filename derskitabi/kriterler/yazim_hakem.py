@@ -35,12 +35,18 @@ def _yazim_hatasi_komsulari(kelime: str) -> set[str]:
     bir harf eksik kalmış (ekleme), bir harf fazla yazılmış (son harf hariç silme), Türkçe harf
     yerine Latin harfi ya da tersi, yan yana iki harf yer değiştirmiş. Rastgele harf değişimi ve
     son harfin silinmesi alınmaz: geliştirme verisinde bunlar terimleri geçerli kelimelere
-    benzetiyordu ("tüzlük"→"düzlük", "grid"→"gri", "nelerin"→"neleri")."""
+    benzetiyordu ("tüzlük"→"düzlük", "grid"→"gri", "nelerin"→"neleri").
+    K29 eki — hece: aynı hece iki kez yazılmış ("olacacağını") ya da iki kez yazılması gereken hece bir
+    kez yazılmış ("sorumluklar" → "sorumluluklar"). Model bunların üzerinden okuyup "doğru" diyordu.
+    Rastgele iki harf ekleme/silme alınmadı (etiketli 225 sahte tespitin 29'unu geçerli kelimeye
+    benzetiyordu: "omuza"→"oma"); yalnız tekrarlanan hece: 9 kitapta 4 kelime, dördü de gerçek hata."""
     k = yazim.tr_kucuk(kelime)
     sonuc = {k[:i] + h + k[i:] for i in range(len(k) + 1) for h in _HARFLER}
     sonuc |= {k[:i] + k[i + 1:] for i in range(len(k) - 1)}
     sonuc |= {k[:i] + _TR_ESI[c] + k[i + 1:] for i, c in enumerate(k) if c in _TR_ESI}
     sonuc |= {k[:i] + k[i + 1] + k[i] + k[i + 2:] for i in range(len(k) - 1)}
+    sonuc |= {k[:i] + k[i + 2:] for i in range(len(k) - 3) if k[i:i + 2] == k[i + 2:i + 4]}  # hece ikilenmiş
+    sonuc |= {k[:i] + k[i:i + 2] + k[i:] for i in range(len(k) - 1)}  # tekrarlanan hece düşmüş
     sonuc.discard(k)
     return sonuc
 
@@ -125,7 +131,7 @@ def hakemle(tespitler: list[Tespit], bloklar: list[Blok], hakem: Hakem | None = 
         if yakin:
             sonuc.append(replace(t, guven_skoru=0.5, aciklama=t.aciklama +
                                  f" Dil modeli (gemma4) doğru dedi, ama kelime kitapta geçen '{yakin}' kelimesine "
-                                 f"tek harf uzaklıkta: olası yazım hatası.{gerekce}"))
+                                 f"tek yazım hatası (harf ya da hece) uzaklıkta: olası yazım hatası.{gerekce}"))
         elif k["karar"] == "dogru":
             dusen += 1
             sonuc.append(replace(t, guven_skoru=DUSUK_GUVEN, aciklama=t.aciklama +

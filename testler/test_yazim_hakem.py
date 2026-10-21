@@ -70,6 +70,13 @@ class HakemTesti(unittest.TestCase):
         self.assertIn("gird", komsular)  # yer değiştirme
         self.assertIn("kişisel", _yazim_hatasi_komsulari("kisisel"))  # Türkçe harf
 
+    def test_hece_ikilenmesi_ve_dusmesi_komsu_sayilir(self):
+        # K29 eki: model "olacacağını" ve "sorumluklar"ın üzerinden okuyup "doğru" demişti
+        from derskitabi.kriterler.yazim_hakem import _yazim_hatasi_komsulari
+        self.assertIn("olacağını", _yazim_hatasi_komsulari("olacacağını"))
+        self.assertIn("sorumluluklar", _yazim_hatasi_komsulari("sorumluklar"))
+        self.assertNotIn("oma", _yazim_hatasi_komsulari("omuza"))  # rastgele iki harf silinmesi değil
+
     def test_baglam_cumle_ve_onceki_cumle(self):
         cumle, onceki = baglam(BLOK.metin, "kisisel")
         self.assertTrue(cumle.startswith("Glikoliz"))

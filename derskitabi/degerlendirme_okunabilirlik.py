@@ -13,8 +13,11 @@ Kavramsal yük (K30, --kavramsal): formüllerin ölçmediği nadir kelime ve ter
 sınıflarını ayırt ediyor mu? (ölçüt önceden sabit: aynı programın kitapları arasında AUC ≥ 0,60 ve
 bütün çiftlerde ≥ 0,55)
 
+--kavramsal-model: aynı ölçütle ikinci deneme — yerel dil modeli (gemma4) paragrafın sınıf düzeyini
+tahmin eder (her kitaptan sabit tohumlu 60 paragraf; cevaplar veri/kavramsal_model_onbellek.json).
+
 Kullanım:
-    python -m derskitabi.degerlendirme_okunabilirlik [--kavramsal]
+    python -m derskitabi.degerlendirme_okunabilirlik [--kavramsal | --kavramsal-model]
 """
 
 import json
@@ -105,8 +108,63 @@ def kavramsal_olc() -> dict:
     return {"auc": rapor, "karar": karar}
 
 
+MODEL_ORNEKLEM = 60
+_SINIF_SISTEMI = """Sen Türkiye'de ders kitabı inceleyen deneyimli bir öğretmensin. Sana bir ders kitabından bir paragraf
+verilecek. Paragrafı anlamak için gereken kavram bilgisine, terimlere ve kelimelerin ne kadar tanıdık
+olduğuna bakarak bu paragrafın hangi sınıf düzeyine (1–12) uygun olduğunu tahmin et. Yalnız cümle
+uzunluğuna bakma; içeriğin gerektirdiği ön bilgiyi değerlendir. Önce kısa bir Türkçe gerekçe yaz (en fazla iki
+cümle), sonra sınıfı ver."""
+
+
+def model_sinif_tahmini(metin: str) -> int | None:
+    from . import yerel_model
+    j = yerel_model.sohbet("gemma4:12b-it-qat", _SINIF_SISTEMI, f"Paragraf: {metin[:1500]}",
+                           {"gerekce": {"type": "string"}, "sinif": {"type": "integer"}}, num_predict=160)
+    return j["sinif"] if j and isinstance(j.get("sinif"), int) and 1 <= j["sinif"] <= 12 else None
+
+
+def kavramsal_model_olc() -> dict:
+    """K30 ikinci deneme: dil modelinin sınıf tahmini aynı dersin sınıflarını ayırt ediyor mu?"""
+    from .donanim import Bekci
+    onbellek_yolu = PROJE / "veri" / "kavramsal_model_onbellek.json"
+    onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
+    bekci = Bekci(print)
+    tahmin = {}
+    try:
+        for ders, kitaplar in DERS_SERILERI.items():
+            for k in kitaplar:
+                if not (PROJE / "veri" / f"{k}_bloklar.json").exists():
+                    continue
+                ps = aday_paragraflar(_bloklar(k))
+                tahmin[k] = []
+                for b, _ in random.Random(TOHUM).sample(ps, min(MODEL_ORNEKLEM, len(ps))):
+                    if b.metin not in onbellek:
+                        bekci.adim()
+                        onbellek[b.metin] = model_sinif_tahmini(b.metin)
+                    if onbellek[b.metin] is not None:
+                        tahmin[k].append(onbellek[b.metin])
+                print(f"  {k}: ortanca tahmin {statistics.median(tahmin[k])} ({len(tahmin[k])} paragraf)", flush=True)
+    finally:
+        json_kaydet(onbellek, onbellek_yolu)
+    rapor = {}
+    for ders, kitaplar in DERS_SERILERI.items():
+        sirali = sorted((k for k in kitaplar if k in tahmin), key=kitaplar.get)
+        for i, a in enumerate(sirali):
+            for b in sirali[i + 1:]:
+                rapor[f"{b}>{a}"] = round(auc(tahmin[b], tahmin[a], False), 3)
+                print(f"  AUC {b} > {a}: {rapor[f'{b}>{a}']}", flush=True)
+    ayni = [rapor[f"{b}>{a}"] for a, b in AYNI_PROGRAM]
+    karar = {"ayni_program_en_az": min(ayni), "tum_ciftler_en_az": min(rapor.values()),
+             "basarili": min(ayni) >= 0.60 and min(rapor.values()) >= 0.55}
+    print("Karar (önceden sabit ölçüt):", karar)
+    return {"ortanca": {k: statistics.median(v) for k, v in tahmin.items()}, "auc": rapor, "karar": karar}
+
+
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
+    if "--kavramsal-model" in sys.argv:
+        json_kaydet(kavramsal_model_olc(), PROJE / "veri" / "degerlendirme_kavramsal_model.json")
+        return
     if "--kavramsal" in sys.argv:
         json_kaydet(kavramsal_olc(), PROJE / "veri" / "degerlendirme_kavramsal.json")
         return

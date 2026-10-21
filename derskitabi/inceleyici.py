@@ -30,12 +30,17 @@ import pymupdf
 
 from .gorsellestir import _ham_kelimeler, blok_raporu, cumle_dikdortgenleri, sayfa_araligi_coz
 from .kriterler.okunabilirlik import cumlelere_bol
-from .kriterler import alinti, okunabilirlik, tutarlilik, yazim
+from .kriterler import dusuk_oncelik, okunabilirlik, tutarlilik, yazim
 from .model import Blok, Tespit
 from .pdf_cikarma import _OKUMA_AYARLARI, bloklari_cikar
 
 SABLON = Path(__file__).parent / "sablonlar" / "inceleyici.html"
 GORUNTU_DPI = 110
+# Yazım iz kaydında düşük önceliğe inen kelimenin notu (kitap ipuçları, K28, K29)
+IPUCU_ACIKLAMALARI = {
+    "alıntı içinde": "alıntı metin: yazarın kendi yazımı ya da eski yazım olabilir (düşük öncelik)",
+    "terim": "kitabın kendi terimi: sözlüğünde açıklanmış ya da italik yazılmış (düşük öncelik)",
+    "PDF okuma parçası": "PDF okuma parçası: kelime metin çıkarılırken parçalanmış (düşük öncelik)"}
 
 
 def satirlari_birlestir(dikdortgenler: list[pymupdf.Rect]) -> list[list[float]]:
@@ -100,7 +105,7 @@ def yazim_izi(blok: Blok, blok_tespitleri: list[Tespit], baglam: dict, ham) -> d
     iz = {}
     yazim.kelime_denetimi(blok, baglam["denetciler"], iz=iz)
     hatali = {t.metin_parcasi: t.guven_skoru for t in blok_tespitleri if t.alt_tur == "morfoloji"}
-    alintida = {t.metin_parcasi for t in blok_tespitleri if alinti.ALINTI_NOTU in t.aciklama}
+    ipuclu = {t.metin_parcasi: dusuk_oncelik.sebep(t) for t in blok_tespitleri if dusuk_oncelik.sebep(t)}
     kelimeler = []
     for k in iz["kelimeler"]:
         kucuk = yazim.tr_kucuk(k["kelime"])
@@ -109,8 +114,8 @@ def yazim_izi(blok: Blok, blok_tespitleri: list[Tespit], baglam: dict, ham) -> d
             d["d"] = "gecerli"
         elif k["kelime"] in hatali:
             g = hatali[k["kelime"]]
-            if k["kelime"] in alintida:  # alıntı ayırma (K28)
-                d["d"], d["not"] = "atlandi", "alıntı metin: yazarın kendi yazımı ya da eski yazım olabilir (düşük öncelik)"
+            if k["kelime"] in ipuclu:  # kitap ipuçları (K28, K29)
+                d["d"], d["not"] = "atlandi", IPUCU_ACIKLAMALARI[ipuclu[k["kelime"]]]
             elif g < 0.5:  # yazım hakemi (K25): muhtemelen doğru, düşük öncelik
                 d["d"], d["not"] = "atlandi", "dil modeli muhtemelen doğru yazıldığını söyledi (düşük öncelik)"
             else:
@@ -254,8 +259,8 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
             secili_kume = set(secili)
             yazim_tespitleri = yazim.analiz_et([b for b in bloklar if b.sayfa_no in secili_kume],
                                                kitap_bloklari=bloklar)
-            if not test_modu:  # test modunda metin değiştirilmiş: alıntı ayırma PDF ile eşleşmez
-                yazim_tespitleri = alinti.pdf_ile_isaretle(pdf_yolu, bloklar, yazim_tespitleri)
+            # test modunda metin değiştirilmiş: yazı biçimleri PDF ile eşleşmez, yalnız metin ipuçları
+            yazim_tespitleri = dusuk_oncelik.isaretle(None if test_modu else pdf_yolu, bloklar, yazim_tespitleri)
         yazim_bloklari = defaultdict(list)
         for t in yazim_tespitleri:
             yazim_bloklari[(t.sayfa_no, t.blok_no)].append(t)

@@ -28,7 +28,7 @@ from pathlib import Path
 
 from .degerlendirme import PROJE, celiskileri_uygula, set_yukle
 from .kayit import bloklari_yukle, json_kaydet
-from .kriterler import alinti, yazim, yazim_hakem
+from .kriterler import dusuk_oncelik, yazim, yazim_hakem
 from .model import Tespit
 
 SET_YOLU = PROJE / "testseti" / "yazim_hatalari.json"
@@ -66,19 +66,18 @@ def _anahtar(t: Tespit) -> tuple:
     return t.sayfa_no, t.blok_no, t.alt_tur, t.metin_parcasi
 
 
-def alinti_uygula(kitap: str, bloklar, tespitler: list[Tespit]) -> list[Tespit]:
-    """Alıntı ayırma (K28): alıntı bloklarındaki kelime tespitleri düşük önceliğe iner."""
-    bicimler = alinti.blok_bicimleri(PROJE / "veri" / f"{kitap}.pdf", bloklar)
-    return alinti.alintilari_isaretle(tespitler, alinti.alinti_bloklari(bloklar, bicimler))
+def alinti_uygula(kitap: str, bloklar, tespitler: list[Tespit], denetciler=None) -> list[Tespit]:
+    """Kitap ipuçları: PDF okuma parçası, terim (K29) ve alıntı (K28) tespitleri düşük önceliğe iner."""
+    return dusuk_oncelik.isaretle(PROJE / "veri" / f"{kitap}.pdf", bloklar, tespitler, denetciler)
 
 
 def recall_olc(ogeler: list[dict], bloklar, taban: list[Tespit], denetciler=None,
                hakem_onbellegi: dict | None = None, kitap: str | None = None) -> dict:
-    """kitap verilirse alıntı ayırma (K28) da uygulanır (PDF'ten yazı tipleri okunur)."""
+    """kitap verilirse kitap ipuçları (K28 alıntı, K29 PDF parçası ve terim) da uygulanır."""
     degismis = celiskileri_uygula(bloklar, ogeler)
     tespitler = yazim.analiz_et(degismis, denetciler, kitap_bloklari=degismis)
     if kitap is not None:
-        tespitler = alinti_uygula(kitap, degismis, tespitler)
+        tespitler = alinti_uygula(kitap, degismis, tespitler, denetciler)
     if hakem_onbellegi is not None:
         tespitler = yazim_hakem.hakemle(tespitler, degismis, onbellek=hakem_onbellegi, ilerleme=print)
     sonuc = {o["id"]: {"guven": bulundu_mu(o, tespitler), "tur": o["tur"], "alt_tur": o["alt_tur"]}
@@ -142,7 +141,8 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Yazım değerlendirmesi (K23)")
     ap.add_argument("--set", choices=("gelistirme", "test"), required=True)
     ap.add_argument("--hakem", action="store_true", help="Yazım hakemiyle (dil modeli, K25)")
-    ap.add_argument("--alinti", action="store_true", help="Alıntı ayırmayla (K28)")
+    ap.add_argument("--alinti", action="store_true",
+                    help="Kitap ipuçlarıyla: alıntı (K28), PDF okuma parçası ve terim (K29)")
     arg = ap.parse_args()
     onbellek = _onbellek_yukle() if arg.hakem else None
 

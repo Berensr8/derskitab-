@@ -47,8 +47,8 @@ def konum_metni(sayfa_no: int, basili: str | None) -> str:
 
 
 def oncelik(g: float) -> str:
-    """Güven skorundan öncelik: yüksek (≥0,75), orta (≥0,5), düşük (alıntı metin ya da yazım hakemi
-    "muhtemelen doğru")."""
+    """Güven skorundan öncelik: yüksek (≥0,75), orta (≥0,5), düşük (PDF okuma parçası, terim, alıntı metin
+    ya da yazım hakemi "muhtemelen doğru")."""
     return "yüksek" if g >= 0.75 else "orta" if g >= GOSTERIM_ESIGI else "düşük"
 
 
@@ -266,8 +266,8 @@ def _ozet_notu(belge, tespitler, sayac, atlanan, dusuk_guven, kapsam=None) -> No
     satirlar = [f"{YAZAR} — otomatik inceleme notları", ""] + ([kapsam, ""] if kapsam else [])
     satirlar += [f"• {ad}: {_sayi_metni(k, tespitler, sayac)}" for k, ad in KRITER_ADLARI.items()]
     if atlanan:
-        satirlar.append(f"• Düşük öncelikli {atlanan} yazım tespiti eklenmedi (alıntı metinde ya da "
-                        "dil modeli muhtemelen doğru dedi; eklemek için --dusuk-guven; Excel raporunda var).")
+        satirlar.append(f"• Düşük öncelikli {atlanan} yazım tespiti eklenmedi (PDF okuma parçası, kitabın "
+                        "terimi, alıntı metin ya da dil modeli muhtemelen doğru dedi; eklemek için --dusuk-guven; Excel raporunda var).")
     elif dusuk_guven:
         satirlar.append("• Düşük öncelikli yazım tespitleri gri renkte eklendi.")
     satirlar += ["", "Renkler: kırmızı dalgalı çizgi = yazım, turuncu çerçeve = dilsel karmaşıklık, "

@@ -35,6 +35,8 @@ from .. import yerel_model
 from ..kayit import bloklari_yukle, json_kaydet, tespitleri_kaydet
 from ..donanim import Bekci
 from ..model import Blok, Tespit
+from ..pdf_cikarma import PARAGRAF_ESIGI
+from ..satirlar import grup_metni, satir_gruplari
 from .okunabilirlik import cumlelere_bol
 
 GOMME_MODELI = "bge-m3"
@@ -110,10 +112,11 @@ def bilgi_cumlesi_mi(c: str) -> bool:
             and not any(_YONERGE.search(w.lower()) for w in k))
 
 
-def _baglam(bloklar: list[Blok], k: int, cumle: str) -> str:
+def _baglam(bloklar: list[Blok], k: int, cumle: str, paragraf_metni: str | None = None) -> str:
     """Aynı sayfadaki önceki 3 blok (başlık, yönerge…) ve paragrafın cümle çevresi. Sayfada
     daha yukarıda bir etkinlik yönergesi varsa o da eklenir (Sosyal 6, s.103: yönerge 4 blok
-    yukarıdaydı ve bilerek yanlış yazılmış cümle çelişki sanıldı)."""
+    yukarıdaydı ve bilerek yanlış yazılmış cümle çelişki sanıldı). paragraf_metni: satır blokları
+    birleştirildiyse paragrafın tamamı (k paragrafın ilk bloğu)."""
     b = bloklar[k]
     onceki = [x.metin[:150] for x in bloklar[max(0, k - 3):k]
               if x.sayfa_no == b.sayfa_no and x.tur in ("paragraf", "kisa")]
@@ -121,8 +124,9 @@ def _baglam(bloklar: list[Blok], k: int, cumle: str) -> str:
                      if x.sayfa_no == b.sayfa_no and _ETKINLIK.search(x.metin)), None)
     if etkinlik:
         onceki.insert(0, "Etkinlik yönergesi: " + etkinlik)
-    yer = max(0, b.metin.find(cumle))
-    paragraf = b.metin[max(0, yer - 400):yer + len(cumle) + 200]
+    metin = paragraf_metni or b.metin
+    yer = max(0, metin.find(cumle))
+    paragraf = metin[max(0, yer - 400):yer + len(cumle) + 200]
     return " | ".join(onceki + [paragraf])
 
 
@@ -138,16 +142,22 @@ def alinti_haric(bloklar: list[Blok], pdf_yolu=None) -> set:
 
 def bilgi_cumleleri(bloklar: list[Blok], haric: set | None = None) -> list[Cumle]:
     """Paragraflardaki bilgi cümleleri; kitapta aynen tekrar eden cümle bir kez alınır.
-    haric: alınmayacak bloklar {(sayfa_no, blok_no)} (alıntılar, alinti_haric())."""
+    haric: alınmayacak bloklar {(sayfa_no, blok_no)} (alıntılar, alinti_haric()).
+    Satır satır bloklara bölünmüş paragraflar birleştirilir (satirlar.py); cümle, başladığı bloğa bağlanır."""
+    indeks = {id(b): k for k, b in enumerate(bloklar)}
     gorulen, sonuc = set(), []
-    for k, b in enumerate(bloklar):
-        if b.tur != "paragraf" or konusma_mi(b.metin) or (haric and (b.sayfa_no, b.blok_no) in haric):
+    for grup in satir_gruplari(bloklar):
+        metin, baslar = grup_metni(grup)
+        if ((len(grup) == 1 and grup[0].tur != "paragraf") or len(metin.split()) < PARAGRAF_ESIGI
+                or konusma_mi(metin) or (haric and any((x.sayfa_no, x.blok_no) in haric for x in grup))):
             continue
-        for c in cumlelere_bol(b.metin):
+        for c in cumlelere_bol(metin):
             if bilgi_cumlesi_mi(c) and c not in gorulen:
                 gorulen.add(c)
+                yer = metin.find(c)
+                b = grup[max(i for i, bas in enumerate(baslar) if bas <= max(yer, 0))]
                 sonuc.append(Cumle(c, b.sayfa_no, b.blok_no, b.basili_sayfa_no, b.bbox,
-                                   _baglam(bloklar, k, c)))
+                                   _baglam(bloklar, indeks[id(grup[0])], c, metin if len(grup) > 1 else None)))
     return sonuc
 
 

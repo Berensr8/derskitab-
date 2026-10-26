@@ -25,6 +25,7 @@ from pathlib import Path
 
 from ..kayit import bloklari_yukle, json_kaydet, tespitleri_kaydet
 from ..model import Blok, Tespit
+from ..satirlar import birlesik_bloklar
 
 MIN_CUMLE = 3  # Paragraf düzeyinde değerlendirme için en az cümle sayısı (K10)
 ZOR_DILIM = 0.10  # Her formülün "en zor" saydığı dilim: kitabın en zor %10'u (K9)
@@ -197,6 +198,9 @@ def analiz_et(bloklar: list[Blok], hedef_sinif: int | None = None
     if hedef_sinif is None:
         hedef_sinif = hedef_sinifi_bul(bloklar)
 
+    # Satır satır bloklara bölünmüş paragraflar birleştirilir (yoksa "3 cümleden kısa" sayılıp
+    # değerlendirilmiyordu; TDE 12'de metnin çoğu böyle). Tespit paragrafın ilk bloğuna bağlanır.
+    bloklar = birlesik_bloklar(bloklar)
     skorlu = [(b, s) for b in bloklar if b.tur == "paragraf" and (s := skorla(b.metin))]
     if not skorlu:
         raise ValueError("Okunabilirlik için skorlanabilen paragraf yok.")

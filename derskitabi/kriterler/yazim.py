@@ -23,8 +23,11 @@ from collections import Counter
 from collections.abc import Callable
 from pathlib import Path
 
+from dataclasses import replace
+
 from ..kayit import bloklari_yukle, tespitleri_kaydet
 from ..model import Blok, Tespit
+from ..satirlar import grup_metni, satir_gruplari
 
 # Bir kelimenin geçerli olup olmadığını söyleyen fonksiyon (kelime -> bool)
 Denetci = Callable[[str], bool]
@@ -367,6 +370,32 @@ def kitaba_ozel_terimler(adaylar: set[str], kitap_kelimeleri: Counter,
     return terimler
 
 
+def birlesik_paragraf(grup: list[Blok], denetciler) -> Blok:
+    """Satır satır bloklara bölünmüş paragraf tek blok olarak denetlenir (satirlar.py). Tek blok
+    denetlenince her satırın ilk ve son kelimesi "bölünmüş parça olabilir" diye atlanıyordu (TDE 12'de
+    metnin çoğu satır blokları). Tiresi kaybolmuş kelimeler ("Ga" + "rip") birleştirilir."""
+    from ..pdf_cikarma import blok_turu
+    metin, _ = grup_metni(grup, bilesik_mi=lambda k: any(_gecerli(d, k) for d in denetciler),
+                          parca_mi=lambda k: all(_gecerli(d, k) for d in denetciler))
+    kutu = (min(x.bbox[0] for x in grup), min(x.bbox[1] for x in grup),
+            max(x.bbox[2] for x in grup), max(x.bbox[3] for x in grup))
+    return Blok(grup[0].sayfa_no, grup[0].blok_no, kutu, metin, grup[0].basili_sayfa_no, blok_turu(metin))
+
+
+def satira_bagla(tespitler: list[Tespit], grup: list[Blok], metin: str) -> list[Tespit]:
+    """Birleşik paragraftaki tespiti kelimenin bulunduğu satır bloğuna geri bağlar (blok numaraları
+    değişmesin: test setleri ve notlar bloğa göre)."""
+    if len(grup) == 1:
+        return tespitler
+    baslar = [metin.find(x.metin.strip()[:20]) for x in grup]
+    sonuc = []
+    for t in tespitler:
+        yer = metin.find(t.metin_parcasi or "")
+        i = max((j for j, bas in enumerate(baslar) if 0 <= bas <= yer), default=0)
+        sonuc.append(replace(t, blok_no=grup[i].blok_no, bbox=grup[i].bbox))
+    return sonuc
+
+
 def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = None,
               atlananlar: Counter | None = None,
               kitap_bloklari: list[Blok] | None = None) -> list[Tespit]:
@@ -378,10 +407,11 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
     if denetciler is None:
         denetciler = varsayilan_denetciler()
     kelime_tespitleri, kural_tespitleri = [], []
-    for b in bloklar:
+    for grup in satir_gruplari(bloklar):
+        b = grup[0] if len(grup) == 1 else birlesik_paragraf(grup, denetciler)
         if b.tur in ("paragraf", "kisa"):
-            kelime_tespitleri += kelime_denetimi(b, denetciler, atlananlar)
-            kural_tespitleri += kural_denetimi(b)
+            kelime_tespitleri += satira_bagla(kelime_denetimi(b, denetciler, atlananlar), grup, b.metin)
+            kural_tespitleri += satira_bagla(kural_denetimi(b), grup, b.metin)
 
     kitap_kelimeleri = kitap_kelime_sayilari(kitap_bloklari or bloklar)
     terimler = kitaba_ozel_terimler({tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri},

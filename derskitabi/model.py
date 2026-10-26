@@ -10,7 +10,7 @@ from dataclasses import asdict, dataclass, field
 # (x0, y0, x1, y1): PDF birimi (point), sayfanın sol üst köşesi orijin.
 BBox = tuple[float, float, float, float]
 
-KRITERLER = ("yazim", "okunabilirlik", "tutarlilik")
+KRITERLER = ("yazim", "okunabilirlik", "tutarlilik", "mufredat")  # mufredat: Faz 3 (K31)
 
 # Blok türleri (K8):
 #   paragraf : analiz edilecek düz metin (5+ kelime)

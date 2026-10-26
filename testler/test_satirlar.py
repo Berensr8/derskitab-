@@ -29,6 +29,12 @@ class SatirTesti(unittest.TestCase):
         kunye = [satir(1, 100, "Dil Uzmanı", x1=120), satir(2, 114, "Emel ERKİN", x1=118)]
         self.assertEqual(len(satir_gruplari(kunye)), 2)
 
+    def test_iki_satirlik_baslik_birlesmez(self):
+        # Sosyal 6 s.41: kalın haber başlığı (iki satır) + haber metni
+        baslik = Blok(41, 5, (57, 253, 330, 281), "Çevre kirliliği nedeniyle dünyada 13 milyon tür, yok olma tehlikesiyle karşı karşıya", "41", "paragraf")
+        metin = Blok(41, 6, (57, 285, 330, 405), "\"... Sürdürülebilir Üretim ve Tüketim Derneği Başkanı, şu açıklamada bulundu.", "41", "paragraf")
+        self.assertEqual(len(satir_gruplari([baslik, metin])), 2)
+
     def test_liste_maddesi_ve_uzak_blok_birlesmez(self):
         bloklar = [satir(1, 100, "Görseldeki materyaller yerine farklı materyaller de kullanılabilir ve"),
                    satir(2, 114, "a) hazırlayacağınız sokağa edebiyatçıların adlarını veriniz.")]

@@ -6,6 +6,7 @@ bölünüyor; cümle satır başından başlıyor ve öznesi önceki blokta kal�
 setlerinde kullanılıyor); cümleye bakan kriterler ardışık satır bloklarını burada birleştirir.
 
 Bir blok, hemen altındaki bloğa devam ediyor sayılır:
+  - tek satırlık bir blok (iki satırlık kalın haber başlığı alttaki metinle birleşmesin — Sosyal 6 s.41),
   - aynı sayfa, altındaki blok satır aralığı kadar yakın (boşluk ≤ 0,6 satır yüksekliği),
   - sol kenarlar hizalı (üstteki ilk satır girintili olabilir), üstteki satır sütunu dolduruyor,
   - cümle ortasında bitiyor: alttaki küçük harfle başlıyor ya da üstteki en az 5 kelimelik ve küçük
@@ -28,8 +29,10 @@ def devam_ediyor_mu(a: Blok, b: Blok) -> bool:
     """a bloğu (satırı) hemen altındaki b bloğunda devam ediyor mu?"""
     if a.sayfa_no != b.sayfa_no or a.tur not in ("paragraf", "kisa") or b.tur not in ("paragraf", "kisa"):
         return False
+    satir = a.bbox[3] - a.bbox[1]
+    if satir > _SATIR_YUKSEKLIGI_EN_FAZLA:
+        return False
     bosluk = b.bbox[1] - a.bbox[3]
-    satir = min(a.bbox[3] - a.bbox[1], _SATIR_YUKSEKLIGI_EN_FAZLA)
     hizali = b.bbox[0] - 3 <= a.bbox[0] <= b.bbox[0] + 25
     dolu = a.bbox[2] >= max(a.bbox[2], b.bbox[2]) - 15
     son = a.metin.rstrip()[-1:]

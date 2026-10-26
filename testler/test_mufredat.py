@@ -29,6 +29,17 @@ class ProgramTesti(unittest.TestCase):
         self.assertTrue(mufredat._kavram_deseni("prokaryot").search("prokaryotlar ve ökaryotlar"))
         self.assertFalse(mufredat._kavram_deseni("dil").search("dilim ekmek"[:0] + "bildiri"))  # kelime içinde değil
 
+    def test_tema_kapagi_kapsam_sayilmaz(self):
+        # Biyoloji 10 s.15: kapak programın içerik çerçevesini ve anahtar kavramlarını aynen aktarıyor
+        kapak = [Blok(5, 1, (50, 50, 500, 60), "İÇERİK ÇERÇEVESİ", "5", "kisa"),
+                 Blok(5, 2, (50, 70, 500, 130), "Güneşten besinlere: fotosentez, kemosentez, hücresel solunum, "
+                      "aktif taşıma ve ökaryot hücrelerde enerji aktarımında ATP'nin rolü işlenir.", "5", "paragraf")]
+        self.assertEqual(mufredat.tanitim_sayfalari(kapak + BLOKLAR), {5})
+        self.assertEqual([b.sayfa_no for b in mufredat.paragraflar(kapak + BLOKLAR)], [10, 11, 12])
+        self.assertEqual(mufredat.kavram_sayfalari(["ökaryot", "aktif taşıma"], kapak + BLOKLAR),
+                         {"ökaryot": [], "aktif taşıma": [12]})
+        self.assertFalse(mufredat.tanitim_sayfalari([Blok(9, 1, (0, 0, 1, 1), "1. Tema / ENERJİ", "9", "kisa")]))
+
 
 class AnalizTesti(unittest.TestCase):
     def test_en_benzer_paragraflar_hakeme_gider_ve_karsilanmayan_tespit_olur(self):

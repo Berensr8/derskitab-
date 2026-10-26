@@ -40,6 +40,10 @@ KARARLAR = ("karsilaniyor", "kismen", "karsilanmiyor")
 _CIKTI = re.compile(r"(?m)^\s*(?:ÖĞRENME ÇIKTILARI\s*\n\s*VE SÜREÇ BİLEŞENLERİ\s*)?"
                     r"((?:BİY|SB)\.(\d+)\.(\d+)\.(\d+))\.\s+(.+?)\n\s*a\)", re.S)
 _ICERIK = re.compile(r"İÇERİK ÇERÇEVESİ(.*?)Anahtar Kavramlar(.*?)ÖĞRENME\s*\n?\s*KANITLARI", re.S)
+# Kitapta tanıtım sayfası işaretleri: "İÇERİK ÇERÇEVESİ" (tema kapağı), "BU ÖĞRENME ALANINDA" (Sosyal Bilgiler
+# alan kapağı), "TEMA TEMA" (kapaktaki büyük yazı), "Tema sunusu", "Kitabın tanıtımı", "İçindekiler"
+_TANITIM = re.compile(r"İÇERİK ÇERÇEVESİ|BU ÖĞRENME ALANINDA|\bTEMA\s+TEMA\b|(?i:öğrenilecek anahtar kavramlar|"
+                      r"tema sunusu|kitabın tanıtımı|kitabımızı tanıyalım|^\s*içindekiler\s*$)", re.M)
 
 
 @dataclass
@@ -84,16 +88,26 @@ def _kavram_deseni(kavram: str) -> re.Pattern:
     return re.compile(r"(?<![^\W\d_])" + r"\s+".join(kelimeler) + r"[^\W\d_]{0,8}(?![^\W\d_])")
 
 
+def tanitim_sayfalari(bloklar: list[Blok]) -> set[int]:
+    """İçindekiler, kitabı tanıtım, tema / öğrenme alanı kapakları ve tema sunusu sayfaları. Bu sayfalar
+    programın içerik çerçevesini ve anahtar kavramlarını aynen aktarıyor: konunun işlendiğini göstermezler."""
+    return {b.sayfa_no for b in bloklar if _TANITIM.search(b.metin)}
+
+
 def kavram_sayfalari(kavramlar: list[str], bloklar: list[Blok]) -> dict[str, list[int]]:
-    """{kavram: kitapta geçtiği sayfalar}."""
+    """{kavram: kitapta geçtiği sayfalar} (tanıtım sayfaları sayılmaz)."""
+    tanitim = tanitim_sayfalari(bloklar)
     sayfa_metni = {}
     for b in bloklar:
-        sayfa_metni[b.sayfa_no] = sayfa_metni.get(b.sayfa_no, "") + " " + yazim.tr_kucuk(b.metin)
+        if b.sayfa_no not in tanitim:
+            sayfa_metni[b.sayfa_no] = sayfa_metni.get(b.sayfa_no, "") + " " + yazim.tr_kucuk(b.metin)
     return {k: [s for s, m in sorted(sayfa_metni.items()) if _kavram_deseni(k).search(m)] for k in kavramlar}
 
 
 def paragraflar(bloklar: list[Blok]) -> list[Blok]:
-    return [b for b in birlesik_bloklar(bloklar) if b.tur == "paragraf" and len(b.metin.split()) >= EN_AZ_KELIME]
+    tanitim = tanitim_sayfalari(bloklar)
+    return [b for b in birlesik_bloklar(bloklar)
+            if b.tur == "paragraf" and len(b.metin.split()) >= EN_AZ_KELIME and b.sayfa_no not in tanitim]
 
 
 SISTEM = """Sen MEB öğretim programlarını bilen bir ders kitabı inceleme uzmanısın. Sana bir öğrenme çıktısı ve bir ders kitabından bu çıktıya en çok benzeyen paragraflar (sayfa numaralarıyla) verilecek. Görevin: kitabın bu çıktının KONUSUNU işleyip işlemediğine karar vermek. Çıktının beceri ifadesine (bilgi toplama, sorgulama vb.) değil, konusuna bak.

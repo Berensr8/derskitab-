@@ -5,6 +5,8 @@
               Bilgiler 6 "1. Kitap": SB.6.4–6.6 ikinci kitapta) → "karşılanmıyor" beklenir.
   - Eksik tema: Biyoloji 9'dan 2. temanın sayfaları çıkarılır; o temanın çıktıları "karşılanmıyor"a dönmeli.
   - Konum : karşılanan pozitif çıktıda en benzer paragrafın sayfası çıktının temasında mı?
+  - Temiz doğrulama (K31 eki): ilk ölçümden sonra düzeltme yapıldığı için (tanıtım sayfaları) karar, hiç
+    kullanılmamış Biyoloji 11 üzerindeki aynı ölçütlerle verilir; eksik tema testi orada da yapılır.
 
 Kullanım:
     python -m derskitabi.degerlendirme_mufredat
@@ -22,6 +24,7 @@ from .kriterler import mufredat
 # kitap: (program, sınıf, kitabın kapsadığı temalar)
 KITAPLAR = {"biyoloji9": ("biyoloji", 9, (1, 2)), "biyoloji10": ("biyoloji", 10, (1, 2)),
             "kitap": ("sosyal", 6, (1, 2, 3))}
+DOGRULAMA = {"biyoloji11": ("biyoloji", 11, (1, 2))}  # K31 eki: düzeltmeden sonra ilk kez çalıştırılır
 # Sosyal Bilgiler 6 içindekiler sayfası (basılı sayfa): öğrenme alanlarının aralıkları
 SOSYAL6_ALANLAR = {1: (12, 53), 2: (54, 107), 3: (108, 179)}
 _TEMA_BASLIGI = re.compile(r"^\s*(\d)\.\s*Tema\b")
@@ -39,7 +42,7 @@ def sayfa_temalari(kitap: str, bloklar) -> dict[int, int]:
                 for alan, (a, z) in SOSYAL6_ALANLAR.items():
                     if a <= no <= z:
                         sonuc[b.sayfa_no] = alan
-        return sonuc
+        return _kapaklar_sonraki_temaya(sonuc, bloklar, set(sonuc))
     isaret = {}
     for b in bloklar:
         if (m := _TEMA_BASLIGI.match(b.metin)) and len(b.metin) < 40 and b.sayfa_no > ICINDEKILER_SONU:
@@ -49,6 +52,18 @@ def sayfa_temalari(kitap: str, bloklar) -> dict[int, int]:
     for no in range(min(isaret), max(b.sayfa_no for b in bloklar) + 1):
         tema = isaret.get(no, tema)
         sonuc[no] = tema
+    return _kapaklar_sonraki_temaya(sonuc, bloklar, set(isaret))
+
+
+def _kapaklar_sonraki_temaya(sonuc: dict[int, int], bloklar, kesin) -> dict[int, int]:
+    """Tema kapağı ve sunusu, açtığı temaya aittir (sayfa başlığı kapakta yok, ileri doğru doldurma kapağı
+    önceki temaya veriyordu). kesin: teması kesin bilinen sayfalar (başlıklı ya da içindekilerden)."""
+    tanitim = mufredat.tanitim_sayfalari(bloklar)
+    for kapak in sorted(p for p in tanitim if p > ICINDEKILER_SONU):
+        sonraki = min((p for p in kesin if p > kapak and p not in tanitim), default=None)
+        if sonraki is not None:
+            for p in range(kapak, sonraki):
+                sonuc[p] = sonuc[sonraki]
     return sonuc
 
 
@@ -60,55 +75,71 @@ def calistir(kitap: str, bloklar, ciktilar, onbellek) -> list[dict]:
     return kayit
 
 
+def kitap_olc(kitap, program, sinif, temalar, ciktilar, onbellek) -> tuple[dict, Counter]:
+    bloklar = bloklari_yukle(PROJE / "veri" / f"{kitap}_bloklar.json")
+    pozitif = {c.kod for c in ciktilar if c.sinif == sinif and c.tema in temalar}
+    print(f"## {kitap}: {len(pozitif)} pozitif, {len(ciktilar) - len(pozitif)} negatif çıktı", flush=True)
+    kayit = calistir(kitap, bloklar, ciktilar, onbellek)
+    temalar_s = sayfa_temalari(kitap, bloklar)
+    sonuc = Counter()
+    for r in kayit:
+        grup = "pozitif" if r["kod"] in pozitif else ("negatif_ayni_sinif" if r["sinif"] == sinif else "negatif")
+        sonuc[(grup, r["karar"])] += 1
+        if grup == "pozitif" and r["karar"] in ("karsilaniyor", "kismen"):
+            sonuc[("konum", temalar_s.get(r["sayfalar"][0]) == r["tema"])] += 1
+    poz = sum(v for (g, k), v in sonuc.items() if g == "pozitif")
+    poz_iyi = sonuc[("pozitif", "karsilaniyor")] + sonuc[("pozitif", "kismen")]
+    neg = sum(v for (g, k), v in sonuc.items() if g.startswith("negatif"))
+    neg_kotu = sonuc[("negatif", "karsilaniyor")] + sonuc[("negatif_ayni_sinif", "karsilaniyor")]
+    print(f"  pozitif kapsam {poz_iyi}/{poz}, negatifte 'karşılanıyor' {neg_kotu}/{neg}, "
+          f"konum {sonuc[('konum', True)]}/{poz_iyi}", flush=True)
+    sonuc_k = {"sayim": {f"{g}/{k}": v for (g, k), v in sonuc.items()},
+               "pozitif_kapsam": round(poz_iyi / poz, 3), "negatif_karsilaniyor": round(neg_kotu / neg, 3),
+               "konum": round(sonuc[("konum", True)] / max(1, poz_iyi), 3), "kayit": kayit}
+    return sonuc_k, Counter({"poz": poz, "poz_iyi": poz_iyi, "neg": neg, "neg_kotu": neg_kotu,
+                             "konum": sonuc[("konum", True)]})
+
+
+def eksik_tema_olc(kitap, sinif, ciktilar, onbellek, cikan_tema=2) -> dict:
+    """Kitaptan bir temanın sayfaları (kapağıyla) çıkarılır; o temanın çıktıları "karşılanmıyor"a dönmeli."""
+    bloklar = bloklari_yukle(PROJE / "veri" / f"{kitap}_bloklar.json")
+    temalar_s = sayfa_temalari(kitap, bloklar)
+    eksik = [b for b in bloklar if temalar_s.get(b.sayfa_no) != cikan_tema]
+    ciktilar = [c for c in ciktilar if c.sinif == sinif]
+    print(f"## Eksik tema testi: {kitap}'dan {len(bloklar) - len(eksik)} blok ({cikan_tema}. tema) çıkarıldı", flush=True)
+    kayit = calistir(f"{kitap}_eksik", eksik, ciktilar, onbellek)
+    et = Counter((r["tema"], r["karar"]) for r in kayit)
+    cikan = sum(v for (t, k), v in et.items() if t == cikan_tema)
+    kalan = sum(v for (t, k), v in et.items() if t != cikan_tema)
+    kalan_iyi = sum(v for (t, k), v in et.items() if t != cikan_tema and k in ("karsilaniyor", "kismen"))
+    sonuc = {"cikan_tema_karsilanmiyor": f"{et[(cikan_tema, 'karsilanmiyor')]}/{cikan}",
+             "kalan_karsilaniyor_kismen": f"{kalan_iyi}/{kalan}",
+             "gecti": et[(cikan_tema, "karsilanmiyor")] >= 0.8 * cikan and kalan_iyi >= 0.8 * kalan, "kayit": kayit}
+    print("  ", {k: v for k, v in sonuc.items() if k != "kayit"}, flush=True)
+    return sonuc
+
+
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     onbellek = json.loads(ONBELLEK.read_text(encoding="utf-8")) if ONBELLEK.exists() else {}
     programlar = {ad: mufredat.program_ciktilari(PROJE / "veri" / "programlar" / f"{ad}_programi.pdf")
-                  for ad in {p for p, _, _ in KITAPLAR.values()}}
-    rapor = {"kitaplar": {}}
-    toplam = Counter()
-    for kitap, (program, sinif, temalar) in KITAPLAR.items():
-        bloklar = bloklari_yukle(PROJE / "veri" / f"{kitap}_bloklar.json")
-        ciktilar = programlar[program]
-        pozitif = {c.kod for c in ciktilar if c.sinif == sinif and c.tema in temalar}
-        print(f"## {kitap}: {len(pozitif)} pozitif, {len(ciktilar) - len(pozitif)} negatif çıktı", flush=True)
-        kayit = calistir(kitap, bloklar, ciktilar, onbellek)
-        temalar_s = sayfa_temalari(kitap, bloklar)
-        sonuc = Counter()
-        for r in kayit:
-            grup = "pozitif" if r["kod"] in pozitif else ("negatif_ayni_sinif" if r["sinif"] == sinif else "negatif")
-            sonuc[(grup, r["karar"])] += 1
-            if grup == "pozitif" and r["karar"] in ("karsilaniyor", "kismen"):
-                sonuc[("konum", temalar_s.get(r["sayfalar"][0]) == r["tema"])] += 1
-        poz = sum(v for (g, k), v in sonuc.items() if g == "pozitif")
-        poz_iyi = sonuc[("pozitif", "karsilaniyor")] + sonuc[("pozitif", "kismen")]
-        neg = sum(v for (g, k), v in sonuc.items() if g.startswith("negatif"))
-        neg_kotu = sonuc[("negatif", "karsilaniyor")] + sonuc[("negatif_ayni_sinif", "karsilaniyor")]
-        rapor["kitaplar"][kitap] = {"sayim": {f"{g}/{k}": v for (g, k), v in sonuc.items()},
-                                    "pozitif_kapsam": round(poz_iyi / poz, 3), "negatif_karsilaniyor": round(neg_kotu / neg, 3),
-                                    "konum": round(sonuc[("konum", True)] / max(1, poz_iyi), 3),
-                                    "kayit": kayit}
-        toplam.update({"poz": poz, "poz_iyi": poz_iyi, "neg": neg, "neg_kotu": neg_kotu})
-        print(f"  pozitif kapsam {poz_iyi}/{poz}, negatifte 'karşılanıyor' {neg_kotu}/{neg}, "
-              f"konum {sonuc[('konum', True)]}/{poz_iyi}", flush=True)
-
-    # Eksik tema testi: Biyoloji 9'dan 2. tema çıkarılır
-    bloklar = bloklari_yukle(PROJE / "veri" / "biyoloji9_bloklar.json")
-    temalar_s = sayfa_temalari("biyoloji9", bloklar)
-    eksik = [b for b in bloklar if temalar_s.get(b.sayfa_no) != 2]
-    ciktilar = [c for c in programlar["biyoloji"] if c.sinif == 9]
-    print(f"## Eksik tema testi: Biyoloji 9'dan {len(bloklar) - len(eksik)} blok (2. tema) çıkarıldı", flush=True)
-    kayit = calistir("biyoloji9_eksik", eksik, ciktilar, onbellek)
-    et = Counter((r["tema"], r["karar"]) for r in kayit)
-    t2 = sum(v for (t, k), v in et.items() if t == 2)
-    t1 = sum(v for (t, k), v in et.items() if t == 1)
-    rapor["eksik_tema"] = {"tema2_karsilanmiyor": f"{et[(2, 'karsilanmiyor')]}/{t2}",
-                           "tema1_karsilaniyor_kismen": f"{et[(1, 'karsilaniyor')] + et[(1, 'kismen')]}/{t1}",
-                           "kayit": kayit}
-    rapor["genel"] = {"pozitif_kapsam": round(toplam["poz_iyi"] / toplam["poz"], 3),
-                      "negatif_karsilaniyor": round(toplam["neg_kotu"] / toplam["neg"], 3)}
+                  for ad in {p for p, _, _ in (KITAPLAR | DOGRULAMA).values()}}
+    rapor = {}
+    for ad, kume in (("gelistirme", KITAPLAR), ("dogrulama", DOGRULAMA)):
+        bolum, toplam = {"kitaplar": {}}, Counter()
+        for kitap, (program, sinif, temalar) in kume.items():
+            bolum["kitaplar"][kitap], sayim = kitap_olc(kitap, program, sinif, temalar, programlar[program], onbellek)
+            toplam.update(sayim)
+        kitap, (program, sinif, _) = next(iter(kume.items()))
+        bolum["eksik_tema"] = eksik_tema_olc(kitap, sinif, programlar[program], onbellek)
+        bolum["genel"] = {"pozitif_kapsam": round(toplam["poz_iyi"] / toplam["poz"], 3),
+                          "negatif_karsilaniyor": round(toplam["neg_kotu"] / toplam["neg"], 3),
+                          "konum": round(toplam["konum"] / max(1, toplam["poz_iyi"]), 3)}
+        bolum["karar_kurali_gecti"] = (bolum["genel"]["pozitif_kapsam"] >= 0.85
+                                       and bolum["genel"]["negatif_karsilaniyor"] <= 0.30 and bolum["eksik_tema"]["gecti"])
+        print(f"Genel ({ad}):", bolum["genel"], "| karar kuralı:", bolum["karar_kurali_gecti"], flush=True)
+        rapor[ad] = bolum
     json_kaydet(rapor, PROJE / "veri" / "degerlendirme_mufredat.json")
-    print("Genel:", rapor["genel"], "| Eksik tema:", {k: v for k, v in rapor["eksik_tema"].items() if k != "kayit"})
 
 
 if __name__ == "__main__":

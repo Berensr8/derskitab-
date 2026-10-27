@@ -11,8 +11,12 @@ Girdi : kitabın blokları + Türkiye Yüzyılı Maarif Modeli öğretim program
      yakın paragraflar sayfalarıyla gemma4'e sorulur: karşılanıyor / kısmen / karşılanmıyor. Beceri
      değil konu kapsamı sorulur (çıktılar "bilgi toplayabilme" gibi beceri diliyle yazılıyor).
 
+Ürüne giren (K31 eki): yalnız anahtar kavram kontrolü. Çıktı kapsamı (dil modeli) önceden yazılan ölçütü
+temiz doğrulamada geçmedi (Biyoloji 11 pozitif 0,82 < 0,85; eksik tema testi 5/10); --kapsam ile deneysel.
+
 Kullanım:
-    python -m derskitabi.kriterler.mufredat veri/biyoloji9.pdf veri/programlar/biyoloji_programi.pdf --sinif 9
+    python -m derskitabi.kriterler.mufredat veri/biyoloji9.pdf            (program ve sınıf otomatik)
+    python -m derskitabi.kriterler.mufredat veri/kitap.pdf --temalar 1-3 --kapsam
 """
 
 import argparse
@@ -56,8 +60,11 @@ class Cikti:
     kavramlar: list[str] = field(default_factory=list)
 
 
+_ALTLIK = re.compile(r"\s*\d+\s+[^,\n]*?DERSİ ÖĞRETİM PROGRAMI")  # programın sayfa altlığı ("50 BİYOLOJİ DERSİ …")
+
+
 def _sade(metin: str) -> str:
-    return " ".join(metin.replace("-\n", "").split())
+    return " ".join(_ALTLIK.sub(" ", metin.replace("-\n", "")).split())
 
 
 def program_ciktilari(pdf_yolu) -> list[Cikti]:
@@ -94,14 +101,48 @@ def tanitim_sayfalari(bloklar: list[Blok]) -> set[int]:
     return {b.sayfa_no for b in bloklar if _TANITIM.search(b.metin)}
 
 
-def kavram_sayfalari(kavramlar: list[str], bloklar: list[Blok]) -> dict[str, list[int]]:
-    """{kavram: kitapta geçtiği sayfalar} (tanıtım sayfaları sayılmaz)."""
-    tanitim = tanitim_sayfalari(bloklar)
+def _kelime_desenleri(kavram: str) -> list[re.Pattern]:
+    """Çok kelimeli kavramın kelimeleri ayrı ayrı, ek ve iyelik payıyla ("ısı dengesi" → "ısı", "deng…")."""
+    kokler = [k if len(k) <= 4 else k[:max(4, len(k) - 3)] for k in yazim.tr_kucuk(kavram).split()]
+    return [re.compile(r"(?<![^\W\d_])" + re.escape(k)) for k in kokler]
+
+
+def _sayfa_metinleri(bloklar: list[Blok], tanitim: set[int], tanitim_mi: bool) -> dict[int, str]:
     sayfa_metni = {}
     for b in bloklar:
-        if b.sayfa_no not in tanitim:
+        if (b.sayfa_no in tanitim) == tanitim_mi:
             sayfa_metni[b.sayfa_no] = sayfa_metni.get(b.sayfa_no, "") + " " + yazim.tr_kucuk(b.metin)
-    return {k: [s for s, m in sorted(sayfa_metni.items()) if _kavram_deseni(k).search(m)] for k in kavramlar}
+    return sayfa_metni
+
+
+def kavram_sayfalari(kavramlar: list[str], bloklar: list[Blok]) -> dict[str, list[int]]:
+    """{kavram: kitapta geçtiği sayfalar} (tanıtım sayfaları sayılmaz). Kavram aynen geçmiyorsa çok kelimeli
+    kavramın bütün kelimelerinin aynı sayfada geçtiği sayfalar ("kan basıncı dengesi" ↔ "kan basıncını düzenleyen")."""
+    sayfa_metni = _sayfa_metinleri(bloklar, tanitim_sayfalari(bloklar), False)
+    sonuc = {}
+    for k in kavramlar:
+        bulunan = set()
+        for v in _bicimler(k):
+            bulunan |= {s for s, m in sayfa_metni.items() if _kavram_deseni(v).search(m)}
+            if not bulunan and len(v.split()) > 1:
+                desenler = _kelime_desenleri(v)
+                bulunan |= {s for s, m in sayfa_metni.items() if all(d.search(m) for d in desenler)}
+        sonuc[k] = sorted(bulunan)
+    return sonuc
+
+
+def _bicimler(kavram: str) -> list[str]:
+    """Kavramın aranacak biçimleri: parantezsiz hâli ve parantez içi ("sivil toplum kuruluşu (STK)"); tireli
+    sıralama kelimelere ayrılır ("üretim-dağıtım-tüketim" → "üretim dağıtım tüketim")."""
+    ana = re.sub(r"\s*\([^)]*\)", "", kavram).strip()
+    parantez = re.findall(r"\(([^)]*)\)", kavram)
+    return [re.sub(r"(?<=\w)[-–](?=\w)", " ", b) for b in [ana, *parantez] if b]
+
+
+def yalniz_tanitimda(kavram: str, bloklar: list[Blok]) -> list[int]:
+    """Kavramın geçtiği tanıtım sayfaları (kapak, içindekiler): kavram kitapta yalnız orada anılıyor olabilir."""
+    sayfa_metni = _sayfa_metinleri(bloklar, tanitim_sayfalari(bloklar), True)
+    return [s for s, m in sorted(sayfa_metni.items()) if _kavram_deseni(kavram).search(m)]
 
 
 def paragraflar(bloklar: list[Blok]) -> list[Blok]:
@@ -173,39 +214,117 @@ def analiz_et(bloklar: list[Blok], ciktilar: list[Cikti], gomucu: Gomucu | None 
                                     f"En yakın paragraf s. {b.basili_sayfa_no or b.sayfa_no}. Dil modeli (gemma4): {k['gerekce']}",
                                     0.5, b.basili_sayfa_no, alt_tur="cikti_karsilanmiyor", metin_parcasi=c.kod))
         yaz(f"  {c.kod}: {k['karar']}")
-    for kv, sayfalar in kavramlar.items():
-        if not sayfalar:
-            sahipler = [c.kod for c in ciktilar if kv in c.kavramlar]
-            tespitler.append(Tespit(1, 0, (0, 0, 0, 0), "mufredat",
-                                    f"Anahtar kavram '{kv}' ({', '.join(sahipler)}) kitapta geçmiyor.",
-                                    1.0, None, alt_tur="kavram_yok", metin_parcasi=kv))
+    tespitler += kavram_kontrolu(bloklar, ciktilar, kavramlar)
     return kayit, tespitler
+
+
+TEMA_YOK_ORANI = 0.5  # bir temanın anahtar kavramlarının en az yarısı yoksa tema kitapta yok sayılır
+TEMA_YOK_EN_AZ = 3
+
+
+def kavram_kontrolu(bloklar: list[Blok], ciktilar: list[Cikti],
+                    kavramlar: dict[str, list[int]] | None = None) -> list[Tespit]:
+    """Ürüne giren müfredat denetimi (K31 eki): programın anahtar kavramları kitabın konu anlatımında geçiyor mu.
+    Bir temanın kavramlarının çoğu yoksa kavram kavram değil, tema için tek not verilir (tema kitapta
+    işlenmemiş ya da başka bir ciltte: Sosyal Bilgiler 6 "1. Kitap" ilk üç öğrenme alanını kapsıyor)."""
+    if kavramlar is None:
+        kavramlar = kavram_sayfalari(sorted({k for c in ciktilar for k in c.kavramlar}), bloklar)
+    temalar: dict[tuple[int, int], list[Cikti]] = {}
+    for c in ciktilar:
+        temalar.setdefault((c.sinif, c.tema), []).append(c)
+    tespitler, bildirilen = [], set()
+    for (sinif, tema), grup in sorted(temalar.items()):
+        tema_kavramlari = list(dict.fromkeys(k for c in grup for k in c.kavramlar))
+        eksik = [k for k in tema_kavramlari if not kavramlar.get(k)]
+        on_ek = grup[0].kod.rsplit(".", 1)[0]
+        if len(tema_kavramlari) >= TEMA_YOK_EN_AZ and len(eksik) >= TEMA_YOK_ORANI * len(tema_kavramlari):
+            tespitler.append(Tespit(1, 0, (0, 0, 0, 0), "mufredat",
+                                    f"Programın {sinif}. sınıf {tema}. tema / öğrenme alanı ({on_ek}.*, {len(grup)} öğrenme "
+                                    f"çıktısı) anahtar kavramlarının {len(eksik)}/{len(tema_kavramlari)} tanesi kitapta "
+                                    f"geçmiyor: {', '.join(eksik[:8])}{'…' if len(eksik) > 8 else ''}. Bu tema kitapta "
+                                    "işlenmemiş ya da başka bir ciltte olabilir.",
+                                    1.0, None, alt_tur="tema_yok", metin_parcasi=on_ek))
+            bildirilen.update(eksik)
+            continue
+        for kv in eksik:
+            if kv in bildirilen:
+                continue
+            bildirilen.add(kv)
+            sahipler = [c.kod for c in ciktilar if kv in c.kavramlar]
+            kapak = yalniz_tanitimda(kv, bloklar)
+            yer = (f"yalnız tanıtım/kapak sayfasında geçiyor (PDF s. {', '.join(map(str, kapak))}), konu "
+                   f"anlatımında geçmiyor" if kapak else "kitapta geçmiyor")
+            tespitler.append(Tespit(kapak[0] if kapak else 1, 0, (0, 0, 0, 0), "mufredat",
+                                    f"Programın anahtar kavramı '{kv}' ({', '.join(sahipler)}) {yer}.",
+                                    1.0, None, alt_tur="kavram_yok", metin_parcasi=kv))
+    return tespitler
+
+
+PROGRAMLAR = Path(__file__).resolve().parents[2] / "veri" / "programlar"
+EN_AZ_ESLESME = 0.5  # programın o sınıf kavramlarının en az yarısı kitapta geçmeli
+
+
+def program_bul(bloklar: list[Blok], sinif: int | None = None,
+                klasor: Path = PROGRAMLAR) -> tuple[Path, int, list[Cikti]] | None:
+    """Kitabın öğretim programı: o sınıfın anahtar kavramlarının en çoğu kitapta geçen program (en az yarısı).
+    sinif verilmezse kapaktan bulunur; bulunamazsa None (sınıf tahmin edilmez: alt sınıfların genel kavramları
+    — "istek", "dayanışma" — her kitapta geçiyor, Sosyal 6 kitabı 4. sınıfa benziyordu). Ders kitabı ile program
+    ayrımı belirgin: Biyoloji 9–11 ve Sosyal 6 kendi programlarıyla 0,75–1,0; TDE ve Matematik kitapları
+    Biyoloji programıyla 0,05–0,38. TDE programı beceri temelli: çıktı kodu ayrıştırılmıyor, hiç eşleşmez."""
+    if sinif is None:
+        from .okunabilirlik import hedef_sinifi_bul
+        sinif = hedef_sinifi_bul(bloklar)
+        if sinif is None:
+            return None
+    en_iyi, en_iyi_oran = None, EN_AZ_ESLESME
+    for yol in sorted(klasor.glob("*_programi.pdf")) if klasor.exists() else []:
+        ciktilar = [c for c in program_ciktilari(yol) if c.sinif == sinif]
+        kavramlar = sorted({k for c in ciktilar for k in c.kavramlar})
+        if not kavramlar:
+            continue
+        oran = sum(bool(v) for v in kavram_sayfalari(kavramlar, bloklar).values()) / len(kavramlar)
+        if oran >= en_iyi_oran:
+            en_iyi, en_iyi_oran = (yol, sinif, ciktilar), oran
+    return en_iyi
 
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
-    ap = argparse.ArgumentParser(description="Müfredat uyumu (K31)")
+    ap = argparse.ArgumentParser(description="Müfredat uyumu (K31): programın anahtar kavramları kitapta geçiyor mu")
     ap.add_argument("pdf", type=Path)
-    ap.add_argument("program", type=Path)
-    ap.add_argument("--sinif", type=int, required=True)
+    ap.add_argument("--program", type=Path, help="Öğretim programı PDF'i (verilmezse veri/programlar'dan bulunur)")
+    ap.add_argument("--sinif", type=int, help="Kitabın sınıfı (verilmezse programla birlikte bulunur)")
     ap.add_argument("--temalar", help='Kitabın kapsadığı temalar ("1-3"); verilmezse hepsi')
+    ap.add_argument("--kapsam", action="store_true",
+                    help="Deneysel: öğrenme çıktısı kapsamını dil modeline de sor (K31: ölçütü geçmedi, ürün değil)")
     arg = ap.parse_args()
     kok = arg.pdf.with_suffix("")
     bloklar = bloklari_yukle(f"{kok}_bloklar.json")
-    ciktilar = [c for c in program_ciktilari(arg.program) if c.sinif == arg.sinif]
+    if arg.program:
+        ciktilar = [c for c in program_ciktilari(arg.program) if arg.sinif is None or c.sinif == arg.sinif]
+    elif (bulunan := program_bul(bloklar, arg.sinif)) is None:
+        sys.exit("Kitaba uyan öğretim programı bulunamadı (veri/programlar).")
+    else:
+        yol, sinif, ciktilar = bulunan
+        print(f"Program: {yol.name}, {sinif}. sınıf")
     if arg.temalar:
         a, _, b = arg.temalar.partition("-")
         ciktilar = [c for c in ciktilar if int(a) <= c.tema <= int(b or a)]
-    onbellek_yolu = arg.pdf.with_name("mufredat_onbellek.json")
-    onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
-    try:
-        kayit, tespitler = analiz_et(bloklar, ciktilar, onbellek=onbellek, ilerleme=print)
-    finally:
-        json_kaydet(onbellek, onbellek_yolu)
-    json_kaydet(kayit, f"{kok}_mufredat.json")
+    if arg.kapsam:
+        onbellek_yolu = arg.pdf.with_name("mufredat_onbellek.json")
+        onbellek = json.loads(onbellek_yolu.read_text(encoding="utf-8")) if onbellek_yolu.exists() else {}
+        try:
+            kayit, tespitler = analiz_et(bloklar, ciktilar, onbellek=onbellek, ilerleme=print)
+        finally:
+            json_kaydet(onbellek, onbellek_yolu)
+        json_kaydet(kayit, f"{kok}_mufredat.json")
+        for r in kayit:
+            print(f"{r['kod']} [{r['karar']}] s.{r['basili'][:3]} {r['ad'][:70]}")
+    else:
+        tespitler = kavram_kontrolu(bloklar, ciktilar)
     tespitleri_kaydet(tespitler, f"{kok}_mufredat_tespitler.json")
-    for r in kayit:
-        print(f"{r['kod']} [{r['karar']}] s.{r['basili'][:3]} {r['ad'][:70]}")
+    for t in tespitler:
+        print("-", t.aciklama)
     print(f"{len(tespitler)} tespit")
 
 

@@ -20,7 +20,7 @@ from .pdf_cikarma import bloklari_cikar
 @dataclass
 class KitapSonuclari:
     bloklar: list[Blok]
-    tespitler: dict[str, list[Tespit] | None]  # {"yazim": …, "okunabilirlik": …, "tutarlilik": … ya da None}
+    tespitler: dict[str, list[Tespit] | None]  # {"yazim": …, "okunabilirlik": …, "tutarlilik": …, "mufredat": … ya da None}
     okunabilirlik_ozeti: "okunabilirlik.KitapOzeti | None" = None
     tutarlilik_kaydi: list[dict] | None = None
 
@@ -28,7 +28,7 @@ class KitapSonuclari:
 def sonuclari_topla(pdf_yolu, bloklar: list[Blok] | None = None, hedef_sinif: int | None = None,
                     yazim_tespitleri: list[Tespit] | None = None, okunabilirlik_analizi: tuple | None = None,
                     tutarlilik_tespitleri: list[Tespit] | None = None, tutarlilik_kaydi: list[dict] | None = None,
-                    hakem: bool = False, ilerleme=None) -> KitapSonuclari:
+                    hakem: bool = False, ilerleme=None, mufredat_tespitleri: list[Tespit] | None = None) -> KitapSonuclari:
     """okunabilirlik_analizi: okunabilirlik.analiz_et() çıktısı (özet, tespitler) önceden hesaplandıysa."""
     yaz = ilerleme or (lambda _m: None)
     pdf_yolu = Path(pdf_yolu)
@@ -57,6 +57,10 @@ def sonuclari_topla(pdf_yolu, bloklar: list[Blok] | None = None, hedef_sinif: in
         tutarlilik_tespitleri = tespitleri_yukle(yol) if yol.exists() else None
     if tutarlilik_kaydi is None and tutarlilik_tespitleri:
         tutarlilik_kaydi = tutarlilik_kaydi_yukle(pdf_yolu)
+    if mufredat_tespitleri is None:
+        yol = Path(f"{kok}_mufredat_tespitler.json")
+        mufredat_tespitleri = tespitleri_yukle(yol) if yol.exists() else None
     ozet, okunabilirlik_tespitleri = okunabilirlik_analizi
     return KitapSonuclari(bloklar, {"yazim": yazim_tespitleri, "okunabilirlik": okunabilirlik_tespitleri,
-                                    "tutarlilik": tutarlilik_tespitleri}, ozet, tutarlilik_kaydi)
+                                    "tutarlilik": tutarlilik_tespitleri, "mufredat": mufredat_tespitleri},
+                          ozet, tutarlilik_kaydi)

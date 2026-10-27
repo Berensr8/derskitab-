@@ -22,7 +22,7 @@ from . import yerel_model
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
 from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet, tespitleri_yukle
-from .kriterler import dusuk_oncelik, okunabilirlik, tutarlilik, yazim, yazim_hakem
+from .kriterler import dusuk_oncelik, mufredat, okunabilirlik, tutarlilik, yazim, yazim_hakem
 from .model import BLOK_TURLERI
 from .pdf_notlari import KRITER_ADLARI, notlu_pdf_olustur
 from .rapor import rapor_olustur
@@ -70,7 +70,7 @@ def sayfa_sor(sayfa_sayisi: int) -> list[int] | None:
 
 
 def adim(no: int, metin: str) -> float:
-    print(f"\n[{no}/6] {metin}...")
+    print(f"\n[{no}/7] {metin}...")
     return time.perf_counter()
 
 
@@ -134,6 +134,25 @@ def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> tuple[list |
     tespitleri_kaydet(tespitler, klasor / "tutarlilik_tespitler.json")
     json_kaydet(kayit, klasor / "tutarlilik_adaylar.json")
     return kayit, tespitler
+
+
+def mufredat_adimi(bloklar, hedef_sinif: int | None, klasor: Path) -> list | None:
+    """Kitabın programı veri/programlar'dan, sınıfı kapaktan bulunur; bulunamazsa adım atlanır (None)."""
+    bulunan = mufredat.program_bul(bloklar, hedef_sinif)
+    if bulunan is None:
+        print("  Kitaba uyan öğretim programı bulunamadı (veri/programlar; sınıf kapaktan okunur). Adım atlandı.")
+        return None
+    yol, sinif, ciktilar = bulunan
+    tespitler = mufredat.kavram_kontrolu(bloklar, ciktilar)
+    tespitleri_kaydet(tespitler, klasor / "mufredat_tespitler.json")
+    kavram = len({k for c in ciktilar for k in c.kavramlar})
+    print(f"  Program: {yol.stem.replace('_programi', '').title()} {sinif}. sınıf — {len(ciktilar)} öğrenme çıktısı, "
+          f"{kavram} anahtar kavram")
+    for t_ in tespitler:
+        print(f"  - {t_.aciklama}")
+    if not tespitler:
+        print("  Bütün anahtar kavramlar kitabın konu anlatımında geçiyor.")
+    return tespitler
 
 
 def test_modu_var_mi(pdf: Path) -> bool:
@@ -252,25 +271,32 @@ def main() -> None:
     print(f"  ({time.perf_counter() - t:.1f} sn)")
 
     # 5. İnceleme sayfası
-    t = adim(5, "İnceleme sayfası hazırlanıyor")
+    # 5. Müfredat: programın anahtar kavramları (kural tabanlı, K31 eki)
+    t = adim(5, "Müfredat: öğretim programının anahtar kavramları")
+    mufredat_tespitleri = mufredat_adimi(bloklar, analiz[0].hedef_sinif if analiz[0] else None, klasor)
+    print(f"  ({time.perf_counter() - t:.1f} sn)")
+
+    t = adim(6, "İnceleme sayfası hazırlanıyor")
     html = klasor / "inceleme.html"
     inceleme_html_olustur(pdf, html, sayfalar, bloklar=bloklar, analiz=analiz,
                           yazim_tespitleri=yazim_tespitleri, tutarlilik_kaydi=tutarlilik_kaydi)
     print(f"  {html} ({html.stat().st_size / 1e6:.1f} MB, {time.perf_counter() - t:.1f} sn)")
 
-    # 6. Notlu PDF + Excel raporu (sayfa seçildiyse yalnız o sayfaların tespitleri; kitabın sayfa düzeni değişmez)
-    t = adim(6, "Notlu PDF ve Excel raporu hazırlanıyor")
+    # 7. Notlu PDF + Excel raporu (sayfa seçildiyse yalnız o sayfaların tespitleri; kitabın sayfa düzeni değişmez)
+    t = adim(7, "Notlu PDF ve Excel raporu hazırlanıyor")
     sec = (lambda liste: [x for x in liste if x.sayfa_no in secili]) if secili else (lambda liste: liste)
     sonuclar = KitapSonuclari(bloklar, {
         "yazim": sec(yazim_tespitleri), "okunabilirlik": sec(analiz[1]),
-        "tutarlilik": sec(tutarlilik_tespitleri) if tutarlilik_tespitleri is not None else None},
+        "tutarlilik": sec(tutarlilik_tespitleri) if tutarlilik_tespitleri is not None else None,
+        "mufredat": mufredat_tespitleri},  # kitabın bütünü için: sayfa seçimine bağlı değil
         analiz[0], tutarlilik_kaydi)
     kapsam = f"Yalnız seçili {len(sayfalar)} sayfa incelendi." if sayfalar else None
     notlu = klasor / f"{pdf.stem}_notlu.pdf"
     sonuc = notlu_pdf_olustur(
         pdf, notlu, bloklar=bloklar, yazim_tespitleri=sonuclar.tespitler["yazim"],
         okunabilirlik_tespitleri=sonuclar.tespitler["okunabilirlik"],
-        tutarlilik_tespitleri=sonuclar.tespitler["tutarlilik"], tutarlilik_kaydi=tutarlilik_kaydi, kapsam=kapsam)
+        tutarlilik_tespitleri=sonuclar.tespitler["tutarlilik"], tutarlilik_kaydi=tutarlilik_kaydi, kapsam=kapsam,
+        mufredat_tespitleri=mufredat_tespitleri)
     print("  Notlu PDF: " + " · ".join(f"{ad}: {sonuc[k]}" for k, ad in KRITER_ADLARI.items()))
     if sonuc["dusuk_atlanan"]:
         print(f"  Düşük öncelikli {sonuc['dusuk_atlanan']} yazım tespiti PDF'e eklenmedi (raporda var).")

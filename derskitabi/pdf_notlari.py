@@ -32,10 +32,10 @@ from .sonuclar import sonuclari_topla
 YAZAR = "Ders Kitabı İnceleme Sistemi"
 GOSTERIM_ESIGI = 0.5  # inceleyicideki gibi: altındakiler "düşük öncelik" (yazım hakemi, K25)
 RENKLER = {"yazim": (0.85, 0.1, 0.1), "okunabilirlik": (1.0, 0.5, 0.0),
-           "tutarlilik": (0.55, 0.25, 0.8), "dusuk": (0.6, 0.6, 0.6)}
+           "tutarlilik": (0.55, 0.25, 0.8), "mufredat": (0.1, 0.5, 0.3), "dusuk": (0.6, 0.6, 0.6)}
 TUTARLILIK_VURGUSU = (0.85, 0.72, 1.0)
 KRITER_ADLARI = {"yazim": "Yazım ve dil", "okunabilirlik": "Dilsel karmaşıklık (okunabilirlik)",
-                 "tutarlilik": "Bilgi tutarsızlığı"}
+                 "tutarlilik": "Bilgi tutarsızlığı", "mufredat": "Müfredat (programın anahtar kavramları)"}
 KURAL_ADLARI = {"noktalama_bosluk": "noktalamadan sonra boşluk", "bag_te_ta": "bağlaç de/da",
                "bag_de_da_uyum": "bağlaç de/da uyumu", "soru_eki_uyum": "soru eki uyumu",
                "ya_da": "ya da", "bitisik_ayri": "bitişik/ayrı yazım", "kelime_tekrari": "bağlaç tekrarı"}
@@ -120,6 +120,17 @@ def _okunabilirlik_notu(s: _Sayfalar, t: Tespit) -> tuple[float, float]:
               "Bu bir dilsel karmaşıklık uyarısıdır: paragrafın sadeleştirilmesi düşünülebilir.\n\n" + UYARI)
     _not(annot, "okunabilirlik", "Dilsel karmaşıklık", icerik)
     return r.x0, r.y0
+
+
+def _mufredat_notu(s: _Sayfalar, t: Tespit) -> tuple[float, float]:
+    """Müfredat tespiti kitabın tamamı içindir: sayfanın sol üst kenarına not simgesi (aynı sayfadakiler alt alta)."""
+    y = 30 + 24 * sum(1 for e in s.etiketler[t.sayfa_no] if e.x0 < 20)
+    s.etiketler[t.sayfa_no].append(pymupdf.Rect(8, y, 18, y + 10))
+    annot = s.sayfa(t.sayfa_no).add_text_annot((8, y), "", icon="Note")
+    icerik = (f"{t.aciklama}\n\nAnahtar kavramlar MEB öğretim programından (TYMM) alınır; tanıtım, kapak ve "
+              "içindekiler sayfaları sayılmaz.\n\n" + UYARI)
+    _not(annot, "mufredat", "Müfredat", icerik)
+    return 8, y
 
 
 def cumle_kutulari(s: _Sayfalar, blok: Blok, cumle: str) -> list[pymupdf.Rect]:
@@ -215,6 +226,8 @@ def _yer_imi_basligi(t: Tespit, bloklar: dict) -> str:
         kelimeler = (t.metin_parcasi or "").split()
         isaretli = [k for k in kelimeler if any(c in k for c in ".,;:!?")] or kelimeler[1:-1] or kelimeler
         return f"{yer}: {KURAL_ADLARI.get(t.alt_tur, t.alt_tur)} — {_kisalt(' '.join(isaretli[:2]), 30)}"
+    if t.kriter == "mufredat":
+        return f"{t.alt_tur == 'tema_yok' and 'tema ' or ''}{_kisalt(t.metin_parcasi or '', 40)}"
     if t.kriter == "tutarlilik" and t.ilgili_konumlar:
         b = bloklar.get(tuple(t.ilgili_konumlar[0]))
         karsi = (b.basili_sayfa_no or b.sayfa_no) if b else t.ilgili_konumlar[0][0]
@@ -236,7 +249,7 @@ def notlari_ekle(belge: pymupdf.Document, bloklar: list[Blok], tespitler: dict[s
     blok_dizini = {(b.sayfa_no, b.blok_no): b for b in bloklar}
     s = _Sayfalar(belge)
     sayac, atlanan, yer_imleri = Counter(), 0, defaultdict(list)
-    for kriter in ("yazim", "okunabilirlik", "tutarlilik"):
+    for kriter in KRITER_ADLARI:
         for t in sorted(tespitler.get(kriter) or [], key=lambda t: (t.sayfa_no, t.bbox[1], t.bbox[0])):
             dusuk = t.guven_skoru < GOSTERIM_ESIGI
             if dusuk and not dusuk_guven:
@@ -246,6 +259,8 @@ def notlari_ekle(belge: pymupdf.Document, bloklar: list[Blok], tespitler: dict[s
                 x, y = _yazim_notu(s, t, dusuk)
             elif kriter == "okunabilirlik":
                 x, y = _okunabilirlik_notu(s, t)
+            elif kriter == "mufredat":
+                x, y = _mufredat_notu(s, t)
             else:
                 x, y = _tutarlilik_notu(s, t, blok_dizini, tutarlilik_kaydi)
             sayac[kriter] += 1
@@ -271,7 +286,8 @@ def _ozet_notu(belge, tespitler, sayac, atlanan, dusuk_guven, kapsam=None) -> No
     elif dusuk_guven:
         satirlar.append("• Düşük öncelikli yazım tespitleri gri renkte eklendi.")
     satirlar += ["", "Renkler: kırmızı dalgalı çizgi = yazım, turuncu çerçeve = dilsel karmaşıklık, "
-                 "mor vurgu = çelişen cümleler (kenardaki ↔ etiketi karşı cümleye götürür).",
+                 "mor vurgu = çelişen cümleler (kenardaki ↔ etiketi karşı cümleye götürür), "
+                 "yeşil not = müfredat (programın anahtar kavramı kitapta yok).",
                  "Tüm notlar okuyucunun Yorumlar panelinde, kritere göre liste Yer İmleri panelinde.",
                  "", UYARI]
     sayfa = belge[0]
@@ -302,12 +318,12 @@ def notlu_pdf_olustur(pdf_yolu, cikti_yolu, bloklar: list[Blok] | None = None, h
                       yazim_tespitleri: list[Tespit] | None = None, okunabilirlik_tespitleri: list[Tespit] | None = None,
                       tutarlilik_tespitleri: list[Tespit] | None = None, tutarlilik_kaydi: list[dict] | None = None,
                       hakem: bool = False, dusuk_guven: bool = False, kapsam: str | None = None,
-                      ilerleme=None) -> dict:
+                      ilerleme=None, mufredat_tespitleri: list[Tespit] | None = None) -> dict:
     """Verilmeyen sonuçlar sonuclar.sonuclari_topla() ile hesaplanır ya da dosyadan okunur."""
     yaz = ilerleme or (lambda _m: None)
     okunabilirlik_analizi = (None, okunabilirlik_tespitleri) if okunabilirlik_tespitleri is not None else None
     s = sonuclari_topla(pdf_yolu, bloklar, hedef_sinif, yazim_tespitleri, okunabilirlik_analizi,
-                        tutarlilik_tespitleri, tutarlilik_kaydi, hakem, ilerleme)
+                        tutarlilik_tespitleri, tutarlilik_kaydi, hakem, ilerleme, mufredat_tespitleri)
     bloklar, tutarlilik_kaydi = s.bloklar, s.tutarlilik_kaydi
     yazim_tespitleri, okunabilirlik_tespitleri, tutarlilik_tespitleri = (
         s.tespitler["yazim"], s.tespitler["okunabilirlik"], s.tespitler["tutarlilik"])
@@ -315,7 +331,7 @@ def notlu_pdf_olustur(pdf_yolu, cikti_yolu, bloklar: list[Blok] | None = None, h
     yaz("Notlar PDF'e işleniyor…")
     with pymupdf.open(pdf_yolu) as belge:
         sonuc = notlari_ekle(belge, bloklar, {"yazim": yazim_tespitleri, "okunabilirlik": okunabilirlik_tespitleri,
-                                              "tutarlilik": tutarlilik_tespitleri},
+                                              "tutarlilik": tutarlilik_tespitleri, "mufredat": s.tespitler["mufredat"]},
                              tutarlilik_kaydi, dusuk_guven, kapsam)
         belge.save(cikti_yolu, garbage=1)
     return sonuc

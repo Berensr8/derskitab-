@@ -22,13 +22,13 @@ Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 ## Kullanım
 
 **En kolay yol:** `DEMO.bat` dosyasına çift tıklayın (ya da bir PDF'i üzerine sürükleyin).
-PDF seçilir, altı adım çalışır (PDF, okunabilirlik, yazım, bilgi tutarsızlığı, inceleme,
+PDF seçilir, yedi adım çalışır (PDF, okunabilirlik, yazım, bilgi tutarsızlığı, müfredat, inceleme,
 notlu PDF + Excel raporu) ve inceleme sayfası tarayıcıda açılır. Çıktılar `veri/demo/<kitap adı>/` klasörüne yazılır.
 
 - **Notlu PDF** (`<kitap>_notlu.pdf`): kitabın kendisi, tespitler üzerinde standart PDF yorum
   notu olarak (Acrobat, Edge, Foxit… her okuyucuda açılır; kitabın metni ve sayfa düzeni değişmez).
   Kırmızı dalgalı çizgi = yazım, turuncu çerçeve = dilsel karmaşıklık, mor vurgu = çelişen cümleler
-  (kenardaki "↔ s. 45" etiketi karşı cümleye götürür). 1. sayfada özet notu; Yer İmleri panelinde
+  (kenardaki "↔ s. 45" etiketi karşı cümleye götürür), yeşil not = müfredat. 1. sayfada özet notu; Yer İmleri panelinde
   kritere göre tespit listesi. Editör notlara yanıt yazabilir, "çözüldü" işaretleyebilir.
 - **Excel raporu** (`<kitap>_rapor.xlsx`): Özet sayfası (kriter başına tespit sayıları, kitabın
   dilsel karmaşıklık puanları, sistemin ölçülmüş başarısı) ve Tespitler sayfası (her satır bir tespit;
@@ -38,6 +38,11 @@ notlu PDF + Excel raporu) ve inceleme sayfası tarayıcıda açılır. Çıktıl
 - **Bilgi tutarsızlığı** yerel modeller gerektirir. Kitabın önceden hesaplanmış tam kitap
   sonucu (`veri/<kitap>_tutarlilik_adaylar.json`) varsa o kullanılır; yoksa Ollama çalışıyorsa
   seçili sayfalarda çalıştırmak için sorulur; ikisi de yoksa adım atlanır.
+- **Müfredat (K31):** kitabın MEB öğretim programı (`veri/programlar/`, TYMM) ve sınıfı (kapaktan) bulunur;
+  programın anahtar kavramlarından kitabın konu anlatımında hiç geçmeyenler bildirilir (kapak, içindekiler,
+  tema sunusu sayılmaz). Bir temanın kavramlarının çoğu yoksa tek not: "tema kitapta işlenmemiş ya da başka
+  bir ciltte". Öğrenme çıktısı kapsamını dil modeline sorma ölçütü geçemedi; yalnız
+  `python -m derskitabi.kriterler.mufredat <pdf> --kapsam` ile deneysel.
 - **Yazım hakemi:** Ollama hazırsa demo, kelime tespitlerinin dil modeline danışılmasını önerir;
   model "muhtemelen doğru" dediği tespitler (terim, alıntı) silinmez, soluk ve düşük öncelikli gösterilir.
 - **Kitap ipuçları (K28, K29):** aşağıdaki kelime tespitleri silinmez, sebebiyle birlikte düşük önceliğe iner

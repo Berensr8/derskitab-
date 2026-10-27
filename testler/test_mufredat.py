@@ -41,6 +41,28 @@ class ProgramTesti(unittest.TestCase):
         self.assertFalse(mufredat.tanitim_sayfalari([Blok(9, 1, (0, 0, 1, 1), "1. Tema / ENERJİ", "9", "kisa")]))
 
 
+    def test_cok_kelimeli_kavram_kelimeleri_ayni_sayfada(self):
+        # Biyoloji 11: "kan basıncı dengesi" kitapta "kan basıncını düzenleyen…denge" olarak işleniyor
+        b = [Blok(30, 1, (0, 0, 1, 1), "Böbrekler kan basıncını düzenleyen hormonlarla vücudun su dengesini korur.", "30", "paragraf")]
+        self.assertEqual(mufredat.kavram_sayfalari(["kan basıncı dengesi", "sivil toplum kuruluşu (STK)"], b),
+                         {"kan basıncı dengesi": [30], "sivil toplum kuruluşu (STK)": []})
+        self.assertEqual(mufredat._bicimler("üretim-dağıtım-tüketim"), ["üretim dağıtım tüketim"])
+        self.assertEqual(mufredat._bicimler("sivil toplum kuruluşu (STK)"), ["sivil toplum kuruluşu", "STK"])
+
+    def test_program_altligi_kavrama_karismaz(self):
+        self.assertEqual(mufredat._sade("töre 77 SOSYAL BİLGİLER DERSİ ÖĞRETİM PROGRAMI"), "töre")
+
+
+class KavramKontroluTesti(unittest.TestCase):
+    def test_eksik_kavram_ve_eksik_tema(self):
+        ciktilar = [Cikti("BİY.10.1.1", 10, 1, "Fotosentez", "", ["fotosentez", "kloroplast", "ökaryot"]),
+                    Cikti("BİY.10.2.1", 10, 2, "Ekosistem", "", ["besin zinciri", "biyom", "süksesyon", "biyolojik birikim"])]
+        tespitler = mufredat.kavram_kontrolu(BLOKLAR, ciktilar)
+        self.assertEqual(sorted((t.alt_tur, t.metin_parcasi) for t in tespitler),
+                         [("kavram_yok", "ökaryot"), ("tema_yok", "BİY.10.2")])  # 3/4 kavram yok: tek tema notu
+        self.assertIn("başka bir ciltte", next(t for t in tespitler if t.alt_tur == "tema_yok").aciklama)
+
+
 class AnalizTesti(unittest.TestCase):
     def test_en_benzer_paragraflar_hakeme_gider_ve_karsilanmayan_tespit_olur(self):
         ciktilar = [Cikti("BİY.10.1.5", 10, 1, "Fotosentezin evrelerini açıklayabilme", "Fotosentez", ["ışık enerjisi"]),

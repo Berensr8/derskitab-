@@ -43,7 +43,8 @@ SUTUNLAR = [  # (başlık, genişlik)
 SUTUN = {ad: i + 1 for i, (ad, _) in enumerate(SUTUNLAR)}  # başlık -> sütun numarası (1'den)
 HARF = {ad: chr(ord("A") + i) for i, (ad, _) in enumerate(SUTUNLAR)}
 TUR_ADLARI = {"morfoloji": "kelime (yazım)", "kitap_ici_zor_paragraf": "zor paragraf",
-              "kitap_ici_celiski": "kitap içi çelişki", **{k: f"TDK kuralı: {v}" for k, v in KURAL_ADLARI.items()}}
+              "kitap_ici_celiski": "kitap içi çelişki", "kavram_yok": "anahtar kavram yok",
+              "tema_yok": "tema / öğrenme alanı yok", **{k: f"TDK kuralı: {v}" for k, v in KURAL_ADLARI.items()}}
 ONCELIK_RENGI = {"yüksek": "F8CBAD", "orta": "FFE699", "düşük": "D9D9D9"}
 GIRDI_RENGI = "FFF2CC"  # editörün dolduracağı hücreler
 BASLIK_RENGI = "1F4E79"
@@ -61,6 +62,11 @@ OLCULEN_BASARI = [
     ("Bilgi tutarsızlığı", "Bilerek eklenmiş 35 çelişkinin 27'si bulundu (%77); bulunanların hepsi gerçekten "
      "çelişkiydi (%100). En zayıf: 'en/ilk' ve sözel çelişkiler.",
      "testseti/tutarlilik_sonuclari.md (K20)"),
+    ("Müfredat (programın anahtar kavramları)", "Kural tabanlı: kavram kitabın konu anlatımında hiç geçmiyorsa "
+     "bildirilir (Biyoloji 9–11, Sosyal 6: 1 kavram + kitabın kapsamadığı öğrenme alanları). Yalnız tamamen eksik "
+     "kavramı yakalar: bir tema çıkarıldığında kavramlarının çoğu başka temalarda da geçtiği için eksik görünmez. "
+     "Öğrenme çıktısı kapsamını dil modeliyle değerlendirme ölçütü geçemedi (ürüne alınmadı).",
+     "KARARLAR.md K31 ve eki"),
 ]
 
 

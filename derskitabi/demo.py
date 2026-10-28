@@ -257,8 +257,8 @@ def main() -> None:
             json_kaydet(onbellek, onbellek_yolu)
     tespitleri_kaydet(yazim_tespitleri, klasor / "yazim_tespitler.json")
     yuksek = sum(t_.guven_skoru >= 0.75 for t_ in yazim_tespitleri)
-    dusuk_oncelik = sum(t_.guven_skoru < 0.5 for t_ in yazim_tespitleri)
-    print(f"  {len(yazim_tespitleri)} yazım tespiti (yüksek güven {yuksek}, düşük öncelik {dusuk_oncelik}) "
+    dusuk_sayisi = sum(t_.guven_skoru < 0.5 for t_ in yazim_tespitleri)
+    print(f"  {len(yazim_tespitleri)} yazım tespiti (yüksek güven {yuksek}, düşük öncelik {dusuk_sayisi}) "
           f"({time.perf_counter() - t:.1f} sn)")
     for tur, n in Counter(t_.alt_tur for t_ in yazim_tespitleri).most_common():
         print(f"    {tur}: {n}")

@@ -21,3 +21,6 @@ KARARLAR.md
 GUNLUK.md
 # Claude Code yerel ayarları (önizleme sunucusu vb.)
 .claude/
+
+# Eğitilen ve indirilen modeller (büyük dosyalar)
+modeller/

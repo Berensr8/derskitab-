@@ -171,7 +171,11 @@ def _farklari_indir(en_fazla: int, saat: float, tohum: int, ilerleme) -> int:
     adaylar = adaylar[:en_fazla]
     yapilan = set()
     if FARKLAR.exists():
-        yapilan = {json.loads(s)["rev"] for s in open(FARKLAR, encoding="utf-8")}
+        for s in open(FARKLAR, encoding="utf-8"):
+            try:
+                yapilan.add(json.loads(s)["rev"])
+            except json.JSONDecodeError:
+                pass
     bitis = time.time() + saat * 3600
     yeni = 0
     with open(FARKLAR, "a", encoding="utf-8") as c:
@@ -314,7 +318,10 @@ def ciftleri_cikar(cikti: Path = CIFTLER, ilerleme=print) -> dict:
     say = {"degisiklik": 0, "kabul": 0, "hatali_cumle": 0, "hatasiz_cumle": 0}
     with open(cikti, "w", encoding="utf-8") as c:
         for s in open(FARKLAR, encoding="utf-8"):
-            d = json.loads(s)
+            try:
+                d = json.loads(s)
+            except json.JSONDecodeError:  # indirme bir satırı yazarken kesildiyse
+                continue
             say["degisiklik"] += 1
             kabul = False
             for eski, yeni in d["satirlar"]:

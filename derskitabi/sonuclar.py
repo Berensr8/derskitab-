@@ -54,7 +54,9 @@ def sonuclari_topla(pdf_yolu, bloklar: list[Blok] | None = None, hedef_sinif: in
                 onbellek_yolu.write_text(json.dumps(onbellek, ensure_ascii=False), encoding="utf-8")
     if tutarlilik_tespitleri is None:
         yol = Path(f"{kok}_tutarlilik_tespitler.json")
-        tutarlilik_tespitleri = tespitleri_yukle(yol) if yol.exists() else None
+        if yol.exists():  # kural eklenmeden önce hesaplanmış olabilir: doğru/yanlış etkinlikleri süzülür
+            from .kriterler.tutarlilik import dogru_yanlis_suz
+            tutarlilik_tespitleri = dogru_yanlis_suz(tespitleri_yukle(yol), bloklar)
     if tutarlilik_kaydi is None and tutarlilik_tespitleri:
         tutarlilik_kaydi = tutarlilik_kaydi_yukle(pdf_yolu)
     if mufredat_tespitleri is None:

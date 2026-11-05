@@ -138,7 +138,8 @@ def calistir(klasor: Path) -> dict:
         hazir = pdf.with_name(pdf.stem + "_tutarlilik_adaylar.json")
         hazir_t = pdf.with_name(pdf.stem + "_tutarlilik_tespitler.json")
         if hazir.exists() and hazir_t.exists():
-            tut_kayit, tut_t = json.loads(hazir.read_text(encoding="utf-8")), tespitleri_yukle(hazir_t)
+            tut_kayit = json.loads(hazir.read_text(encoding="utf-8"))
+            tut_t = tutarlilik.dogru_yanlis_suz(tespitleri_yukle(hazir_t), bloklar)
             il.mesaj("tutarlilik", "Bu kitap için önceden hesaplanmış sonuç kullanıldı.")
         elif sebep := ollama_durumu():
             neden["tutarlilik"] = sebep
@@ -162,7 +163,8 @@ def calistir(klasor: Path) -> dict:
 
     il.adim("inceleme")
     inceleme_html_olustur(pdf, klasor / "inceleme.html", sayfalar, bloklar=bloklar, analiz=(ozet, okun),
-                          yazim_tespitleri=yazim_t or [], tutarlilik_kaydi=tut_kayit)
+                          yazim_tespitleri=yazim_t or [], tutarlilik_kaydi=tut_kayit,
+                          mufredat_tespitleri=muf_t, mufredat_oku=False)
     il.adim("inceleme", "bitti")
 
     il.adim("dosyalar")

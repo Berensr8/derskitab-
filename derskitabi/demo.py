@@ -111,7 +111,7 @@ def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> tuple[list |
         tespit = sum(1 for k in kayit if k.get("guven"))
         print(f"  Önceden hesaplanmış tam kitap sonucu kullanılıyor ({hazir.name}): "
               f"{len(kayit)} cümle çifti karşılaştırılmış, {tespit} bilgi tutarsızlığı tespiti.")
-        return kayit, tespitleri_yukle(hazir_tespitler)
+        return kayit, tutarlilik.dogru_yanlis_suz(tespitleri_yukle(hazir_tespitler), bloklar)
     sebep = ollama_hazir_mi()
     if sebep:
         print(f"  Atlandı: {sebep}. İnceleme sayfasında Tutarlılık sekmesi görünmeyecek.")
@@ -279,7 +279,8 @@ def main() -> None:
     t = adim(6, "İnceleme sayfası hazırlanıyor")
     html = klasor / "inceleme.html"
     inceleme_html_olustur(pdf, html, sayfalar, bloklar=bloklar, analiz=analiz,
-                          yazim_tespitleri=yazim_tespitleri, tutarlilik_kaydi=tutarlilik_kaydi)
+                          yazim_tespitleri=yazim_tespitleri, tutarlilik_kaydi=tutarlilik_kaydi,
+                          mufredat_tespitleri=mufredat_tespitleri, mufredat_oku=False)
     print(f"  {html} ({html.stat().st_size / 1e6:.1f} MB, {time.perf_counter() - t:.1f} sn)")
 
     # 7. Notlu PDF + Excel raporu (sayfa seçildiyse yalnız o sayfaların tespitleri; kitabın sayfa düzeni değişmez)

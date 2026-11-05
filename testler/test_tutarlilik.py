@@ -61,6 +61,37 @@ KITAP = [
 ]
 
 
+class DogruYanlisTesti(unittest.TestCase):
+    """Doğru/yanlış etkinliğinin maddeleri bilerek yanlış yazılır: karşılaştırılmaz (TDE 12 s.257)."""
+    SAYFA = [
+        blok(257, 36, "Söylevlerde konuşmanın amacı, dinleyicilerin duygularını harekete geçirmektir ve bu çok önemlidir."),
+        blok(257, 37, "3. Aşağıdaki cümlelerde verilen bilgiler doğru ise “D”, yanlış ise “Y”yi işaretleyiniz."),
+        blok(257, 38, "Bilgiler D Y"),
+        blok(257, 42, "Söylevde temel amaç, kitleleri etkilemek değil onlara bilgi vermektir ve böyle kabul edilir."),
+        blok(257, 50, "4. Aşağıdaki söylev parçasında geçen kelimelerin anlamlarını açıklayarak yazınız."),
+        blok(257, 51, "Söylev geleneği Türk edebiyatında çok eski dönemlere uzanmakta ve günümüzde de sürmektedir."),
+        blok(258, 1, "Söylevler genellikle topluluk karşısında yapılan etkili konuşmalar olarak bilinmektedir."),
+    ]
+
+    def test_yonergeden_sonraki_maddeler_ve_yeni_soruda_biter(self):
+        self.assertEqual(tutarlilik.dogru_yanlis_bloklari(self.SAYFA), {(257, 42)})
+        cumleler = {c.metin.split()[1] for c in bilgi_cumleleri(self.SAYFA)}
+        self.assertNotIn("temel", cumleler)
+        self.assertTrue({"konuşmanın", "geleneği", "genellikle"} <= cumleler)
+
+    def test_yon_bildiren_dogru_yonerge_degil(self):
+        b = [blok(33, 1, "Tropizma hareketleri, uyaranın yönüne doğru ise pozitif tropizma; tersi yönde ise negatif tropizmadır."),
+             blok(33, 2, "Fototropizma bitkilerde ışığın etkisi ile görülen yönelim hareketi olarak bilinmektedir.")]
+        self.assertEqual(tutarlilik.dogru_yanlis_bloklari(b), set())
+
+    def test_hazir_sonuclar_suzulur(self):
+        from derskitabi.model import Tespit
+        t = [Tespit(257, 42, (0, 0, 1, 1), "tutarlilik", "x", 0.5, ilgili_konumlar=[(250, 3)]),
+             Tespit(240, 1, (0, 0, 1, 1), "tutarlilik", "y", 0.5, ilgili_konumlar=[(257, 42)]),
+             Tespit(240, 1, (0, 0, 1, 1), "tutarlilik", "z", 0.5, ilgili_konumlar=[(250, 3)])]
+        self.assertEqual([x.aciklama for x in tutarlilik.dogru_yanlis_suz(t, self.SAYFA)], ["z"])
+
+
 class CumleSecimiTesti(unittest.TestCase):
     def test_bilgi_cumlesi(self):
         self.assertTrue(bilgi_cumlesi_mi("Malazgirt Savaşı 1071 yılında Selçuklular ile Bizans arasında yapılmıştır."))
@@ -82,9 +113,15 @@ class CumleSecimiTesti(unittest.TestCase):
         self.assertIn("resmî dili", c.baglam)
 
     def test_etkinlik_yonergesi_uzakta_olsa_da_baglamda(self):
-        bloklar = [blok(103, 1, "Kutulardaki bilgi doğru ise ✔ yanlış ise X ile işaretleyiniz.")] + [
+        bloklar = [blok(103, 1, "Aşağıdaki kavramları açıklamalarıyla eşleştiriniz.")] + [
             blok(103, i, f"Bu etkinlikteki {i}. ifade Türk dünyası hakkında bir bilgi vermektedir.") for i in range(2, 7)]
         self.assertIn("Etkinlik yönergesi", bilgi_cumleleri(bloklar)[-1].baglam)
+
+    def test_dogru_yanlis_maddeleri_hic_alinmaz(self):
+        # Sosyal 6, s.103: önce yalnız bağlama eklenmişti, model yine çelişki dedi (K34 sonrası)
+        bloklar = [blok(103, 1, "Kutulardaki bilgi doğru ise ✔ yanlış ise X ile işaretleyiniz.")] + [
+            blok(103, i, f"Bu etkinlikteki {i}. ifade Türk dünyası hakkında bir bilgi vermektedir.") for i in range(2, 7)]
+        self.assertEqual(bilgi_cumleleri(bloklar), [])
 
     def test_test_sikki_bilgi_cumlesi_degil(self):
         self.assertFalse(bilgi_cumlesi_mi("C) Dağlar genellikle denize paralel uzanmaktadır."))

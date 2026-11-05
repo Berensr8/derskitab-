@@ -85,6 +85,45 @@ def konusma_mi(metin: str) -> bool:
     return bool(m) and m.group(1) not in _KONUSMA_DEGIL
 # Etkinlik yönergesi: altındaki cümleler bilerek yanlış olabilir ("doğru ise ✔ yanlış ise X")
 _ETKINLIK = re.compile(r"doğru ise|yanlış ise|işaretleyiniz|eşleştiriniz|boşluklara|doğru mu yanlış mı", re.I)
+# Doğru/yanlış etkinliği: maddeleri bilerek yanlış yazılır, hiç karşılaştırılmaz (TDE 12 s.257 ve
+# Sosyal 6 s.103'teki sahte çelişkiler). Yönerge ya da "Bilgiler D Y" gibi tablo başlığı; aynı tür
+# "Evet/Hayır" yargı tabloları da ("yargılar doğru ise “Evet”… işaretleyiniz") yönerge sayılır.
+# Yönerge hem "doğru ise/yanlış ise" hem bir işaretleme sözü içermeli: "uyaranın yönüne doğru ise pozitif"
+# (Biyoloji 11) yönerge değildir.
+_DY_IFADE = re.compile(r"doğru ise|yanlış ise|doğru mu,? yanlış mı|doğru\s*/\s*yanlış", re.I)
+_DY_ISARET = re.compile(r"işaretle|yazınız|belirtiniz|koyunuz|[“\"']D[”\"']|✔|✓", re.I)
+_DY_BASLIK = re.compile(r"^\s*(?:\w+\s+)?D\s*/?\s*Y(?:\s+\w+)?\s*$")  # "D Y", "Bilgiler D Y", "Özellikler D Y Açıklama"
+_YENI_SORU = re.compile(r"^\s*\d{1,2}\s*[.)](?:\s|$)")
+
+
+def _dogru_yanlis_yonergesi(metin: str) -> bool:
+    return bool(_DY_IFADE.search(metin) and _DY_ISARET.search(metin)) or bool(_DY_BASLIK.match(metin))
+
+
+def dogru_yanlis_suz(tespitler: list[Tespit], bloklar: list[Blok]) -> list[Tespit]:
+    """Önceden hesaplanmış sonuçlardan doğru/yanlış etkinliği maddesine dayanan tespitleri çıkarır
+    (kural eklenmeden önce hesaplanmış tam kitap sonuçları için)."""
+    dy = dogru_yanlis_bloklari(bloklar)
+    return [t for t in tespitler
+            if (t.sayfa_no, t.blok_no) not in dy and not any(tuple(k) in dy for k in t.ilgili_konumlar)]
+
+
+def dogru_yanlis_bloklari(bloklar: list[Blok]) -> set[tuple[int, int]]:
+    """Doğru/yanlış etkinliğinin maddeleri: yönergeden sonra aynı sayfada, bir sonraki numaralı
+    soruya ("4. …") kadar gelen bloklar."""
+    sonuc, sayfa = set(), None
+    for b in bloklar:
+        if b.sayfa_no != sayfa:
+            sayfa = None
+        if _dogru_yanlis_yonergesi(b.metin):
+            sayfa = b.sayfa_no
+            continue
+        if sayfa is not None:
+            if _YENI_SORU.match(b.metin):
+                sayfa = None
+            else:
+                sonuc.add((b.sayfa_no, b.blok_no))
+    return sonuc
 
 
 @dataclass
@@ -145,11 +184,12 @@ def bilgi_cumleleri(bloklar: list[Blok], haric: set | None = None) -> list[Cumle
     haric: alınmayacak bloklar {(sayfa_no, blok_no)} (alıntılar, alinti_haric()).
     Satır satır bloklara bölünmüş paragraflar birleştirilir (satirlar.py); cümle, başladığı bloğa bağlanır."""
     indeks = {id(b): k for k, b in enumerate(bloklar)}
+    haric = (haric or set()) | dogru_yanlis_bloklari(bloklar)
     gorulen, sonuc = set(), []
     for grup in satir_gruplari(bloklar):
         metin, baslar = grup_metni(grup)
         if ((len(grup) == 1 and grup[0].tur != "paragraf") or len(metin.split()) < PARAGRAF_ESIGI
-                or konusma_mi(metin) or (haric and any((x.sayfa_no, x.blok_no) in haric for x in grup))):
+                or konusma_mi(metin) or any((x.sayfa_no, x.blok_no) in haric for x in grup)):
             continue
         for c in cumlelere_bol(metin):
             if bilgi_cumlesi_mi(c) and c not in gorulen:

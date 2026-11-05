@@ -38,7 +38,9 @@ KRITER_ADLARI = {"yazim": "Yazım ve dil", "okunabilirlik": "Dilsel karmaşıkl�
                  "tutarlilik": "Bilgi tutarsızlığı", "mufredat": "Müfredat (programın anahtar kavramları)"}
 KURAL_ADLARI = {"noktalama_bosluk": "noktalamadan sonra boşluk", "bag_te_ta": "bağlaç de/da",
                "bag_de_da_uyum": "bağlaç de/da uyumu", "soru_eki_uyum": "soru eki uyumu",
-               "ya_da": "ya da", "bitisik_ayri": "bitişik/ayrı yazım", "kelime_tekrari": "bağlaç tekrarı"}
+               "ya_da": "ya da", "bitisik_ayri": "bitişik/ayrı yazım", "kelime_tekrari": "bağlaç tekrarı",
+               "ozel_ad_kesme": "özel ada gelen ekte kesme", "kisaltma_kesme": "kısaltmaya gelen ekte kesme",
+               "sayi_kesme": "sayıya gelen ekte kesme", "gereksiz_kesme": "gereksiz kesme işareti"}
 UYARI = "Bu not sistemin önerisidir, kesin hata değildir; editör kontrolü gerekir."
 
 

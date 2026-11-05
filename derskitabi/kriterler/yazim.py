@@ -8,7 +8,7 @@ Girdi : Blok listesi ("paragraf" ve "kisa" türleri; K8)
      Starlang (ana denetçi) ve Zemberek (ikinci görüş). İkisi de çözümleyemezse
      güven 1,0; yalnız biri çözümleyemezse 0,5.
   2. TDK kuralları (K14): R1 noktalamadan sonra boşluk, R3–R5 ayrı yazılan de/da ve
-     mi, R6 yada, R7 bitişik/ayrı yazım listesi, R8 bağlaç tekrarı.
+     mi, R6 yada, R7 bitişik/ayrı yazım listesi, R8 bağlaç tekrarı; kesme işareti (K34, kesme.py).
 
 Kullanım:
     python -m derskitabi.kriterler.yazim veri/kitap_bloklar.json
@@ -398,20 +398,28 @@ def satira_bagla(tespitler: list[Tespit], grup: list[Blok], metin: str) -> list[
 
 def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = None,
               atlananlar: Counter | None = None,
-              kitap_bloklari: list[Blok] | None = None) -> list[Tespit]:
+              kitap_bloklari: list[Blok] | None = None,
+              kesme_cozumleyici: "kesme.Cozumleyici | None" = None) -> list[Tespit]:
     """Paragraf ve kısa metin bloklarında yazım tespitleri (bozuk ve simge bloklar atlanır, K8).
 
     kitap_bloklari: yalnız bazı sayfalar denetlenirken kitabın tamamı; "kitaba özel terim"
-    sayımı (K15) her zaman tüm kitaba göre yapılır. Verilmezse bloklar kullanılır.
+    sayımı (K15) ve kesmeyle yazılmış adlar (K34) her zaman tüm kitaba göre yapılır.
+    kesme_cozumleyici: kesme işareti denetimi (K34) için Zemberek çözümlemesi. Gerçek araçlarla
+    (denetciler verilmediğinde) kendiliğinden kullanılır; testlerde sahte denetçilerle kapalıdır.
     """
+    from . import kesme
     if denetciler is None:
         denetciler = varsayilan_denetciler()
+        kesme_cozumleyici = kesme_cozumleyici or kesme.zemberek_analizleri
+    kesmeli = kesme.kesmeli_adlar(kitap_bloklari or bloklar) if kesme_cozumleyici else None
     kelime_tespitleri, kural_tespitleri = [], []
     for grup in satir_gruplari(bloklar):
         b = grup[0] if len(grup) == 1 else birlesik_paragraf(grup, denetciler)
         if b.tur in ("paragraf", "kisa"):
             kelime_tespitleri += satira_bagla(kelime_denetimi(b, denetciler, atlananlar), grup, b.metin)
             kural_tespitleri += satira_bagla(kural_denetimi(b), grup, b.metin)
+            if kesme_cozumleyici:
+                kural_tespitleri += satira_bagla(kesme.kesme_denetimi(b, kesmeli, kesme_cozumleyici), grup, b.metin)
 
     kitap_kelimeleri = kitap_kelime_sayilari(kitap_bloklari or bloklar)
     terimler = kitaba_ozel_terimler({tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri},

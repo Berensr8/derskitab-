@@ -488,6 +488,10 @@ const KURALLAR = [
   ["R6", "ya_da", "'ya da' ayrı yazılır (yada ✗)", false],
   ["R7", "bitisik_ayri", "Bitişik/ayrı yazım listesi (hiç bir, bir çok ✗)", false],
   ["R8", "kelime_tekrari", "Bağlaç art arda tekrarlanmaz (ve ve ✗)", false],
+  ["R9", "ozel_ad_kesme", "Özel ada gelen ek kesmeyle ayrılır (Tibete ✗, kitap başka yerde Tibet'e yazmış)", false],
+  ["R10", "kisaltma_kesme", "Kısaltmaya gelen ek kesmeyle ayrılır (DNAnın ✗)", false],
+  ["R11", "sayi_kesme", "Sayıya gelen ek kesmeyle ayrılır (1923te ✗)", false],
+  ["R12", "gereksiz_kesme", "Yapım eki ve çokluk eki kesmeyle ayrılmaz (Türkçe'nin ✗)", false],
 ];
 const karar = ok => ok ? el("span", { class: "tamam" }, "✓ tanıdı") : el("span", { class: "olumsuz" }, "✗ çözümleyemedi");
 

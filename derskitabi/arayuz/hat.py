@@ -13,10 +13,10 @@ import time
 import traceback
 from pathlib import Path
 
-ADIMLAR = [("pdf", "PDF'ten metni okuma"), ("okunabilirlik", "Dilsel karmaşıklık"),
-           ("yazim", "Yazım denetimi"), ("mufredat", "Öğretim programıyla karşılaştırma"),
-           ("tutarlilik", "Kitap içi çelişkiler"), ("inceleme", "Sayfa sayfa inceleme dosyası"),
-           ("dosyalar", "Notlu PDF ve Excel raporu")]
+ADIMLAR = [("pdf", "Metni okuma"), ("okunabilirlik", "Dil zorluğunu ölçme"),
+           ("yazim", "Yazımı denetleme"), ("mufredat", "Programla karşılaştırma"),
+           ("tutarlilik", "Çelişkileri arama"), ("inceleme", "İnceleme sayfasını hazırlama"),
+           ("dosyalar", "Notlu PDF'i ve Excel'i hazırlama")]
 
 
 class Ilerleme:
@@ -42,10 +42,11 @@ def ollama_durumu() -> str | None:
     from ..kriterler import tutarlilik
     modeller = yerel_model.yuklu_modeller()
     if modeller is None:
-        return "Yerel model programı (Ollama) çalışmıyor. OLLAMA_BASLAT.bat ile başlatılabilir."
+        return ("Bu denetim için bilgisayardaki yapay zekâ programı (Ollama) açık olmalı: proje klasöründeki "
+                "OLLAMA_BASLAT.bat'ı çalıştırıp sayfayı yenileyin.")
     eksik = [m for m in (tutarlilik.GOMME_MODELI, tutarlilik.HAKEM_MODELI, tutarlilik.IKINCI_GORUS_MODELI)
              if m not in modeller and m + ":latest" not in modeller]
-    return f"Gereken yerel model yüklü değil: {', '.join(eksik)}." if eksik else None
+    return f"Bilgisayardaki yapay zekâ programında gereken model yüklü değil: {', '.join(eksik)}." if eksik else None
 
 
 def calistir(klasor: Path) -> dict:
@@ -75,7 +76,7 @@ def calistir(klasor: Path) -> dict:
     sayfalar = ayar.get("sayfalar")  # None = bütün kitap
     secili = set(sayfalar) if sayfalar else None
     sec = (lambda liste: [x for x in liste if x.sayfa_no in secili]) if secili else (lambda liste: liste)
-    il.adim("pdf", "bitti", f"{sayfa_sayisi} sayfa, {len(bloklar)} metin bloğu")
+    il.adim("pdf", "bitti", f"{sayfa_sayisi} sayfa okundu")
 
     # Okunabilirlik kitabın tamamına göre hesaplanır ("en zor %10" kitap geneline göre); hedef sınıf da buradan
     il.adim("okunabilirlik")
@@ -91,6 +92,7 @@ def calistir(klasor: Path) -> dict:
 
     neden = {}
     yazim_t = None
+    hakem_calisti = False
     if "yazim" in secilen:
         il.adim("yazim")
         yazim_t = yazim.analiz_et([b for b in bloklar if secili is None or b.sayfa_no in secili],
@@ -107,6 +109,7 @@ def calistir(klasor: Path) -> dict:
                 try:
                     yazim_t = yazim_hakem.hakemle(yazim_t, bloklar, onbellek=onbellek,
                                                   ilerleme=lambda m: il.mesaj("yazim", m))
+                    hakem_calisti = True
                 finally:
                     json_kaydet(onbellek, onbellek_yolu)
         tespitleri_kaydet(yazim_t, klasor / "yazim_tespitler.json")
@@ -133,6 +136,7 @@ def calistir(klasor: Path) -> dict:
         il.adim("mufredat", "atlandı", "Seçilmedi.")
 
     tut_kayit = tut_t = None
+    tut_hazir = False
     if "tutarlilik" in secilen:
         il.adim("tutarlilik")
         hazir = pdf.with_name(pdf.stem + "_tutarlilik_adaylar.json")
@@ -140,6 +144,7 @@ def calistir(klasor: Path) -> dict:
         if hazir.exists() and hazir_t.exists():
             tut_kayit = json.loads(hazir.read_text(encoding="utf-8"))
             tut_t = tutarlilik.dogru_yanlis_suz(tespitleri_yukle(hazir_t), bloklar)
+            tut_hazir = True
             il.mesaj("tutarlilik", "Bu kitap için önceden hesaplanmış sonuç kullanıldı.")
         elif sebep := ollama_durumu():
             neden["tutarlilik"] = sebep
@@ -164,7 +169,8 @@ def calistir(klasor: Path) -> dict:
     il.adim("inceleme")
     inceleme_html_olustur(pdf, klasor / "inceleme.html", sayfalar, bloklar=bloklar, analiz=(ozet, okun),
                           yazim_tespitleri=yazim_t or [], tutarlilik_kaydi=tut_kayit,
-                          mufredat_tespitleri=muf_t, mufredat_oku=False)
+                          mufredat_tespitleri=muf_t, mufredat_oku=False,
+                          kitap_adi=ayar.get("kitap_adi"))
     il.adim("inceleme", "bitti")
 
     il.adim("dosyalar")
@@ -184,11 +190,12 @@ def calistir(klasor: Path) -> dict:
     blok_sozluk = {(b.sayfa_no, b.blok_no): b for b in bloklar}
     kriterler, no = {}, 1
     for kod, tespitler, ek in (
-            ("yazim", sec(yazim_t) if yazim_t is not None else None, {}),
+            ("yazim", sec(yazim_t) if yazim_t is not None else None, {"hakem": hakem_calisti}),
             ("okunabilirlik", okun_sec if "okunabilirlik" in secilen else None,
              {"okunabilirlik_ozeti": ozet.sozluge() if ozet else None}),
             ("mufredat", muf_t, {}),
-            ("tutarlilik", sec(tut_t) if tut_t is not None else None, {})):
+            ("tutarlilik", sec(tut_t) if tut_t is not None else None,
+             {"karsilastirma": len(tut_kayit) if tut_kayit else None, "hazir": tut_hazir})):
         if tespitler is None and kod not in secilen:
             continue  # seçilmeyen kriter sonuç ekranında hiç görünmez
         kriterler[kod] = kriter_ozeti(kod, tespitler, blok_sozluk, no, neden=neden.get(kod), **ek)

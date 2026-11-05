@@ -40,7 +40,7 @@
        border: 0; background: none; padding: 5px 8px; border-radius: 6px; cursor: pointer; font: inherit; }
   #sayfaListesi button:hover { background: var(--zemin); }
   #sayfaListesi button.secili { background: #ebe6ff; font-weight: 600; }
-  .rozet { background: var(--tespit); color: #fff; border-radius: 999px; font-size: 11px; padding: 0 7px; }
+  .rozet { background: #b35f00; color: #fff; border-radius: 999px; font-size: 11px; padding: 0 7px; }
   .rozet.yazim { background: var(--bozuk); }
   .rozetler { display: flex; gap: 3px; }
   .yazimCizgi { fill: var(--bozuk); pointer-events: none; }
@@ -165,7 +165,7 @@
       <strong id="sayfaBilgisi"></strong>
       <button id="sonraki">Sonraki ▶</button>
       <span style="flex:1"></span>
-      <button id="kucult">−</button><span id="olcek">100%</span><button id="buyut">+</button>
+      <button id="kucult" aria-label="Küçült">−</button><span id="olcek">100%</span><button id="buyut" aria-label="Büyüt">+</button>
     </div>
     <div class="ipucu kucuk">Bir kutuya tıklayın: ayrıntılar sağda açılır. Klavye: ← → sayfa, Esc seçimi kaldır.</div>
     <div id="sayfaKutusu"></div>
@@ -698,11 +698,21 @@ document.addEventListener("keydown", e => {
   else if (e.key === "Escape") blokSec(null);
 });
 
-// Arayüzün sonuç ekranındaki bağlantılar: inceleme.html#s=45 → PDF'in 45. sayfası açılır
+// Arayüzün sonuç ekranındaki bağlantılar: inceleme.html#s=45&b=3&k=yazim&p=kelime → PDF'in 45. sayfası
+// açılır; b verilirse o blok seçili gelir (k: sağ paneldeki sekme, p: hatalı parça) ve renkli blok
+// kutuları kapanır: editör yalnız işaretli yeri görsün.
 function adrestekiSayfa() {
-  const m = location.hash.match(/s=(\d+)/);
-  const i = m ? sayfaSirasi(Number(m[1])) : -1;
-  if (i >= 0) sayfayaGit(i);
+  const p = new URLSearchParams(location.hash.slice(1));
+  const i = p.get("s") ? sayfaSirasi(Number(p.get("s"))) : -1;
+  if (i < 0) return;
+  sayfayaGit(i);
+  if (!p.has("b")) return;
+  for (const tur of Object.keys(durum.gorunur)) durum.gorunur[tur] = false;
+  document.querySelectorAll("#lejant input[type=checkbox]").forEach(k => { k.checked = false; });
+  const bi = sayfa().bloklar.findIndex(x => x.rapor.blok_no === Number(p.get("b")));
+  if (bi < 0) { sayfaCiz(); return; }
+  if (["yazim", "tutarlilik", "okunabilirlik"].includes(p.get("k"))) durum.sekme = p.get("k");
+  blokSec(bi, p.get("p") || null);
 }
 window.addEventListener("hashchange", adrestekiSayfa);
 

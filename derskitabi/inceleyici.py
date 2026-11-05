@@ -236,7 +236,8 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
                           analiz: tuple | None = None,
                           yazim_tespitleri: list[Tespit] | None = None,
                           tutarlilik_kaydi: list[dict] | None = None, test_modu: str | None = None,
-                          mufredat_tespitleri: list[Tespit] | None = None, mufredat_oku: bool = True) -> None:
+                          mufredat_tespitleri: list[Tespit] | None = None, mufredat_oku: bool = True,
+                          kitap_adi: str | None = None) -> None:
     """bloklar, analiz (ozet, tespitler) ve yazım tespitleri önceden hesaplandıysa
     verilebilir (demo.py); verilmezse burada hesaplanır. Tutarlılık burada hesaplanmaz
     (yerel modeller gerekir, uzun sürer): verilmezse PDF'in yanındaki aday kaydı okunur.
@@ -283,7 +284,7 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
         yol = Path(pdf_yolu).with_name(Path(pdf_yolu).stem + "_mufredat_tespitler.json")
         mufredat_tespitleri = tespitleri_yukle(yol) if yol.exists() else None
     veri = {
-        "kitap": Path(pdf_yolu).name,
+        "kitap": kitap_adi or Path(pdf_yolu).name,
         "mufredat": None if mufredat_tespitleri is None else [
             {"tur": t.alt_tur, "parca": t.metin_parcasi, "aciklama": t.aciklama} for t in mufredat_tespitleri],
         "ozet": ozet_verisi,

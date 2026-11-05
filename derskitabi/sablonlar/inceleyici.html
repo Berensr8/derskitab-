@@ -19,6 +19,13 @@
   .cip { background: var(--zemin); border: 1px solid var(--cizgi); border-radius: 999px;
          padding: 2px 10px; font-size: 12.5px; white-space: nowrap; }
   .cip b { font-weight: 600; }
+  button.cip { font: inherit; font-size: 12.5px; color: inherit; cursor: pointer; }
+  button.cip:hover { border-color: #2e8b57; }
+  #mufredatPanel { background: var(--kart); border-bottom: 1px solid var(--cizgi); padding: 10px 16px;
+                   font-size: 13.5px; max-height: 32vh; overflow: auto; }
+  #mufredatPanel ul { margin: 6px 0 0; padding-left: 18px; }
+  #mufredatPanel li { margin-bottom: 4px; }
+  #mufredatPanel .kavram { font-weight: 600; color: #1e7a46; }
   main { flex: 1; display: grid; grid-template-columns: 200px minmax(0, 1fr) 430px; min-height: 0; }
   aside, section { overflow: auto; min-height: 0; }
   #sol { border-right: 1px solid var(--cizgi); background: var(--kart); padding: 12px; }
@@ -213,6 +220,7 @@ function ustBilgi() {
     el("b", {}, "görünmez"), "; sağ paneldeki Tutarlılık sekmesinde metin olarak ve ", el("span", { class: "eklendi" }, "test için eklendi"),
     " etiketiyle gösterilir. Gerçek kitapta çelişki bulunmadı."), document.body.firstChild);
   const o = VERI.ozet, kutu = document.getElementById("ozet");
+  mufredatCipi(kutu);
   if (!o) { kutu.append(el("span", { class: "cip" }, "Okunabilirlik özeti yok")); return; }
   kutu.append(
     el("span", { class: "cip" }, "Hedef: ", el("b", {}, o.hedef_sinif ? o.hedef_sinif + ". sınıf" : "bilinmiyor")),
@@ -225,6 +233,25 @@ function ustBilgi() {
     VERI.tutarlilik_var ? el("span", { class: "cip" }, "Bilgi tutarsızlığı: ", el("b", {}, VERI.toplam_tutarlilik), " (gösterilen sayfalara dokunan)")
                         : el("span", { class: "cip", title: "Önce tutarlılık kriteri çalıştırılmalı (yerel modeller)" }, "Bilgi tutarsızlığı: çalıştırılmadı"),
   );
+}
+
+// Müfredat notları kitabın bütünü içindir (sayfaya bağlı değil): üst şeritte, tıklayınca açılan panelde
+function mufredatCipi(kutu) {
+  const m = VERI.mufredat;
+  if (m === null || m === undefined) {
+    kutu.append(el("span", { class: "cip", title: "Müfredat kriteri bu kitap için çalıştırılmadı ya da kitaba uyan program yok" },
+      "Müfredat: çalıştırılmadı"));
+    return;
+  }
+  if (!m.length) { kutu.append(el("span", { class: "cip" }, "Müfredat: ", el("b", {}, "bütün anahtar kavramlar var"))); return; }
+  const panel = el("div", { id: "mufredatPanel", hidden: true },
+    el("b", {}, "Öğretim programıyla karşılaştırma"), " — kitabın bütünü için; sayfalara işaretlenmez.",
+    el("ul", {}, m.map(n => el("li", {}, n.tur === "kavram_yok" ? el("span", { class: "kavram" }, n.parca + ": ") : null, n.aciklama))));
+  document.querySelector("header").after(panel);
+  const dugme = el("button", { class: "cip", "aria-expanded": "false", title: "Notları göster / gizle" },
+    "Müfredat: ", el("b", {}, `${m.length} not`), " ▾");
+  dugme.onclick = () => { panel.hidden = !panel.hidden; dugme.setAttribute("aria-expanded", String(!panel.hidden)); };
+  kutu.append(dugme);
 }
 
 // --- sol panel ---

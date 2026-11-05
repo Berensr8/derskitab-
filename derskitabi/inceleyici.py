@@ -31,6 +31,7 @@ import pymupdf
 from .gorsellestir import _ham_kelimeler, blok_raporu, cumle_dikdortgenleri, sayfa_araligi_coz
 from .kriterler.okunabilirlik import cumlelere_bol
 from .kriterler import dusuk_oncelik, okunabilirlik, tutarlilik, yazim
+from .kayit import tespitleri_yukle
 from .model import Blok, Tespit
 from .pdf_cikarma import _OKUMA_AYARLARI, bloklari_cikar
 
@@ -234,10 +235,14 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
                           hedef_sinif: int | None = None, bloklar: list[Blok] | None = None,
                           analiz: tuple | None = None,
                           yazim_tespitleri: list[Tespit] | None = None,
-                          tutarlilik_kaydi: list[dict] | None = None, test_modu: str | None = None) -> None:
+                          tutarlilik_kaydi: list[dict] | None = None, test_modu: str | None = None,
+                          mufredat_tespitleri: list[Tespit] | None = None, mufredat_oku: bool = True) -> None:
     """bloklar, analiz (ozet, tespitler) ve yazım tespitleri önceden hesaplandıysa
     verilebilir (demo.py); verilmezse burada hesaplanır. Tutarlılık burada hesaplanmaz
-    (yerel modeller gerekir, uzun sürer): verilmezse PDF'in yanındaki aday kaydı okunur."""
+    (yerel modeller gerekir, uzun sürer): verilmezse PDF'in yanındaki aday kaydı okunur.
+    Müfredat notları kitabın bütünü içindir (sayfaya bağlı değil): verilmezse PDF'in yanındaki
+    <kitap>_mufredat_tespitler.json okunur (mufredat_oku=False ise okunmaz: arayüz ve demo kendi
+    sonucunu verir; None = çalıştırılmadı); o da yoksa "çalıştırılmadı" gösterilir."""
     if bloklar is None:
         bloklar = bloklari_cikar(pdf_yolu)
     test_bilgisi = None
@@ -274,8 +279,13 @@ def inceleme_html_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = Non
             for no in secili
         ]
 
+    if mufredat_tespitleri is None and mufredat_oku:
+        yol = Path(pdf_yolu).with_name(Path(pdf_yolu).stem + "_mufredat_tespitler.json")
+        mufredat_tespitleri = tespitleri_yukle(yol) if yol.exists() else None
     veri = {
         "kitap": Path(pdf_yolu).name,
+        "mufredat": None if mufredat_tespitleri is None else [
+            {"tur": t.alt_tur, "parca": t.metin_parcasi, "aciklama": t.aciklama} for t in mufredat_tespitleri],
         "ozet": ozet_verisi,
         "toplam_tespit": len(tespit_listesi),
         "toplam_yazim": sum(len(v) for k, v in yazim_bloklari.items() if k[0] in set(secili)),

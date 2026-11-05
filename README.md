@@ -21,9 +21,14 @@ Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 
 ## Kullanım
 
-**En kolay yol:** `DEMO.bat` dosyasına çift tıklayın (ya da bir PDF'i üzerine sürükleyin).
-PDF seçilir, yedi adım çalışır (PDF, okunabilirlik, yazım, bilgi tutarsızlığı, müfredat, inceleme,
-notlu PDF + Excel raporu) ve inceleme sayfası tarayıcıda açılır. Çıktılar `veri/demo/<kitap adı>/` klasörüne yazılır.
+**En kolay yol:** `INCELE.bat` dosyasına çift tıklayın; program tarayıcıda açılır (yeni bir şey kurmak gerekmez).
+1. Kitabı (PDF) seçin, 2. nerelerin inceleneceğini (bütün kitap ya da sayfalar; kriterler) işaretleyin,
+3. sonuçların kaydedileceği klasörü seçin. İnceleme ayrı bir süreçte çalışır; adım adım ilerleme görünür.
+Sonuç ekranı her kriter için basit cümlelerle özet ve örnek alıntılar verir; her örneğin yanındaki
+"s. 45 →" bağlantısı sayfa sayfa inceleme ekranında o sayfayı açar. "Tek tek incele" bütün tespitleri
+önceliğe göre listeler. Bütün incelemeler **Geçmiş**'te kalır (`incelemeler/gecmis/`). Kod: `derskitabi/arayuz/`.
+
+Konsol sürümü `DEMO.bat` de duruyor (aynı adımlar; ayrıca test modu). Çıktıları `veri/demo/<kitap adı>/` klasörüne yazar.
 
 - **Notlu PDF** (`<kitap>_notlu.pdf`): kitabın kendisi, tespitler üzerinde standart PDF yorum
   notu olarak (Acrobat, Edge, Foxit… her okuyucuda açılır; kitabın metni ve sayfa düzeni değişmez).

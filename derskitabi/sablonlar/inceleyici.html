@@ -671,7 +671,16 @@ document.addEventListener("keydown", e => {
   else if (e.key === "Escape") blokSec(null);
 });
 
+// Arayüzün sonuç ekranındaki bağlantılar: inceleme.html#s=45 → PDF'in 45. sayfası açılır
+function adrestekiSayfa() {
+  const m = location.hash.match(/s=(\d+)/);
+  const i = m ? sayfaSirasi(Number(m[1])) : -1;
+  if (i >= 0) sayfayaGit(i);
+}
+window.addEventListener("hashchange", adrestekiSayfa);
+
 ustBilgi(); lejant(); sayfaListesi(); sayfaCiz(); ayrinti();
+adrestekiSayfa();
 </script>
 </body>
 </html>

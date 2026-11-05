@@ -134,7 +134,7 @@ def sonuc() -> None:
     gruplar = Counter()
     for e in etiket:
         k = kaynak[e["id"]]
-        for g in (k, "kural" if k.startswith("kural") else "model"):
+        for g in {k, "kural" if k.startswith("kural") else "model"}:
             gruplar[(g, e["etiket"])] += 1
     ozet = {}
     for g in sorted({g for g, _ in gruplar}):

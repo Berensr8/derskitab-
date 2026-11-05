@@ -1,0 +1,1052 @@
+[
+ {
+  "id": "K34-001",
+  "kitap": "turkdili12",
+  "sayfa_no": 167,
+  "blok_no": 12,
+  "kelime": "Fontannaya",
+  "baglam": "alıp Fontannaya’dan ayrılır. Çünkü Fontannaya insanların olmadığı, savaşın ortasında kalmış, üşüyen",
+  "etiket": "sahte",
+  "not": "doğru (yalın özel ad)"
+ },
+ {
+  "id": "K34-002",
+  "kitap": "kitap",
+  "sayfa_no": 177,
+  "blok_no": 34,
+  "kelime": "Listesi’nde",
+  "baglam": "UNESCO Dünya Miras Listesi’nde yer alan Divriği Ulu Camii ve Darüşşifası Saltuklular",
+  "etiket": "sahte",
+  "not": "belge adı: Listesi'nde doğru (TDK: Resmî Gazete'de)"
+ },
+ {
+  "id": "K34-003",
+  "kitap": "turkdili11",
+  "sayfa_no": 168,
+  "blok_no": 7,
+  "kelime": "hıncahınçtı",
+  "baglam": "Vapur hıncahınçtı. Şehirdeki işlerinden dönen küçük memurlar, gezmelerden, uzak plâjlardan gelenle",
+  "etiket": "sahte",
+  "not": "doğru kelime"
+ },
+ {
+  "id": "K34-004",
+  "kitap": "turkdili11",
+  "sayfa_no": 75,
+  "blok_no": 8,
+  "kelime": "İlyada’da",
+  "baglam": "bir nokta vardı. Ben gazetada Homer İlyada’da “Palamed”den bahsediyor demişdim. İlyada’da Homer bahsetmiyor, dedin. Söylediğin şu itibarla doğruydu ki elimizdeki İlyada’",
+  "etiket": "sahte",
+  "not": "doğru"
+ },
+ {
+  "id": "K34-005",
+  "kitap": "turkdili11",
+  "sayfa_no": 29,
+  "blok_no": 7,
+  "kelime": "Mora’lı",
+  "baglam": "KARAGÖZ — Hayır, Mora’lı değilim, İstanbul’luyum.",
+  "etiket": "gercek",
+  "not": "Moralı (yapım eki)"
+ },
+ {
+  "id": "K34-006",
+  "kitap": "turkdili12",
+  "sayfa_no": 49,
+  "blok_no": 43,
+  "kelime": "Hasanımla",
+  "baglam": "san iyiyim,” derdi. “Sağlığınıza duacıyım. Buralar hep bahçe. Çok çalışıyoruz. Hasanımla",
+  "etiket": "gercek",
+  "not": "Hasan'ımla"
+ },
+ {
+  "id": "K34-007",
+  "kitap": "turkdili9",
+  "sayfa_no": 102,
+  "blok_no": 13,
+  "kelime": "Paşaya",
+  "baglam": "Yavere kendimi tanıttım, kartvizitim filân yoktu o zaman. Yaver bey, Refet Paşaya haber vermiş, beni hemen içeri aldılar.",
+  "etiket": "gercek",
+  "not": "Refet Paşa'ya (unvan)"
+ },
+ {
+  "id": "K34-008",
+  "kitap": "biyoloji10",
+  "sayfa_no": 152,
+  "blok_no": 3,
+  "kelime": "Birliğine",
+  "baglam": "Uluslararası Doğayı Koruma Birliğine (IUCN) göre biyoçeşitlilik kaybına neden olan faktörlerden biri habitat kaybı v",
+  "etiket": "sahte",
+  "not": "kurum adı"
+ },
+ {
+  "id": "K34-009",
+  "kitap": "kitap",
+  "sayfa_no": 113,
+  "blok_no": 355,
+  "kelime": "Türkistanda",
+  "baglam": "Türkistanda kurulan ilk Türk devletlerinin tarihini öğrenmek neden önemlidir? Düşüncelerini",
+  "etiket": "gercek",
+  "not": "Türkistan'da"
+ },
+ {
+  "id": "K34-010",
+  "kitap": "kitap",
+  "sayfa_no": 23,
+  "blok_no": 25,
+  "kelime": "Anadoluya",
+  "baglam": "sayesinde çivi yazısını Anadoluya",
+  "etiket": "gercek",
+  "not": "Anadolu'ya"
+ },
+ {
+  "id": "K34-011",
+  "kitap": "matematik11",
+  "sayfa_no": 257,
+  "blok_no": 18,
+  "kelime": "de",
+  "baglam": "Her bir bağımsız de",
+  "etiket": "sahte",
+  "not": "bölünmüş kelime"
+ },
+ {
+  "id": "K34-012",
+  "kitap": "turkdili11",
+  "sayfa_no": 127,
+  "blok_no": 7,
+  "kelime": "Vav’da",
+  "baglam": "ö. ḍ zaman. Vav’da dudakları daraltarak. Şu atasözünde geçer: ö. ḍ keçe.r kişi tu.yma.s yalŋu.k o.",
+  "etiket": "sahte",
+  "not": "harf adı + ek (TDK: a'dan z'ye)"
+ },
+ {
+  "id": "K34-013",
+  "kitap": "biyoloji9",
+  "sayfa_no": 71,
+  "blok_no": 4,
+  "kelime": "Adenin",
+  "baglam": "DNA RNA Adenin",
+  "etiket": "sahte",
+  "not": "terim (yalın)"
+ },
+ {
+  "id": "K34-014",
+  "kitap": "kitap",
+  "sayfa_no": 154,
+  "blok_no": 52,
+  "kelime": "Selçukların",
+  "baglam": "Büyük Selçukların en geniş sınırları",
+  "etiket": "sahte",
+  "not": "çokluk: Selçukların doğru"
+ },
+ {
+  "id": "K34-015",
+  "kitap": "turkdili10",
+  "sayfa_no": 179,
+  "blok_no": 15,
+  "kelime": "Allahım",
+  "baglam": " dallanmışlardı. Şimdiyse birtakım yabancılar gelmiş, toprağı ölçüyorlardı. Hey Allahım, bu kök bu topraktan çıkarılır da başka toprağa dikilirse tamamiyle kuruyup git",
+  "etiket": "gercek",
+  "not": "Allah'ım"
+ },
+ {
+  "id": "K34-016",
+  "kitap": "turkdili11",
+  "sayfa_no": 111,
+  "blok_no": 4,
+  "kelime": "Paşa’ların",
+  "baglam": "Komşularımız olan İbrâhim Paşa’ların, Nâşid Paşa’ların, Sâmi Paşa’ların, Viyana Sefîri Gâlip Bey’lerin, Mâliye müste",
+  "etiket": "sahte",
+  "not": "eski metin aktarımı"
+ },
+ {
+  "id": "K34-017",
+  "kitap": "turkdili12",
+  "sayfa_no": 248,
+  "blok_no": 10,
+  "kelime": "sizler",
+  "baglam": "eden beyler, (sizler) mi yanılacaksınız?",
+  "etiket": "sahte",
+  "not": "doğru"
+ },
+ {
+  "id": "K34-018",
+  "kitap": "kitap",
+  "sayfa_no": 142,
+  "blok_no": 2,
+  "kelime": "TÜRKLERIN",
+  "baglam": "TÜRKLERIN SOSYAL VE KÜLTÜREL HAYATLARINDA MEYDANA GELEN DEĞIŞIMLER",
+  "etiket": "sahte",
+  "not": "büyük harfli başlık, doğru"
+ },
+ {
+  "id": "K34-019",
+  "kitap": "turkdili9",
+  "sayfa_no": 36,
+  "blok_no": 2,
+  "kelime": "Allahım",
+  "baglam": "anmış gibi bütün boyutların aşılmak üzere bulunduğunu sandığı bir anda içinden “Allahım” dedikten sonra nefesini bıraktı. Şaşırdı ve tekrar ihtiyarın yüzüne baktı. Bir",
+  "etiket": "gercek",
+  "not": "Allah'ım"
+ },
+ {
+  "id": "K34-020",
+  "kitap": "turkdili9",
+  "sayfa_no": 26,
+  "blok_no": 15,
+  "kelime": "kal’a",
+  "baglam": "Alınır kal’a mı göğsündeki kat kat îman?",
+  "etiket": "sahte",
+  "not": "eski yazım (kal'a)"
+ },
+ {
+  "id": "K34-021",
+  "kitap": "kitap",
+  "sayfa_no": 154,
+  "blok_no": 58,
+  "kelime": "Ömerî",
+  "baglam": "Şihabeddin El Ömerî, 2014, s. 85-86.",
+  "etiket": "sahte",
+  "not": "özel ad, yalın"
+ },
+ {
+  "id": "K34-022",
+  "kitap": "turkdili12",
+  "sayfa_no": 152,
+  "blok_no": 36,
+  "kelime": "Meryemce’nin",
+  "baglam": "2. Meryemce’nin konuşmamaya karar vermesiyle ev halkında ne gibi değişimler olur?",
+  "etiket": "sahte",
+  "not": "kişi adı Meryemce: Meryemce'nin doğru"
+ },
+ {
+  "id": "K34-023",
+  "kitap": "turkdili11",
+  "sayfa_no": 279,
+  "blok_no": 15,
+  "kelime": "dil’in",
+  "baglam": " içindeki saklı biçime (yoksa cevhere mi demeliydim?) ulaşmaya çalışıyor, bense dil’in içindeki cevhere. Hiçbir zaman varamayacağımı bile bile.”",
+  "etiket": "gercek",
+  "not": "dil'in → dilin (üslup olabilir)"
+ },
+ {
+  "id": "K34-024",
+  "kitap": "kitap",
+  "sayfa_no": 64,
+  "blok_no": 347,
+  "kelime": "CHAPADA",
+  "baglam": "CHAPADA DIAMANİNA DAĞLARI",
+  "etiket": "sahte",
+  "not": "harita etiketi"
+ },
+ {
+  "id": "K34-025",
+  "kitap": "turkdili12",
+  "sayfa_no": 225,
+  "blok_no": 14,
+  "kelime": "Sultanisinde",
+  "baglam": "Nurullah Ataç (1898-1957): İstanbul’da doğdu. Galatasaray Sultanisinde bir süre",
+  "etiket": "sahte",
+  "not": "kurum adı (okul)"
+ },
+ {
+  "id": "K34-026",
+  "kitap": "turkdili12",
+  "sayfa_no": 44,
+  "blok_no": 2,
+  "kelime": "Kunduralarımı",
+  "baglam": "9. Okuduğunuz metinde “Nerde benim sokaklarım? Kunduralarımı çarptığım taşlar?” cümleleri yaza",
+  "etiket": "sahte",
+  "not": "cümle başı, cins ad"
+ },
+ {
+  "id": "K34-027",
+  "kitap": "turkdili11",
+  "sayfa_no": 116,
+  "blok_no": 7,
+  "kelime": "Tiginin",
+  "baglam": "Bunca yazıyı yazan Kül Tiginin yeğeni Yollug Tigin, yazdım. Yirmi gün oturup bu taşa, bu duvara hep Yollug Tig",
+  "etiket": "gercek",
+  "not": "Kül Tigin'in"
+ },
+ {
+  "id": "K34-028",
+  "kitap": "turkdili10",
+  "sayfa_no": 199,
+  "blok_no": 25,
+  "kelime": "Allaha",
+  "baglam": "kıl sahibi insan ne kendinin, ne de başkasının bedeninde bir yara görmek ister. Allaha şükür bir acım yok, fakat yokluk ve düşkünlük içindekilerin acısını görünce bed",
+  "etiket": "gercek",
+  "not": "Allah'a"
+ },
+ {
+  "id": "K34-029",
+  "kitap": "matematik11",
+  "sayfa_no": 71,
+  "blok_no": 4,
+  "kelime": "Kurumunun",
+  "baglam": "Bilgi Teknolojileri ve İletişim Kurumunun sağladığı güvenli genel ağ hizmetinden kaç kişinin faydalandığını görmek isteye",
+  "etiket": "sahte",
+  "not": "kurum adı"
+ },
+ {
+  "id": "K34-030",
+  "kitap": "kitap",
+  "sayfa_no": 92,
+  "blok_no": 189,
+  "kelime": "İslama",
+  "baglam": "İslama",
+  "etiket": "gercek",
+  "not": "İslam'a"
+ },
+ {
+  "id": "K34-031",
+  "kitap": "turkdili12",
+  "sayfa_no": 153,
+  "blok_no": 21,
+  "kelime": "Meryemce’nin",
+  "baglam": "c) Meryemce’nin konuştuğunu düşünseniz sizce o gece oğlu, gelini ve torunlarına halk geleneğind",
+  "etiket": "sahte",
+  "not": "kişi adı Meryemce"
+ },
+ {
+  "id": "K34-032",
+  "kitap": "kitap",
+  "sayfa_no": 174,
+  "blok_no": 4,
+  "kelime": "Selçuklular’dan",
+  "baglam": "r zamanında yapılan kendine özgü yapısı olan anıtmezarlardır (Görsel 3.79). (…) Selçuklular’dan günümüze gelen en erken tarihli mezar anıtı, Konya Alâeddîn Câmîsi avlusundaki ",
+  "etiket": "gercek",
+  "not": "Selçuklulardan (çokluk)"
+ },
+ {
+  "id": "K34-033",
+  "kitap": "turkdili12",
+  "sayfa_no": 24,
+  "blok_no": 33,
+  "kelime": "da",
+  "baglam": "edebiyatında önemli bir yer edindi. İlk dönem eserlerinde olay örgüsüne da",
+  "etiket": "sahte",
+  "not": "bölünmüş kelime"
+ },
+ {
+  "id": "K34-034",
+  "kitap": "kitap",
+  "sayfa_no": 57,
+  "blok_no": 1039,
+  "kelime": "İSTANBULYA",
+  "baglam": "İSTANBULYA AD.",
+  "etiket": "sahte",
+  "not": "harita etiketi"
+ },
+ {
+  "id": "K34-035",
+  "kitap": "kitap",
+  "sayfa_no": 64,
+  "blok_no": 502,
+  "kelime": "ELTANIN",
+  "baglam": "ELTANIN",
+  "etiket": "sahte",
+  "not": "harita etiketi"
+ },
+ {
+  "id": "K34-036",
+  "kitap": "turkdili12",
+  "sayfa_no": 150,
+  "blok_no": 17,
+  "kelime": "Meryemceyi",
+  "baglam": "cundan değneğine çöke çöke Meryemce geliyordu. İçlerinde bir umut ışığı açıldı. Meryemceyi",
+  "etiket": "gercek",
+  "not": "Meryemce'yi (kitap başka yerde Meryemce'nin)"
+ },
+ {
+  "id": "K34-037",
+  "kitap": "turkdili11",
+  "sayfa_no": 23,
+  "blok_no": 35,
+  "kelime": "İstanbul’luyum",
+  "baglam": "KARAGÖZ — Hayır, Mora’lı değilim, İstanbul’luyum.",
+  "etiket": "gercek",
+  "not": "İstanbulluyum (yapım eki)"
+ },
+ {
+  "id": "K34-038",
+  "kitap": "turkdili12",
+  "sayfa_no": 226,
+  "blok_no": 54,
+  "kelime": "laşma’da",
+  "baglam": "laşma’da ben’leri ateşle sürükleyip birbirine götüren.",
+  "etiket": "sahte",
+  "not": "bölünmüş kelime / üslup"
+ },
+ {
+  "id": "K34-039",
+  "kitap": "kitap",
+  "sayfa_no": 178,
+  "blok_no": 16,
+  "kelime": "Listesi’nde",
+  "baglam": "zamanda UNESCO Dünya Mirası Listesi’nde yer almıştır.",
+  "etiket": "sahte",
+  "not": "belge adı"
+ },
+ {
+  "id": "K34-040",
+  "kitap": "turkdili11",
+  "sayfa_no": 111,
+  "blok_no": 4,
+  "kelime": "Paşa’ların",
+  "baglam": "Komşularımız olan İbrâhim Paşa’ların, Nâşid Paşa’ların, Sâmi Paşa’ların, Viyana Sefîri Gâlip Bey’lerin, Mâliye müste",
+  "etiket": "sahte",
+  "not": "eski metin aktarımı"
+ },
+ {
+  "id": "K34-041",
+  "kitap": "turkdili11",
+  "sayfa_no": 111,
+  "blok_no": 4,
+  "kelime": "Efendi’lerin",
+  "baglam": "a’ların, Viyana Sefîri Gâlip Bey’lerin, Mâliye müsteşarlarının, amcamız İbrâhim Efendi’lerin hanımları ve kızları ile aynı mahalle ve sokakta bulunarak komşuluk ettiğimiz â",
+  "etiket": "sahte",
+  "not": "eski metin aktarımı"
+ },
+ {
+  "id": "K34-042",
+  "kitap": "kitap",
+  "sayfa_no": 23,
+  "blok_no": 24,
+  "kelime": "İyonyalılar’daki",
+  "baglam": "İyonyalılar’daki",
+  "etiket": "gercek",
+  "not": "İyonyalılardaki (çokluk)"
+ },
+ {
+  "id": "K34-043",
+  "kitap": "kitap",
+  "sayfa_no": 142,
+  "blok_no": 1,
+  "kelime": "İSLAMIYET’IN",
+  "baglam": "İSLAMIYET’IN KABULÜYLE",
+  "etiket": "sahte",
+  "not": "doğru (İslamiyet'in)"
+ },
+ {
+  "id": "K34-044",
+  "kitap": "turkdili12",
+  "sayfa_no": 58,
+  "blok_no": 33,
+  "kelime": "gezegen’in",
+  "baglam": "◘Yabancılaşma giderilecek, haritası yapılacak bu gezegen’in, sınıflandırılacak, adı verilecek...",
+  "etiket": "gercek",
+  "not": "gezegenin (şiir, üslup olabilir)"
+ },
+ {
+  "id": "K34-045",
+  "kitap": "turkdili11",
+  "sayfa_no": 29,
+  "blok_no": 7,
+  "kelime": "İstanbul’luyum",
+  "baglam": "KARAGÖZ — Hayır, Mora’lı değilim, İstanbul’luyum.",
+  "etiket": "gercek",
+  "not": "İstanbulluyum"
+ },
+ {
+  "id": "K34-046",
+  "kitap": "turkdili11",
+  "sayfa_no": 24,
+  "blok_no": 35,
+  "kelime": "Düzcesi",
+  "baglam": "HACİVAT — Düzcesi, Karagöz, bana para vermeyim diye dükkânın adını çıkarıyorsun. Ben parayı senden",
+  "etiket": "sahte",
+  "not": "cümle başı, cins ad"
+ },
+ {
+  "id": "K34-047",
+  "kitap": "turkdili12",
+  "sayfa_no": 28,
+  "blok_no": 20,
+  "kelime": "Üniversitesine",
+  "baglam": "Profesör olduğu 1989 yılında Erciyes Üniversitesine geçti. Yayımlanmış çok sa",
+  "etiket": "sahte",
+  "not": "kurum adı"
+ },
+ {
+  "id": "K34-048",
+  "kitap": "turkdili9",
+  "sayfa_no": 27,
+  "blok_no": 4,
+  "kelime": "Osmanlılar’ın",
+  "baglam": ". Boğazlar’a karşı girişilecek bir deniz harekâtı ile İstanbul’un ele geçirilip Osmanlılar’ın savaş dışı bırakılması fikri, özellikle İngiliz Bahriye nâzırı ve sonra başbaka",
+  "etiket": "gercek",
+  "not": "Osmanlıların (çokluk)"
+ },
+ {
+  "id": "K34-049",
+  "kitap": "turkdili11",
+  "sayfa_no": 75,
+  "blok_no": 8,
+  "kelime": "İlyada’da",
+  "baglam": "i o gece bana söyledin. Haklı olduğun küçük bir nokta vardı. Ben gazetada Homer İlyada’da “Palamed”den bahsediyor demişdim. İlyada’da Homer bahsetmiyor, dedin. Söylediği",
+  "etiket": "sahte",
+  "not": "doğru"
+ },
+ {
+  "id": "K34-050",
+  "kitap": "kitap",
+  "sayfa_no": 136,
+  "blok_no": 10,
+  "kelime": "Listesi'ne",
+  "baglam": "Kurtuba Ulu Camii, UNESCO tarafından 1984 yılında Dünya Mirası Listesi'ne dâhil edilmiştir.",
+  "etiket": "sahte",
+  "not": "belge adı"
+ },
+ {
+  "id": "K34-051",
+  "kitap": "biyoloji10",
+  "sayfa_no": 133,
+  "blok_no": 2,
+  "kelime": "m2lik",
+  "baglam": "Proje için ABD’nin Arizona Çölü’nde dış ortamdan tamamen izole, yaklaşık 12.000 m2lik bir yaşam alanı inşa edilmiştir. Bu alanda yeryüzündeki yaşam için gerekli olan",
+  "etiket": "gercek",
+  "not": "m²'lik (birim)"
+ },
+ {
+  "id": "K34-052",
+  "kitap": "matematik11",
+  "sayfa_no": 274,
+  "blok_no": 4,
+  "kelime": "2dir",
+  "baglam": "2dir. Ses düzeyini ölçmek için desibel (dB) ölçeği kullanılır. Kaynağın ses şiddeti ",
+  "etiket": "sahte",
+  "not": "üs/PDF okuma"
+ },
+ {
+  "id": "K34-053",
+  "kitap": "turkdili11",
+  "sayfa_no": 110,
+  "blok_no": 7,
+  "kelime": "Şerîf’lere",
+  "baglam": " yok. Odalarının duvarlarında ise, Kur’ân-ı Kerîm’lere, cüz keselerine, Hilye-i Şerîf’lere, sedirlerin üstünde ise rahlelere, sevâhiden minderlere, sırma ve ipek işlemeli",
+  "etiket": "sahte",
+  "not": "eski metin aktarımı"
+ },
+ {
+  "id": "K34-054",
+  "kitap": "turkdili10",
+  "sayfa_no": 251,
+  "blok_no": 16,
+  "kelime": "de",
+  "baglam": "“Her şey,” dedi; “her şey yapabiliriz, de mi Reis Bey?”",
+  "etiket": "sahte",
+  "not": "konuşma dili 'de mi'"
+ },
+ {
+  "id": "K34-055",
+  "kitap": "turkdili10",
+  "sayfa_no": 268,
+  "blok_no": 18,
+  "kelime": "Fransızca’dan",
+  "baglam": "• Çeşitli devlet görevlerinde bulunmuş, Fransızca’dan çeviriler yapmış ve gazetelerde yazılar yazmıştır.",
+  "etiket": "gercek",
+  "not": "Fransızcadan"
+ },
+ {
+  "id": "K34-056",
+  "kitap": "turkdili9",
+  "sayfa_no": 115,
+  "blok_no": 15,
+  "kelime": "yavaşçacık",
+  "baglam": "— Bir de şimdi yavaşçacık kulağımıza kabak çekirdeğine para yerine ekmek vermemizi istiyor.",
+  "etiket": "sahte",
+  "not": "doğru kelime"
+ },
+ {
+  "id": "K34-057",
+  "kitap": "turkdili12",
+  "sayfa_no": 195,
+  "blok_no": 46,
+  "kelime": "Çalışkurlar’ın",
+  "baglam": "kur. Güzel olduğu kadar da zeki bir kız. Çalışkurlar’ın tek evladı olduğu için",
+  "etiket": "gercek",
+  "not": "Çalışkurların (çokluk)"
+ },
+ {
+  "id": "K34-058",
+  "kitap": "matematik11",
+  "sayfa_no": 256,
+  "blok_no": 45,
+  "kelime": "de",
+  "baglam": "Her bir bağımsız de",
+  "etiket": "sahte",
+  "not": "bölünmüş kelime"
+ },
+ {
+  "id": "K34-059",
+  "kitap": "turkdili9",
+  "sayfa_no": 102,
+  "blok_no": 11,
+  "kelime": "Paşaya",
+  "baglam": "Refet Paşaya, içimden geldi, bir şiir yazdım; Türk askerinin şanla, şerefle İstanbul’a girişi",
+  "etiket": "gercek",
+  "not": "Refet Paşa'ya"
+ },
+ {
+  "id": "K34-060",
+  "kitap": "kitap",
+  "sayfa_no": 12,
+  "blok_no": 28,
+  "kelime": "Ortaokulunda",
+  "baglam": "el 1.1). Annem, babam ve küçük kardeşimle Gaziantep'te yaşıyorum. Mustafa Kemal Ortaokulunda altıncı sınıf öğrencisiyim. Okulumu, öğretmenlerimi ve arkadaşlarımı çok seviyo",
+  "etiket": "sahte",
+  "not": "kurum adı (okul)"
+ },
+ {
+  "id": "K34-061",
+  "kitap": "turkdili12",
+  "sayfa_no": 95,
+  "blok_no": 25,
+  "kelime": "Kolejde",
+  "baglam": "Radyosunda edebî müşavirlik, Robert Kolejde edebiyat öğretmenliği yaptı. Haf",
+  "etiket": "sahte",
+  "not": "kurum adı (okul)"
+ },
+ {
+  "id": "K34-062",
+  "kitap": "kitap",
+  "sayfa_no": 166,
+  "blok_no": 86,
+  "kelime": "Listesi'nde",
+  "baglam": " en büyük ve en uzun taş kemerli köprüsüdür. Bu eser UNESCO Dünya Mirası Geçici Listesi'nde yer almaktadır (Görsel 3.70).",
+  "etiket": "sahte",
+  "not": "belge adı"
+ },
+ {
+  "id": "K34-063",
+  "kitap": "kitap",
+  "sayfa_no": 177,
+  "blok_no": 24,
+  "kelime": "İyonyalılar’daki",
+  "baglam": "İyonyalılar’daki",
+  "etiket": "gercek",
+  "not": "İyonyalılardaki"
+ },
+ {
+  "id": "K34-064",
+  "kitap": "turkdili12",
+  "sayfa_no": 129,
+  "blok_no": 29,
+  "kelime": "em’i",
+  "baglam": "Yaramıza sabır em’i",
+  "etiket": "sahte",
+  "not": "eski yazım (şiir)"
+ },
+ {
+  "id": "K34-065",
+  "kitap": "turkdili10",
+  "sayfa_no": 251,
+  "blok_no": 16,
+  "kelime": "yapabiliriz",
+  "baglam": "“Her şey,” dedi; “her şey yapabiliriz, de mi Reis Bey?”",
+  "etiket": "sahte",
+  "not": "doğru"
+ },
+ {
+  "id": "K34-066",
+  "kitap": "kitap",
+  "sayfa_no": 177,
+  "blok_no": 25,
+  "kelime": "Anadoluya",
+  "baglam": "sayesinde çivi yazısını Anadoluya",
+  "etiket": "gercek",
+  "not": "Anadolu'ya"
+ },
+ {
+  "id": "K34-067",
+  "kitap": "turkdili11",
+  "sayfa_no": 23,
+  "blok_no": 35,
+  "kelime": "Mora’lı",
+  "baglam": "KARAGÖZ — Hayır, Mora’lı değilim, İstanbul’luyum.",
+  "etiket": "gercek",
+  "not": "Moralı"
+ },
+ {
+  "id": "K34-068",
+  "kitap": "kitap",
+  "sayfa_no": 89,
+  "blok_no": 1375,
+  "kelime": "İSTANBULYA",
+  "baglam": "İSTANBULYA AD.",
+  "etiket": "sahte",
+  "not": "harita etiketi"
+ },
+ {
+  "id": "K34-069",
+  "kitap": "turkdili11",
+  "sayfa_no": 30,
+  "blok_no": 13,
+  "kelime": "Allahım",
+  "baglam": "Allahım, ne güzel şey bu dost yüzü!",
+  "etiket": "gercek",
+  "not": "Allah'ım"
+ },
+ {
+  "id": "K34-070",
+  "kitap": "turkdili11",
+  "sayfa_no": 110,
+  "blok_no": 7,
+  "kelime": "Kerîm’lere",
+  "baglam": "n saçak altında “Yâ Hâfız” levhaları yok. Odalarının duvarlarında ise, Kur’ân-ı Kerîm’lere, cüz keselerine, Hilye-i Şerîf’lere, sedirlerin üstünde ise rahlelere, sevâhide",
+  "etiket": "sahte",
+  "not": "eski metin aktarımı"
+ },
+ {
+  "id": "K34-071",
+  "kitap": "turkdili12",
+  "sayfa_no": 152,
+  "blok_no": 40,
+  "kelime": "Meryemce’nin",
+  "baglam": "6. Meryemce’nin köylü bilgeliği ile kadınların korkularını yok edip onlara ümit vermek amacıyla",
+  "etiket": "sahte",
+  "not": "kişi adı Meryemce"
+ },
+ {
+  "id": "K34-072",
+  "kitap": "turkdili10",
+  "sayfa_no": 175,
+  "blok_no": 13,
+  "kelime": "Nehri’ni",
+  "baglam": "Oğuz Kağan, Kıpçak akınında İdil Nehri’ni nasıl geçmiştir?",
+  "etiket": "sahte",
+  "not": "doğru (İdil Nehri'ni)"
+ },
+ {
+  "id": "K34-073",
+  "kitap": "turkdili12",
+  "sayfa_no": 50,
+  "blok_no": 41,
+  "kelime": "Kars’lardan",
+  "baglam": "ım valla,” diyordu. “Baştan söyleselerdi ya. Yatağımı bile sattım da kalktım ta Kars’lardan",
+  "etiket": "gercek",
+  "not": "Karslardan (çokluk)"
+ },
+ {
+  "id": "K34-074",
+  "kitap": "turkdili12",
+  "sayfa_no": 129,
+  "blok_no": 28,
+  "kelime": "gem’i",
+  "baglam": "Şefkat atı çiğner gem’i",
+  "etiket": "sahte",
+  "not": "eski yazım (şiir)"
+ },
+ {
+  "id": "K34-075",
+  "kitap": "turkdili9",
+  "sayfa_no": 40,
+  "blok_no": 15,
+  "kelime": "Anadolusu",
+  "baglam": "a Anadolu, maddecilik teorilerinin iflâsına en iyi örnek olarak, ekonomik gücün Anadolusu değildir. Anadolu tarihi, mermerin, kutsal seslerin, kılıç ve kanat şakırtıları",
+  "etiket": "gercek",
+  "not": "Anadolu'su"
+ },
+ {
+  "id": "K34-076",
+  "kitap": "turkdili12",
+  "sayfa_no": 196,
+  "blok_no": 2,
+  "kelime": "da",
+  "baglam": " Sebâti: “Tok olan cümle cihanı tok sanır. Aç olan âlemde ekmek yok sanır.” Ben da",
+  "etiket": "sahte",
+  "not": "bölünmüş kelime"
+ },
+ {
+  "id": "K34-077",
+  "kitap": "turkdili9",
+  "sayfa_no": 177,
+  "blok_no": 7,
+  "kelime": "mata’ların",
+  "baglam": "Halka mata’ların satar",
+  "etiket": "sahte",
+  "not": "eski yazım (şiir)"
+ },
+ {
+  "id": "K34-078",
+  "kitap": "matematik11",
+  "sayfa_no": 71,
+  "blok_no": 3,
+  "kelime": "Kurumunun",
+  "baglam": "uklara fırsat olarak sunulabilir. Bu doğrultuda Bilgi Teknolojileri ve İletişim Kurumunun 2011 yılında uygulamaya başladığı ücretsiz ve «talebe bağlı güvenli genel ağ hi",
+  "etiket": "sahte",
+  "not": "kurum adı"
+ },
+ {
+  "id": "K34-079",
+  "kitap": "turkdili11",
+  "sayfa_no": 111,
+  "blok_no": 4,
+  "kelime": "Bey’lerin",
+  "baglam": "olan İbrâhim Paşa’ların, Nâşid Paşa’ların, Sâmi Paşa’ların, Viyana Sefîri Gâlip Bey’lerin, Mâliye müsteşarlarının, amcamız İbrâhim Efendi’lerin hanımları ve kızları ile ",
+  "etiket": "sahte",
+  "not": "eski metin aktarımı"
+ },
+ {
+  "id": "K34-080",
+  "kitap": "turkdili10",
+  "sayfa_no": 164,
+  "blok_no": 6,
+  "kelime": "Tanrıya",
+  "baglam": "e düşmanlar ağlattım! Nice dostlar güldürdüm! Ben ödedim çok şükür! Borcumu Gök Tanrıya! Veriyorum artık ben, sizin olsun bu yurdum!”",
+  "etiket": "gercek",
+  "not": "Gök Tanrı'ya"
+ },
+ {
+  "id": "K34-081",
+  "kitap": "kitap",
+  "sayfa_no": 34,
+  "blok_no": 8,
+  "kelime": "Maraş'lının",
+  "baglam": "28 Kasım 1919 Cuma sabahı Maraş'lının kara sabahıdır. Yatağından kalkan Maraş'lılar, asırlardan beri Kale burcunda da",
+  "etiket": "gercek",
+  "not": "Maraşlının (yapım eki)"
+ },
+ {
+  "id": "K34-082",
+  "kitap": "kitap",
+  "sayfa_no": 152,
+  "blok_no": 4,
+  "kelime": "Ömerî",
+  "baglam": "Şihabeddin El Ömerî, 2014, s. 106-107.",
+  "etiket": "sahte",
+  "not": "özel ad, yalın"
+ },
+ {
+  "id": "K34-083",
+  "kitap": "turkdili12",
+  "sayfa_no": 253,
+  "blok_no": 20,
+  "kelime": "Balkanlarda",
+  "baglam": "Osmanlı padişahlığı yaptı. Anadolu ve Balkanlarda giriştiği fetihlerle Osmanlı",
+  "etiket": "sahte",
+  "not": "belirsiz: Balkanlar bölge adı"
+ },
+ {
+  "id": "K34-084",
+  "kitap": "turkdili12",
+  "sayfa_no": 29,
+  "blok_no": 2,
+  "kelime": "TÜRKÇENİN",
+  "baglam": "İLK ÖRNEKLERDEN GÜNÜMÜZE TÜRKÇENİN",
+  "etiket": "sahte",
+  "not": "büyük harfli başlık, doğru"
+ },
+ {
+  "id": "K34-085",
+  "kitap": "turkdili10",
+  "sayfa_no": 59,
+  "blok_no": 7,
+  "kelime": "Uygurca’da",
+  "baglam": "Masalın öz Türkçe karşılığı ödkünç/ötkünç‘tür. Uygurca’da öd, öğüt; ödkünç ise, öğüt verici ad, öğüt verici hikâye, ahlak dersi veren all",
+  "etiket": "gercek",
+  "not": "Uygurcada"
+ },
+ {
+  "id": "K34-086",
+  "kitap": "turkdili9",
+  "sayfa_no": 102,
+  "blok_no": 21,
+  "kelime": "Paşayla",
+  "baglam": "Benim Refet Paşayla tanışmamı sağlayan şiir, o zaman hangi gazete veya dergide yayınlandı bilemiyor",
+  "etiket": "gercek",
+  "not": "Refet Paşa'yla"
+ },
+ {
+  "id": "K34-087",
+  "kitap": "turkdili12",
+  "sayfa_no": 247,
+  "blok_no": 55,
+  "kelime": "Tarkan’lar",
+  "baglam": "şik boyum (ve) halkım, sağdaki Şadapıt beyler, soldaki Tarkan’lar (ve) kumandan beyler,",
+  "etiket": "gercek",
+  "not": "Tarkanlar (çokluk)"
+ },
+ {
+  "id": "K34-088",
+  "kitap": "turkdili11",
+  "sayfa_no": 254,
+  "blok_no": 30,
+  "kelime": "Allaha",
+  "baglam": "CLÉANTE: Aman baba, yakınacak halde de değilsiniz, Allaha şükür. Herkes biliyor bir hayli paranız olduğunu.",
+  "etiket": "gercek",
+  "not": "Allah'a"
+ },
+ {
+  "id": "K34-089",
+  "kitap": "turkdili12",
+  "sayfa_no": 80,
+  "blok_no": 28,
+  "kelime": "Tanpınar’da",
+  "baglam": "tanındı. Kendi sanatında sürekli yenilik peşinde olan Ahmet Hamdi Tanpınar’da",
+  "etiket": "sahte",
+  "not": "doğru"
+ },
+ {
+  "id": "K34-090",
+  "kitap": "turkdili9",
+  "sayfa_no": 35,
+  "blok_no": 22,
+  "kelime": "Allahım",
+  "baglam": "den, sözüme dikkat et, yüreğinden, yüreğinden, anladın mı, yüreğinden bir kere “Allahım” deyiver, sonra nefesini birden koyuver. Anladın mı?",
+  "etiket": "gercek",
+  "not": "Allah'ım"
+ },
+ {
+  "id": "K34-091",
+  "kitap": "biyoloji9",
+  "sayfa_no": 70,
+  "blok_no": 26,
+  "kelime": "Adenin",
+  "baglam": "Guanin Adenin",
+  "etiket": "sahte",
+  "not": "terim (yalın)"
+ },
+ {
+  "id": "K34-092",
+  "kitap": "turkdili12",
+  "sayfa_no": 244,
+  "blok_no": 39,
+  "kelime": "Ninova’da",
+  "baglam": "Uzak memleketlerde, Tep’te, Ninova’da Atina’da, Roma’da kazma iniyor,",
+  "etiket": "sahte",
+  "not": "doğru"
+ },
+ {
+  "id": "K34-093",
+  "kitap": "kitap",
+  "sayfa_no": 153,
+  "blok_no": 281,
+  "kelime": "Ömerî",
+  "baglam": "Şihabeddin El Ömerî, 2014, s. 106.",
+  "etiket": "sahte",
+  "not": "özel ad, yalın"
+ },
+ {
+  "id": "K34-094",
+  "kitap": "turkdili12",
+  "sayfa_no": 244,
+  "blok_no": 22,
+  "kelime": "Bursamızda",
+  "baglam": "İmparatorluğu’nun en mâruf bir ilim ve hüner ocağı hâline koymuştu. Bursamızda",
+  "etiket": "gercek",
+  "not": "Bursa'mızda"
+ },
+ {
+  "id": "K34-095",
+  "kitap": "turkdili12",
+  "sayfa_no": 152,
+  "blok_no": 38,
+  "kelime": "Meryemce’nin",
+  "baglam": "4. Meryemce’nin kişiliği ve köydeki konumu ile ilgili neler söyleyebilirsiniz?",
+  "etiket": "sahte",
+  "not": "kişi adı Meryemce"
+ },
+ {
+  "id": "K34-096",
+  "kitap": "kitap",
+  "sayfa_no": 57,
+  "blok_no": 1183,
+  "kelime": "Ma'dan",
+  "baglam": "Ma'dan Jadid",
+  "etiket": "sahte",
+  "not": "harita etiketi"
+ },
+ {
+  "id": "K34-097",
+  "kitap": "kitap",
+  "sayfa_no": 34,
+  "blok_no": 8,
+  "kelime": "Maraş'lılar",
+  "baglam": "28 Kasım 1919 Cuma sabahı Maraş'lının kara sabahıdır. Yatağından kalkan Maraş'lılar, asırlardan beri Kale burcunda dalgalanan şanlı bayraklarını göremezler. Bu ola",
+  "etiket": "gercek",
+  "not": "Maraşlılar"
+ },
+ {
+  "id": "K34-098",
+  "kitap": "turkdili10",
+  "sayfa_no": 45,
+  "blok_no": 6,
+  "kelime": "TÜRKÜLERIN",
+  "baglam": "TÜRKÜLERIN OLUŞMASI VE YAYILMASI",
+  "etiket": "sahte",
+  "not": "büyük harfli başlık"
+ },
+ {
+  "id": "K34-099",
+  "kitap": "turkdili10",
+  "sayfa_no": 203,
+  "blok_no": 6,
+  "kelime": "Farsça’dan",
+  "baglam": "nu söylerler. Şeyhî bunun üzerine; Nizâmî’nin “Hüsrev ü Şîrîn” adlı mesnevisini Farsça’dan Türkçe’ye tercümeye başlar. Çevirdiği 1000 beyti padişaha arz edince padişah bu",
+  "etiket": "gercek",
+  "not": "Farsçadan"
+ },
+ {
+  "id": "K34-100",
+  "kitap": "turkdili12",
+  "sayfa_no": 243,
+  "blok_no": 19,
+  "kelime": "Akademisini",
+  "baglam": "Harp Akademisini bitirdi. Çanakkale Savaşı’nda komuta ettiği 19. Tümen düşma",
+  "etiket": "sahte",
+  "not": "kurum adı (akademi)"
+ },
+ {
+  "id": "K34-101",
+  "kitap": "turkdili11",
+  "sayfa_no": 111,
+  "blok_no": 4,
+  "kelime": "Paşa’ların",
+  "baglam": "Komşularımız olan İbrâhim Paşa’ların, Nâşid Paşa’ların, Sâmi Paşa’ların, Viyana Sefîri Gâlip Bey’lerin, Mâliye müste",
+  "etiket": "sahte",
+  "not": "eski metin aktarımı"
+ },
+ {
+  "id": "K34-102",
+  "kitap": "turkdili10",
+  "sayfa_no": 203,
+  "blok_no": 6,
+  "kelime": "Türkçe’ye",
+  "baglam": "r. Şeyhî bunun üzerine; Nizâmî’nin “Hüsrev ü Şîrîn” adlı mesnevisini Farsça’dan Türkçe’ye tercümeye başlar. Çevirdiği 1000 beyti padişaha arz edince padişah buna çok mem",
+  "etiket": "gercek",
+  "not": "Türkçeye"
+ },
+ {
+  "id": "K34-103",
+  "kitap": "matematik11",
+  "sayfa_no": 290,
+  "blok_no": 19,
+  "kelime": "de",
+  "baglam": "Her bir bağımsız de",
+  "etiket": "sahte",
+  "not": "bölünmüş kelime"
+ },
+ {
+  "id": "K34-104",
+  "kitap": "turkdili12",
+  "sayfa_no": 253,
+  "blok_no": 8,
+  "kelime": "Türkler’e",
+  "baglam": "Türkler’e zalim diyenler öyle günah işliyorlar ki, tarihin karşısında onların günahlarını",
+  "etiket": "gercek",
+  "not": "Türklere"
+ },
+ {
+  "id": "K34-105",
+  "kitap": "biyoloji10",
+  "sayfa_no": 24,
+  "blok_no": 8,
+  "kelime": "O2in",
+  "baglam": "sında bitkilerin ürettiği CO2 kullanılarak karşılanır. Fotosentez sonucu oluşan O2in fazlası atmosfere verilir.",
+  "etiket": "gercek",
+  "not": "O₂'nin"
+ }
+]

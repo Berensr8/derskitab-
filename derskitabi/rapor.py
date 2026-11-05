@@ -56,6 +56,10 @@ OLCULEN_BASARI = [
     ("Yazım ve dil", "Gerçek kitapta isabet düşük: Matematik 11'de gösterilen tespitlerin %27'si gerçek hata "
      "(çoğu terim, özel isim, alıntı). TDK kuralları 9 tespitin 8'inde isabetli.",
      "testseti/yazim_sonuclari.md (K23, K25)"),
+    ("Yazım ve dil", "Kesme işareti (özel ad, kısaltma, sayı; gereksiz kesme): görülmemiş sayfalarda 46 tespitin "
+     "31'i gerçek hata (%67; özel ad + ek %82). Orta öncelikle gösterilir. Kitabın hiç kesmeyle yazmadığı adlar "
+     "ve eski metin aktarımları bilinen zayıflık.",
+     "testseti/kesme_sonuclari.md (K34)"),
     ("Dilsel karmaşıklık (okunabilirlik)", "Formüller sınıf düzeyini ayırt etmiyor (aynı ders içinde de); "
      "cümle ve kelime uzunluğunu ölçüyor. Tespitler 'dilsel karmaşıklık uyarısı' olarak okunmalı.",
      "testseti/okunabilirlik_sonuclari.md (K24)"),

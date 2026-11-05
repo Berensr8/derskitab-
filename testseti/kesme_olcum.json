@@ -1,0 +1,39 @@
+{
+ "yapay_recall": {
+  "toplam": 3095,
+  "bulunan": 856,
+  "recall": 0.277
+ },
+ "etiketli": {
+  "kural": {
+   "gercek": 31,
+   "sahte": 15,
+   "isabet": 0.674
+  },
+  "kural:gereksiz_kesme": {
+   "gercek": 17,
+   "sahte": 11,
+   "isabet": 0.607
+  },
+  "kural:ozel_ad_kesme": {
+   "gercek": 14,
+   "sahte": 3,
+   "isabet": 0.824
+  },
+  "kural:sayi_kesme": {
+   "gercek": 0,
+   "sahte": 1,
+   "isabet": 0.0
+  },
+  "model": {
+   "gercek": 10,
+   "sahte": 49,
+   "isabet": 0.169
+  }
+ },
+ "karar": {
+  "kural_girer": false,
+  "kural_orta_oncelik": true,
+  "model_girer": false
+ }
+}

@@ -24,6 +24,7 @@ CEVAP = {
     "türkçe": ["[Türk:Noun, Prop] türk:Noun+A3sg+çe:Equ", P.format(k="Türkçe", l="türkçe")],
     "tibete": [P.format(k="Tibet", l="tibet") + "+e:Dat"],
     "halide": [P.format(k="Halid", l="halid") + "+e:Dat"],
+    "ömerî": [P.format(k="Ömer", l="ömer") + "+î:Acc"],
 }
 
 
@@ -55,6 +56,7 @@ class OzelAdTesti(unittest.TestCase):
         self.assertIsNone(ozel_ad_eki("Türklerin", cozumle))  # çokluk eki
         self.assertIsNone(ozel_ad_eki("Konyalıdan", cozumle))  # yapım eki
         self.assertIsNone(ozel_ad_eki("Mayısın", cozumle))  # ay adı: yalnız belirli tarihte
+        self.assertIsNone(ozel_ad_eki("Ömerî", cozumle))  # şapkalı harf ek değil
 
     def test_kitapta_kesmeli_yazilmamis_ad_isaretlenmez(self):
         self.assertEqual(bulunan("Ordu Tibete ulaştı.", Counter()), [])

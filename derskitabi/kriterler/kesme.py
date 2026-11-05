@@ -98,9 +98,14 @@ def _turemis_ozel_ad(kok: str, cozumle: Cozumleyici) -> bool:
     return bool(m) and any(_parcala(a)[1] for a in cozumle(kok[:m.start()]))
 
 
+# K34 doğrulaması: isabet 31/46 = 0,67 (karar kuralı 0,50–0,70 → güven 0,5, "orta öncelik": kontrol edin).
+# Sahtelerin çoğu eski metin aktarımı (Paşa’ların), adı "-ce" ile biten kişi (Meryemce’nin).
+GUVEN = 0.5
+
+
 def _tespit(blok: Blok, alt_tur: str, parca: str, aciklama: str) -> Tespit:
     return Tespit(sayfa_no=blok.sayfa_no, blok_no=blok.blok_no, bbox=blok.bbox, kriter="yazim",
-                  aciklama=aciklama, guven_skoru=1.0, basili_sayfa_no=blok.basili_sayfa_no,
+                  aciklama=aciklama, guven_skoru=GUVEN, basili_sayfa_no=blok.basili_sayfa_no,
                   alt_tur=alt_tur, metin_parcasi=parca)
 
 
@@ -114,6 +119,8 @@ def ozel_ad_eki(kelime: str, cozumle: Cozumleyici) -> str | None:
     if kok.lower() in TARIH_ADLARI or _turemis_ozel_ad(kok, cozumle):
         return None
     n = len(kok)
+    if any(c in "âîûÂÎÛ" for c in kelime[n - 1:]):
+        return None  # "Ömerî": şapkalı harf ek değildir (doğrulamadan sonra bulunan hata, K34 sonucu)
     if kelime[:n].lower() == kok.lower():
         return f"{kelime[:n]}'{kelime[n:]}"
     if kelime[:n - 1].lower() == kok[:n - 1].lower():  # yumuşama: "Kerküğe" — TDK: Kerkük'e

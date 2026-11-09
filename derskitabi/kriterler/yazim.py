@@ -81,6 +81,11 @@ def tr_kucuk(k: str) -> str:
     return k.replace("I", "ı").replace("İ", "i").lower()
 
 
+def tr_buyuk(k: str) -> str:
+    """Türkçeye uygun büyük harf: i -> İ, ı -> I (Python'un upper() bunları yanlış çevirir)."""
+    return k.replace("i", "İ").replace("ı", "I").upper()
+
+
 def son_unlu(k: str) -> str | None:
     return next((c for c in reversed(k.lower()) if c in UNLULER), None)
 
@@ -316,6 +321,70 @@ def buyuk_harf_i_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci]) -> li
     return tespitler
 
 
+NISPET_SOZLUK = {
+    "milli": "millî",
+    "gayrimilli": "gayrimillî",
+    "millilik": "millîlik",
+    "millilesme": "millîleşme",
+    "millilestirme": "millîleştirme",
+}
+_RE_NISPET = re.compile(r"\b(milli|gayrimilli|millilik|millilesme|millilestirme)\b")
+
+
+def nispet_i_denetimi(bloklar: list[Blok], kitap_bloklari: list[Blok] | None = None) -> list[Tespit]:
+    """Nispet î'si (düzeltme işareti) eksikliği denetimi (K41).
+
+    TDK'ye göre nispet eki düzeltme işaretiyle yazılması gereken sınırlı listedeki
+    kelimeleri denetler. Bir kitapta aynı yazım çok kez geçiyorsa her geçişi ayrı tespit
+    yapmaz; kitap başına ilk geçişte tek bir tespit ve geçiş sayısı notu üretir.
+    """
+    sayac = Counter()
+    ilk_blok = {}
+    kaynak = kitap_bloklari or bloklar
+    for b in kaynak:
+        if b.tur not in ("paragraf", "kisa"):
+            continue
+        metin = tr_kucuk(b.metin)
+        for m in _RE_NISPET.finditer(metin):
+            kelime = m.group(1)
+            sayac[kelime] += 1
+            if kelime not in ilk_blok:
+                orijinal_m = re.search(rf"\b{re.escape(kelime)}\b", b.metin, re.I)
+                parca = orijinal_m.group(0) if orijinal_m else kelime
+                ilk_blok[kelime] = (b, parca)
+    tespitler = []
+    hedef_idler = {id(b) for b in bloklar}
+    for kelime, sayi in sayac.items():
+        b, parca = ilk_blok[kelime]
+        if id(b) not in hedef_idler:
+            continue
+        dogru = NISPET_SOZLUK[kelime]
+        if parca.isupper():
+            dogru_bicim = tr_buyuk(dogru)
+        elif parca[:1].isupper():
+            dogru_bicim = dogru.capitalize()
+        else:
+            dogru_bicim = dogru
+        not_metin = f" (bu yazım kitapta {sayi} kez geçiyor)" if sayi > 1 else ""
+        tespitler.append(_tespit(
+            b, "duzeltme_isareti_nispet", 0.5, parca,
+            f"'{parca}' yazımında düzeltme işareti eksik ('{dogru_bicim}' olmalı, TDK){not_metin}."
+        ))
+    return tespitler
+
+
+_RAKAM_HARF_BIRIMLER = {
+    "puan", "derece", "kelvin", "volt", "watt", "ohm", "amper", "joule", "kalori", "kcal",
+    "km", "cm", "mm", "nm", "pm", "m", "kg", "g", "mg", "ton", "litre", "ml",
+    "sn", "saniye", "dakika", "dk", "saat", "gün", "hafta", "ay", "yıl",
+    "kişi", "adet", "tane", "net", "kat", "oranında", "cinsinden", "seviyesi",
+    "ile", "veya", "ve", "ila", "hariç", "dışında",
+}
+_RE_TEK_0 = re.compile(r"(?:^|(?<=[\s(«“]))0\s+([a-zçğıöşü]{3,})")
+_RE_KELIME_ICI_0 = re.compile(r"\b([a-zA-ZçğıöşüÇĞİÖŞÜ]+0[a-zA-ZçğıöşüÇĞİÖŞÜ]+)\b")
+_RE_KELIME_BASI_0 = re.compile(r"(?<![a-zA-ZçğıöşüÇĞİÖŞÜ0-9])0([a-zçğıöşü]{3,})\b")
+
+
 def kural_denetimi(blok: Blok) -> list[Tespit]:
     metin = _WEB.sub(lambda w: " " * len(w.group(0)), blok.metin)
     tespitler = []
@@ -373,6 +442,35 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
         tespitler.append(_tespit(
             blok, "noktalama_ters_tirnak", 1.0, parca,
             "Açılış tırnağı olarak ters (kapanış) tırnak işareti ('”') kullanılmış (doğrusu '“' olmalı)."
+        ))
+
+    # R16: Rakamın harf yerine dizilmesi (0 civar / c0var vb.) (K41)
+    for m in _RE_TEK_0.finditer(metin):
+        sonraki = m.group(1).lower()
+        if sonraki in _RAKAM_HARF_BIRIMLER:
+            continue
+        civardaki_sayilar = re.findall(r"\b\d+\b", metin[max(0, m.start() - 30):min(len(metin), m.end() + 30)])
+        if len(civardaki_sayilar) >= 3:
+            continue
+        parca = m.group(0).strip()
+        tespitler.append(_tespit(
+            blok, "dizgi_rakam_harf", 0.5, parca,
+            f"Tek başına '0' rakamı büyük 'O' harfi yerine dizilmiş olabilir ('O {m.group(1)}'?)."
+        ))
+    for m in _RE_KELIME_ICI_0.finditer(metin):
+        parca = m.group(1)
+        tespitler.append(_tespit(
+            blok, "dizgi_rakam_harf", 0.5, parca,
+            f"'{parca}' kelimesinde '0' rakamı harf yerine dizilmiş olabilir."
+        ))
+    for m in _RE_KELIME_BASI_0.finditer(metin):
+        sonraki = m.group(1).lower()
+        if sonraki in _RAKAM_HARF_BIRIMLER:
+            continue
+        parca = m.group(0)
+        tespitler.append(_tespit(
+            blok, "dizgi_rakam_harf", 0.5, parca,
+            f"Kelime başında '0' rakamı büyük 'O' harfi yerine dizilmiş olabilir ('O{m.group(1)}'?)."
         ))
 
     if blok.tur != "paragraf" or _aralikli_mi(metin):
@@ -488,6 +586,8 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
             kural_tespitleri += satira_bagla(buyuk_harf_i_denetimi(b, denetciler), grup, b.metin)
             if kesme_cozumleyici:
                 kural_tespitleri += satira_bagla(kesme.kesme_denetimi(b, kesmeli, kesme_cozumleyici), grup, b.metin)
+
+    kural_tespitleri += nispet_i_denetimi(bloklar, kitap_bloklari)
 
     kitap_kelimeleri = kitap_kelime_sayilari(kitap_bloklari or bloklar)
     terimler = kitaba_ozel_terimler({tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri},

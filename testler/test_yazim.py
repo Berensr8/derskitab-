@@ -183,6 +183,22 @@ class KuralTesti(unittest.TestCase):
         self.assertIn("noktalama_ters_tirnak", [x.alt_tur for x in t])
         self.assertEqual(t[0].guven_skoru, 1.0)
 
+    def test_r16_dizgi_rakam_harf(self):
+        t1 = kural_denetimi(blok("NİN HAYATI (…) 0 civar karyelerinden birinde doğdu."))
+        self.assertEqual([x.alt_tur for x in t1], ["dizgi_rakam_harf"])
+        self.assertEqual(t1[0].metin_parcasi, "0 civar")
+        self.assertEqual(t1[0].guven_skoru, 0.5)
+
+        t2 = kural_denetimi(blok("Köylüler c0var tepelerini aştılar."))
+        self.assertEqual([x.alt_tur for x in t2], ["dizgi_rakam_harf"])
+        self.assertEqual(t2[0].metin_parcasi, "c0var")
+
+        # Ölçü birimleri, formüller ve puan ifadeleri atlanır
+        self.assertEqual(kural_denetimi(blok("I. Grup: 0 puan aldı.")), [])
+        self.assertEqual(kural_denetimi(blok("Bugün hava 0 derece.")), [])
+        self.assertEqual(kural_denetimi(blok("Formül H2O olup 30kg ve 10 km yol aldı.")), [])
+        self.assertEqual(kural_denetimi(blok("Büyütme 40x olarak ayarlandı.")), [])
+
 
 class YardimciTesti(unittest.TestCase):
     def test_turkce_kucuk_harf(self):
@@ -243,6 +259,29 @@ class BuyukHarfITesti(unittest.TestCase):
         b = blok("ISITICI VE SOĞUTUCU DNA ATP")
         t = buyuk_harf_i_denetimi(b, sahte_arac)
         self.assertEqual(t, [])
+
+
+class NispetDuzeltmeIsaretiTesti(unittest.TestCase):
+    def test_nispet_i_tek_tespit_ve_sayim(self):
+        from derskitabi.kriterler.yazim import nispet_i_denetimi
+        b1 = blok("MİLLİ EDEBİYAT DÖNEMİ", tur="kisa")
+        b2 = blok("Milli Edebiyat akımı ve milli marşımız üzerine çalıştı.", tur="paragraf")
+        t = nispet_i_denetimi([b1, b2])
+        self.assertEqual(len(t), 1)
+        self.assertEqual(t[0].alt_tur, "duzeltme_isareti_nispet")
+        self.assertEqual(t[0].guven_skoru, 0.5)
+        self.assertEqual(t[0].metin_parcasi, "MİLLİ")
+        self.assertIn("MİLLÎ", t[0].aciklama)
+        self.assertIn("3 kez geçiyor", t[0].aciklama)
+
+    def test_kucuk_harfli_milli(self):
+        from derskitabi.kriterler.yazim import nispet_i_denetimi
+        b = blok("Bu bir milli meseledir.")
+        t = nispet_i_denetimi([b])
+        self.assertEqual(len(t), 1)
+        self.assertEqual(t[0].metin_parcasi, "milli")
+        self.assertIn("millî", t[0].aciklama)
+        self.assertNotIn("kez geçiyor", t[0].aciklama)
 
 
 if __name__ == "__main__":

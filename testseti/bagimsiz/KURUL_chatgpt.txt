@@ -1,0 +1,103 @@
+Kimlik	Karar	Alıntı içinde mi?	Doğrusu (yalnız HATA ise)	Gerekçe
+K001	HATA DEĞİL (PDF)	HAYIR	—	Derece işareti (°) PDF aktarımında küçük o harfine dönüşmüş olabilir.
+K002	HATA DEĞİL (PDF)	HAYIR	—	Fazladan boşluk, satır sonu bölünmesinin ve PDF metin çıkarımının sonucu olabilir.
+K003	HATA DEĞİL (alıntı)	EVET	—	Eski metindeki düzeltme işareti özgün yazımın parçasıdır.
+K004	HATA DEĞİL	EVET	—	Nazariyatçı sözcüğü kuramcı anlamında kullanılan doğru bir sözcüktür.
+K005	HATA DEĞİL	EVET	—	Irgat sözcüğü yönelme eki aldığında ırgada biçiminde yazılır.
+K006	HATA DEĞİL	HAYIR	—	Lob sözcüğünün üçüncü tekil iyelik eki almış biçimi doğrudur.
+K007	HATA DEĞİL (alıntı)	EVET	—	Zarf-fiilden sonraki virgül, aktarılan edebî metnin özgün noktalamasıdır.
+K008	HATA DEĞİL (alıntı)	EVET	—	Didi, tarihî şiirin dil özelliklerini yansıtan özgün biçimdir.
+K009	HATA	HAYIR	1. ve 2. soruları	Bağlaç olan ve, iki sıra sayısı arasında küçük harfle yazılmalıdır.
+K010	HATA DEĞİL (alıntı)	EVET	—	Şiirdeki halinde yazımı şairin özgün imlası olarak korunur.
+K011	HATA	HAYIR	Millî Edebiyat Dönemi	Tarihî dönem adının bütün sözcükleri büyük harfle başlamalıdır.
+K012	HATA	HAYIR	dışarıdan	TDK'ye göre dışarı sözcüğü ek aldığında son ünlüsü düşmez.
+K013	HATA DEĞİL (alıntı)	EVET	—	Virgül kullanımı yazarın aktarılan metindeki özgün noktalamasıdır.
+K014	HATA DEĞİL (alıntı)	EVET	—	Lûtf sözcüğünün tarihî yazımı alıntıda korunmuştur.
+K015	HATA DEĞİL (alıntı)	EVET	—	Belâ biçimi edebî metnin dönemsel yazım tercihidir.
+K016	HATA DEĞİL (alıntı)	EVET	—	Mehmed, kişi adının tarihî yazılış biçimidir.
+K017	HATA DEĞİL (alıntı)	EVET	—	Listelenen sözcüklerin düzeltme işaretleri eski metnin özgün imlasını yansıtır.
+K018	HATA DEĞİL (alıntı)	EVET	—	Güncel bitişik yazımı dörtnala olsa da ayrı biçim alıntının özgün yazımıdır.
+K019	HATA DEĞİL (alıntı)	EVET	—	Tanpınar'ın metnindeki tarihî düzeltme işaretleri korunmalıdır.
+K020	HATA DEĞİL (alıntı)	EVET	—	Sadef eski metinde kullanılan biçimdir ve yanında güncel karşılığı açıklanmıştır.
+K021	HATA	HAYIR	Zorlandığım konularla baş etmek için kullandığım yöntemler	Öz değerlendirme formunda kişi eki diğer ifadelerle tutarlı olmalıdır.
+K022	HATA DEĞİL (alıntı)	EVET	—	Gemi adıyla kullanılan özel ad ekleri kesme işaretiyle ayrılmıştır.
+K023	HATA DEĞİL (alıntı)	EVET	—	Olmağa biçimi eski anlatının özgün dil özelliğidir.
+K024	HATA DEĞİL (PDF)	HAYIR	—	Moleküllerinin sözcüğündeki ü harfinin PDF metin aktarımında bozulduğu anlaşılıyor.
+K025	HATA	BİLİNMİYOR	Postman da	Kastedilen düşünür Neil Postman ise soyadının Postmen yazılması harf hatasıdır.
+K026	HATA DEĞİL	HAYIR	—	Gözlük ve önlük laboratuvar güvenlik malzemelerinin doğru adlarıdır.
+K027	HATA DEĞİL	HAYIR	—	İfade dil bilgisi ve yazım bakımından doğrudur.
+K028	HATA DEĞİL (PDF)	HAYIR	—	Büyük İ harflerinin PDF aktarımında noktasız I biçiminde görünmesi olasıdır.
+K029	HATA DEĞİL (PDF)	HAYIR	—	Geçişidir sözcüğündeki ş harfinin PDF metin çıkarımında bozulduğu anlaşılıyor.
+K030	HATA	EVET	nefes edeyim	Bağlamda nefes etmek kastedilirken nefes sözcüğünün bir harfi eksilmiştir.
+K031	HATA	BİLİNMİYOR	r parçasıdır. (...)	Noktadan sonra gelen yay ayraçtan önce boşluk bırakılmalıdır.
+K032	HATA DEĞİL (alıntı)	EVET	—	Nisan sözcüğünün büyük harfle yazılması aktarılan metnin özgün tercihidir.
+K033	HATA DEĞİL (alıntı)	EVET	—	Yararlanılamıyacak biçimi eski yazım anlayışını yansıttığından alıntıda korunur.
+K034	HATA DEĞİL (alıntı)	EVET	—	Rabbime sözcüğünün küçük harfle yazımı aktarılan anlatının özgün biçimidir.
+K035	HATA DEĞİL (alıntı)	EVET	—	Lâyık biçimindeki düzeltme işareti eski metnin yazım özelliğidir.
+K036	HATA	HAYIR	Yağ asidi	Asit sözcüğü iyelik eki aldığında son ünsüzü yumuşar.
+K037	HATA DEĞİL (alıntı)	EVET	—	Seslenme sonrasındaki virgül eksikliği özgün diyalog noktalaması kapsamında değerlendirilir.
+K038	HATA DEĞİL	EVET	—	Ekol sözcüğünden sonraki de ayrı yazılan bağlaçtır.
+K039	HATA	EVET	O civar karyelerinden	O harfi yerine sıfır rakamı kullanılması dizgi kazasıdır.
+K040	HATA DEĞİL	HAYIR	—	Kondrin, kıkırdak dokunun ara maddesi için kullanılan bilimsel terimdir.
+K041	HATA DEĞİL	HAYIR	—	Kına çiçeğigiller bitki familyasının sözlükte bulunan adıdır.
+K042	HATA	HAYIR	asit-baz	Asit ve baz karşıt kavramlarını birleştiren terimde kısa çizgi kullanılmalıdır.
+K043	HATA DEĞİL	HAYIR	—	Filogenetik, evrimsel akrabalıkla ilgili doğru bilimsel terimdir.
+K044	HATA DEĞİL	HAYIR	—	Fâyık, eski dilde yüce ve üstün anlamına gelen gerçek bir sözcüktür.
+K045	HATA DEĞİL	HAYIR	—	Anlat bakalım ifadesi burada tırnak içinde belirtilen bir oyun adlandırmasıdır.
+K046	HATA DEĞİL (alıntı)	EVET	—	Kimseneyi biçimi tarihî şiirin özgün söyleyişini yansıtır.
+K047	HATA DEĞİL (alıntı)	EVET	—	Şurda, tiyatro kişisinin konuşma dilini yansıtan özgün biçimdir.
+K048	HATA	HAYIR	Balkan Savaşları'na	Tarihî olay adlarına gelen durum ekleri kesme işaretiyle ayrılır.
+K049	HATA DEĞİL (alıntı)	EVET	—	Mısraı biçimi Tanpınar'ın metnindeki eski çekim ve yazım tercihidir.
+K050	HATA DEĞİL (alıntı)	EVET	—	On yedi günümüzde ayrı yazılsa da onyedi biçimi edebî alıntının özgün yazımıdır.
+K051	HATA DEĞİL (alıntı)	EVET	—	Mikdar eski metinde kullanılan dönemsel yazım biçimidir.
+K052	HATA DEĞİL (PDF)	HAYIR	—	Verilen bağlamda doğru biçim olan eşik şiddetinden zaten bulunmaktadır.
+K053	HATA DEĞİL	HAYIR	—	Nelere sözcüğü ne soru zamirinin yönelme durumundaki doğru biçimidir.
+K054	HATA DEĞİL	HAYIR	—	Katabolik biyolojide yıkım tepkimelerini niteleyen doğru terimdir.
+K055	HATA	HAYIR	ASYA'NIN KANDİLLERİ	Asya özel adına getirilen ilgi eki kesme işaretiyle ayrılmalıdır.
+K056	HATA	HAYIR	“Analitik Dereceli Puanlama Anahtarı”	Açılış ve kapanış tırnakları aynı türden ve birbirine uygun olmalıdır.
+K057	HATA DEĞİL	EVET	—	Okudunuzsa biçimi şart ekinin sözcüğe bitişik getirilmesiyle oluşmuştur.
+K058	HATA	EVET	“Yüce dağların başında …”	Açılışta kapanış tırnağının kullanılması özgün imla tercihi değil dizgi hatasıdır.
+K059	HATA	HAYIR	Millî; MİLLÎ EDEBİYAT; Millî Edebiyat; Millî Mücadele’nin; Millî Mücadele ile/de	TDK'nin standart yazımında millî sözcüğündeki düzeltme işareti korunur.
+K060	HATA DEĞİL (alıntı)	EVET	—	Âbıhayat, güncel abıhayat biçiminden farklı olan özgün edebî yazımdır.
+K061	HATA DEĞİL (PDF)	HAYIR	—	Yüksek sözcüğündeki ü harfinin PDF metin aktarımında kaybolduğu anlaşılıyor.
+K062	HATA DEĞİL	HAYIR	—	ml, mililitreyi gösteren kabul edilebilir birim simgesidir.
+K063	HATA	HAYIR	kazanır (Görsel 1.26).	Görsel göndermesi ilgili cümleye bağlanmalı ve nokta kapanış ayracından sonra konmalıdır.
+K064	HATA DEĞİL (alıntı)	EVET	—	Seslenme ifadesinin noktalaması aktarılan romanın özgün üslubudur.
+K065	HATA DEĞİL	EVET	—	Soru işaretinden sonra iki nokta kullanılması TDK'nin kabul ettiği bir kullanımdır.
+K066	HATA DEĞİL (PDF)	HAYIR	—	Geçirgen sözcüğündeki ç harfi PDF metin çıkarımında bozulmuş görünmektedir.
+K067	HATA DEĞİL (PDF)	HAYIR	—	Seçici sözcüğündeki ç harfi PDF aktarımında kaybolmuş görünmektedir.
+K068	HATA DEĞİL (alıntı)	EVET	—	Kesme işaretleri ve tarihî sözcük biçimleri eski metnin özgün yazım özellikleridir.
+K069	HATA DEĞİL	HAYIR	—	Nelerdi, neler sözcüğüne ek fiilin geçmiş zaman ekinin getirilmesiyle doğru oluşmuştur.
+K070	HATA DEĞİL (alıntı)	EVET	—	Câridir biçimindeki düzeltme işareti aktarılan metnin dönemsel yazımıdır.
+K071	HATA DEĞİL (alıntı)	EVET	—	Günümüzde tespit yazılsa da tesbit, yazarın eski yazım tercihidir.
+K072	HATA	EVET	kayalıklar	Küçük l yerine büyük I kullanılması sözcük içinde dizgi hatası oluşturmuştur.
+K073	HATA	HAYIR	gerçekleştiriniz	Sözcüğün başına yanlışlıkla fazladan g harfi eklenmiştir.
+K074	HATA DEĞİL	HAYIR	—	Bazılarınız sözcüğü iyelik ekiyle doğru oluşturulmuştur.
+K075	HATA DEĞİL (alıntı)	EVET	—	Zaya, şiirde kullanılan halk söyleyişini yansıtan özgün biçimdir.
+K076	HATA DEĞİL	HAYIR	—	Pupilla, göz bebeğinin anatomide kullanılan Latince adıdır.
+K077	HATA DEĞİL (alıntı)	EVET	—	Cenab biçimi, şairin adının edebî metindeki tarihî yazılışıdır.
+K078	HATA	HAYIR	sanatın	Ders kitabının açıklama metninde sanat sözcüğünün içine kesme işareti konmaz.
+K079	HATA DEĞİL (alıntı)	EVET	—	Besmele sözcüğünün tırnak ve büyük harfle verilmesi yazarın özgün tercihidir.
+K080	HATA DEĞİL	HAYIR	—	Arke sözcüğüne bulunma durumu eki getirildiğinde arkede biçimi oluşur.
+K081	HATA DEĞİL (alıntı)	EVET	—	Güncel yazımı ıstırap olsa da ızdırap eski edebî metnin özgün biçimidir.
+K082	HATA DEĞİL	EVET	—	Velakin, Türkçede kullanılan eski bir bağlaçtır.
+K083	HATA DEĞİL (alıntı)	EVET	—	Şehire biçimi, edebî anlatının eski çekim tercihidir.
+K084	HATA	HAYIR	Türk edebiyatı	Genel bir edebiyat alanını belirten edebiyatı sözcüğü özel adın parçası olmadığı için küçük yazılır.
+K085	HATA DEĞİL	HAYIR	—	İnflamasyon, tıpta iltihabi tepkiyi ifade eden doğru terimdir.
+K086	HATA DEĞİL	HAYIR	—	Glikoprotein, protein ve karbonhidrat bileşenlerini içeren yapının doğru bilimsel adıdır.
+K087	HATA DEĞİL	HAYIR	—	Anabolik, biyolojide yapım tepkimelerini niteleyen doğru terimdir.
+K088	HATA DEĞİL (alıntı)	EVET	—	Şair Ahmet Muhip Dıranas'ın soyadı tarihî kaynaklarda Dranas olarak da kullanılmıştır.
+K089	HATA DEĞİL (alıntı)	EVET	—	Meş’aleler, şiirin özgün başlığında kullanılan tarihî yazım biçimidir.
+K090	HATA DEĞİL	EVET	—	Habire, sürekli ve durmadan anlamlarında kullanılan doğru bir sözcüktür.
+K091	HATA DEĞİL (alıntı)	EVET	—	Günümüzde birçok bitişik yazılsa da bir çok, Tanpınar'ın özgün yazımıdır.
+K092	HATA DEĞİL (alıntı)	EVET	—	Eflâtun adının ve pervâneleri sözcüğünün tarihî yazımları alıntılarda korunmuştur.
+K093	HATA DEĞİL (PDF)	HAYIR	—	Başlığın başka aktarımında DİNLEME/İZLEME biçimi bulunduğundan nokta kaybı PDF kaynaklı görünmektedir.
+K094	HATA DEĞİL	HAYIR	—	Ta’lik, geleneksel hat sanatında kullanılan tarihî bir terimin aktarım biçimidir.
+K095	HATA DEĞİL	HAYIR	—	Ndan, tırnak içinde verilen Kontrol Tablosu adından sonra gelen doğru durum eki parçasıdır.
+K096	HATA DEĞİL (alıntı)	EVET	—	Yarabbi, edebî diyalogda korunmuş özgün seslenme biçimidir.
+K097	HATA DEĞİL (alıntı)	EVET	—	Oynaşur, tarihî destan metninin eski dil özelliklerini yansıtır.
+K098	HATA DEĞİL (PDF)	BİLİNMİYOR	—	Rust parçasının öncesi kesildiği için tam sözcük PDF metin aktarımından belirlenemiyor.
+K099	HATA	HAYIR	avokado	Meyvenin Güncel Türkçe Sözlük'teki doğru yazımı avokadodur.
+K100	HATA DEĞİL (alıntı)	EVET	—	Halde sözcüğünün düzeltme işaretsiz yazılması yazarın özgün imlasıdır.
+K101	HATA DEĞİL (alıntı)	EVET	—	Duysundu, edebî anlatıda kullanılan özgün kip ve söyleyiş biçimidir.
+K102	HATA	EVET	nefes edeyim; himmet edeyim	İlk ifadede nefes sözcüğünün bir harfi eksiktir ancak ikinci ifade doğrudur.

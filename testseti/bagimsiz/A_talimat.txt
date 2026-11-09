@@ -1,0 +1,25 @@
+Ekteki PDF'te Türkçe ders kitaplarından alınmış 30 sayfa var. Her sayfanın sol üst köşesinde kırmızı bir kod yazıyor (S01, S02 … S30). Bu kodu sayfanın adı olarak kullan.
+
+Görevin: Bu sayfalardaki bütün YAZIM ve NOKTALAMA hatalarını bul. Ölçü: TDK Yazım Kılavuzu (güncel). Sayfaları baştan sona, dikkatle oku; başlıklar, kutular, tablolar, görsel altı yazıları ve soru metinleri de dahil.
+
+Neler sayılır:
+- Yanlış yazılmış kelimeler (harf eksik, fazla, yer değiştirmiş, Türkçe harf yerine Latin harf: "ogrenci" gibi).
+- Bitişik / ayrı yazım hataları ("bir çok", "herşey", bağlaç olan "de/da", "ki", soru eki "mi").
+- Büyük / küçük harf hataları.
+- Kesme işareti hataları (özel ada gelen ekin ayrılmaması, gereksiz kesme).
+- Noktalama hataları (noktalamadan sonra boşluk eksik, yanlış işaret, eksik işaret).
+- Kelime tekrarı ("ve ve") gibi dizgi hataları.
+
+Neler sayılmaz (listeye yazma):
+- Anlatım, üslup ve cümle yapısı tercihleri (anlatım bozukluğu bu çalışmanın konusu değil).
+- Satır sonunda tireyle bölünmüş kelimeler (sayfa düzeni).
+- Bilimsel terimler, yabancı özel adlar, birimler, formüller.
+
+Alıntılar: Şiir, eski metin, halk ağzı ya da imzalı bir yazarın metni içindeki yazım TDK'ya uymasa bile hata değildir (yazarın özgün yazımı). Böyle bir şey görürsen yine yaz ama "Alıntı mı?" sütununa EVET yaz.
+
+Emin olmadığın şeyleri de yaz, "Emin misin?" sütununa HAYIR yaz. Bir yerde hata yoksa uydurma; 30 sayfanın çoğunda hiç hata olmayabilir.
+
+Cevabını yalnız şu tabloyla ver, başka açıklama ekleme:
+Sayfa kodu | Kitaptaki yazım (aynen) | Doğrusu | Hata türü (kısa) | Alıntı mı? (EVET/HAYIR) | Emin misin? (EVET/HAYIR)
+
+Hiç hata bulamadığın sayfaları ayrıca listeleme.

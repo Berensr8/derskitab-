@@ -1,0 +1,56 @@
+ChatGPT cevabı (ekran görüntülerinden aktarıldı: A_chatgpt_1.png, A_chatgpt_2.png)
+Sayfa | Kitaptaki | Doğrusu | Tür | Alıntı | Emin
+S05 | kazanır. (Görsel 1.26). | kazanır (Görsel 1.26). | Noktalama hatası | HAYIR | EVET
+S06 | Yağ asiti | Yağ asidi | Ünsüz yumuşaması | HAYIR | EVET
+S09 | molekullerinin | moleküllerinin | Türkçe harf eksikliği (2 kez) | HAYIR | EVET
+S09 | secici | seçici | Türkçe harf hatası | HAYIR | EVET
+S09 | gecirgen | geçirgen | Türkçe harf hatası | HAYIR | EVET
+S09 | gecişidir | geçişidir | Türkçe harf hatası | HAYIR | EVET
+S09 | yuksek | yüksek | Türkçe harf hatası | HAYIR | EVET
+S22 | yararlanılamıyacak | yararlanılamayacak | Yanlış ek yazımı | EVET | EVET
+S22 | tesbit | tespit | Ünsüz harf hatası | EVET | EVET
+S22 | câridir | caridir | Gereksiz düzeltme işareti | EVET | EVET
+S24 | lâf | laf | Gereksiz düzeltme işareti | EVET | EVET
+S24 | bir çok | birçok | Bitişik/ayrı yazım | EVET | EVET
+S24 | lâzımdır | lazımdır | Gereksiz düzeltme işareti | EVET | EVET
+S24 | tevârüt | tevarüt | Düzeltme işareti | EVET | HAYIR
+S24 | lâtif | latif | Gereksiz düzeltme işareti | EVET | EVET
+S24 | zarâfet | zarafet | Gereksiz düzeltme işareti | EVET | EVET
+S24 | ”Yüce dağların başında | “Yüce dağların başında | Yanlış açılış tırnağı | EVET | EVET
+S24 | kayalıklar | kayalıklar | Büyük I / küçük l karışıklığı | EVET | EVET
+S24 | elâ | ela | Gereksiz düzeltme işareti (2 kez) | EVET | EVET
+S24 | mısraı | mısrası | İyelik eki yazımı | EVET | HAYIR
+S24 | Cenab’ın | Cenap’ın | Özel adın yazımı | EVET | HAYIR
+S24 | Dranas’ın | Dıranas’ın | Özel adın yazımı | EVET | HAYIR
+S25 | 0 civar | O civar | Rakam/harf karışıklığı | EVET | EVET
+S25 | Nihâyet | Nihayet | Gereksiz düzeltme işareti | EVET | EVET
+S25 | kerâmet | keramet | Gereksiz düzeltme işareti | EVET | EVET
+S25 | inâyetlerini | inayetlerini | Gereksiz düzeltme işareti | EVET | EVET
+S25 | mikdar | miktar | Ünsüz harf hatası | EVET | EVET
+S25 | lûtf | lütuf | Eski yazım | EVET | EVET
+S25 | muâmele | muamele | Gereksiz düzeltme işareti | EVET | EVET
+S25 | misâfir | misafir | Gereksiz düzeltme işareti | EVET | EVET
+S25 | Gâfil | Gafil | Gereksiz düzeltme işareti | EVET | EVET
+S25 | dânesine | tanesine | Eski kelime yazımı | EVET | HAYIR
+S25 | def’a | defa | Gereksiz kesme işareti | EVET | EVET
+S25 | lâkin | lakin | Gereksiz düzeltme işareti | EVET | EVET
+S25 | hatânın | hatanın | Gereksiz düzeltme işareti | EVET | EVET
+S25 | pişmân | pişman | Gereksiz düzeltme işareti | EVET | EVET
+S25 | kusûrunu | kusurunu | Gereksiz düzeltme işareti | EVET | EVET
+S25 | i’tiraf | itiraf | Gereksiz kesme işareti | EVET | EVET
+S25 | cevâbı | cevabı | Gereksiz düzeltme işareti | EVET | EVET
+S25 | ta’yin | tayin | Gereksiz kesme işareti | EVET | EVET
+S28 | Nisan mevsiminde | nisan mevsiminde | Büyük/küçük harf | EVET | EVET
+S28 | Nisan yağmurunun | nisan yağmurunun | Büyük/küçük harf | EVET | EVET
+S28 | lâyık | layık | Gereksiz düzeltme işareti | EVET | EVET
+S29 | MİLLİ EDEBİYAT | MİLLÎ EDEBİYAT | Eksik düzeltme işareti | EVET | EVET
+S29 | Milli Edebiyat Dönemi | Millî Edebiyat Dönemi | Eksik düzeltme işareti | EVET | EVET
+S29 | Milli Mücadele’nin | Millî Mücadele’nin | Eksik düzeltme işareti | EVET | EVET
+S29 | Milli Mücadele ile | Millî Mücadele ile | Eksik düzeltme işareti | EVET | EVET
+S29 | Milli Mücadele de | Millî Mücadele de | Eksik düzeltme işareti | EVET | EVET
+S29 | Milli Edebiyat dönemi | Millî Edebiyat Dönemi | Düzeltme işareti / büyük harf (2 kez) | EVET | EVET
+S29 | dışardan | dışarıdan | Ünlü eksikliği | EVET | EVET
+S29 | Türk Edebiyatı | Türk edebiyatı | Büyük/küçük harf | EVET | HAYIR
+S30 | Ali yardım et | Ali, yardım et | Eksik hitap virgülü | EVET | EVET
+S30 | Yarabbi | Ya Rabbi | Bitişik/ayrı yazım | EVET | HAYIR
+S30 | aferin Seyit | aferin, Seyit | Eksik hitap virgülü | EVET | EVET

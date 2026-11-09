@@ -1,0 +1,104 @@
+
+Kimlik	Karar	Alıntı içinde mi?	Doğrusu	Gerekçe
+K001	HATA	HAYIR	oC’ta → °C’ta	Sıcaklık derecesi simgesi °C iken oC yazılmış.
+K002	HATA	HAYIR	Etkileşimli Videosu	Kelime arasında gereksiz iki boşluk var.
+K003	HATA DEĞİL (alıntı)	EVET	—	Eski menkıbe metni; dânesine yazımı dönemin imlası.
+K004	HATA DEĞİL	HAYIR	—	nazariyatçı türetilmiş terim; TDK’ya aykırı değil.
+K005	HATA DEĞİL (alıntı)	EVET	—	Şiir alıntısı; ırgada yazımı şairin tercihi.
+K006	HATA DEĞİL	HAYIR	—	lobu, lob kelimesinin belirtme hâli; doğru.
+K007	HATA	HAYIR	getirip namluya	Sıralı fiiller arasında virgül gereksiz.
+K008	HATA DEĞİL (alıntı)	EVET	—	Eski şiirde didi yazımı dönemin imlası.
+K009	HATA	HAYIR	1. ve 2. soruları	Bağlaç ve soru sözcüğü küçük harfle yazılmalı.
+K010	HATA DEĞİL	HAYIR	—	TDK’ye göre halinde şapkasız doğru.
+K011	HATA	HAYIR	Millî Edebiyat Dönemi	Millî şapkalı, Dönemi büyük harfle olmalı.
+K012	HATA	HAYIR	dışarıdan	dışardan değil dışarıdan doğru.
+K013	HATA	HAYIR	çevirip ateşlediler	Sıralı fiiller arasında virgül gereksiz.
+K014	HATA	HAYIR	lütuf	lûtf değil lütuf doğru.
+K015	HATA DEĞİL (alıntı)	EVET	—	Edebî metin alıntısı; belâ şapkalı yazım yazarın tercihi.
+K016	HATA DEĞİL	HAYIR	—	Mehmed Hilmi özel ad; yazımı doğru.
+K017	HATA DEĞİL (alıntı)	EVET	—	Menkıbe alıntısı; şapkalı kelimeler dönemin imlası.
+K018	HATA	HAYIR	dörtnala	TDK’ye göre dörtnala birleşik yazılır.
+K019	HATA DEĞİL (alıntı)	EVET	—	Tanpınar’dan alıntı; şapkalı yazımlar yazarın imlası.
+K020	HATA	HAYIR	sedef	sadef değil sedef doğru.
+K021	HATA DEĞİL	HAYIR	—	Anlatım bozukluğu var ama yazım hatası değil.
+K022	HATA DEĞİL	HAYIR	—	Ocean Zırhlısı özel gemi adı; yazım doğru.
+K023	HATA DEĞİL (alıntı)	EVET	—	Halk hikâyesi alıntısı; olmağa eski imla.
+K024	HATA	HAYIR	moleküllerinin	Ü ve i harfleri eksik yazılmış.
+K025	HATA	HAYIR	Postmodern de	Postmen değil Postmodern de olmalı.
+K026	HATA DEĞİL	HAYIR	—	gözlük, önlük doğru yazılmış.
+K027	HATA DEĞİL	HAYIR	—	“ilgili kas tepki veremez” doğru.
+K028	HATA	HAYIR	ZARARLI VEYA TAHRIŞ EDİCİ MADDE	EDICI değil EDİCİ olmalı.
+K029	HATA	HAYIR	geçişidir	gecişidir değil geçişidir doğru.
+K030	HATA	HAYIR	nefes edeyim	nefs edeyim değil nefes edeyim olmalı.
+K031	HATA	HAYIR	parçasıdır (…)	Nokta ve parantez birlikte kullanılmaz.
+K032	HATA DEĞİL	HAYIR	—	Nisan ay adı; büyük harfle doğru.
+K033	HATA	HAYIR	yararlanılamayacak	yararlanılamıyacak değil -mayacak doğru.
+K034	HATA DEĞİL (alıntı)	EVET	—	Menkıbe alıntısı; rabbime yazımı dönemin imlası.
+K035	HATA	HAYIR	layık	lâyık değil layık doğru.
+K036	HATA	HAYIR	yağ asidi	Yağ asiti değil yağ asidi doğru.
+K037	HATA	HAYIR	Ali, yardım et	Seslenme için virgül gerekli.
+K038	HATA DEĞİL	HAYIR	—	ekol de bağlacı ayrı ve doğru.
+K039	HATA	HAYIR	o civar	0 (sıfır) değil o (harf) olmalı.
+K040	HATA DEĞİL	HAYIR	—	kondrin biyoloji terimi; doğru.
+K041	HATA DEĞİL	HAYIR	—	çiçeğigillerden familya adı; doğru.
+K042	HATA	HAYIR	asit-baz	asitbaz değil asit-baz ayrı yazılır.
+K043	HATA DEĞİL	HAYIR	—	filogenetik terim; doğru.
+K044	HATA	HAYIR	fayık	fâyık değil fayık doğru.
+K045	HATA DEĞİL	HAYIR	—	“anlat bakalım” tırnak içinde doğru.
+K046	HATA DEĞİL (alıntı)	EVET	—	Şiir alıntısı; kimseneyi eski imla.
+K047	HATA	HAYIR	şurada	şurda değil şurada doğru.
+K048	HATA	HAYIR	Balkan Savaşları’na	Özel ada gelen ek kesme işaretiyle ayrılır.
+K049	HATA DEĞİL	HAYIR	—	mısraı, mısra kelimesinin belirtme hâli; doğru.
+K050	HATA	HAYIR	on yedi	onyedi değil on yedi ayrı yazılır.
+K051	HATA	HAYIR	miktar	mikdar değil miktar doğru.
+K052	HATA	HAYIR	eşik şiddetinden	şiddetten değil şiddetinden olmalı.
+K053	HATA DEĞİL	HAYIR	—	nelere doğru yazılmış.
+K054	HATA DEĞİL	HAYIR	—	katabolik terim; doğru.
+K055	HATA	HAYIR	Asya’nın Kandilleri	ASYANIN KANDİLLERİ değil, büyük harf ve kesme gerekli.
+K056	HATA	HAYIR	“Analitik Dereceli Puanlama Anahtarı”	Açılış “, kapanış ” olmalı; ’ ’ yanlış.
+K057	HATA DEĞİL	HAYIR	—	okudunuzsa doğru.
+K058	HATA	HAYIR	“Yüce dağların başında …”	Ters tırnak kullanılmış; düzeltilmeli.
+K059	HATA	HAYIR	Millî Edebiyat, Millî Mücadele	Milli değil Millî şapkalı olmalı.
+K060	HATA DEĞİL (alıntı)	EVET	—	Eski metin alıntısı; âbıhayat dönemin imlası.
+K061	HATA	HAYIR	yüksek	yuksek değil yüksek doğru.
+K062	HATA DEĞİL	HAYIR	—	200 ml birim yazımı doğru.
+K063	HATA	HAYIR	kazanır (Görsel 1.26).	Nokta ve parantez fazladan kullanılmış.
+K064	HATA	HAYIR	aferin, Seyit	Seslenme için virgül gerekli.
+K065	HATA	HAYIR	bıçak?...	Üç nokta ?.. değil ... olmalı.
+K066	HATA	HAYIR	geçirgen	gecirgen değil geçirgen doğru.
+K067	HATA	HAYIR	seçici	secici değil seçici doğru.
+K068	HATA	HAYIR	defa, itiraf, tayin, pirin / pire	Kesme işaretleri kaldırılmalı; şapkalar yanlış.
+K069	HATA DEĞİL	HAYIR	—	nelerdi doğru.
+K070	HATA	HAYIR	caridir	câridir değil caridir doğru.
+K071	HATA	HAYIR	tespit	tesbit değil tespit doğru.
+K072	HATA	HAYIR	kayalıklar	kayaIıklar; büyük I harfi küçük l olmalı.
+K073	HATA	HAYIR	gerçekleştiriniz	ggerçekleştiriniz; fazladan g var.
+K074	HATA DEĞİL	HAYIR	—	bazılarınız doğru.
+K075	HATA	HAYIR	zayi	zaya değil zayi doğru.
+K076	HATA DEĞİL	HAYIR	—	pupilla Latince terim; doğru.
+K077	HATA DEĞİL	HAYIR	—	Cenab’ın yazımı kabul edilebilir.
+K078	HATA	HAYIR	sanatın	san’atın değil sanatın doğru.
+K079	HATA DEĞİL	HAYIR	—	“Besmele” tırnak içinde doğru.
+K080	HATA	HAYIR	arkegon	ar kede değil arkegon doğru.
+K081	HATA DEĞİL	HAYIR	—	TDK’ye göre ızdırap doğru (ıstırap’a gönderme).
+K082	HATA DEĞİL	HAYIR	—	velakin TDK’de doğru.
+K083	HATA	HAYIR	şehre	şehire değil şehre doğru.
+K084	HATA DEĞİL	HAYIR	—	Türk Edebiyatı özel ad; doğru.
+K085	HATA DEĞİL	HAYIR	—	inflamasyon terim; doğru.
+K086	HATA DEĞİL	HAYIR	—	glikoprotein terim; doğru.
+K087	HATA DEĞİL	HAYIR	—	anabolik terim; doğru.
+K088	HATA DEĞİL	HAYIR	—	Dranas’ın özel ad; doğru.
+K089	HATA	HAYIR	Meşaleler	Meş’aleler değil Meşaleler doğru.
+K090	HATA	HAYIR	ha bire	habire değil ha bire ayrı yazılır.
+K091	HATA	HAYIR	birçok	bir çok değil birçok birleşik.
+K092	HATA	HAYIR	Eflatun, pervaneleri	Eflâtun ve pervâneleri şapkalı yazılmış; doğrusu şapkasız.
+K093	HATA	HAYIR	DİNLEME/İZLEME	DINLEME değil DİNLEME olmalı.
+K094	HATA	HAYIR	talik	ta’lik değil talik doğru.
+K095	HATA	HAYIR	Tablosu’ndan	ndan değil Tablosu’ndan (kesme işareti eksik).
+K096	HATA DEĞİL	HAYIR	—	Yarabbi yazımı TDK’de kabul edilebilir.
+K097	HATA DEĞİL (alıntı)	EVET	—	Destan alıntısı; oynaşur eski imla.
+K098	EMİN DEĞİLİM	BİLİNMİYOR	—	Bağlam yetersiz; rust kelimesinin doğrusu belirsiz.
+K099	HATA	HAYIR	avokado	avakado değil avokado doğru.
+K100	HATA DEĞİL	HAYIR	—	TDK’ye göre halde şapkasız doğru.
+K101	HATA	HAYIR	duydu	duysundu diye bir çekim yok; duydu olmalı.
+K102	HATA	HAYIR	nefes edeyim	nefs edeyim değil nefes edeyim olmalı.

@@ -1,0 +1,103 @@
+Kimlik | Karar | Alıntı içinde mi? (EVET/HAYIR/BİLİNMİYOR) | Doğrusu (yalnız HATA ise) | Gerekçe (tek kısa cümle)
+K001 | HATA DEĞİL (PDF) | HAYIR | | PDF'ten metin çıkarılırken üst simge olan derece işareti (°) "o" harfine dönüşmüştür.
+K002 | HATA DEĞİL (PDF) | HAYIR | | Çevre metinde "Vi- deosu" şeklinde satır sonunda bölünen kelimenin birleşirken oluşturduğu PDF kaynaklı çift boşluktur.
+K003 | HATA DEĞİL (alıntı) | EVET | | İmzalı/tarihî menkıbe metninde yazarın özgün imlasına ("dâne") sadık kalınmıştır.
+K004 | HATA DEĞİL | EVET | | "Nazariyatçı" kelimesi TDK Güncel Türkçe Sözlük'te yer alan doğru bir kullanımdır.
+K005 | HATA DEĞİL | EVET | | "Irgat" kelimesi ünlüyle başlayan yönelme durumu eki aldığında ünsüz yumuşamasına uğrayarak "ırgada" şeklinde yazılır.
+K006 | HATA DEĞİL | HAYIR | | Tıp ve biyoloji terimi olan "lob", ünlüyle başlayan ek aldığında "lobu" biçiminde yazılır.
+K007 | HATA DEĞİL (alıntı) | EVET | | Mehmet Niyazi'nin eserinden alınan metinde zarf-fiilden sonra virgül kullanılması yazarın dönemsel/özgün noktalama tercihidir.
+K008 | HATA DEĞİL (alıntı) | EVET | | Eski Anadolu Türkçesiyle yazılmış divan şiiri metninde dönemin özgün dil ve imla özelliği ("didi") korunmuştur.
+K009 | HATA | HAYIR | 1. ve 2. soruları | Cümle içinde yer alan "ve" bağlacı ile "soruları" kelimesinin ilk harfleri küçük yazılmalıdır.
+K010 | HATA DEĞİL (alıntı) | EVET | | Yazarın (Yusuf Ziya Ortaç) özgün metninde düzeltme işareti kullanmadan yazdığı "halinde" imlası korunmuştur.
+K011 | HATA | HAYIR | Millî Edebiyat Dönemi | Tarihî ve edebî dönem adlarında kelimelerin ilk harfleri büyük yazılır ve "Millî" kelimesinde düzeltme işareti kullanılır.
+K012 | HATA | HAYIR | dışarıdan | "Dışarı" kelimesi "-dan" eki aldığında ünlü düşmesi göstermez, TDK'ye göre "dışarıdan" şeklinde yazılır.
+K013 | HATA DEĞİL (alıntı) | EVET | | İmzalı edebî alıntıda zarf-fiil ekinden sonra virgül konması yazarın kendi noktalama tercihidir.
+K014 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde yazarın eski yazım geleneğine uygun "lûtf" biçimindeki özgün imlası korunmuştur.
+K015 | HATA DEĞİL (alıntı) | EVET | | Edebî alıntıda yazarın "belâ" kelimesinde kullandığı düzeltme işareti özgün metin imlası olarak korunmuştur.
+K016 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde kişi adının eski imla ile "Mehmed" şeklinde yazımı yazarın özgün tercihidir.
+K017 | HATA DEĞİL (alıntı) | EVET | | Alıntılanan metinde yazarın uzun ünlüler için kullandığı düzeltme işaretleri dönemin/yazarın özgün imlasıdır.
+K018 | HATA DEĞİL (alıntı) | EVET | | Güncel yazımı "dörtnala" (bitişik) olsa da Ahmet Hamdi Tanpınar'ın metnindeki özgün ayrı yazımı korunmuştur.
+K019 | HATA DEĞİL (alıntı) | EVET | | Ahmet Hamdi Tanpınar'dan yapılan alıntıda yazarın düzeltme işaretli ve dönemsel kelime yazımları korunmuştur.
+K020 | HATA DEĞİL | EVET | | Metinde kelimenin eski/geleneksel biçimi verilmiş ve hemen yanında parantez içinde güncel karşılığı ("sedef") açıklanmıştır.
+K021 | HATA | HAYIR | 4. Zorlandığım konularla … kullandığım yöntemler | Öz değerlendirme formunun diğer maddeleri birinci tekil şahıs ("zorlandığım") iken bu maddede "Zorlandığınız" denmesi anlatım/dizgi hatasıdır.
+K022 | HATA | EVET | Ocean zırhlısına / Ocean zırhlısının | Gemi özel adından sonra gelen tür adı ("zırhlı") küçük harfle başlar ve aldığı çekim ekleri kesme işaretiyle ayrılmaz (alıntıda da olsa bariz kural hatasıdır, yahut alıntı tercihi sayılırsa yazarın kullanımıdır ancak modern imlada hatadır).
+K023 | HATA DEĞİL (alıntı) | EVET | | Halk hikâyesi alıntısında geçen "olmağa" yazımı, metnin alındığı kaynağın ve dönemin özgün imlasıdır.
+K024 | HATA | HAYIR | moleküllerinin | Kitap metninde "moleküllerinin" kelimesindeki "ü" harfinin noktasız ("u") dizilmesi bir dizgi hatasıdır.
+K025 | HATA | HAYIR | Postman de | Yazarın soyadı "Postman" olup okunuşa göre ("Postmen") aldığı "de" bağlacı ince ünlü uyumuyla yazılmalıdır.
+K026 | HATA DEĞİL | HAYIR | | Deney malzemelerinin sıralandığı listede eş görevli kelimeler arasında virgül kullanılması doğrudur.
+K027 | HATA DEĞİL | HAYIR | | Cümlede dil bilgisi, yazım veya noktalama açısından herhangi bir yanlışlık bulunmamaktadır.
+K028 | HATA | HAYIR | ZARARLI VEYA TAHRİŞ EDİCİ MADDE | Türkçede büyük harfli yazılımlarda "İ" harfinin noktası korunur; "I" olarak yazılması dizgi/font hatasıdır.
+K029 | HATA | HAYIR | geçişidir | Kelimedeki "ç" harfinin "c" olarak yazılması ("gecişidir") açık bir dizgi hatasıdır.
+K030 | HATA | EVET | nefes edeyim | Menkıbede "nefes edeyim" (okuyup üfleyeyim, bereketlendireyim) anlamındaki sözün "nefs" olarak yazılması dizgi hatasıdır.
+K031 | HATA DEĞİL (PDF) | EVET | | "bir parçasıdır" ifadesindeki "bi" kısmının görünmemesi PDF metin çıkarma/kırpma kaynaklı bir bozulmadır.
+K032 | HATA | EVET | nisan mevsiminde / nisan yağmurunun | Belirli bir tarih bildirmeyen ay adları küçük harfle başlar.
+K033 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde daralma kuralına göre eski imla ile yazılmış "yararlanılamıyacak" biçimi yazarın özgün yazımıdır.
+K034 | HATA DEĞİL (alıntı) | EVET | | Halk hikâyesi metnindeki imla ve noktalama, kaynak metnin özgün yapısını yansıtmaktadır.
+K035 | HATA DEĞİL (alıntı) | EVET | | Edebî/tasavvufi alıntı metinde yazarın düzeltme işaretli "lâyık" yazımı özgün imla olarak korunmuştur.
+K036 | HATA | HAYIR | Yağ asidi | "Asit" kelimesi ünlüyle başlayan ek aldığında ünsüz yumuşamasına uğrayarak "asidi" şeklinde yazılır.
+K037 | HATA DEĞİL (alıntı) | EVET | | Edebî alıntıda seslenme sözünden sonra virgül kullanılmaması yazarın özgün noktalama tercihidir.
+K038 | HATA DEĞİL | EVET | | "Ekol" kelimesinden sonra gelen "de" bağlacı ayrı ve ünlü uyumuna uygun olarak doğru yazılmıştır.
+K039 | HATA | EVET | O civar karyelerinden | Büyük "O" harfi yerine "0" (sıfır) rakamının basılması alıntı içinde de olsa açık bir dizgi kazasıdır.
+K040 | HATA DEĞİL | HAYIR | | Kıkırdak doku ara maddesini ifade eden "kondrin" biyoloji terimi olarak doğru yazılmıştır.
+K041 | HATA | HAYIR | Kına çiçeğigillerden (veya kınaçiçeğigillerden / ayrımda hata yok, ancak TDK'de familya adı bitişik veya kına çiçeğigiller) -> HATA DEĞİL | HAYIR | | TDK Güncel Türkçe Sözlük'te "kına çiçeği" tanımında "Kına çiçeğigillerden, çiçekleri..." ifadesi birebir bu yazımla yer almaktadır.
+K042 | HATA | HAYIR | asit-baz | İki kelimenin birleşimiyle oluşan terimde araya kısa çizgi konmalı veya ayrı yazılmalıdır ("asit-baz dengesi").
+K043 | HATA DEĞİL | HAYIR | | Biyolojide evrimsel akrabalığa dayalı sınıflandırmayı ifade eden "filogenetik" terimi doğru yazılmıştır.
+K044 | HATA | HAYIR | fakr | Sözlük/kelime kutusunda "Azlık, yokluk" anlamına gelen "fakr" kelimesinin bir önceki "fâyık" maddesiyle karışıp tekrar dizilmesi dizgi hatasıdır.
+K045 | HATA | HAYIR | “Anlat Bakalım” | Özel oyun adlarının her kelimesi büyük harfle başlar ve Türkçede eğik/kıvrık çift tırnak (“ ”) kullanılır.
+K046 | HATA DEĞİL (alıntı) | EVET | | Divan/halk şiiri alıntısında ölçü ve dönem dili gereği kullanılan "kimseneyi" biçimi özgün kullanımdır.
+K047 | HATA DEĞİL (alıntı) | EVET | | Tiyatro metninde konuşma dilini yansıtan "şurda" yazımı yazarın bilinçli ve özgün tercihidir.
+K048 | HATA | HAYIR | Balkan Savaşları'na | Tarihî olay ve savaş adlarına gelen çekim ekleri kesme işaretiyle ayrılır.
+K049 | HATA DEĞİL | EVET | | Sonunda noktalama işareti bulunmayan "mısra" kelimesine gelen "-ı" iyelik eki bitişik ve kesmesiz olarak doğru yazılmıştır.
+K050 | HATA DEĞİL (alıntı) | EVET | | Edebî öykü alıntısında sayının "onyedi" şeklinde bitişik yazılması yazarın özgün imlasıdır.
+K051 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde kelimenin dönemsel/özgün biçimi olan "mikdar" yazımı korunmuştur.
+K052 | HATA DEĞİL | HAYIR | | Çevre metinde zaten "eşik şiddetinden" şeklinde doğru yazılmış olup biyoloji terimi olarak kullanımı uygundur.
+K053 | HATA DEĞİL | HAYIR | | Soru zamiri olan "nelere" kelimesinin yazımı ve cümledeki kullanımı doğrudur.
+K054 | HATA DEĞİL | HAYIR | | Biyolojide yıkım tepkimelerini ifade eden "katabolik" terimi doğru yazılmıştır.
+K055 | HATA DEĞİL | BİLİNMİYOR | | Görsel içindeki kitap/eser kapağı veya başlık tasarımında kesme işareti kullanılmaması grafik/özgün kapak tasarımı kaynaklıdır (veya HATA: ASYA'NIN KANDİLLERİ).
+K056 | HATA | HAYIR | “Analitik Dereceli Puanlama Anahtarı” | Tırnak işareti kapatılırken çift tırnak (”) yerine iki adet tek tırnak (’’) kullanılması dizgi hatasıdır.
+K057 | HATA DEĞİL | HAYIR | | "Okudunuz ise" birleşik çekiminin "okudunuzsa" şeklinde bitişik yazımı TDK kurallarına uygundur.
+K058 | HATA | EVET | “Yüce dağların başında …” | Açılış tırnağı olarak kapanış yönlü tırnak işareti (”) kullanılması dizgi hatasıdır.
+K059 | HATA | HAYIR | Millî (MİLLÎ EDEBİYAT, Millî Edebiyat, Millî Mücadele’nin, Millî Mücadele) | Nispet eki alan "Millî" kelimesinde düzeltme işareti (î) kullanılmaması yazım hatasıdır.
+K060 | HATA DEĞİL (alıntı) | EVET | | TDK'de "abıhayat" olarak geçse de alıntı metindeki "âbıhayat" biçimi kaynak metnin özgün imlasıdır.
+K061 | HATA | HAYIR | yüksek | Kelimedeki "ü" harfinin noktasız ("u") basılması açık bir dizgi hatasıdır.
+K062 | HATA DEĞİL | HAYIR | | Mililitre kısaltması olarak "ml" (veya "mL") kullanımı ders kitaplarında ve TDK'de kabul görmektedir.
+K063 | HATA | HAYIR | kazanır (Görsel 1.26). | Cümle sonundaki parantez açıklamalarından önce nokta konulmaz; nokta yalnızca parantez kapandıktan sonra konur.
+K064 | HATA DEĞİL (alıntı) | EVET | | İmzalı edebî alıntıda ünlem/hitap ifadesinde virgül kullanılmaması yazarın özgün noktalama tercihidir.
+K065 | HATA DEĞİL (alıntı) | EVET | | Edebî alıntıda soru işaretinden sonra iki nokta ("?..") konulması yazarın ve dönemin yaygın noktalama tercihidir.
+K066 | HATA | HAYIR | geçirgen | Kelimedeki "ç" harfinin "c" olarak basılması ("gecirgen") dizgi hatasıdır.
+K067 | HATA | HAYIR | seçici | Kelimedeki "ç" harfinin "c" olarak basılması ("secici") dizgi hatasıdır.
+K068 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde ayın harfini göstermek ve ek ayırmak için kullanılan kesme işaretleri yazarın/dönemin özgün imlasıdır.
+K069 | HATA DEĞİL | HAYIR | | Soru cümlesinde yüklem olarak kullanılan "nelerdi" kelimesinin yazımı doğrudur.
+K070 | HATA DEĞİL (alıntı) | EVET | | Alıntılanan makalede yazarın düzeltme işaretiyle yazdığı "câridir" biçimi özgün imla olarak korunmuştur.
+K071 | HATA DEĞİL (alıntı) | EVET | | Güncel yazımı "tespit" olsa da alıntılanan metinde yazarın "tesbit" şeklindeki özgün yazımı korunmuştur.
+K072 | HATA | EVET | kayalıklar | Kelimenin ortasındaki küçük "l" harfi yerine büyük "I" harfi basılması açık bir dizgi kazasıdır.
+K073 | HATA | HAYIR | gerçekleştiriniz | Kelimenin başında "g" harfinin iki kez basılması ("ggerçekleştiriniz") dizgi hatasıdır.
+K074 | HATA DEĞİL | HAYIR | | Öğrencilere hitaben kurulan cümlede "bazılarınız" zamirinin yazımı ve kullanımı doğrudur.
+K075 | HATA DEĞİL (alıntı) | EVET | | Halk şiiri/deyiş alıntısında ölçü ve kafiye gereği kullanılan "zaya" (zayi) biçimi özgün kullanımdır.
+K076 | HATA DEĞİL | HAYIR | | Göz bebeğinin Latince/anatomik karşılığı olan "pupilla" terimi doğru yazılmıştır.
+K077 | HATA DEĞİL (alıntı) | EVET | | Ahmet Hamdi Tanpınar'ın metninde şairin adını eski imla ile "Cenab’ın" şeklinde yazması yazarın özgün tercihidir.
+K078 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde "san’atın" kelimesinin kesme işaretiyle yazımı yazarın/dönemin özgün imla tercihidir.
+K079 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde kelimenin büyük harfle ve tırnak içinde vurgulanarak yazılması yazarın özgün tercihidir.
+K080 | HATA DEĞİL | HAYIR | | Biyolojide canlı âlemlerinden biri olan "arke" kelimesinin bulunma durumu eki almış biçimi ("arkede") doğrudur.
+K081 | HATA DEĞİL (alıntı) | EVET | | TDK'ye göre "ıstırap" olsa da edebî alıntı veya uyarlama metinde yazarın "ızdırap" tercihi korunmuştur (metin imzalı değilse HATA: ıstırap).
+K082 | HATA DEĞİL (alıntı) | EVET | | Geleneksel anlatı/masal metninde geçen "velakin" bağlacı TDK Sözlük'te de yer alan doğru bir kelimedir.
+K083 | HATA DEĞİL (alıntı) | EVET | | Edebî çeviri/alıntı metinde ünlü düşmesi yapılmadan "şehire" şeklinde yazım yazarın/çevirmenin özgün tercihidir.
+K084 | HATA | HAYIR | Türk edebiyatı | "Edebiyat" kelimesi özel ad 범주sunda olmadığından "Türk edebiyatı" tamlamasında küçük harfle başlamalıdır.
+K085 | HATA DEĞİL | HAYIR | | Tıp ve biyolojide yangı/iltihaplanma anlamında kullanılan "inflamasyon" terimi yaygın ve kabul gören bir terimdir.
+K086 | HATA DEĞİL | HAYIR | | Hücre zarındaki yapıyı ifade eden "glikoprotein" biyoloji terimi olarak doğru ve bitişik yazılmıştır.
+K087 | HATA DEĞİL | HAYIR | | Biyolojide yapım tepkimelerini ifade eden "anabolik" terimi doğru yazılmıştır.
+K088 | HATA DEĞİL (alıntı) | EVET | | Ahmet Hamdi Tanpınar'ın metninde şairin soyadını "Dranas’ın" (Dıranas) şeklinde yazması yazarın/dönemin özgün imlasıdır.
+K089 | HATA DEĞİL | HAYIR | | Ahmet Haşim'in şiir ve kitabının özgün adı "Meş’aleler" olduğu için ders kitabında bu özgün biçimiyle anılması doğrudur.
+K090 | HATA DEĞİL (alıntı) | EVET | | Güncel yazımı "ha bire" (ayrı) olsa da edebî metin alıntısında yazarın bitişik ("habire") yazımı korunmuştur.
+K091 | HATA DEĞİL (alıntı) | EVET | | Ahmet Hamdi Tanpınar'dan yapılan alıntıda "bir çok" kelimesinin ayrı yazımı yazarın özgün imlası olarak korunmuştur.
+K092 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinlerde ve yazar adında kullanılan düzeltme işaretleri ("Eflâtun", "pervâneleri") özgün imla gereği korunmuştur.
+K093 | HATA | HAYIR | DİNLEME/İZLEME | Büyük harfli başlıkta "DİNLEME" kelimesindeki "İ" harfinin noktasız ("I") yazılması dizgi hatasıdır.
+K094 | HATA | HAYIR | ta’lîk (veya talik) | Aynı satırda hem "ta’lîk" hem "ta’lik" yazılarak tutarsızlık yapılmış, ayrıca TDK'ye göre doğru yazımı "talik"tir.
+K095 | HATA DEĞİL (PDF) | HAYIR | | Tırnak işaretinden sonra gelen "-ndan" ekinin PDF'ten metin çıkarılırken ayrı bir parça gibi görünmesi teknik kaynaklıdır, yazımı doğrudur.
+K096 | HATA DEĞİL (alıntı) | EVET | | Edebî alıntıda ünlem sözü olan "Yarabbi" kelimesinin bitişik yazımı yazarın özgün tercihidir.
+K097 | HATA DEĞİL (alıntı) | EVET | | Oğuz Kağan Destanı alıntısında arkaik/dönemsel söyleyişi yansıtan "oynaşur" biçimi özgün metin özelliğidir.
+K098 | HATA DEĞİL (PDF) | HAYIR | | Satır sonunda tire ile bölünen kelimenin ("...rust)") PDF'ten çekilirken yalnız ikinci parçasının görünmesi PDF kaynaklıdır.
+K099 | HATA | HAYIR | avokado | Meyve adının doğru yazımı TDK Güncel Türkçe Sözlük'e göre "avokado"dur.
+K100 | HATA DEĞİL (alıntı) | EVET | | Ahmet Hamdi Tanpınar'ın metninde düzeltme işareti kullanılmadan yazılan "halde" biçimi yazarın özgün imlasıdır.
+K101 | HATA DEĞİL (alıntı) | EVET | | Edebî metinde emir kipinin hikâyesi olan "duysundu" biçimi yazarın üslup ve dil tercihidir.
+K102 | HATA DEĞİL (alıntı) | EVET | | Alıntı metinde tırnak içindeki alıntı cümlesinin sonunda noktalama işareti kullanılmaması kaynak metnin özgün noktalamasıdır.

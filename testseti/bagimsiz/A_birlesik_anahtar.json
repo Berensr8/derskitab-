@@ -1,0 +1,719 @@
+{
+ "maddeler": [
+  {
+   "no": "A01",
+   "sayfa": "S01",
+   "kitap": "biyoloji9",
+   "sayfa_no": 11,
+   "kitaptaki": "ZARARLI VEYA TAHRIŞ EDICI MADDE",
+   "onerilen": "ZARARLI VEYA TAHRİŞ EDİCİ MADDE",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A02",
+   "sayfa": "S02",
+   "kitap": "biyoloji9",
+   "sayfa_no": 14,
+   "kitaptaki": "\"anlat bakalım\"",
+   "onerilen": "\"Anlat Bakalım\"",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A03",
+   "sayfa": "S02",
+   "kitap": "biyoloji9",
+   "sayfa_no": 14,
+   "kitaptaki": "1. Ve 2. Soruları",
+   "onerilen": "1 ve 2. soruları",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A04",
+   "sayfa": "S05",
+   "kitap": "biyoloji9",
+   "sayfa_no": 48,
+   "kitaptaki": "kazanır. (Görsel 1.26).",
+   "onerilen": "kazanır (Görsel 1.26).",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A05",
+   "sayfa": "S06",
+   "kitap": "biyoloji9",
+   "sayfa_no": 63,
+   "kitaptaki": "Yağ asiti",
+   "onerilen": "Yağ asidi",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A06",
+   "sayfa": "S07",
+   "kitap": "biyoloji9",
+   "sayfa_no": 81,
+   "kitaptaki": "200 ml",
+   "onerilen": "200 mL",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A07",
+   "sayfa": "S07",
+   "kitap": "biyoloji9",
+   "sayfa_no": 81,
+   "kitaptaki": "gözlük, önlük",
+   "onerilen": "gözlük, önlük.",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A08",
+   "sayfa": "S09",
+   "kitap": "biyoloji9",
+   "sayfa_no": 114,
+   "kitaptaki": "molekullerinin (2 yerde)",
+   "onerilen": "moleküllerinin",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A09",
+   "sayfa": "S09",
+   "kitap": "biyoloji9",
+   "sayfa_no": 114,
+   "kitaptaki": "secici",
+   "onerilen": "seçici",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A10",
+   "sayfa": "S09",
+   "kitap": "biyoloji9",
+   "sayfa_no": 114,
+   "kitaptaki": "gecirgen",
+   "onerilen": "geçirgen",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A11",
+   "sayfa": "S09",
+   "kitap": "biyoloji9",
+   "sayfa_no": 114,
+   "kitaptaki": "gecişidir",
+   "onerilen": "geçişidir",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A12",
+   "sayfa": "S09",
+   "kitap": "biyoloji9",
+   "sayfa_no": 114,
+   "kitaptaki": "yuksek",
+   "onerilen": "yüksek",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A13",
+   "sayfa": "S10",
+   "kitap": "biyoloji9",
+   "sayfa_no": 173,
+   "kitaptaki": "4. Zorlandığınız konularla … kullandığım yöntemler",
+   "onerilen": "Zorlandığım konularla",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A14",
+   "sayfa": "S12",
+   "kitap": "biyoloji11",
+   "sayfa_no": 62,
+   "kitaptaki": "eşik şiddetten",
+   "onerilen": "eşik şiddetinden",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A15",
+   "sayfa": "S13",
+   "kitap": "biyoloji11",
+   "sayfa_no": 78,
+   "kitaptaki": "ilgili kas tepki veremez",
+   "onerilen": "ilgili kas tepki veremez.",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A16",
+   "sayfa": "S16",
+   "kitap": "biyoloji11",
+   "sayfa_no": 103,
+   "kitaptaki": "“Analitik Dereceli Puanlama Anahtarı’’",
+   "onerilen": "“Analitik Dereceli Puanlama Anahtarı”",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A17",
+   "sayfa": "S16",
+   "kitap": "biyoloji11",
+   "sayfa_no": 103,
+   "kitaptaki": "Etkileşimli  Videosu (iki boşluk)",
+   "onerilen": "Etkileşimli Videosu",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A18",
+   "sayfa": "S21",
+   "kitap": "turkdili10",
+   "sayfa_no": 70,
+   "kitaptaki": "velakin",
+   "onerilen": "velâkin",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A19",
+   "sayfa": "S22",
+   "kitap": "turkdili10",
+   "sayfa_no": 81,
+   "kitaptaki": "yararlanılamıyacak",
+   "onerilen": "yararlanılamayacak",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A20",
+   "sayfa": "S22",
+   "kitap": "turkdili10",
+   "sayfa_no": 81,
+   "kitaptaki": "tesbit",
+   "onerilen": "tespit",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A21",
+   "sayfa": "S22",
+   "kitap": "turkdili10",
+   "sayfa_no": 81,
+   "kitaptaki": "câridir",
+   "onerilen": "caridir",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A22",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "Düzeltme işaretli kelimeler: lâf, lâzımdır, tevârüt, lâtif, zarâfet, elâ, Mûsikileri, şahsî, sehl-i mümtenî",
+   "onerilen": "laf, lazımdır, tevarüt, latif, zarafet, ela, Musikileri, şahsi, sehl-i mümteni",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A23",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "halde",
+   "onerilen": "hâlde",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A24",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "bir çok",
+   "onerilen": "birçok",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A25",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "”Yüce dağların başında …”",
+   "onerilen": "“Yüce dağların başında …”",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A26",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "dört nala",
+   "onerilen": "dörtnala",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A27",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "kayaIıklar",
+   "onerilen": "kayalıklar",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A28",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "mısraı",
+   "onerilen": "mısrası",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A29",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "Cenab’ın",
+   "onerilen": "Cenap’ın",
+   "kaynak": [
+    "chatgpt"
+   ]
+  },
+  {
+   "no": "A30",
+   "sayfa": "S24",
+   "kitap": "turkdili10",
+   "sayfa_no": 141,
+   "kitaptaki": "Dranas’ın",
+   "onerilen": "Dıranas’ın",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A31",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "ASYANIN KANDİLLERİ",
+   "onerilen": "ASYA’NIN KANDİLLERİ",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A32",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "0 civar karyelerinden",
+   "onerilen": "O civar karyelerinden",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A33",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "Düzeltme işaretli kelimeler: Yûnus, Nihâyet, kerâmet, inâyetlerini, Velî, Bektâş, muâmele, misâfir, Gâfil, lâkin, hatânın, pişmân, derhâl, kusûrunu, cevâbı",
+   "onerilen": "Yunus, Nihayet, keramet, inayetlerini, Veli, Bektaş, muamele, misafir, Gafil, lakin, hatanın, pişman, derhal, kusurunu, cevabı",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A34",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "Kesmeli eski yazımlar: def’a, i’tiraf, ta’yin, pîr’in / pîr’e",
+   "onerilen": "defa, itiraf, tayin, pirin / pire",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A35",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "mikdar",
+   "onerilen": "miktar",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A36",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "lûtf",
+   "onerilen": "lütuf",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A37",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "dânesine",
+   "onerilen": "tanesine",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A38",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "nefs edeyim",
+   "onerilen": "nefes edeyim",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A39",
+   "sayfa": "S25",
+   "kitap": "turkdili10",
+   "sayfa_no": 148,
+   "kitaptaki": "… edeyim” dedi. (2 yerde: nefs edeyim, himmet edeyim)",
+   "onerilen": "… edeyim.” dedi.",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A40",
+   "sayfa": "S27",
+   "kitap": "turkdili10",
+   "sayfa_no": 216,
+   "kitaptaki": "bıçak?..",
+   "onerilen": "bıçak?...",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A41",
+   "sayfa": "S27",
+   "kitap": "turkdili10",
+   "sayfa_no": 216,
+   "kitaptaki": "Düzeltme işaretli kelimeler: Eflâtun, pervâneleri",
+   "onerilen": "Eflatun, pervaneleri",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A42",
+   "sayfa": "S27",
+   "kitap": "turkdili10",
+   "sayfa_no": 216,
+   "kitaptaki": "Meş’aleler / meş’aleler",
+   "onerilen": "Meşaleler / meşaleler",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A43",
+   "sayfa": "S27",
+   "kitap": "turkdili10",
+   "sayfa_no": 216,
+   "kitaptaki": "halinde",
+   "onerilen": "hâlinde",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A44",
+   "sayfa": "S28",
+   "kitap": "turkdili10",
+   "sayfa_no": 233,
+   "kitaptaki": "sadef",
+   "onerilen": "sedef",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A45",
+   "sayfa": "S28",
+   "kitap": "turkdili10",
+   "sayfa_no": 233,
+   "kitaptaki": "Nisan mevsiminde / Nisan yağmurunun",
+   "onerilen": "nisan mevsiminde / nisan yağmurunun",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A46",
+   "sayfa": "S28",
+   "kitap": "turkdili10",
+   "sayfa_no": 233,
+   "kitaptaki": "ızdırap",
+   "onerilen": "ıstırap",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A47",
+   "sayfa": "S28",
+   "kitap": "turkdili10",
+   "sayfa_no": 233,
+   "kitaptaki": "lâyık",
+   "onerilen": "layık",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A48",
+   "sayfa": "S29",
+   "kitap": "turkdili10",
+   "sayfa_no": 284,
+   "kitaptaki": "DINLEME/İZLEME",
+   "onerilen": "DİNLEME/İZLEME",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A49",
+   "sayfa": "S29",
+   "kitap": "turkdili10",
+   "sayfa_no": 284,
+   "kitaptaki": "Milli (MİLLİ EDEBİYAT, Milli Edebiyat, Milli Mücadele’nin, Milli Mücadele ile / de)",
+   "onerilen": "Millî",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A50",
+   "sayfa": "S29",
+   "kitap": "turkdili10",
+   "sayfa_no": 284,
+   "kitaptaki": "Milli Edebiyat dönemi",
+   "onerilen": "Millî Edebiyat Dönemi",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A51",
+   "sayfa": "S29",
+   "kitap": "turkdili10",
+   "sayfa_no": 284,
+   "kitaptaki": "dışardan",
+   "onerilen": "dışarıdan",
+   "kaynak": [
+    "chatgpt",
+    "gemini"
+   ]
+  },
+  {
+   "no": "A52",
+   "sayfa": "S29",
+   "kitap": "turkdili10",
+   "sayfa_no": 284,
+   "kitaptaki": "Türk Edebiyatı",
+   "onerilen": "Türk edebiyatı",
+   "kaynak": [
+    "chatgpt"
+   ]
+  },
+  {
+   "no": "A53",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "Balkan Savaşlarına",
+   "onerilen": "Balkan Savaşları’na",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A54",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "belâ",
+   "onerilen": "bela",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A55",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "Ocean Zırhlısı’na / Ocean Zırhlısı’nın",
+   "onerilen": "Ocean zırhlısına / Ocean zırhlısının",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A56",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "çevirip, ateşlediler",
+   "onerilen": "çevirip ateşlediler",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A57",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "getirip, namluya",
+   "onerilen": "getirip namluya",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A58",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "“Besmele”",
+   "onerilen": "“besmele”",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A59",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "Mehmed Hilmi",
+   "onerilen": "Mehmet Hilmi",
+   "kaynak": [
+    "gemini"
+   ]
+  },
+  {
+   "no": "A60",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "Ali yardım et",
+   "onerilen": "Ali, yardım et",
+   "kaynak": [
+    "chatgpt"
+   ]
+  },
+  {
+   "no": "A61",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "Yarabbi",
+   "onerilen": "Ya Rabbi",
+   "kaynak": [
+    "chatgpt"
+   ]
+  },
+  {
+   "no": "A62",
+   "sayfa": "S30",
+   "kitap": "turkdili10",
+   "sayfa_no": 301,
+   "kitaptaki": "aferin Seyit",
+   "onerilen": "aferin, Seyit",
+   "kaynak": [
+    "chatgpt"
+   ]
+  }
+ ],
+ "atlanan": [
+  "S22 ilmî (G)",
+  "S24 Elhân-ı Şitâ’sından (G)",
+  "S24 sanatkârlarının (G)",
+  "S30 Çanakkale Boğazı’ndan (G)"
+ ]
+}

@@ -1,0 +1,522 @@
+[
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 194,
+  "basili": "193",
+  "parca": "rabbime",
+  "baglam": "…a ateşinden kayalar terledi. Kerem baktı ki gittikçe kış ziyade oluyor, galiba vademiz burada imiş deyip bari rabbime niyaz edeyim, ahır nefesimde imanı kâmilden ayırmasın deyip aldı sazı eline bakalım ne dedi?",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'rabbime' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B01"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 109,
+  "basili": "108",
+  "parca": "bazılarınız",
+  "baglam": "neden bazılarınız hasta olurken bazılarınız hasta olmaz? Tartışınız.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'bazılarınız' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B02"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 215,
+  "basili": "214",
+  "parca": "şurda",
+  "baglam": "…avaya bakar.) Hay mendebur hava! Bozmasa olmaz, illâ bozacak. (Dizlerini oğuşturur.) Tatlı tatlı konuşuyorduk şurda. (Gök gürlemesi ve şimşek. Ürperme.) Biz de yarın devam ederiz konuşmamıza. Kim bilir ne çok anlatacak şeyimi…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'şurda' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B03"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 117,
+  "basili": "116",
+  "parca": "çiçeğigillerden",
+  "baglam": "kına çiçeği : Kına çiçeğigillerden, çiçekleri",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'çiçeğigillerden' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B04"
+ },
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 110,
+  "basili": "109",
+  "parca": "kimseneyi",
+  "baglam": "Rûhu şâd ola ki incitmez idi kimseneyi Ne gönündeki biti ne kulağında keneyi Paça ile başı hoş idi severdi teneyi Nidelim âh pisi neyleyelim vâh pis…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'kimseneyi' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B05"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 87,
+  "basili": "86",
+  "parca": "nazariyatçısıdır",
+  "baglam": "2. “İslâm Bey, sadece kahraman değil, aynı zamanda, adeta vatan fikrinin nazariyatçısıdır.” ifadesini nasıl yorumlarsınız?",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'nazariyatçısıdır' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Zemberek); yazım hatası olabilir."
+  },
+  "no": "B06"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 103,
+  "basili": "102",
+  "parca": "glikoprotein",
+  "baglam": "Proteine bağlı karbohidrat grupları (glikoprotein)",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'glikoprotein' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B07"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 117,
+  "basili": "116",
+  "parca": "inflamasyon",
+  "baglam": "Deride inflamasyon (yangı) ve kaşıntı alerjik tepkilerdir.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'inflamasyon' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B08"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 158,
+  "basili": "157",
+  "parca": "ekol de",
+  "baglam": "kitaplara gömülmekle olmaz sadece, ekol de kuracaksın.” “Sahi bu ‘ekol kurmuş’u anlatacaktınız",
+  "gizli": {
+   "alt_tur": "bag_de_da_uyum",
+   "guven": 1.0,
+   "aciklama": "Bağlaç ünlü uyumuna uyar: 'ekol da' olmalı."
+  },
+  "no": "B09"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 69,
+  "basili": "68",
+  "parca": "habire",
+  "baglam": "Sizin anlayacağınız koca konağın böyle bir odasına tıkıldık, kaldık, bütün aldığımız kiraları habire bankaya yatırıyoruz. Kalan üç beş kuruş da vergisi ile tamirata gidiyor.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'habire' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B10"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 171,
+  "basili": "170",
+  "parca": "avakado",
+  "baglam": "Meyve ve sebzeler (muz, incir, avakado, kabak, patates)",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'avakado' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B11"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 308,
+  "basili": "307",
+  "parca": "nelere",
+  "baglam": "Bir kişinin yaşadığı yere aidiyet duygusu geliştirebilmesi nelere bağlıdır? Örneklerle açıklayınız. 14.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'nelere' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B12"
+ },
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 194,
+  "basili": "193",
+  "parca": "olmağa",
+  "baglam": "Amma hava bozulup Nuh tufanı olmağa başladı. Bunlar dağda bir kayaya arkaların verip üç gün üç gece kaldılar. Kerem baktı ki havanın açılacağı yo…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'olmağa' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Zemberek); yazım hatası olabilir."
+  },
+  "no": "B13"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 103,
+  "basili": "102",
+  "parca": "arkede",
+  "baglam": "…Besinlerin, oksijen ve karbondioksit gibi gazların, hücresel atıkların geçişi hücre zarı ile sağlanır. Birçok arkede, alglerde (bazı protistlerde), bitkilerde, mantarlarda ve bakterilerde hücre zarının dış kısmında hücre duvar…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'arkede' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B14"
+ },
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 152,
+  "basili": "151",
+  "parca": "didi",
+  "baglam": "V. Didüm yitürdi kemâlün didi aya noksân",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'didi' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B15"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 94,
+  "basili": "93",
+  "parca": "kondrin",
+  "baglam": "Kıkırdak dokunun hücrelerine kondrosit, bu hücrelerin salgıladığı ara maddeye ise kondrin denir (Görsel 1.9.9). Kıkırdak doku hücreleri yuvarlak ya da ovaldir. Bu hücreler kapsül yapısı içinde yer al…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'kondrin' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B16"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 216,
+  "basili": "215",
+  "parca": "Postmen da",
+  "baglam": "1980’lerden sonra Türkiye’de ticari radyo ve televizyonların yayına başlamasından sonra, reklam alma yarışı ve ticari kaygılar eğlence ağırlıklı yayınların yaygınlık kazanmasına neden olmuştur. Kapitalizmin daha çok tüketmek üzerine kurulu …",
+  "gizli": {
+   "alt_tur": "bag_de_da_uyum",
+   "guven": 1.0,
+   "aciklama": "Bağlaç ünlü uyumuna uyar: 'Postmen de' olmalı."
+  },
+  "no": "B17"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 200,
+  "basili": "199",
+  "parca": "asitbaz",
+  "baglam": "Sıvı ve Elektrolit Dengesi Sağlama: Böbrekler, çeşitli iyon ayarlamaları ile vücuttaki asitbaz ve elektrolit dengesini korumaya katkı sağlar. Su arıtma sistemlerinde ise kalsiyum ve magnezyum ile iyon değ…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'asitbaz' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B18"
+ },
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 39,
+  "basili": "38",
+  "parca": "âbıhayat",
+  "baglam": "ne düşmanı kayırır, “Dağları yırtıp ayırır, kayaları kesip yol eyler âbıhayat akıtmağa...”",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'âbıhayat' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B19"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 126,
+  "basili": "125",
+  "parca": "filogenetik",
+  "baglam": "…ktadır. Günümüzde bu işlem akrabalık ilişkilerine göre yapılmakta ve bu sınıflandırma sistemi doğal (modern = filogenetik) sınıflandırma olarak adlandırılmaktadır. Bu kapsamda canlıların morfolojik, anatomik, fizyolojik, genetik vb…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'filogenetik' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B20"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 94,
+  "basili": "93",
+  "parca": "duysundu",
+  "baglam": "Sultan onu nasıl duysundu ki! Parmaklığın yanında duran bir demiryolcu ona sordu:",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'duysundu' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B21"
+ },
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 152,
+  "basili": "151",
+  "parca": "san’atın",
+  "baglam": "…ebiyat türü, diğer san’at alanlarını da etkilemiştir ki Türk Mûsikîsi bu san’atların başında gelmektedir. İki san’atın birlikteliğiyle oluşan muhteşem bir ifâde biçimi ortaya çıkmıştır. Bu ilimlere mensup pek çok şair ve bestekâ…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'san’atın' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B22"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 81,
+  "basili": "80",
+  "parca": "ta’lik",
+  "baglam": "muammâ ta’lîk: Âşıklık geleneğinde manzum bilmece (ta’lik yazı sitiliyle) yazmak.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'ta’lik' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B23"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 92,
+  "basili": "91",
+  "parca": "şehire",
+  "baglam": "…uru yoktu ve bundan sürekli olarak ama haksız yere kocasını sorumlu tutuyordu. Kocasının evli iki kızı vardı, şehire yerleşmişlerdi ve her nedense, hiç gelip görmezlerdi onları. (...)",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'şehire' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B24"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 183,
+  "basili": "182",
+  "parca": "okudunuzsa",
+  "baglam": "14. Heinrich Böll’ün (Henrih Böl) Türkçeye de çevrilen Saat Dokuz Buçukta Bilardo adlı romanını tesadüfen okudunuzsa bilirsiniz. Romanın kahramanı Fahmel, her sabah bir otelin bilardo salonunda otelin asansörcüsü Hugo’yla bila…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'okudunuzsa' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B25"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 138,
+  "basili": "137",
+  "parca": "onyedi",
+  "baglam": "Gene vapurdaydık. Yarım iş gününün kalabalık 13.15 vapuruydu. Haftanın altı günü bu onyedi dakikalık Alsancak yolculuklarında çoğu ayakta kalırdım. Kalabalığın içinde onu aramanın, ikimizden başkasını…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'onyedi' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Zemberek); yazım hatası olabilir."
+  },
+  "no": "B26"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 37,
+  "basili": "36",
+  "parca": "anabolik",
+  "baglam": "…pım süreci olarak da bilinir. Hücrelerde amino asitlerin proteinlere veya glikozun polisakkaritlere dönüşmesi anabolik reaksiyonlara örnektir. Katabolizma ise yapısal olarak büyük moleküllerin kendisinden daha küçük bileşenlerin…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'anabolik' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B27"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 176,
+  "basili": "175",
+  "parca": "nelerdi",
+  "baglam": "3. Topladığımız verileri nasıl analiz ettik ve yorumladık? Kullanılan analiz yöntemleri nelerdi?",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'nelerdi' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir."
+  },
+  "no": "B28"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 125,
+  "basili": "124",
+  "parca": "ırgada",
+  "baglam": "Tohum Dedim ki ırgada -Harman et toprağı ayıkla, kar. Zaman dar Bana yumuk bir tarla hazırla eller görmeden",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'ırgada' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir. Sondaki 'da' ayrılınca geçerli bir kelime kalıyor: bağlaç 'de/da' ayrı yazılmalı olabilir ('ırga da')."
+  },
+  "no": "B29"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 148,
+  "basili": "147",
+  "parca": "rust",
+  "baglam": "rust) gelen ve yaşadığı zamanın getirdikleriyle uzlaşamamaktan kaynaklanan",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'rust' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B30"
+ },
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 161,
+  "basili": "160",
+  "parca": "oynaşur",
+  "baglam": "Oğuz-Han’ın doğuşu: (…) Ansızın dile geldi, söyler, konuşur oldu! Kırk gün geçtikten sonra, yürür oynaşur oldu! Öküz ayağı gibi, idi sanki ayağı! Kurdun bileği gibi, idi sanki bileği! Benzer idi omuzu, tıpkı samurun…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'oynaşur' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B31"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 23,
+  "basili": "22",
+  "parca": "ndan",
+  "baglam": "3. Araştırma yaparken kullandığınız kaynakların güvenilirliğini aşağıdaki “Kontrol Tablosu”ndan yararlanarak kontrol ediniz.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'ndan' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B32"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 123,
+  "basili": "122",
+  "parca": "ggerçekleştiriniz",
+  "baglam": "7. Uygun deney düzeneğini hazırlandıktan sonra tasarladığınız deneyi grup arkadaşlarınızla ggerçekleştiriniz. Etkinliğin sonundaki Deney Tasarlama Formu'nda ya da kitabın sonunda verilen ekler bölümündeki Form17'de \"De…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'ggerçekleştiriniz' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B33"
+ },
+ {
+  "kitap": "biyoloji9",
+  "sayfa_no": 37,
+  "basili": "36",
+  "parca": "katabolik",
+  "baglam": "…crelerde proteinlerin sindirimiyle amino asitlerin oluşturulması ve glikozun enerji üretimi için parçalanması katabolik reaksiyonlara örnektir.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'katabolik' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B34"
+ },
+ {
+  "kitap": "turkdili10",
+  "sayfa_no": 191,
+  "basili": "190",
+  "parca": "fâyık",
+  "baglam": "f fâyık VII Azlık, yokluk.",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'fâyık' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B35"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 71,
+  "basili": "70",
+  "parca": "lobu",
+  "baglam": "…leri tam olarak ayrılmamıştır. Sürüngenler, kuşlar ve memelilerde beyin iki yarım küreye ayrılmıştır. Koklama lobu balıklarda büyük, memelilerde küçüktür. Beyinciğin büyüklüğü ise hareket yeteneğine göre değişir. Beyincik ba…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 0.5,
+   "aciklama": "'lobu' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Zemberek); yazım hatası olabilir."
+  },
+  "no": "B36"
+ },
+ {
+  "kitap": "turkdili12",
+  "sayfa_no": 126,
+  "basili": "125",
+  "parca": "zaya",
+  "baglam": "Emeğini verme zaya,",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'zaya' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B37"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 54,
+  "basili": "53",
+  "parca": "pupilla",
+  "baglam": "…an oluşur ve göze renk veren pigmentler içerir. İrisin tam ortasında ışığın göze girdiği açıklığa göz bebeği (pupilla) adı verilir. Göz bebeği, iris kaslarının kasılıp gevşemesiyle fazla ışıkta daralır, az ışıkta genişler. Böyl…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'pupilla' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B38"
+ },
+ {
+  "kitap": "turkdili11",
+  "sayfa_no": 281,
+  "basili": "280",
+  "parca": "r parçasıdır.(...)",
+  "baglam": "…se karakterin eylemine zemin hazırlayan fiziksel düzlemdir. Biyolojik boyut, aynı zamanda sosyal yapının da bir parçasıdır.(...)",
+  "gizli": {
+   "alt_tur": "noktalama_bosluk",
+   "guven": 0.5,
+   "aciklama": "'.' işaretinden sonra boşluk bırakılmamış. Alıntıdaki (…) işaretinden önce de boşluk bırakılır; tasarım tercihi de olabilir."
+  },
+  "no": "B39"
+ },
+ {
+  "kitap": "biyoloji11",
+  "sayfa_no": 34,
+  "basili": "33",
+  "parca": "oC’ta",
+  "baglam": "oC’ta kapalıyken 15-20 oC’ta açılır (Görsel 1.3.8 a, b). Sıcaklık tekrar düştüğünde ise açılan yapraklar yine kapan…",
+  "gizli": {
+   "alt_tur": "morfoloji",
+   "guven": 1.0,
+   "aciklama": "'oC’ta' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+  },
+  "no": "B40"
+ }
+]

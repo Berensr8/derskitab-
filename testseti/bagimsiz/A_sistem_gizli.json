@@ -1,0 +1,884 @@
+[
+ {
+  "sayfa": "S02",
+  "sayfa_no": 14,
+  "blok_no": 43,
+  "bbox": [
+   309.7683410644531,
+   453.0345153808594,
+   417.14007568359375,
+   483.031494140625
+  ],
+  "kriter": "yazim",
+  "aciklama": "'notatum' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "13",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "notatum",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S06",
+  "sayfa_no": 63,
+  "blok_no": 27,
+  "bbox": [
+   53.70220184326172,
+   497.8124084472656,
+   374.2743835449219,
+   530.1741333007812
+  ],
+  "kriter": "yazim",
+  "aciklama": "'asiti' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "62",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "asiti",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S06",
+  "sayfa_no": 63,
+  "blok_no": 29,
+  "bbox": [
+   42.51969909667969,
+   550.8211059570312,
+   337.1427917480469,
+   732.2111206054688
+  ],
+  "kriter": "yazim",
+  "aciklama": "'dizilimini' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir.",
+  "guven_skoru": 0.5,
+  "basili_sayfa_no": "62",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "dizilimini",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S07",
+  "sayfa_no": 81,
+  "blok_no": 6,
+  "bbox": [
+   45.354400634765625,
+   253.80099487304688,
+   478.0993957519531,
+   300.9747009277344
+  ],
+  "kriter": "yazim",
+  "aciklama": "'puar' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "80",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "puar",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S09",
+  "sayfa_no": 114,
+  "blok_no": 6,
+  "bbox": [
+   322.4410095214844,
+   132.38571166992188,
+   485.25164794921875,
+   265.19403076171875
+  ],
+  "kriter": "yazim",
+  "aciklama": "'molekullerinin' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "113",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "molekullerinin",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S09",
+  "sayfa_no": 114,
+  "blok_no": 6,
+  "bbox": [
+   322.4410095214844,
+   132.38571166992188,
+   485.25164794921875,
+   265.19403076171875
+  ],
+  "kriter": "yazim",
+  "aciklama": "'gecirgen' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "113",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "gecirgen",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S09",
+  "sayfa_no": 114,
+  "blok_no": 6,
+  "bbox": [
+   322.4410095214844,
+   132.38571166992188,
+   485.25164794921875,
+   265.19403076171875
+  ],
+  "kriter": "yazim",
+  "aciklama": "'gecişidir' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "113",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "gecişidir",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S09",
+  "sayfa_no": 114,
+  "blok_no": 6,
+  "bbox": [
+   322.4410095214844,
+   132.38571166992188,
+   485.25164794921875,
+   265.19403076171875
+  ],
+  "kriter": "yazim",
+  "aciklama": "'molekullerinin' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "113",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "molekullerinin",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S09",
+  "sayfa_no": 114,
+  "blok_no": 6,
+  "bbox": [
+   322.4410095214844,
+   132.38571166992188,
+   485.25164794921875,
+   265.19403076171875
+  ],
+  "kriter": "yazim",
+  "aciklama": "'yuksek' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "113",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "yuksek",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S14",
+  "sayfa_no": 82,
+  "blok_no": 10,
+  "bbox": [
+   173.33290100097656,
+   319.9832763671875,
+   396.4727478027344,
+   451.0132751464844
+  ],
+  "kriter": "yazim",
+  "aciklama": "'dorsal' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "81",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "dorsal",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S14",
+  "sayfa_no": 82,
+  "blok_no": 10,
+  "bbox": [
+   173.33290100097656,
+   319.9832763671875,
+   396.4727478027344,
+   451.0132751464844
+  ],
+  "kriter": "yazim",
+  "aciklama": "'ventral' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "81",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "ventral",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S17",
+  "sayfa_no": 111,
+  "blok_no": 3,
+  "bbox": [
+   158.74009704589844,
+   74.47720336914062,
+   499.01446533203125,
+   320.5072021484375
+  ],
+  "kriter": "yazim",
+  "aciklama": "'immün' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "110",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "immün",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S17",
+  "sayfa_no": 111,
+  "blok_no": 20,
+  "bbox": [
+   158.74009704589844,
+   558.208740234375,
+   498.9969787597656,
+   666.2387084960938
+  ],
+  "kriter": "yazim",
+  "aciklama": "'lizozim' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "110",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "lizozim",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S18",
+  "sayfa_no": 135,
+  "blok_no": 6,
+  "bbox": [
+   42.51758575439453,
+   346.7663269042969,
+   488.0475769042969,
+   461.34625244140625
+  ],
+  "kriter": "yazim",
+  "aciklama": "'sölenter' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "134",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "sölenter",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S21",
+  "sayfa_no": 70,
+  "blok_no": 5,
+  "bbox": [
+   81.4180908203125,
+   133.54278564453125,
+   500.73284912109375,
+   185.0227813720703
+  ],
+  "kriter": "yazim",
+  "aciklama": "'desti' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir.",
+  "guven_skoru": 0.5,
+  "basili_sayfa_no": "69",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "desti",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S21",
+  "sayfa_no": 70,
+  "blok_no": 9,
+  "bbox": [
+   81.28739929199219,
+   360.0220031738281,
+   500.6022644042969,
+   447.50201416015625
+  ],
+  "kriter": "yazim",
+  "aciklama": "'velakin' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir.",
+  "guven_skoru": 0.5,
+  "basili_sayfa_no": "69",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "velakin",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S22",
+  "sayfa_no": 81,
+  "blok_no": 5,
+  "bbox": [
+   55.039398193359375,
+   172.83111572265625,
+   489.63214111328125,
+   248.3111114501953
+  ],
+  "kriter": "yazim",
+  "aciklama": "'yararlanılamıyacak' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "80",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "yararlanılamıyacak",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S22",
+  "sayfa_no": 81,
+  "blok_no": 5,
+  "bbox": [
+   55.039398193359375,
+   172.83111572265625,
+   489.63214111328125,
+   248.3111114501953
+  ],
+  "kriter": "yazim",
+  "aciklama": "'câridir' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir.",
+  "guven_skoru": 0.5,
+  "basili_sayfa_no": "80",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "câridir",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S22",
+  "sayfa_no": 81,
+  "blok_no": 6,
+  "bbox": [
+   55.039398193359375,
+   250.5010986328125,
+   489.6312561035156,
+   349.9811096191406
+  ],
+  "kriter": "yazim",
+  "aciklama": "'tesbit' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "80",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "tesbit",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 6,
+  "bbox": [
+   48.63148498535156,
+   169.099609375,
+   493.1782531738281,
+   244.57960510253906
+  ],
+  "kriter": "yazim",
+  "aciklama": "'şimdiye' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir.",
+  "guven_skoru": 0.5,
+  "basili_sayfa_no": "140",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "şimdiye",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 12,
+  "bbox": [
+   48.63148498535156,
+   358.3396301269531,
+   493.1773681640625,
+   397.81964111328125
+  ],
+  "kriter": "yazim",
+  "aciklama": "'tevârüt' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "140",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "tevârüt",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 16,
+  "bbox": [
+   48.6314697265625,
+   444.4996643066406,
+   493.1773681640625,
+   531.9796142578125
+  ],
+  "kriter": "yazim",
+  "aciklama": "'mümtenî' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (eski Türkçe ya da edebî dil işaretleri var): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "140",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "mümtenî",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 16,
+  "bbox": [
+   48.6314697265625,
+   444.4996643066406,
+   493.1773681640625,
+   531.9796142578125
+  ],
+  "kriter": "yazim",
+  "aciklama": "'lâtif' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (eski Türkçe ya da edebî dil işaretleri var): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "140",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "lâtif",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 16,
+  "bbox": [
+   48.6314697265625,
+   444.4996643066406,
+   493.1773681640625,
+   531.9796142578125
+  ],
+  "kriter": "yazim",
+  "aciklama": "'zarâfet' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (eski Türkçe ya da edebî dil işaretleri var): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "140",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "zarâfet",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 16,
+  "bbox": [
+   48.6314697265625,
+   444.4996643066406,
+   493.1773681640625,
+   531.9796142578125
+  ],
+  "kriter": "yazim",
+  "aciklama": "'stilize' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (eski Türkçe ya da edebî dil işaretleri var): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "140",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "stilize",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 20,
+  "bbox": [
+   48.6314697265625,
+   578.65966796875,
+   493.1792297363281,
+   606.1396484375
+  ],
+  "kriter": "yazim",
+  "aciklama": "'kayaIıklar' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir.",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "140",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "kayaIıklar",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S24",
+  "sayfa_no": 141,
+  "blok_no": 9,
+  "bbox": [
+   48.63148498535156,
+   287.7196044921875,
+   493.1772766113281,
+   315.1996154785156
+  ],
+  "kriter": "yazim",
+  "aciklama": "'bir çok' değil, 'birçok' yazılır (TDK).",
+  "guven_skoru": 1.0,
+  "basili_sayfa_no": "140",
+  "alt_tur": "bitisik_ayri",
+  "metin_parcasi": "bir çok",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'rençberlikle' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "rençberlikle",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'inâyetlerini' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "inâyetlerini",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'pîr’in' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "pîr’in",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'mikdar' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "mikdar",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'lûtf' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "lûtf",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'muâmele' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "muâmele",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'misâfir' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "misâfir",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'pîr’e' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "pîr’e",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'dânesine' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "dânesine",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'nefs' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "nefs",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'def’a' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "def’a",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'hatânın' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "hatânın",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'pişmân' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "pişmân",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'kusûrunu' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "kusûrunu",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'i’tiraf' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "i’tiraf",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'cevâbı' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "cevâbı",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S25",
+  "sayfa_no": 148,
+  "blok_no": 16,
+  "bbox": [
+   68.035400390625,
+   373.65081787109375,
+   501.6832580566406,
+   587.3407592773438
+  ],
+  "kriter": "yazim",
+  "aciklama": "'ta’yin' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir. Alıntı metin (kaynak: Fuad Köprülü, Türk Edebiyatında İlk Mutasavvıflar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "147",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "ta’yin",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S27",
+  "sayfa_no": 216,
+  "blok_no": 3,
+  "bbox": [
+   72.16609191894531,
+   97.39170837402344,
+   502.6219482421875,
+   295.57177734375
+  ],
+  "kriter": "yazim",
+  "aciklama": "'mıngır' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Eflâtun Cem Güney, Masallar): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "215",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "mıngır",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S27",
+  "sayfa_no": 216,
+  "blok_no": 21,
+  "bbox": [
+   189.9221954345703,
+   591.4051513671875,
+   362.91107177734375,
+   642.8851318359375
+  ],
+  "kriter": "yazim",
+  "aciklama": "'pervâneleri' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Sedat Umran): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "215",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "pervâneleri",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S27",
+  "sayfa_no": 216,
+  "blok_no": 22,
+  "bbox": [
+   189.9221954345703,
+   645.0751342773438,
+   364.61004638671875,
+   696.5551147460938
+  ],
+  "kriter": "yazim",
+  "aciklama": "'sükûtla' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Sedat Umran): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "215",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "sükûtla",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S27",
+  "sayfa_no": 216,
+  "blok_no": 22,
+  "bbox": [
+   189.9221954345703,
+   645.0751342773438,
+   364.61004638671875,
+   696.5551147460938
+  ],
+  "kriter": "yazim",
+  "aciklama": "'sükûn' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Sedat Umran): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "215",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "sükûn",
+  "ilgili_konumlar": []
+ },
+ {
+  "sayfa": "S29",
+  "sayfa_no": 284,
+  "blok_no": 9,
+  "bbox": [
+   80.9541015625,
+   215.25775146484375,
+   501.3672180175781,
+   386.7377624511719
+  ],
+  "kriter": "yazim",
+  "aciklama": "'dışardan' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir. Alıntı metin (kaynak: Sevgül Türkmenoğlu): kelime yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.",
+  "guven_skoru": 0.25,
+  "basili_sayfa_no": "283",
+  "alt_tur": "morfoloji",
+  "metin_parcasi": "dışardan",
+  "ilgili_konumlar": []
+ }
+]

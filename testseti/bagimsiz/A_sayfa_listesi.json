@@ -1,0 +1,152 @@
+[
+ {
+  "kod": "S01",
+  "kitap": "biyoloji9",
+  "sayfa_no": 11
+ },
+ {
+  "kod": "S02",
+  "kitap": "biyoloji9",
+  "sayfa_no": 14
+ },
+ {
+  "kod": "S03",
+  "kitap": "biyoloji9",
+  "sayfa_no": 27
+ },
+ {
+  "kod": "S04",
+  "kitap": "biyoloji9",
+  "sayfa_no": 34
+ },
+ {
+  "kod": "S05",
+  "kitap": "biyoloji9",
+  "sayfa_no": 48
+ },
+ {
+  "kod": "S06",
+  "kitap": "biyoloji9",
+  "sayfa_no": 63
+ },
+ {
+  "kod": "S07",
+  "kitap": "biyoloji9",
+  "sayfa_no": 81
+ },
+ {
+  "kod": "S08",
+  "kitap": "biyoloji9",
+  "sayfa_no": 96
+ },
+ {
+  "kod": "S09",
+  "kitap": "biyoloji9",
+  "sayfa_no": 114
+ },
+ {
+  "kod": "S10",
+  "kitap": "biyoloji9",
+  "sayfa_no": 173
+ },
+ {
+  "kod": "S11",
+  "kitap": "biyoloji11",
+  "sayfa_no": 40
+ },
+ {
+  "kod": "S12",
+  "kitap": "biyoloji11",
+  "sayfa_no": 62
+ },
+ {
+  "kod": "S13",
+  "kitap": "biyoloji11",
+  "sayfa_no": 78
+ },
+ {
+  "kod": "S14",
+  "kitap": "biyoloji11",
+  "sayfa_no": 82
+ },
+ {
+  "kod": "S15",
+  "kitap": "biyoloji11",
+  "sayfa_no": 99
+ },
+ {
+  "kod": "S16",
+  "kitap": "biyoloji11",
+  "sayfa_no": 103
+ },
+ {
+  "kod": "S17",
+  "kitap": "biyoloji11",
+  "sayfa_no": 111
+ },
+ {
+  "kod": "S18",
+  "kitap": "biyoloji11",
+  "sayfa_no": 135
+ },
+ {
+  "kod": "S19",
+  "kitap": "biyoloji11",
+  "sayfa_no": 141
+ },
+ {
+  "kod": "S20",
+  "kitap": "biyoloji11",
+  "sayfa_no": 222
+ },
+ {
+  "kod": "S21",
+  "kitap": "turkdili10",
+  "sayfa_no": 70
+ },
+ {
+  "kod": "S22",
+  "kitap": "turkdili10",
+  "sayfa_no": 81
+ },
+ {
+  "kod": "S23",
+  "kitap": "turkdili10",
+  "sayfa_no": 128
+ },
+ {
+  "kod": "S24",
+  "kitap": "turkdili10",
+  "sayfa_no": 141
+ },
+ {
+  "kod": "S25",
+  "kitap": "turkdili10",
+  "sayfa_no": 148
+ },
+ {
+  "kod": "S26",
+  "kitap": "turkdili10",
+  "sayfa_no": 149
+ },
+ {
+  "kod": "S27",
+  "kitap": "turkdili10",
+  "sayfa_no": 216
+ },
+ {
+  "kod": "S28",
+  "kitap": "turkdili10",
+  "sayfa_no": 233
+ },
+ {
+  "kod": "S29",
+  "kitap": "turkdili10",
+  "sayfa_no": 284
+ },
+ {
+  "kod": "S30",
+  "kitap": "turkdili10",
+  "sayfa_no": 301
+ }
+]

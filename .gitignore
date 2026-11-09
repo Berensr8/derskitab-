@@ -27,6 +27,7 @@ modeller/
 
 # Tasarım taslakları (beyin fırtınası ekranları)
 .superpowers/
+.deep-review/
 
 # Arayüzün inceleme geçmişi ve varsayılan çıktıları
 incelemeler/

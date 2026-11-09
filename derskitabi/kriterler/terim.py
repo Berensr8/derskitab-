@@ -1,12 +1,14 @@
-"""Terim tanıma (K29): araçların bilmediği ama kitabın kendisinin terim olarak gösterdiği kelimeler.
+"""Terim tanıma (K29, K41): araçların bilmediği ama kitabın kendisinin terim olarak gösterdiği kelimeler.
 
 Biyoloji kitaplarında kelime tespitlerinin çoğu terim ve Latince addı (K29 körlemesine örneklem:
-100 tespitin 83'ü). Kitap bunları iki yoldan kendisi işaretliyor:
+100 tespitin 83'ü). Kitap bunları şu yollardan kendisi işaretliyor:
   1. Sözlük: "terim: açıklama" biçimindeki maddeler (kitabın sonundaki Sözlük, TDE'de metinlerin
-     altındaki kelime açıklamaları). Tespit edilen kelime bir maddenin kendisi ya da ek almış hâli.
-  2. İtalik: bilimsel adlar italik dizilir ("Vanessa cardui"); hemen arkasındaki parantez içi de
+     altındaki kelime açıklamaları; tek blokta birden fazla madde veya A-B-C harf başlıkları dahil).
+  2. Tanım ve terim kalıpları (K41): "X denir", "X adı verilir", "X (Y)" parantezli terimler
+     veya bilimsel niteleyici tamlamaları ("lizozim enzimi").
+  3. İtalik: bilimsel adlar italik dizilir ("Vanessa cardui"); hemen arkasındaki parantez içi de
      adın okunuşudur ("(vanesa karduyi)"). Yazı biçimi PDF'ten okunur.
-Tespit silinmez; güveni düşer, sebebi açıklamaya yazılır (editör yine görebilir).
+Tespit silinmez; güveni düşer (0,25), sebebi açıklamaya yazılır (editör yine görebilir).
 """
 
 import re
@@ -22,7 +24,19 @@ from . import yazim
 DUSUK_GUVEN = 0.25
 TERIM_NOTU = "Terim"
 EN_KISA_KOK = 4  # sözlük maddesinin ek almış hâli: madde en az bu uzunlukta olmalı
-_MADDE = re.compile(r"^\s*([a-zçğıöşüâîû][^\W\d_]*(?:[ -][^\W\d_]+){0,3})\s*(?:\([^)]{1,40}\)\s*)?:\s+\S")
+
+_MADDE = re.compile(
+    r"(?:^|[.?!;]\s+|(?:^[A-ZÇĞİÖŞÜ](?:-[A-ZÇĞİÖŞÜ])+\s+))"
+    r"([a-zçğıöşüâîû][^\W\d_]*(?:[ -][^\W\d_]+){0,3}|[A-ZÇĞİÖŞÜ]\s+[a-zçğıöşüâîû][^\W\d_]*)"
+    r"\s*(?:\([^)]{1,40}\)\s*)?:\s+\S"
+)
+_TANIM = re.compile(r"\b([a-zçğıöşüâîû]{4,})\s+(?:denir|adı verilir|olarak adlandırılır|olarak isimlendirilir)\b")
+_PARANTEZ_TERIM = re.compile(r"\(([a-zçğıöşüâîû]{4,}(?:\s+[a-zçğıöşüâîû]{3,})?)\)")
+_PARANTEZ_ONCESI_TERIM = re.compile(r"\b([a-zçğıöşüâîû]{4,})\s*\(([a-zçğıöşüâîû]{3,})\)")
+_BILIMSEL_TAMLAMA = re.compile(
+    r"\b([a-zçğıöşüâîû]{4,})\s+(?:enzim|enzimi|enzimler|enzimleri|hormon|hormonu|hormonlar|hormonları|"
+    r"protein|proteini|proteinler|proteinleri|vitamin|vitamini|bakteri|bakterisi|virüs|virüsü|asit|asidi)\b"
+)
 _ITALIK = 2  # PyMuPDF span bayrağı
 # Bloğun bu oranından fazlası italikse italik bir işaret değil, bloğun biçimidir (başlık, yönerge): o
 # bloktaki kelimeler italik diye terim sayılmaz (Biyoloji 11'in italik kazanım başlığındaki
@@ -31,12 +45,32 @@ ITALIK_EN_FAZLA_ORAN = 0.6
 
 
 def sozluk_maddeleri(bloklar: list[Blok]) -> set[str]:
-    """Kitaptaki "kelime: açıklama" maddelerinin kelimeleri (Türkçe küçük harfle)."""
+    """Kitaptaki "kelime: açıklama" maddelerinin kelimeleri (Türkçe küçük harfle).
+    Tek blokta birden fazla madde veya "A-B-C adaptasyon :" gibi harf aralıklı başlıklar da ayrıştırılır."""
     maddeler = set()
     for b in bloklar:
-        if (m := _MADDE.match(b.metin)):
-            maddeler |= {yazim.tr_kucuk(k) for k in re.split(r"[ -]", m.group(1)) if len(k) >= 3}
+        for m in _MADDE.finditer(b.metin):
+            baslik = re.sub(r"^[A-ZÇĞİÖŞÜ](?:-[A-ZÇĞİÖŞÜ])+\s+", "", m.group(1).strip())
+            maddeler |= {yazim.tr_kucuk(k) for k in re.split(r"[ -]", baslik) if len(k) >= 3}
     return maddeler
+
+
+def tanim_kelimeleri(bloklar: list[Blok]) -> set[str]:
+    """Kitap içinde '... denir / adı verilir', parantez içi veya bilimsel niteleyici tamlamasıyla
+    geçen terim kelimeleri."""
+    terimler = set()
+    for b in bloklar:
+        for m in _TANIM.finditer(b.metin):
+            terimler.add(yazim.tr_kucuk(m.group(1)))
+        for m in _PARANTEZ_TERIM.finditer(b.metin):
+            for k in m.group(1).split():
+                if len(k) >= 4:
+                    terimler.add(yazim.tr_kucuk(k))
+        for m in _PARANTEZ_ONCESI_TERIM.finditer(b.metin):
+            terimler.add(yazim.tr_kucuk(m.group(1)))
+        for m in _BILIMSEL_TAMLAMA.finditer(b.metin):
+            terimler.add(yazim.tr_kucuk(m.group(1)))
+    return terimler
 
 
 def sozlukte_mi(kelime: str, maddeler: set[str], bilinen=None) -> str | None:
@@ -89,6 +123,7 @@ def isaretle(tespitler: list[Tespit], bloklar: list[Blok], italikler: dict | Non
     italikler: italik_kelimeler() çıktısı (verilmezse yalnız sözlük kullanılır)."""
     denetciler = denetciler or yazim.varsayilan_denetciler()
     maddeler = sozluk_maddeleri(bloklar)
+    tanimlar = tanim_kelimeleri(bloklar)
     metin = {(b.sayfa_no, b.blok_no): b.metin for b in bloklar}
     italikler = italikler or {}
     sonuc = []
@@ -99,6 +134,14 @@ def isaretle(tespitler: list[Tespit], bloklar: list[Blok], italikler: dict | Non
             italik = italikler.get((t.sayfa_no, t.blok_no), set())
             if (madde := sozlukte_mi(t.metin_parcasi, maddeler, lambda m: yazim._gecerli(denetciler[0], m))):
                 sebep = f"kitabın sözlüğünde açıklanmış ('{madde}')"
+            elif k in tanimlar:
+                sebep = f"tanım veya terim kalıbı ('{k}')"
+            elif any(k[:i] in tanimlar for i in range(len(k) - 1, EN_KISA_KOK - 1, -1)):
+                kok = next(k[:i] for i in range(len(k) - 1, EN_KISA_KOK - 1, -1) if k[:i] in tanimlar)
+                sebep = f"tanım veya terim kalıbı ('{kok}')"
+            elif k.endswith(("ler", "lar")) and k[:-3] in (maddeler | tanimlar):
+                kok = k[:-3]
+                sebep = f"çoğul terim ('{kok}')"
             elif k in italik:
                 sebep = "italik yazılmış (bilimsel ad ya da yabancı kelime)"
             elif k in okunus_kelimeleri(metin.get((t.sayfa_no, t.blok_no), ""), italik):

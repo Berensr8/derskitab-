@@ -65,6 +65,22 @@ class TerimTesti(unittest.TestCase):
                                {(1, 1): {"vanessa", "cardui"}}, SAHTE_ARAC)
         self.assertEqual([t.guven_skoru for t in sonuc], [terim.DUSUK_GUVEN, terim.DUSUK_GUVEN, 1.0])
 
+    def test_coklu_ve_harf_baslikli_sozluk_maddeleri(self):
+        b = blok(1, "A-B-C adaptasyon : Bir canlının uyumu. adiponektin : Yağ dokusu hormonu.")
+        maddeler = terim.sozluk_maddeleri([b])
+        self.assertIn("adaptasyon", maddeler)
+        self.assertIn("adiponektin", maddeler)
+
+    def test_tanim_ve_parantez_terimleri(self):
+        b1 = blok(1, "Hücrelerin salgıladığı ara maddeye ise kondrin denir.")
+        b2 = blok(2, "Zarda proteine bağlı karbohidratlar (glikoprotein) bulunur.")
+        b3 = blok(3, "Gözyaşında bulunan lizozim enzimi mikropları öldürür.")
+        sonuc = terim.isaretle([tespit(1, "kondrin"), tespit(2, "glikoprotein"), tespit(3, "lizozim")],
+                               [b1, b2, b3], None, SAHTE_ARAC)
+        for t in sonuc:
+            self.assertEqual(t.guven_skoru, terim.DUSUK_GUVEN)
+            self.assertIn(terim.TERIM_NOTU, t.aciklama)
+
 
 class BirlesikTesti(unittest.TestCase):
     def test_ilk_uyan_sebep_ve_kisa_ad(self):

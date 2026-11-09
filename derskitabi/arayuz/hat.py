@@ -142,7 +142,7 @@ def calistir(klasor: Path) -> dict:
         hazir = pdf.with_name(pdf.stem + "_tutarlilik_adaylar.json")
         hazir_t = pdf.with_name(pdf.stem + "_tutarlilik_tespitler.json")
         if hazir.exists() and hazir_t.exists():
-            tut_kayit = json.loads(hazir.read_text(encoding="utf-8"))
+            tut_kayit = tutarlilik.dogru_yanlis_adaylari_suz(json.loads(hazir.read_text(encoding="utf-8")), bloklar)
             tut_t = tutarlilik.dogru_yanlis_suz(tespitleri_yukle(hazir_t), bloklar)
             tut_hazir = True
             il.mesaj("tutarlilik", "Bu kitap için önceden hesaplanmış sonuç kullanıldı.")

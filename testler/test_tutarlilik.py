@@ -91,6 +91,43 @@ class DogruYanlisTesti(unittest.TestCase):
              Tespit(240, 1, (0, 0, 1, 1), "tutarlilik", "z", 0.5, ilgili_konumlar=[(250, 3)])]
         self.assertEqual([x.aciklama for x in tutarlilik.dogru_yanlis_suz(t, self.SAYFA)], ["z"])
 
+    def test_hazir_adaylar_suzulur(self):
+        kayit = [
+            {"a": {"sayfa_no": 257, "blok_no": 42}, "b": {"sayfa_no": 250, "blok_no": 3}, "guven": 0.5},
+            {"a": {"sayfa_no": 240, "blok_no": 1}, "b": {"sayfa_no": 257, "blok_no": 42}, "guven": 0.5},
+            {"a": {"sayfa_no": 240, "blok_no": 1}, "b": {"sayfa_no": 250, "blok_no": 3}, "guven": 0.5},
+        ]
+        kalan = tutarlilik.dogru_yanlis_adaylari_suz(kayit, self.SAYFA)
+        self.assertEqual(len(kalan), 1)
+        self.assertEqual(kalan[0]["a"]["sayfa_no"], 240)
+        self.assertEqual(kalan[0]["b"]["sayfa_no"], 250)
+
+    def test_yonerge_blogu_uzunsa_dislanir(self):
+        b = [
+            blok(10, 1, "Aşağıdaki cümleler doğru ise “D”, yanlış ise “Y”yi işaretleyiniz. Söylevde temel amaç kitleleri etkilemektir."),
+            blok(10, 2, "4. Yeni soru metni burada başlar.")
+        ]
+        self.assertIn((10, 1), tutarlilik.dogru_yanlis_bloklari(b))
+
+    def test_yonerge_blogu_tek_cumleyse_dislanmaz(self):
+        b = [
+            blok(10, 1, "Aşağıdaki cümleler doğru ise “D”, yanlış ise “Y”yi işaretleyiniz."),
+            blok(10, 2, "4. Yeni soru metni burada başlar.")
+        ]
+        self.assertNotIn((10, 1), tutarlilik.dogru_yanlis_bloklari(b))
+
+    def test_numarali_soru_bolgeyi_kapatir(self):
+        b = [
+            blok(10, 1, "Aşağıdaki cümleler doğru ise “D”, yanlış ise “Y”yi işaretleyiniz."),
+            blok(10, 2, "Doğal sınıflandırma akrabalık derecelerine göre yapılır."),
+            blok(10, 3, "1. Yeni soru metni burada başlar."),
+            blok(10, 4, "Bu blok dışlanmamalıdır.")
+        ]
+        dy = tutarlilik.dogru_yanlis_bloklari(b)
+        self.assertIn((10, 2), dy)
+        self.assertNotIn((10, 3), dy)
+        self.assertNotIn((10, 4), dy)
+
 
 class CumleSecimiTesti(unittest.TestCase):
     def test_bilgi_cumlesi(self):

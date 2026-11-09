@@ -107,7 +107,7 @@ def tutarlilik_adimi(pdf: Path, bloklar, sayfalar, klasor: Path) -> tuple[list |
     hazir = pdf.with_name(pdf.stem + "_tutarlilik_adaylar.json")
     hazir_tespitler = pdf.with_name(pdf.stem + "_tutarlilik_tespitler.json")
     if hazir.exists() and hazir_tespitler.exists():
-        kayit = json.loads(hazir.read_text(encoding="utf-8"))
+        kayit = tutarlilik.dogru_yanlis_adaylari_suz(json.loads(hazir.read_text(encoding="utf-8")), bloklar)
         tespit = sum(1 for k in kayit if k.get("guven"))
         print(f"  Önceden hesaplanmış tam kitap sonucu kullanılıyor ({hazir.name}): "
               f"{len(kayit)} cümle çifti karşılaştırılmış, {tespit} bilgi tutarsızlığı tespiti.")

@@ -108,6 +108,29 @@ def dogru_yanlis_suz(tespitler: list[Tespit], bloklar: list[Blok]) -> list[Tespi
             if (t.sayfa_no, t.blok_no) not in dy and not any(tuple(k) in dy for k in t.ilgili_konumlar)]
 
 
+def dogru_yanlis_adaylari_suz(kayit: list[dict], bloklar: list[Blok]) -> list[dict]:
+    """Önceden hesaplanmış aday kaydından doğru/yanlış etkinliği maddesine dayanan adayları çıkarır.
+    Bir adayın a ya da b bloğu dogru_yanlis_bloklari(bloklar) içindeyse aday çıkar."""
+    if not kayit:
+        return []
+    dy = dogru_yanlis_bloklari(bloklar)
+    return [k for k in kayit
+            if (k["a"]["sayfa_no"], k["a"]["blok_no"]) not in dy
+            and (k["b"]["sayfa_no"], k["b"]["blok_no"]) not in dy]
+
+
+def _yonergeden_uzun_mu(metin: str) -> bool:
+    """Yönerge bloğu yönergeden uzunsa (yönerge cümlesinden sonra en az bir cümle daha varsa) True."""
+    cumleler = cumlelere_bol(metin)
+    if len(cumleler) <= 1:
+        return False
+    for i, c in enumerate(cumleler):
+        if (_DY_IFADE.search(c) and _DY_ISARET.search(c)) or _DY_BASLIK.match(c):
+            return i < len(cumleler) - 1
+    son_isaret = max((i for i, c in enumerate(cumleler) if _DY_IFADE.search(c) or _DY_ISARET.search(c)), default=-1)
+    return 0 <= son_isaret < len(cumleler) - 1
+
+
 def dogru_yanlis_bloklari(bloklar: list[Blok]) -> set[tuple[int, int]]:
     """Doğru/yanlış etkinliğinin maddeleri: yönergeden sonra aynı sayfada, bir sonraki numaralı
     soruya ("4. …") kadar gelen bloklar."""
@@ -117,6 +140,8 @@ def dogru_yanlis_bloklari(bloklar: list[Blok]) -> set[tuple[int, int]]:
             sayfa = None
         if _dogru_yanlis_yonergesi(b.metin):
             sayfa = b.sayfa_no
+            if _yonergeden_uzun_mu(b.metin):
+                sonuc.add((b.sayfa_no, b.blok_no))
             continue
         if sayfa is not None:
             if _YENI_SORU.match(b.metin):

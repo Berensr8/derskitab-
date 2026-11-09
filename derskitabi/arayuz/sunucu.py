@@ -6,6 +6,8 @@ Yalnız Python'un kendi kütüphanesiyle yazıldı (yeni kurulum gerekmez). INCE
 """
 
 import argparse
+import csv
+import io
 import json
 import mimetypes
 import os
@@ -101,13 +103,34 @@ def ilerlemeyi_oku(klasor: Path) -> list[dict]:
     return satirlar
 
 
+def _pid_calisiyor_mu(pid: int | None) -> bool:
+    """Windows'ta bu PID'e sahip ve Python olarak çalışan bir süreç var mı?"""
+    if not pid or not isinstance(pid, int):
+        return False
+    try:
+        sonuc = subprocess.run(
+            ["tasklist", "/FI", f"PID eq {pid}", "/FO", "CSV", "/NH"],
+            capture_output=True, text=True, check=False,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+        )
+        for satir in csv.reader(io.StringIO(sonuc.stdout)):
+            if len(satir) >= 2 and satir[1] == str(pid):
+                return satir[0].lower().startswith("python")
+    except Exception:
+        pass
+    return False
+
+
 def inceleme_durumu(kayit: dict) -> dict:
     """Kaydın güncel hâli: ilerleme satırları, bittiyse özet; durum güncellenir."""
     klasor = Path(kayit["cikti"])
     ilerleme = ilerlemeyi_oku(klasor)
     son = next((s for s in reversed(ilerleme) if s.get("durum") in ("tamam", "hata")), None)
     surec = SUREC.get(kayit["id"])
-    calisiyor = surec is not None and surec.poll() is None
+    if surec is not None:
+        calisiyor = surec.poll() is None
+    else:
+        calisiyor = _pid_calisiyor_mu(kayit.get("pid"))
     eski = kayit["durum"]
     if son and son["durum"] == "tamam":
         kayit["durum"] = "bitti"
@@ -122,7 +145,7 @@ def inceleme_durumu(kayit: dict) -> dict:
         kayit["ozet_sayilari"] = {k: v.get("sayilar") for k, v in ozet["kriterler"].items()}
         kayit["sure_sn"] = ozet.get("sure_sn")
     if kayit["durum"] != eski:
-        kayit["bitis"] = kayit.get("bitis") or time.time()
+        kayit["bitis"] = son.get("zaman") if (son and son.get("zaman")) else time.time()
         gecmis.kaydet(kayit)
     from .hat import ADIMLAR
     return {"kayit": kayit, "ilerleme": ilerleme, "ozet": ozet, "adimlar": ADIMLAR}
@@ -146,10 +169,10 @@ def baslat(istek: dict) -> dict:
             "sinif": istek.get("sinif") or None, "yazim_hakemi": bool(istek.get("yazim_hakemi")), "cikti": str(klasor)}
     (klasor / "ayar.json").write_text(json.dumps(ayar, ensure_ascii=False, indent=1), encoding="utf-8")
     kayit = gecmis.yeni(ayar)
-    gunluk = open(klasor / "gunluk.txt", "w", encoding="utf-8")
-    surec = subprocess.Popen([sys.executable, "-m", "derskitabi.arayuz.hat", str(klasor)], cwd=PROJE,
-                             stdout=gunluk, stderr=subprocess.STDOUT,
-                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    with open(klasor / "gunluk.txt", "w", encoding="utf-8") as gunluk:
+        surec = subprocess.Popen([sys.executable, "-m", "derskitabi.arayuz.hat", str(klasor)], cwd=PROJE,
+                                 stdout=gunluk, stderr=subprocess.STDOUT,
+                                 creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     SUREC[kayit["id"]] = surec
     kayit["pid"] = surec.pid
     gecmis.kaydet(kayit)
@@ -159,10 +182,23 @@ def baslat(istek: dict) -> dict:
 def vazgec(kimlik: str) -> None:
     surec = SUREC.get(kimlik)
     if surec and surec.poll() is None:
-        surec.terminate()
-        surec.wait(10)
+        try:
+            surec.terminate()
+            surec.wait(10)
+        except subprocess.TimeoutExpired:
+            surec.kill()
+        except Exception:
+            pass
     kayit = gecmis.oku(kimlik)
-    if kayit and kayit["durum"] == "sürüyor":
+    if kayit and kayit.get("durum") == "sürüyor":
+        pid = kayit.get("pid")
+        if pid and _pid_calisiyor_mu(pid):
+            try:
+                subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"],
+                               capture_output=True, check=False,
+                               creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+            except Exception:
+                pass
         kayit.update(durum="vazgeçildi", bitis=time.time())
         gecmis.kaydet(kayit)
 
@@ -191,12 +227,15 @@ class Isleyici(BaseHTTPRequestHandler):
         pass
 
     def _gonder(self, kod: int, govde: bytes, tur: str) -> None:
-        self.send_response(kod)
-        self.send_header("Content-Type", tur)
-        self.send_header("Content-Length", str(len(govde)))
-        self.send_header("Cache-Control", "no-store")
-        self.end_headers()
-        self.wfile.write(govde)
+        try:
+            self.send_response(kod)
+            self.send_header("Content-Type", tur)
+            self.send_header("Content-Length", str(len(govde)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(govde)
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
 
     def _json(self, veri, kod: int = 200) -> None:
         self._gonder(kod, json.dumps(veri, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
@@ -205,12 +244,20 @@ class Isleyici(BaseHTTPRequestHandler):
         n = int(self.headers.get("Content-Length") or 0)
         return json.loads(self.rfile.read(n) or b"{}")
 
+    def _host_gecerli_mi(self) -> bool:
+        """DNS rebinding saldırılarını engellemek için Host başlığını denetler."""
+        host = self.headers.get("Host") or ""
+        ad = urlparse(f"//{host}").hostname or host.split(":")[0]
+        return ad.lower() in ("127.0.0.1", "localhost")
+
     def _yerel_mi(self) -> bool:
         """Başka bir sitenin tarayıcı üzerinden bu sunucuya istek atmasını engeller."""
         kaynak = self.headers.get("Origin") or self.headers.get("Referer") or ""
         return not kaynak or urlparse(kaynak).hostname in ("127.0.0.1", "localhost")
 
     def do_GET(self):
+        if not self._host_gecerli_mi():
+            return self._json({"hata": "İzin yok."}, 403)
         yol = urlparse(self.path).path
         try:
             if yol == "/":
@@ -235,7 +282,7 @@ class Isleyici(BaseHTTPRequestHandler):
             self._json({"hata": str(hata)}, 500)
 
     def do_POST(self):
-        if not self._yerel_mi():
+        if not self._host_gecerli_mi() or not self._yerel_mi():
             return self._json({"hata": "İzin yok."}, 403)
         yol = urlparse(self.path).path
         try:

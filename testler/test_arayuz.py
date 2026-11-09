@@ -1,7 +1,12 @@
 """Arayüz testleri: sonuç ekranı cümleleri, geçmiş kaydı, sunucu (gerçek analiz çalıştırılmaz)."""
 
 import json
+import os
+import subprocess
+import sys
 import tempfile
+import time
+from unittest.mock import MagicMock
 import threading
 import unittest
 import urllib.error
@@ -191,6 +196,82 @@ class SunucuTesti(unittest.TestCase):
         secili = {20, 21, 22, 23, 24, 25}
         sayi = sum(1 for k in kayit if k["a"]["sayfa_no"] in secili or k["b"]["sayfa_no"] in secili)
         self.assertEqual(sayi, 1)
+
+    def test_host_denetimi_kotu_host_403(self):
+        kod, _ = self._al("/api/gecmis", basliklar={"Host": "kotu.example"})
+        self.assertEqual(kod, 403)
+        kod, _ = self._al(f"/api/inceleme/{self.kayit['id']}/sil", {}, {"Host": "kotu.example"})
+        self.assertEqual(kod, 403)
+        kod, _ = self._al("/api/gecmis", basliklar={"Host": "localhost"})
+        self.assertEqual(kod, 200)
+
+    def test_bitis_zamani_ilerlemeden_alinir(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            gecmis_eski = gecmis.GECMIS
+            try:
+                gecmis.GECMIS = Path(tmp) / "gecmis"
+                cikti = Path(tmp) / "cikti"
+                cikti.mkdir()
+                (cikti / "ilerleme.jsonl").write_text(
+                    json.dumps({"durum": "tamam", "zaman": 1700000000.0}) + "\n", encoding="utf-8"
+                )
+                kayit = gecmis.yeni({"pdf": "D:/a/kitap.pdf", "cikti": str(cikti)})
+                sonuc = sunucu.inceleme_durumu(kayit)
+                self.assertEqual(sonuc["kayit"]["durum"], "bitti")
+                self.assertEqual(sonuc["kayit"]["bitis"], 1700000000.0)
+            finally:
+                gecmis.GECMIS = gecmis_eski
+
+    def test_pid_ile_calisan_surec_suruyor_gorunur(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            gecmis_eski = gecmis.GECMIS
+            try:
+                gecmis.GECMIS = Path(tmp) / "gecmis"
+                cikti = Path(tmp) / "cikti"
+                cikti.mkdir()
+                kayit = gecmis.yeni({"pdf": "D:/a/kitap.pdf", "cikti": str(cikti)})
+                kayit["pid"] = os.getpid()
+                sonuc = sunucu.inceleme_durumu(kayit)
+                self.assertEqual(sonuc["kayit"]["durum"], "sürüyor")
+
+                kayit2 = gecmis.yeni({"pdf": "D:/a/kitap.pdf", "cikti": str(cikti)})
+                kayit2["pid"] = 999999
+                sonuc2 = sunucu.inceleme_durumu(kayit2)
+                self.assertEqual(sonuc2["kayit"]["durum"], "yarıda kaldı")
+            finally:
+                gecmis.GECMIS = gecmis_eski
+
+    def test_vazgec_timeout_hata_vermez(self):
+        sahte_surec = MagicMock()
+        sahte_surec.poll.return_value = None
+        sahte_surec.wait.side_effect = subprocess.TimeoutExpired(cmd="hat", timeout=10)
+        sunucu.SUREC["test_timeout"] = sahte_surec
+        with tempfile.TemporaryDirectory() as tmp:
+            gecmis_eski = gecmis.GECMIS
+            try:
+                gecmis.GECMIS = Path(tmp)
+                k = gecmis.yeni({"pdf": "D:/a/kitap.pdf", "cikti": tmp, "durum": "sürüyor"})
+                k["id"] = "test_timeout"
+                gecmis.kaydet(k)
+                sunucu.vazgec("test_timeout")
+                sahte_surec.kill.assert_called_once()
+                self.assertEqual(gecmis.oku("test_timeout")["durum"], "vazgeçildi")
+            finally:
+                gecmis.GECMIS = gecmis_eski
+                sunucu.SUREC.pop("test_timeout", None)
+
+    def test_gunluk_kapatilir_ve_kilitli_kalmaz(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            klasor = Path(tmp)
+            with open(klasor / "gunluk.txt", "w", encoding="utf-8") as gunluk:
+                p = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(0.5)"],
+                                     stdout=gunluk, stderr=subprocess.STDOUT)
+            try:
+                with open(klasor / "gunluk.txt", "a", encoding="utf-8") as f:
+                    f.write("test satırı\n")
+            finally:
+                p.kill()
+                p.wait()
 
 
 if __name__ == "__main__":

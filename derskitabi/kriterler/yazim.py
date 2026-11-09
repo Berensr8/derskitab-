@@ -1,4 +1,4 @@
-"""Yazım ve dil kriteri (Faz 1, adım 3).
+"""Yazım ve noktalama kriteri (Faz 1, adım 3).
 
 Girdi : Blok listesi ("paragraf" ve "kisa" türleri; K8)
 Çıktı : Tespit listesi (kriter="yazim")
@@ -442,7 +442,7 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
-    ap = argparse.ArgumentParser(description="Yazım ve dil kriteri")
+    ap = argparse.ArgumentParser(description="Yazım ve noktalama kriteri")
     ap.add_argument("bloklar_json", type=Path)
     ap.add_argument("--hakem", action="store_true",
                     help="Kelime tespitlerini yerel dil modeline danış (K25; Ollama gerekir)")

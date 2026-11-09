@@ -111,7 +111,7 @@ class NotluPdfTesti(unittest.TestCase):
         t = _tespit("yazim", self.b1, alt_tur="morfoloji", metin_parcasi="denme")
         notlari_ekle(self.belge, self.bloklar, {"yazim": [t], "okunabilirlik": [], "tutarlilik": None})
         ozet = self.notlar(1, "Text")[0]["bilgi"]["content"]
-        self.assertIn("Yazım ve dil: 1 not", ozet)
+        self.assertIn("Yazım ve noktalama: 1 not", ozet)
         self.assertIn("Bilgi tutarsızlığı: çalıştırılmadı", ozet)
         toc = self.belge.get_toc()
         self.assertEqual(toc[0], [1, "Ünite 1", 1])  # kitabın kendi yer imi korunur

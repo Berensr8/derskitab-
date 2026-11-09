@@ -48,29 +48,40 @@ TUR_ADLARI = {"morfoloji": "kelime (yazım)", "kitap_ici_zor_paragraf": "zor par
 ONCELIK_RENGI = {"yüksek": "F8CBAD", "orta": "FFE699", "düşük": "D9D9D9"}
 GIRDI_RENGI = "FFF2CC"  # editörün dolduracağı hücreler
 BASLIK_RENGI = "1F4E79"
-# Sistemin geliştirme sırasında ölçülmüş başarısı (bilerek eklenmiş hatalar ve elle etiketlerle).
+ONCELIKLI = ("yazim", "tutarlilik")  # yalnız bunlar olası hata; öncelik verilir (K38)
+# Sistemin geliştirme sırasında ölçülmüş başarısı. İsabet etiketlerini geliştirici
+# (yapay zekâ asistanı) tek başına koydu; bağımsız etiketleme yapılmadı.
 # Kaynak: testseti/*_sonuclari.md. Sistem değişirse burası da güncellenmeli.
 OLCULEN_BASARI = [
-    ("Yazım ve dil", "Bilerek eklenmiş 56 yazım hatasının 55'i bulundu (kilitli test seti, hakemli).",
+    ("Yazım ve noktalama", "Bilerek eklenmiş, sistemin aradığı türden 56 yazım hatasının 55'i bulundu "
+     "(gerileme seti — geliştirme sırasında tekrar kullanıldı, hakemli); büyük harfle başlayan kelimeler "
+     "(morfoloji denetiminde) ve kitapta 3+ kez tekrarlanan yanlış yazımlar denetlenmez; gerçek hatalarda "
+     "bulma oranı ölçülmedi.",
      "testseti/yazim_sonuclari.md (K23, K25)"),
-    ("Yazım ve dil", "Gerçek kitapta isabet düşük: Matematik 11'de gösterilen tespitlerin %27'si gerçek hata "
-     "(çoğu terim, özel isim, alıntı). TDK kuralları 9 tespitin 8'inde isabetli.",
+    ("Yazım ve noktalama", "Gerçek kitapta isabet düşük: geliştirme kitabı (Matematik 11, hakemli) "
+     "tespitlerinin %27'si gerçek hata; görülmemiş kitaplarda hakemsiz 6/137, hakemli 6/39 (çoğu terim, "
+     "özel isim, alıntı). TDK kuralları belirsizler dahil 8/16; görülmemiş kitaplarda 7'de 3.",
      "testseti/yazim_sonuclari.md (K23, K25)"),
-    ("Yazım ve dil", "Kesme işareti (özel ad, kısaltma, sayı; gereksiz kesme): görülmemiş sayfalarda 46 tespitin "
-     "31'i gerçek hata (%67; özel ad + ek %82). Orta öncelikle gösterilir. Kitabın hiç kesmeyle yazmadığı adlar "
-     "ve eski metin aktarımları bilinen zayıflık.",
+    ("Yazım ve noktalama", "Kesme işareti (özel ad, kısaltma, sayı; gereksiz kesme): kitabın kendi metninde "
+     "yaklaşık %56 (10/18); 31 gerçek tespitin ~21'i alıntılarda; denemede eksik kesmelerin yalnız ~%28'ini buldu.",
      "testseti/kesme_sonuclari.md (K34)"),
     ("Dilsel karmaşıklık (okunabilirlik)", "Formüller sınıf düzeyini ayırt etmiyor (aynı ders içinde de); "
      "cümle ve kelime uzunluğunu ölçüyor. Tespitler 'dilsel karmaşıklık uyarısı' olarak okunmalı.",
      "testseti/okunabilirlik_sonuclari.md (K24)"),
-    ("Bilgi tutarsızlığı", "Bilerek eklenmiş 35 çelişkinin 27'si bulundu (%77); bulunanların hepsi gerçekten "
-     "çelişkiydi (%100). En zayıf: 'en/ilk' ve sözel çelişkiler.",
+    ("Bilgi tutarsızlığı", "Bilerek eklenen 35 çelişkinin 27'si bulundu (%77), bu sette yanlış alarm yok; "
+     "gerçek kitaplarda kitap başına 0–1 yanlış alarm görüldü (4 kitap, ikisi ayar kitabı) ve yalnız bir modelin "
+     "uyardığı tespitler sahte olabilir; çelişkileri sistemi geliştiren taraf yazdı (kod d36da3f).",
      "testseti/tutarlilik_sonuclari.md (K20)"),
     ("Müfredat (programın anahtar kavramları)", "Kural tabanlı: kavram kitabın konu anlatımında hiç geçmiyorsa "
      "bildirilir (Biyoloji 9–11, Sosyal 6: 1 kavram + kitabın kapsamadığı öğrenme alanları). Yalnız tamamen eksik "
      "kavramı yakalar: bir tema çıkarıldığında kavramlarının çoğu başka temalarda da geçtiği için eksik görünmez. "
      "Öğrenme çıktısı kapsamını dil modeliyle değerlendirme ölçütü geçemedi (ürüne alınmadı).",
      "KARARLAR.md K31 ve eki"),
+    ("Tüm kriterler", "İsabet etiketlerini geliştirici (yapay zekâ asistanı) tek başına koydu; bağımsız etiketleme yapılmadı.",
+     "docs/yontem_incelemesi_2026-11-09.md (Bulgu 3)"),
+    ("Kapsam dışı", "Bu sistem şunları denetlemez: bilgilerin dış kaynakla doğruluğu, anlatım bozukluğu, "
+     "görsel/tablo/altyazı, kitabın tutarlı biçimde tekrarladığı bir yanlış.",
+     "docs/yontem_incelemesi_2026-11-09.md (Bulgu 9)"),
 ]
 
 
@@ -113,7 +124,7 @@ def tespit_satirlari(sonuclar: KitapSonuclari) -> list[dict]:
                 "Tür": TUR_ADLARI.get(t.alt_tur, t.alt_tur or "") + (f" — {s}" if (s := dusuk_oncelik.sebep(t)) else ""),
                 "PDF s.": t.sayfa_no, "Kitap s.": t.basili_sayfa_no or "", "İlgili metin": t.metin_parcasi or "",
                 "Açıklama": t.aciklama, "Öneri": oneri(t), "Karşı cümle (tutarlılık)": karsi,
-                "Güven": t.guven_skoru, "Öncelik": oncelik(t.guven_skoru), "Kimlik": kimlik(t),
+                "Güven": t.guven_skoru, "Öncelik": oncelik(t.guven_skoru) if kriter in ONCELIKLI else "—", "Kimlik": kimlik(t),
             })
     satirlar.sort(key=lambda s: s["sira"])
     for i, s in enumerate(satirlar, start=1):
@@ -145,7 +156,8 @@ def _tespitler_sayfasi(ws, satirlar: list[dict]) -> None:
             c.alignment = Alignment(wrap_text=ad in ("İlgili metin", "Açıklama", "Karşı cümle (tutarlılık)",
                                                      "Editör notu"), vertical="top")
         ws.cell(row=r, column=SUTUN["Güven"]).number_format = "0.00"
-        ws.cell(row=r, column=SUTUN["Öncelik"]).fill = _dolgu(ONCELIK_RENGI[s["Öncelik"]])
+        if s["Öncelik"] in ONCELIK_RENGI:
+            ws.cell(row=r, column=SUTUN["Öncelik"]).fill = _dolgu(ONCELIK_RENGI[s["Öncelik"]])
         for ad in ("Editör kararı", "Editör notu"):
             ws.cell(row=r, column=SUTUN[ad]).fill = _dolgu(GIRDI_RENGI)
     karar = DataValidation(type="list", formula1='"' + ",".join(KARARLAR) + '"', allow_blank=True,
@@ -211,11 +223,15 @@ def _ozet_sayfasi(ws, sonuclar: KitapSonuclari, kitap: str, sayfa_sayisi: int | 
         _hucre(ws, r, c, f"=SUM({harf}{r0 + 1}:{harf}{r - 1})", yazi=_yazi(kalin=True))
     _hucre(ws, r, 10, f'=IFERROR(F{r}/(F{r}+G{r}),"-")', yazi=_yazi(kalin=True), number_format="0%")
     _hucre(ws, r + 1, 1, "İsabet = Hata / (Hata + Hata değil): editörün baktığı tespitlerin gerçekten hata "
-           "olanların oranı. Öncelik: yüksek ≥ 0,75 güven, orta ≥ 0,5, düşük = PDF okuma parçası, kitabın terimi, alıntı metin ya da dil modeli 'muhtemelen doğru' dedi.",
+           "olanların oranı. Öncelik bir sıralamadır, olasılık değildir (yalnız yazım ve çelişkiye verilir; "
+           "dilsel karmaşıklık ve müfredat hata değildir: '—').",
+           yazi=_yazi(boyut=9, renk="595959"))
+    _hucre(ws, r + 2, 1, "Bu sistem şunları denetlemez: bilgilerin dış kaynakla doğruluğu, anlatım bozukluğu, "
+           "görsel/tablo/altyazı, kitabın tutarlı biçimde tekrarladığı bir yanlış.",
            yazi=_yazi(boyut=9, renk="595959"))
 
     # Okunabilirlik kitap puanları (sistemin hesabı)
-    r += 3
+    r += 4
     _hucre(ws, r, 1, "Kitabın genel dilsel karmaşıklığı (paragraf puanlarının ortancası)",
            yazi=_yazi(kalin=True, boyut=12))
     if ozet:
@@ -233,7 +249,7 @@ def _ozet_sayfasi(ws, sonuclar: KitapSonuclari, kitap: str, sayfa_sayisi: int | 
 
     # Ölçülmüş başarı (geliştirme sırasında)
     r += 1
-    _hucre(ws, r, 1, "Sistemin ölçülmüş başarısı (geliştirme sırasında)", yazi=_yazi(kalin=True, boyut=12))
+    _hucre(ws, r, 1, "Sistemin ölçülmüş başarısı (geliştirme sırasında) — İsabet etiketlerini geliştirici tek başına koydu; bağımsız etiketleme yapılmadı", yazi=_yazi(kalin=True, boyut=11))
     for i, (kriter, metin, kaynak) in enumerate(OLCULEN_BASARI, start=1):
         _hucre(ws, r + i, 1, kriter, alignment=Alignment(vertical="top"))
         _hucre(ws, r + i, 2, f"{metin} Kaynak: {kaynak}", alignment=Alignment(wrap_text=True, vertical="top"))

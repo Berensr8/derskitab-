@@ -282,11 +282,11 @@ class Isleyici(BaseHTTPRequestHandler):
             self._json({"hata": str(hata)}, 500)
 
     def do_POST(self):
+        istek = self._istek()
         if not self._host_gecerli_mi() or not self._yerel_mi():
             return self._json({"hata": "İzin yok."}, 403)
         yol = urlparse(self.path).path
         try:
-            istek = self._istek()
             if yol == "/api/sec/pdf":
                 secilen = pencere("pdf", istek.get("baslangic"))
                 return self._json(pdf_bilgisi(secilen) if secilen else {})

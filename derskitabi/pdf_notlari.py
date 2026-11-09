@@ -34,7 +34,7 @@ GOSTERIM_ESIGI = 0.5  # inceleyicideki gibi: altındakiler "düşük öncelik" (
 RENKLER = {"yazim": (0.85, 0.1, 0.1), "okunabilirlik": (1.0, 0.5, 0.0),
            "tutarlilik": (0.55, 0.25, 0.8), "mufredat": (0.1, 0.5, 0.3), "dusuk": (0.6, 0.6, 0.6)}
 TUTARLILIK_VURGUSU = (0.85, 0.72, 1.0)
-KRITER_ADLARI = {"yazim": "Yazım ve dil", "okunabilirlik": "Dilsel karmaşıklık (okunabilirlik)",
+KRITER_ADLARI = {"yazim": "Yazım ve noktalama", "okunabilirlik": "Dilsel karmaşıklık (okunabilirlik)",
                  "tutarlilik": "Bilgi tutarsızlığı", "mufredat": "Müfredat (programın anahtar kavramları)"}
 KURAL_ADLARI = {"noktalama_bosluk": "noktalamadan sonra boşluk", "bag_te_ta": "bağlaç de/da",
                "bag_de_da_uyum": "bağlaç de/da uyumu", "soru_eki_uyum": "soru eki uyumu",
@@ -240,7 +240,7 @@ def _yer_imi_basligi(t: Tespit, bloklar: dict) -> str:
 
 def notlari_ekle(belge: pymupdf.Document, bloklar: list[Blok], tespitler: dict[str, list[Tespit] | None],
                  tutarlilik_kaydi: list[dict] | None = None, dusuk_guven: bool = False,
-                 kapsam: str | None = None) -> dict:
+                 kapsam: str | None = None, hakem: bool | None = None) -> dict:
     """Tespitleri belgeye not olarak ekler; özet notu ve yer imlerini yazar.
 
     tespitler: {"yazim": [...], "okunabilirlik": [...], "tutarlilik": [...] ya da None (çalıştırılmadı)}
@@ -268,30 +268,38 @@ def notlari_ekle(belge: pymupdf.Document, bloklar: list[Blok], tespitler: dict[s
             sayac[kriter] += 1
             baslik = _yer_imi_basligi(t, blok_dizini) + (" (düşük öncelik)" if dusuk else "")
             yer_imleri[kriter].append((baslik, t.sayfa_no, x, y))
-    _ozet_notu(belge, tespitler, sayac, atlanan, dusuk_guven, kapsam)
+    _ozet_notu(belge, tespitler, sayac, atlanan, dusuk_guven, kapsam, hakem)
     _yer_imlerini_yaz(belge, tespitler, yer_imleri)
     return {**{k: sayac[k] for k in KRITER_ADLARI}, "dusuk_atlanan": atlanan}
 
 
-def _sayi_metni(kriter: str, tespitler: dict, sayac: Counter) -> str:
+def _sayi_metni(kriter: str, tespitler: dict, sayac: Counter, hakem: bool | None = None) -> str:
     if tespitler.get(kriter) is None:
         return "çalıştırılmadı"
-    return f"{sayac[kriter]} not" if sayac[kriter] else "bulunmadı"
+    if sayac[kriter]:
+        metin = f"{sayac[kriter]} not"
+        if kriter == "yazim" and hakem is not None:
+            metin += f" (hakem {'açık' if hakem else 'kapalı'})"
+        return metin
+    if kriter == "yazim":
+        ek = f" (hakem {'açık' if hakem else 'kapalı'})" if hakem is not None else ""
+        return f"sistemin denetlediği türlerde bulunmadı{ek}"
+    return "bulunmadı"
 
 
-def _ozet_notu(belge, tespitler, sayac, atlanan, dusuk_guven, kapsam=None) -> None:
+def _ozet_notu(belge, tespitler, sayac, atlanan, dusuk_guven, kapsam=None, hakem=None) -> None:
     satirlar = [f"{YAZAR} — otomatik inceleme notları", ""] + ([kapsam, ""] if kapsam else [])
-    satirlar += [f"• {ad}: {_sayi_metni(k, tespitler, sayac)}" for k, ad in KRITER_ADLARI.items()]
+    satirlar += [f"• {ad}: {_sayi_metni(k, tespitler, sayac, hakem)}" for k, ad in KRITER_ADLARI.items()]
     if atlanan:
-        satirlar.append(f"• Düşük öncelikli {atlanan} yazım tespiti eklenmedi (PDF okuma parçası, kitabın "
-                        "terimi, alıntı metin ya da dil modeli muhtemelen doğru dedi; eklemek için --dusuk-guven; Excel raporunda var).")
+        satirlar.append(f"• Düşük öncelikli {atlanan} yazım tespiti bu PDF'e eklenmedi; hepsi Excel raporunda.")
+
     elif dusuk_guven:
         satirlar.append("• Düşük öncelikli yazım tespitleri gri renkte eklendi.")
     satirlar += ["", "Renkler: kırmızı dalgalı çizgi = yazım, turuncu çerçeve = dilsel karmaşıklık, "
                  "mor vurgu = çelişen cümleler (kenardaki ↔ etiketi karşı cümleye götürür), "
                  "yeşil not = müfredat (programın anahtar kavramı kitapta yok).",
                  "Tüm notlar okuyucunun Yorumlar panelinde, kritere göre liste Yer İmleri panelinde.",
-                 "", UYARI]
+                 "", "Bu sistem şunları denetlemez: bilgilerin dış kaynakla doğruluğu, anlatım bozukluğu, görsel/tablo/altyazı, kitabın tutarlı biçimde tekrarladığı bir yanlış.", "", UYARI]
     sayfa = belge[0]
     annot = sayfa.add_text_annot((sayfa.rect.width - 28, 8), "\n".join(satirlar), icon="Comment")
     annot.set_info(title=YAZAR, subject="İnceleme özeti")
@@ -334,7 +342,7 @@ def notlu_pdf_olustur(pdf_yolu, cikti_yolu, bloklar: list[Blok] | None = None, h
     with pymupdf.open(pdf_yolu) as belge:
         sonuc = notlari_ekle(belge, bloklar, {"yazim": yazim_tespitleri, "okunabilirlik": okunabilirlik_tespitleri,
                                               "tutarlilik": tutarlilik_tespitleri, "mufredat": s.tespitler["mufredat"]},
-                             tutarlilik_kaydi, dusuk_guven, kapsam)
+                             tutarlilik_kaydi, dusuk_guven, kapsam, hakem=hakem)
         belge.save(cikti_yolu, garbage=1)
     return sonuc
 

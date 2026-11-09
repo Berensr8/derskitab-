@@ -182,7 +182,8 @@ def calistir(klasor: Path) -> dict:
     notlu = klasor / f"{pdf.stem}_notlu.pdf"
     notlu_pdf_olustur(pdf, notlu, bloklar=bloklar, yazim_tespitleri=sonuclar.tespitler["yazim"],
                       okunabilirlik_tespitleri=okun_sec, tutarlilik_tespitleri=sonuclar.tespitler["tutarlilik"],
-                      tutarlilik_kaydi=tut_kayit, kapsam=kapsam, mufredat_tespitleri=muf_t)
+                      tutarlilik_kaydi=tut_kayit, kapsam=kapsam, mufredat_tespitleri=muf_t,
+                      hakem=hakem_calisti)
     excel = klasor / f"{pdf.stem}_rapor.xlsx"
     rapor_olustur(excel, sonuclar, pdf.name, sayfa_sayisi, kapsam)
     il.adim("dosyalar", "bitti")

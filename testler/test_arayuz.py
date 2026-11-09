@@ -53,7 +53,7 @@ class OzetTesti(unittest.TestCase):
         self.assertEqual((o["sayilar"], o["oncelikli"], o["maddeler"][0]["oncelik"]), ({}, False, None))
         self.assertEqual(o["maddeler"][0]["kisa"], "Cümleler uzun: ortalama 23 kelime (kitapta genelde 10).")
         self.assertNotIn("engelli", o["maddeler"][0]["sade"])
-        self.assertIn("10–12. sınıf düzeyinde", o["maddeler"][0]["sade"])
+        self.assertNotIn("sınıf düzeyinde", o["maddeler"][0]["sade"])
 
     def test_noktalama_vurgusu_kelimeyi_bolmez(self):
         t = tespit(5, 1.0, "noktalama_bosluk", "ikiye katlandı.Takım arkada")

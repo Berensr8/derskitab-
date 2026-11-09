@@ -40,6 +40,8 @@ class SatirTesti(unittest.TestCase):
         self.assertIn("PDF s. 5 / kitap s. 3", celiski["Karşı cümle (tutarlılık)"])
         self.assertIn("1920", celiski["Karşı cümle (tutarlılık)"])
         self.assertEqual({x["Öncelik"] for x in s if x["İlgili metin"] == "Cumhuriyet"}, {"düşük"})
+        oku = next(x for x in s if x["Kriter"] == "Dilsel karmaşıklık (okunabilirlik)")
+        self.assertEqual(oku["Öncelik"], "—")
 
     def test_oneri_yalniz_hakemden(self):
         self.assertEqual(oneri(_sonuclar().tespitler["yazim"][1]), "")
@@ -55,7 +57,7 @@ class RaporDosyasiTesti(unittest.TestCase):
 
     def test_sayfalar_bicim_ve_dogrulama(self):
         sayilar = rapor_olustur(self.yol, _sonuclar(), "ornek.pdf", 10)
-        self.assertEqual(sayilar["Yazım ve dil"], 3)
+        self.assertEqual(sayilar["Yazım ve noktalama"], 3)
         wb = load_workbook(self.yol)
         self.assertEqual(wb.sheetnames, ["Özet", "Tespitler"])
         ws = wb["Tespitler"]
@@ -99,8 +101,8 @@ class RaporDosyasiTesti(unittest.TestCase):
         self.assertEqual(len(okunan), 5)
         self.assertIn(kimlik(_sonuclar().tespitler["yazim"][0]), {k["kimlik"] for k in okunan})
         ozet = isabet_ozeti(okunan)
-        self.assertEqual(ozet["Yazım ve dil"]["Hata"], 2)
-        self.assertAlmostEqual(ozet["Yazım ve dil"]["isabet"], 2 / 3)
+        self.assertEqual(ozet["Yazım ve noktalama"]["Hata"], 2)
+        self.assertAlmostEqual(ozet["Yazım ve noktalama"]["isabet"], 2 / 3)
         self.assertIsNone(ozet["Bilgi tutarsızlığı"]["isabet"])  # bakılmadı
         self.assertEqual(ozet["Bilgi tutarsızlığı"]["Bakılmadı"], 1)
 

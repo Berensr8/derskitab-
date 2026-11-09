@@ -266,7 +266,7 @@ window.addEventListener("hashchange", async () => { window.scrollTo(0, 0); await
 
 // ------------------------------------------------------------------ yeni inceleme
 const KRITERLER = [
-  ["yazim", "Yazım ve dil", "Sözlükte olmayan kelimeler ve TDK kuralları (de/da, kesme işareti, noktalama…).",
+  ["yazim", "Yazım ve noktalama", "Sözlükte olmayan kelimeler ve TDK kuralları (de/da, kesme işareti, noktalama…).",
     s => s < 120 ? "1–2 dk" : "birkaç dakika"],
   ["okunabilirlik", "Dilsel karmaşıklık", "Kitabın geri kalanına göre belirgin biçimde zor paragraflar.", () => "1 dk'dan az"],
   ["mufredat", "Müfredat (öğretim programı)", "Programın anahtar kavramları kitapta geçiyor mu? (şimdilik Biyoloji ve Sosyal Bilgiler)", () => "1 dk'dan az"],
@@ -493,7 +493,7 @@ function sonucEkrani(ana, k, ozet) {
     ek("tutarlilik", n ? el("b", { style: "color:var(--kalem)" }, `${sayi(n)} olası çelişki`) : "Kitap içinde çelişki bulunmadı");
   }
   if (kr.okunabilirlik?.durum === "tamam") ek("okunabilirlik", kr.okunabilirlik.maddeler.length
-    ? `${sayi(kr.okunabilirlik.maddeler.length)} sadeleştirilebilecek paragraf` : "Belirgin biçimde zor paragraf yok");
+    ? `kitabın en karmaşık %10'u (${sayi(kr.okunabilirlik.maddeler.length)} paragraf)` : "Zor paragraf bulunmadı");
   if (kr.mufredat?.durum === "tamam") ek("mufredat", kr.mufredat.maddeler.length
     ? `${sayi(kr.mufredat.maddeler.length)} müfredat notu` : "Programın bütün anahtar kavramları kitapta var");
   const once = (kr.yazim?.sayilar?.["yüksek"] || 0) + (kr.tutarlilik?.sayilar?.["yüksek"] || 0);
@@ -543,6 +543,8 @@ function sonucEkrani(ana, k, ozet) {
       "Her satır bir yer. Sarı sütuna Hata / Hata değil yazın; özet kendini hesaplar."),
     cikti(el("button", { onclick: ac("klasor", "Klasör") }, "Klasörü aç"), "Bütün dosyalar."),
     durumSatiri));
+  ana.append(el("p", { class: "kapsam-notu", style: "margin:16px 0 0; color:var(--silik, #666); font-size:12px;" },
+    "Bu sistem şunları denetlemez: bilgilerin dış kaynakla doğruluğu, anlatım bozukluğu, görsel/tablo/altyazı, kitabın tutarlı biçimde tekrarladığı bir yanlış."));
 }
 
 // ------------------------------------------------------------------ tek tek inceleme

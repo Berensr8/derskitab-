@@ -15,7 +15,7 @@ from ..model import Blok, Tespit
 from ..pdf_notlari import oncelik
 from ..rapor import TUR_ADLARI
 
-KRITERLER = {"yazim": "Yazım ve dil", "okunabilirlik": "Dilsel karmaşıklık",
+KRITERLER = {"yazim": "Yazım ve noktalama", "okunabilirlik": "Dilsel karmaşıklık",
              "mufredat": "Müfredat (öğretim programı)", "tutarlilik": "Bilgi tutarsızlığı"}
 ONCELIKLI = ("yazim", "tutarlilik")  # yalnız bunlar olası hata; öncelik verilir
 ONCELIK_ADI = {"yüksek": "öncelikli", "orta": "kontrol edilecek", "düşük": "düşük öncelikli"}
@@ -30,12 +30,15 @@ GUVEN = {
              "denetlenmez, gerçek hatalarda bulma oranı ölçülmedi. Görülmemiş kitaplarda işaretlenenlerin çoğu "
              "(hakem kapalıyken ~%96, açıkken ~%85) hata değildir; edebiyat kitaplarında isabet en düşüktür; her birine göz atın.",
 
-    "okunabilirlik": "Ne kadar güvenilir? Ölçüler cümle ve kelime uzunluğuna dayanır; sınıf düzeyini kesin "
-                     "ayırt etmez. İşaretler 'buraya bir bakın' anlamındadır.",
+    "okunabilirlik": "Ne kadar güvenilir? Ölçüler cümle ve kelime uzunluğuna dayanır; ölçtüğümüzde "
+                     "aynı dersin farklı sınıf kitaplarını bile ayırt etmedi. İşaretler 'buraya bir bakın' anlamındadır.",
+
     "mufredat": "Ne kadar güvenilir? Yalnız kitapta hiç geçmeyen kavramları yakalar; bir konunun yeterince "
                 "işlenip işlenmediğini değerlendirmez.",
-    "tutarlilik": "Ne kadar güvenilir? Bilerek eklenen 35 çelişkinin 27'sini buldu ve bulduklarının hepsi "
-                  "gerçekten çelişkiydi; ama her çelişkiyi yakalamaz.",
+    "tutarlilik": "Ne kadar güvenilir? Bilerek eklenen 35 çelişkinin 27'sini buldu, bu sette yanlış alarm yok; "
+                  "gerçek kitaplarda kitap başına 0–1 yanlış alarm görüldü (4 kitap, ikisi ayar kitabı) ve yalnız "
+                  "bir modelin uyardığı tespitler sahte olabilir; çelişkileri sistemi geliştiren taraf yazdı.",
+
 }
 HAKEMSIZ = ("Bu incelemede yapay zekâ hakemi kapalıydı; açık olsaydı terim ve özel adlardan gelen yanlış "
             "alarmların çoğu düşük önceliğe inerdi.")
@@ -136,14 +139,14 @@ def sade_aciklama(t: Tespit) -> str:
         return " ".join(cumleler)
     if t.kriter == "okunabilirlik":
         o = _okunabilirlik_olculeri(a)
-        duzey = re.search(r"\((\d+–\d+\. sınıf)\)", a)
+
         parcalar = ["Bu paragraf kitabın en zor bölümleri arasında."]
         if o:
             hece = _sayi(f"{o['hece']:.1f}")
             parcalar.append(f"Cümle başına ortalama {round(o['kelime'])} kelime (kitapta genelde {round(o['ortanca'])}), "
                             f"kelime başına {hece} hece.")
-        if duzey:
-            parcalar.append(f"Formüllere göre {duzey.group(1)} düzeyinde okunuyor.")
+
+
         return " ".join(parcalar)
     if t.kriter == "tutarlilik":
         a = re.sub(r"\(iki model de \([^)]*\)\)", "(iki ayrı yapay zekâ modeli de çelişki gördü)", a)
@@ -223,8 +226,9 @@ def okunabilirlik_cumleleri(maddeler: list[dict], ozet: dict | None) -> list[str
         cumleler.append(f"Kitabın dili genel olarak {ozet['atesman_duzeyi']} (Ateşman puanı "
                         f"{round(ozet['atesman'])}; puan yükseldikçe metin kolaylaşır).")
     if maddeler:
-        cumleler.append(f"{len(maddeler)} paragraf kitabın geri kalanından belirgin biçimde zor. Bunlar hata değil, "
-                        f"sadeleştirmeye aday yerler.")
+        cumleler.append(f"Kitabın en karmaşık %10'u: {len(maddeler)} paragraf (her kitapta yaklaşık %10 çıkar; "
+                        "bunlar hata değil, sadeleştirmeye aday yerlerdir).")
+
     else:
         cumleler.append("Kitabın geri kalanından belirgin biçimde zor bir paragraf yok.")
     return cumleler

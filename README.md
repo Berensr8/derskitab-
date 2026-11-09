@@ -1,11 +1,14 @@
 # Ders Kitaplarında İçerik ve Tutarlılık Hatalarının Otomatik Tespiti
 
-PDF formatındaki Türkçe ders kitaplarını üç kritere göre inceleyen sistem
+PDF formatındaki Türkçe ders kitaplarını dört kritere göre inceleyen sistem
 (OMÜ Yazılım Geliştirme I dersi projesi).
 
-1. **Yazım ve dil hataları** — kural tabanlı
-2. **Yaş/sınıf seviyesine uygunluk** — okunabilirlik formülleri
-3. **Bilgi tutarsızlığı** — LLM tabanlı, aynı kitap içindeki çelişkiler
+1. **Yazım ve noktalama** — kural tabanlı
+2. **Dilsel karmaşıklık (cümle ve kelime uzunluğu)** — okunabilirlik formülleri
+3. **Müfredat uyumu** — öğretim programının anahtar kavramları
+4. **Bilgi tutarsızlığı** — LLM tabanlı, aynı kitap içindeki çelişkiler
+
+Bu sistem şunları denetlemez: bilgilerin dış kaynakla doğruluğu, anlatım bozukluğu, görsel/tablo/altyazı, kitabın tutarlı biçimde tekrarladığı bir yanlış.
 
 Her tespit için sayfa, paragraf (blok) ve açıklama gösterilir.
 

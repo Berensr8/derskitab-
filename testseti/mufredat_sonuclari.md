@@ -68,7 +68,7 @@ Bir temanın kavramlarının en az yarısı yoksa tek not verilir: tema kitapta 
 | Biyoloji 9 | 30/31 | "polimerizasyon" yalnız tanıtım/kapak sayfasında geçiyor (s. 12, 15); konu anlatımında "polimer" var, terim yok |
 | Biyoloji 10 | 20/20 | — |
 | Biyoloji 11 | 16/16 | — |
-| Sosyal Bilgiler 6 ("1. Kitap": 1–3. alanlar) | 30/30 (1–3. alanlar) | 4. ve 6. öğrenme alanı "kitapta yok" (doğru: ikinci ciltte); 5. alandan 3 kavram (pazarlama, yatırım, üretim-dağıtım-tüketim) |
+| Sosyal Bilgiler 6 ("1. Kitap": 1–3. alanlar) | 30/30 (1–3. alanlar) | 4., 5. ve 6. öğrenme alanı "kitapta yok" (doğru: ikinci ciltte; künye ve kaynakça hariç) |
 | TDE 9–12, Matematik 11 | — | program eşleşmedi (doğru: TDE programı beceri temelli, Matematik programı indirilmedi) |
 
 Program eşleştirme: sınıf kapaktan okunur; o sınıfın kavramlarının en az yarısı kitapta geçen program seçilir
@@ -78,7 +78,7 @@ Program eşleştirme: sınıf kapaktan okunur; o sınıfın kavramlarının en a
 **Sınırı (ölçüldü):** kontrol yalnız kitapta **hiç** geçmeyen kavramı yakalar. Bir tema çıkarıldığında
 kavramlarının çoğu yine bulunur, çünkü başka temalarda da geçiyor ("hücre", "enerji"). Tema 2 çıkarılınca o
 temaya özgü kavramlardan eksik bulunan: Biyoloji 9'da 5/17, Biyoloji 10'da 2/8, Biyoloji 11'de 2/7, Sosyal 6'da
-1/9. Yani bir konunun eksik işlendiğini değil, programın bir terimini kitabın hiç kullanmadığını gösterir.
+1/9. Yani bir konunun eksik işlendiğini değil, sınıf kitabında geçmediğini (künye/kaynakça hariç) gösterir.
 Kitabın ikinci cildinde olan alanlar gibi bütün bir temanın yokluğu ise yakalanıyor.
 
 ## 3. Üründe

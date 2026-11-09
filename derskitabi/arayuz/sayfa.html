@@ -269,7 +269,7 @@ const KRITERLER = [
   ["yazim", "Yazım ve dil", "Sözlükte olmayan kelimeler ve TDK kuralları (de/da, kesme işareti, noktalama…).",
     s => s < 120 ? "1–2 dk" : "birkaç dakika"],
   ["okunabilirlik", "Dilsel karmaşıklık", "Kitabın geri kalanına göre belirgin biçimde zor paragraflar.", () => "1 dk'dan az"],
-  ["mufredat", "Müfredat (öğretim programı)", "Programın anahtar kavramları kitapta geçiyor mu?", () => "1 dk'dan az"],
+  ["mufredat", "Müfredat (öğretim programı)", "Programın anahtar kavramları kitapta geçiyor mu? (şimdilik Biyoloji ve Sosyal Bilgiler)", () => "1 dk'dan az"],
   ["tutarlilik", "Bilgi tutarsızlığı", "Kitabın kendi içinde çelişen bilgiler (bilgisayardaki yapay zekâ programıyla).",
     s => `uzun: yaklaşık ${Math.max(5, Math.round(s * 17 / 60 / 5) * 5)} dk`],
 ];

@@ -48,6 +48,44 @@ _ICERIK = re.compile(r"İÇERİK ÇERÇEVESİ(.*?)Anahtar Kavramlar(.*?)ÖĞRENM
 # alan kapağı), "TEMA TEMA" (kapaktaki büyük yazı), "Tema sunusu", "Kitabın tanıtımı", "İçindekiler"
 _TANITIM = re.compile(r"İÇERİK ÇERÇEVESİ|BU ÖĞRENME ALANINDA|\bTEMA\s+TEMA\b|(?i:öğrenilecek anahtar kavramlar|"
                       r"tema sunusu|kitabın tanıtımı|kitabımızı tanıyalım|^\s*içindekiler\s*$)", re.M)
+_KUNYE = re.compile(r"(?i:yayın koordinatörü|görsel tasarım(?:cı)?|isbn\s*[\d-])")
+_KAYNAKCA_BASLIK = re.compile(r"(?im)^\s*(?:kaynakça|kaynaklar|görsel.*?kaynakças?ı)\s*$|^\s*kaynakça\b")
+_KAYNAKCA_ICERIK = re.compile(r"\(\d{4}\)|https?://|www\.|apa\s*6|genel ağ kaynakçası", re.I)
+
+
+def kunye_kaynakca_sayfalari(bloklar: list[Blok]) -> set[int]:
+    """Künye (kitabın ilk sayfaları) ve kaynakça sayfaları (kaynakça başlığı ve devamındaki alıntı listeleri).
+    Bu sayfalar kavram ve çıktı aramasından hariç tutulur (K38)."""
+    sayfa_bloklari: dict[int, list[Blok]] = {}
+    for b in bloklar:
+        sayfa_bloklari.setdefault(b.sayfa_no, []).append(b)
+
+    sayfalar = set()
+    for s, blist in sayfa_bloklari.items():
+        if s <= 10:
+            metin = " ".join(b.metin for b in blist)
+            if _KUNYE.search(metin):
+                sayfalar.add(s)
+
+    kaynakca_baslangic = set()
+    for s, blist in sayfa_bloklari.items():
+        if s > 10:
+            metin = " ".join(b.metin for b in blist)
+            if any(_KAYNAKCA_BASLIK.search(b.metin.strip()) for b in blist):
+                if _KAYNAKCA_ICERIK.search(metin):
+                    kaynakca_baslangic.add(s)
+
+    for s in sorted(kaynakca_baslangic):
+        sayfalar.add(s)
+        curr = s + 1
+        while curr in sayfa_bloklari:
+            metin = " ".join(b.metin for b in sayfa_bloklari[curr])
+            if len(_KAYNAKCA_ICERIK.findall(metin)) >= 2:
+                sayfalar.add(curr)
+                curr += 1
+            else:
+                break
+    return sayfalar
 
 
 @dataclass
@@ -118,7 +156,8 @@ def _sayfa_metinleri(bloklar: list[Blok], tanitim: set[int], tanitim_mi: bool) -
 def kavram_sayfalari(kavramlar: list[str], bloklar: list[Blok]) -> dict[str, list[int]]:
     """{kavram: kitapta geçtiği sayfalar} (tanıtım sayfaları sayılmaz). Kavram aynen geçmiyorsa çok kelimeli
     kavramın bütün kelimelerinin aynı sayfada geçtiği sayfalar ("kan basıncı dengesi" ↔ "kan basıncını düzenleyen")."""
-    sayfa_metni = _sayfa_metinleri(bloklar, tanitim_sayfalari(bloklar), False)
+    haric = tanitim_sayfalari(bloklar) | kunye_kaynakca_sayfalari(bloklar)
+    sayfa_metni = _sayfa_metinleri(bloklar, haric, False)
     sonuc = {}
     for k in kavramlar:
         bulunan = set()
@@ -146,7 +185,7 @@ def yalniz_tanitimda(kavram: str, bloklar: list[Blok]) -> list[int]:
 
 
 def paragraflar(bloklar: list[Blok]) -> list[Blok]:
-    tanitim = tanitim_sayfalari(bloklar)
+    tanitim = tanitim_sayfalari(bloklar) | kunye_kaynakca_sayfalari(bloklar)
     return [b for b in birlesik_bloklar(bloklar)
             if b.tur == "paragraf" and len(b.metin.split()) >= EN_AZ_KELIME and b.sayfa_no not in tanitim]
 

@@ -122,8 +122,8 @@ def calistir(klasor: Path) -> dict:
         il.adim("mufredat")
         bulunan = mufredat.program_bul(bloklar, hedef)
         if bulunan is None:
-            neden["mufredat"] = ("Bu kitaba uyan öğretim programı bulunamadı (şimdilik Biyoloji, Türk Dili ve "
-                                 "Edebiyatı, Sosyal Bilgiler programları yüklü).")
+            neden["mufredat"] = ("Bu kitaba uyan öğretim programı bulunamadı (şimdilik Biyoloji ve "
+                                 "Sosyal Bilgiler programları yüklü).")
             il.adim("mufredat", "atlandı", neden["mufredat"])
         else:
             yol, sinif, ciktilar = bulunan

@@ -41,6 +41,23 @@ class ProgramTesti(unittest.TestCase):
         self.assertFalse(mufredat.tanitim_sayfalari([Blok(9, 1, (0, 0, 1, 1), "1. Tema / ENERJİ", "9", "kisa")]))
 
 
+    def test_kunye_ve_kaynakca_kavram_aramasindan_haric_tutulur(self):
+        # K38: Künye ve kaynakça sayfaları kavram ve çıktı aramasından hariç tutulur
+        kunye = [Blok(2, 1, (0, 0, 1, 1), "Görsel Tasarımcı: Ahmet Yılmaz\nISBN 978-975-11-8776-5", "2", "paragraf")]
+        kaynakca = [
+            Blok(50, 1, (0, 0, 1, 1), "KAYNAKÇA", "50", "kisa"),
+            Blok(50, 2, (0, 0, 1, 1), "Demir, T. (2021). Biyolojik Araştırmalar. Ankara: Nobel.", "50", "paragraf"),
+            Blok(51, 1, (0, 0, 1, 1), "Yılmaz, M. (2020). Ekoloji Temelleri. https://dergi.org/makale", "51", "paragraf"),
+        ]
+        icerik = [Blok(20, 1, (0, 0, 1, 1), "Hücre zarı seçici geçirgendir ve madde iletimini sağlar. Biyolojik sistemlerde enerji üretimi hayati önem taşır.", "20", "paragraf")]
+        tum_bloklar = kunye + icerik + kaynakca
+        haric = mufredat.kunye_kaynakca_sayfalari(tum_bloklar)
+        self.assertEqual(haric, {2, 50, 51})
+        # Künyedeki veya kaynakçadaki terimler kavram olarak sayılmaz
+        ks = mufredat.kavram_sayfalari(["tasarım", "ekoloji", "hücre zarı"], tum_bloklar)
+        self.assertEqual(ks, {"tasarım": [], "ekoloji": [], "hücre zarı": [20]})
+        self.assertEqual([b.sayfa_no for b in mufredat.paragraflar(tum_bloklar)], [20])
+
     def test_cok_kelimeli_kavram_kelimeleri_ayni_sayfada(self):
         # Biyoloji 11: "kan basıncı dengesi" kitapta "kan basıncını düzenleyen…denge" olarak işleniyor
         b = [Blok(30, 1, (0, 0, 1, 1), "Böbrekler kan basıncını düzenleyen hormonlarla vücudun su dengesini korur.", "30", "paragraf")]

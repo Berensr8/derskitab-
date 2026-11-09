@@ -212,14 +212,31 @@ def imza_mi(b: Blok, ust: Blok | None, bolge: list[Blok], bicim, ust_bicim, alt_
     return girintili or sola_hizali_altta
 
 
+_SAPKALI_KELIME = re.compile(r"\b\w*[âîûÂÎÛ]\w*\b")
+_ESKI_KALIP = re.compile(
+    r"\b(?:didüm|didi|eyitdi|idüp|eyleyüp|nidelim|yahşi|olmağa|kâmetün|kaşlarun|yüzümi|tozunı|"
+    r"cemâlüni|kemâlün|şâd|tufanı|oynaşur|kılur|öldüriser|süredurur|itmişdür|akıtmağa)\b", re.I
+)
+
+
 def eski_dil_mi(b: Blok, denetciler) -> bool:
-    """Farsça tamlama ("kandîl-i") ya da "u/ü" bağlacı var ve araçların tanımadığı en az 2 küçük
-    harfli kelime geçiyor."""
-    if not (IZAFET.search(b.metin) or BAGLAC.search(b.metin)):
+    """Farsça tamlama ("kandîl-i"), "u/ü" bağlacı ("tâc u taht"), şapka ve eski biçim/kelime
+    yoğunluğu içeren alıntı ve tarihî/edebî metinleri tanır (K41)."""
+    eski_gosterge = bool(IZAFET.search(b.metin) or BAGLAC.search(b.metin) or _ESKI_KALIP.search(b.metin)
+                         or len(_SAPKALI_KELIME.findall(b.metin)) >= 2)
+    if not eski_gosterge:
         return False
     taninmayan = [k for k in KUCUK_KELIME.findall(b.metin)
                   if not (yazim._gecerli(denetciler[0], k) and yazim._gecerli(denetciler[1], k))]
-    return len(taninmayan) >= 2
+    if not taninmayan:
+        return False
+    if (IZAFET.search(b.metin) or BAGLAC.search(b.metin)) and len(taninmayan) >= 2:
+        return True
+    if _ESKI_KALIP.search(b.metin) and len(taninmayan) >= 1:
+        return True
+    if len(_SAPKALI_KELIME.findall(b.metin)) >= 2 and len(taninmayan) >= 2:
+        return True
+    return False
 
 
 def _alttaki(b: Blok, sayfa_bloklari: list[Blok]) -> Blok | None:

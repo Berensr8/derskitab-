@@ -164,6 +164,17 @@ class IsaretlemeTesti(unittest.TestCase):
         self.assertIn("Alıntıysa yazımı korunur; dipnot var mı kontrol edin (MEB TYMM 2.4.1)", kesme.aciklama)
         self.assertEqual(sonuc[1].guven_skoru, 1.0)
 
+    def test_eski_dil_sapkali_ve_arkaik_kaliplar(self):
+        # K41: Arkaik kalıplar (didüm, didi, şâd vb.) ve şapka yoğunluğu alıntı sayılır
+        sahte_arac = (lambda k: k in {"hava", "çok", "güzel", "ve", "güneşli", "bugün"},
+                      lambda k: k in {"hava", "çok", "güzel", "ve", "güneşli", "bugün"})
+        b1 = blok(1, (0, 0, 1, 1), "Didüm ki kâmetün âfet didi ne togru haber")
+        b2 = blok(2, (0, 0, 1, 1), "Rûhu şâd ola ki incitmez idi kimseneyi Ne gönündeki biti ne kulağında keneyi")
+        b3 = blok(3, (0, 0, 1, 1), "Bugün hava çok güzel ve güneşli.")
+        self.assertTrue(eski_dil_mi(b1, sahte_arac))
+        self.assertTrue(eski_dil_mi(b2, sahte_arac))
+        self.assertFalse(eski_dil_mi(b3, sahte_arac))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -13,7 +13,7 @@
 | Recall, yalnız yüksek güven (1,0) | 24/35 = %68,6 |
 | Precision (tespitlerin doğru olanı) | **27/27 = %100** (eklenmemiş tespit: 0) |
 
-Kitapların kendisinde (çelişki eklenmeden) yapılan tam çalıştırmalarda gerçek bir çelişki bulunmadı; son ayarlarla sahte tespit de çıkmadı.
+Kitapların kendisinde (çelişki eklenmeden) yapılan tam çalıştırmalarda gerçek bir çelişki bulunmadı; ayar kitaplarında (Sosyal 6, Biyoloji 10) sahte tespit çıkmadı, görülmemiş kitaplarda (TDE 11, TDE 12) kitap başına 0–1 sahte tespit görüldü (yalnız bir modelin uyardığı düşük güvenli durumlar).
 
 ## Aşama aşama (35 madde)
 

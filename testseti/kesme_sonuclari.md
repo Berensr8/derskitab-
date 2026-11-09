@@ -15,7 +15,7 @@ Yazım modeli (K33) ürüne giremedi ama kitaplarda bulduğu tek gerçek hata ("
 
 ## Doğrulama (görülmemiş sayfalar: TDE 10 tamamı + diğer kitapların test sayfaları)
 
-105 aday kaynağı gizli olarak etiketlendi (`kesme_etiketler.json`).
+105 aday kaynağı gizli olarak etiketlendi (`kesme_etiketler.json`). Etiketleyen: Claude (tek kişi).
 
 | Kaynak | Gerçek / toplam | İsabet |
 |---|---|---|

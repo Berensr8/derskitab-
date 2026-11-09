@@ -1,6 +1,8 @@
 # Yazım modeli (K33) — sonuçlar
 
-Eğitim 2026-11-05: BERTurk kelime etiketleyici, 205.229 cümle (GECTurk 96.919 + GECTurk'ten yapay 48.746 + Vikipedi gerçek düzeltmeleri 28.148 + kitap cümlelerine yapay hata 31.416), 3 epok, 37 dakika (RTX, bf16). En iyi geliştirme F1 0,955.
+Etiketleyen: Claude (tek kişi).
+
+Eğitim 2026-11-05: BERTurk kelime etiketleyici, 205.229 kayıt (GECTurk 96.919 + GECTurk'ten yapay 48.746 + Vikipedi gerçek düzeltmeleri 28.148 [~14 bin tekil cümle, 2 kat ağırlık] + kitap cümlelerine yapay hata 31.416 [26.686 tekil]), 3 epok, 37 dakika (RTX, bf16). En iyi geliştirme F1 0,955.
 
 Ölçütler ve karar kuralı eğitimden önce yazıldı (KARARLAR K33).
 
@@ -29,4 +31,4 @@ Sistemin mevcut süzgeçleri (alıntı, terim, özel isim, PDF) hepsini kusursuz
 
 ## Sonuç
 
-Model yazım hatası *bulmayı* gerçekten öğrendi: görülmemiş kitapta ve gerçek Vikipedi hatalarında hazır modelden 3–4 kat iyi, kilitli test setinde 8 → 44. Ama gerçek ders kitabında hatalar çok seyrek (sayfada 0–1) ve kitap metni eğitim verisinden farklı (eski metinler, terimler, harita, PDF bozulmaları): model sayfa başına ~3 yanlış alarm veriyor, ürüne girmesi öğretmenin işini artırır. Önceden yazılan kurala göre ürüne girmedi. Yöntem, veri seti ve ölçümler projenin çıktısı olarak kalıyor.
+Model dağılım içi doğrulama setlerinde (E1, E4) ve yüksek kelime örtüşmeli Vikipedi testinde (E3'te %66 kelime örtüşmesi) hazır modelden 3–4 kat yüksek skorlar verdi (kilitli test setinde 8 → 44). Ancak gerçek ders kitaplarında bu başarı genellenemedi (E7 isabet 0,017). Gerçek ders kitabında hatalar çok seyrek (sayfada 0–1) ve kitap metni eğitim verisinden farklı (eski metinler, terimler, harita, PDF bozulmaları): model sayfa başına ~3 yanlış alarm veriyor, ürüne girmesi öğretmenin işini artırır. Önceden yazılan kurala göre ürüne girmedi. Yöntem, veri seti ve ölçümler projenin çıktısı olarak kalıyor.

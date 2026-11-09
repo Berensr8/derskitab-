@@ -25,6 +25,8 @@ sebebiyle durur.
 
 ## 2. Yazım: etiketli örneklemlerde isabet
 
+Etiketleyen: Claude (tek kişi).
+
 Gösterilen tespitlerden gerçek hata olanlar ("belirsiz" etiketler paydada yok). K23/K25 etiketleri ve
 K29 testi Faz 2 geliştirmesinde görüldü; bu tablo özettir, temiz test değildir (temiz ölçümler: K28 TDE 11,
 K29 körlemesine test — `KARARLAR.md`).

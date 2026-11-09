@@ -37,8 +37,9 @@ EKLEME_YOLU = PROJE / "testseti" / "okunabilirlik_eklemeleri.json"
 EKLEME_SHA256 = "38a141fb4e1167752edb7d9c197f1f886b0b1f98ed1ba7929c98406613f5d56e"  # K24
 TOHUM = 20261020
 FORMULLER = {"atesman": True, "cetinkaya_uzun": True, "bezirci_yilmaz": False}  # True: düşük puan = zor
-# Aynı dersin farklı sınıf kitapları (MEB OGM, 2026-10-20 indirildi). Not: 9-10 Biyoloji ve 9 TDE
-# yeni programın "Tema" düzeninde, 11 Biyoloji ve 10-11 TDE "Ünite" düzeninde (eski program).
+# Aynı dersin farklı sınıf kitapları (MEB OGM, 2026-10-20 indirildi).
+# Not: "Ünite" düzenindeki tek kitap TDE 12'dir; diğer kitaplar (Biyoloji 9-11, TDE 9-11) Tema düzenindedir.
+# K32 sonrası yeniden ölçülmedi; program sınıflandırması düzeltildi, ana sonuç değişmiyor.
 DERS_SERILERI = {"Biyoloji": {"biyoloji9": 9, "biyoloji10": 10, "biyoloji11": 11},
                  "Türk Dili ve Edebiyatı": {"turkdili9": 9, "turkdili10": 10, "turkdili11": 11, "turkdili12": 12}}
 # Aynı öğretim programının kitapları (K24 eki): program farkı sınıf farkına karışmasın

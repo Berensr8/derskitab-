@@ -210,5 +210,25 @@ class GercekAraclarTesti(unittest.TestCase):
         self.assertEqual(list(kume), [RootAttribute.Voicing, RootAttribute.Doubling])
 
 
+class BuyukHarfITesti(unittest.TestCase):
+    def test_buyuk_harfli_baslikta_i_noktali_karismasi(self):
+        from derskitabi.kriterler.yazim import buyuk_harf_i_denetimi
+        sozluk = {"zararlı", "veya", "tahriş", "edici", "madde", "ısıtıcı"}
+        sahte_arac = (lambda k: k in sozluk, lambda k: k in sozluk)
+        b = blok("ZARARLI VEYA TAHRIŞ EDICI MADDE")
+        t = buyuk_harf_i_denetimi(b, sahte_arac)
+        self.assertEqual([x.metin_parcasi for x in t], ["TAHRIŞ", "EDICI"])
+        self.assertEqual(t[0].alt_tur, "buyuk_harf_i")
+        self.assertEqual(t[0].guven_skoru, 0.5)
+
+    def test_gecerli_ve_kisa_buyuk_harfli_kelimeler_atlanir(self):
+        from derskitabi.kriterler.yazim import buyuk_harf_i_denetimi
+        sozluk = {"ısıtıcı", "ve", "soğutucu"}
+        sahte_arac = (lambda k: k in sozluk, lambda k: k in sozluk)
+        b = blok("ISITICI VE SOĞUTUCU DNA ATP")
+        t = buyuk_harf_i_denetimi(b, sahte_arac)
+        self.assertEqual(t, [])
+
+
 if __name__ == "__main__":
     unittest.main()

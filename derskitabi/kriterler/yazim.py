@@ -16,6 +16,7 @@ Kullanım:
 
 import argparse
 import functools
+import itertools
 import logging
 import re
 import sys
@@ -277,6 +278,44 @@ def _tespit(blok: Blok, alt_tur: str, guven: float, parca: str, aciklama: str) -
                   alt_tur=alt_tur, metin_parcasi=parca)
 
 
+def buyuk_harf_i_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci]) -> list[Tespit]:
+    """Tümü büyük harfli kelimelerde I/İ karışması (K41). Tümü büyük harfli bir kelime
+    tr_kucuk ile geçersizken, içindeki I harfleri İ yapıldığında iki araca göre de geçerliyse."""
+    if _aralikli_mi(blok.metin):
+        return []
+    tespitler = []
+    for m in re.finditer(r"(?<![a-zA-ZçğıöşüÇĞİÖŞÜIİ])[A-ZÇĞİÖŞÜIİ]{4,}(?![a-zA-ZçğıöşüÇĞİÖŞÜIİ])", blok.metin):
+        kelime = m.group(0)
+        sade = kelime.replace("’", "'")
+        if len(kelime) <= 3 or sade.lower() in KISALTMALAR or "I" not in kelime:
+            continue
+        dogrudan = tr_kucuk(kelime)
+        if _gecerli(denetciler[0], dogrudan) and _gecerli(denetciler[1], dogrudan):
+            continue
+        i_indisleri = [idx for idx, ch in enumerate(kelime) if ch == "I"]
+        if len(i_indisleri) > 4:
+            continue
+        bulunan_aday = None
+        for r in range(1, len(i_indisleri) + 1):
+            for comb in itertools.combinations(i_indisleri, r):
+                chars = list(dogrudan)
+                for idx in comb:
+                    chars[idx] = "i"
+                aday = "".join(chars)
+                if _gecerli(denetciler[0], aday) and _gecerli(denetciler[1], aday):
+                    bulunan_aday = aday
+                    break
+            if bulunan_aday:
+                break
+        if bulunan_aday:
+            tespitler.append(_tespit(
+                blok, "buyuk_harf_i", 0.5, kelime,
+                f"Büyük harfle yazılan '{kelime}' kelimesinde 'I'/'İ' karışması olabilir "
+                f"(doğrusu '{bulunan_aday.upper()}' olabilir)."
+            ))
+    return tespitler
+
+
 def kural_denetimi(blok: Blok) -> list[Tespit]:
     metin = _WEB.sub(lambda w: " " * len(w.group(0)), blok.metin)
     tespitler = []
@@ -420,6 +459,7 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
         if b.tur in ("paragraf", "kisa"):
             kelime_tespitleri += satira_bagla(kelime_denetimi(b, denetciler, atlananlar), grup, b.metin)
             kural_tespitleri += satira_bagla(kural_denetimi(b), grup, b.metin)
+            kural_tespitleri += satira_bagla(buyuk_harf_i_denetimi(b, denetciler), grup, b.metin)
             if kesme_cozumleyici:
                 kural_tespitleri += satira_bagla(kesme.kesme_denetimi(b, kesmeli, kesme_cozumleyici), grup, b.metin)
 

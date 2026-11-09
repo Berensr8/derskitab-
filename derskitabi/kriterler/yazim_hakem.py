@@ -24,6 +24,17 @@ from .okunabilirlik import cumlelere_bol
 
 HAKEM_MODELI = "gemma4:12b-it-qat"
 DUSUK_GUVEN = 0.25
+
+
+def hakem_varsayilani(kullanici_secimi: bool | None = None) -> bool:
+    """Yazım hakeminin varsayılan durumu: kullanıcı açıkça belirtmediyse Ollama ve gemma4 hazırsa True, değilse False."""
+    if kullanici_secimi is not None:
+        return bool(kullanici_secimi)
+    modeller = yerel_model.yuklu_modeller()
+    if modeller is None:
+        return False
+    kok = HAKEM_MODELI.split(":")[0]
+    return any(m == HAKEM_MODELI or m.startswith(kok) for m in modeller)
 KARARLAR = ("hata", "dogru", "belirsiz")
 _HARFLER = "abcçdefgğhıijklmnoöprsştuüvyzâîû"
 _TR_ESI = {"s": "ş", "ş": "s", "i": "ı", "ı": "i", "g": "ğ", "ğ": "g", "o": "ö", "ö": "o",

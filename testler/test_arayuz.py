@@ -154,6 +154,13 @@ class SunucuTesti(unittest.TestCase):
         except urllib.error.HTTPError as h:
             return h.code, h.read()
 
+    def test_durum_bilgisi_hakem_varsayilani(self):
+        kod, govde = self._al("/api/durum")
+        self.assertEqual(kod, 200)
+        veri = json.loads(govde)
+        self.assertIn("hakem_varsayilan", veri)
+        self.assertIsInstance(veri["hakem_varsayilan"], bool)
+
     def test_ana_sayfa(self):
         kod, govde = self._al("/")
         self.assertEqual(kod, 200)

@@ -166,7 +166,7 @@ def baslat(istek: dict) -> dict:
     klasor.mkdir(parents=True, exist_ok=False)
     ayar = {"pdf": bilgi["pdf"], "kitap_adi": istek.get("kitap_adi") or bilgi["ad"], "kriterler": kriterler,
             "sayfalar": sayfalar, "sayfa_metni": f"Sayfa {istek['sayfa_metni']}" if sayfalar else None,
-            "sinif": istek.get("sinif") or None, "yazim_hakemi": bool(istek.get("yazim_hakemi")), "cikti": str(klasor)}
+            "sinif": istek.get("sinif") or None, "yazim_hakemi": hakem_varsayilani(istek.get("yazim_hakemi")), "cikti": str(klasor)}
     (klasor / "ayar.json").write_text(json.dumps(ayar, ensure_ascii=False, indent=1), encoding="utf-8")
     kayit = gecmis.yeni(ayar)
     with open(klasor / "gunluk.txt", "w", encoding="utf-8") as gunluk:
@@ -217,7 +217,9 @@ def ac(kimlik: str, ne: str) -> None:
 
 def durum_bilgisi() -> dict:
     from .hat import ollama_durumu
-    return {"ollama": ollama_durumu(), "varsayilan_cikti": str(gecmis.VARSAYILAN_CIKTI)}
+    from ..kriterler.yazim_hakem import hakem_varsayilani
+    return {"ollama": ollama_durumu(), "hakem_varsayilan": hakem_varsayilani(),
+            "varsayilan_cikti": str(gecmis.VARSAYILAN_CIKTI)}
 
 
 # --- HTTP ----------------------------------------------------------------------------------------

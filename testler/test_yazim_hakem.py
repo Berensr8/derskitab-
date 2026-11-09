@@ -98,5 +98,12 @@ class HakemTesti(unittest.TestCase):
         self.assertEqual(onceki, "Hücreler enerji üretir.")
 
 
+    def test_hakem_varsayilani_fonksiyonu(self):
+        from derskitabi.kriterler.yazim_hakem import hakem_varsayilani
+        self.assertTrue(hakem_varsayilani(True))
+        self.assertFalse(hakem_varsayilani(False))
+        self.assertIsInstance(hakem_varsayilani(None), bool)
+
+
 if __name__ == "__main__":
     unittest.main()

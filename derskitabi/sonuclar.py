@@ -28,7 +28,7 @@ class KitapSonuclari:
 def sonuclari_topla(pdf_yolu, bloklar: list[Blok] | None = None, hedef_sinif: int | None = None,
                     yazim_tespitleri: list[Tespit] | None = None, okunabilirlik_analizi: tuple | None = None,
                     tutarlilik_tespitleri: list[Tespit] | None = None, tutarlilik_kaydi: list[dict] | None = None,
-                    hakem: bool = False, ilerleme=None, mufredat_tespitleri: list[Tespit] | None = None) -> KitapSonuclari:
+                    hakem: bool | None = None, ilerleme=None, mufredat_tespitleri: list[Tespit] | None = None) -> KitapSonuclari:
     """okunabilirlik_analizi: okunabilirlik.analiz_et() çıktısı (özet, tespitler) önceden hesaplandıysa."""
     yaz = ilerleme or (lambda _m: None)
     pdf_yolu = Path(pdf_yolu)
@@ -41,6 +41,9 @@ def sonuclari_topla(pdf_yolu, bloklar: list[Blok] | None = None, hedef_sinif: in
             okunabilirlik_analizi = okunabilirlik.analiz_et(bloklar, hedef_sinif)
         except ValueError:  # skorlanabilen paragraf yok
             okunabilirlik_analizi = (None, [])
+    if hakem is None:
+        from .kriterler.yazim_hakem import hakem_varsayilani
+        hakem = hakem_varsayilani()
     if yazim_tespitleri is None:
         yaz("Yazım denetimi…")
         yazim_tespitleri = dusuk_oncelik.isaretle(pdf_yolu, bloklar, yazim.analiz_et(bloklar))  # K28, K29

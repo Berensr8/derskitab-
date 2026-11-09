@@ -276,7 +276,7 @@ const KRITERLER = [
 
 async function yeniEkrani(ana) {
   document.title = "Yeni inceleme · Ders Kitabı İnceleme";
-  if (!durum.form) durum.form = { kriterler: new Set(["yazim", "okunabilirlik", "mufredat"]), kapsam: "hepsi", aralik: "", hakem: false, cikti: null };
+  if (!durum.form) durum.form = { kriterler: new Set(["yazim", "okunabilirlik", "mufredat"]), kapsam: "hepsi", aralik: "", hakem: undefined, hakem_elle_secildi: false, cikti: null };
   const f = durum.form;
   ana.append(el("h1", {}, "Bir kitabı incele"),
     el("p", { class: "alt-bilgi" }, "Kitabı seçin, nerelere bakılacağını işaretleyin. Sonuçlar seçtiğiniz klasöre kaydedilir ve Geçmiş'te kalır."));
@@ -285,7 +285,15 @@ async function yeniEkrani(ana) {
   if (!durum.sistem) {  // yapay zekâ programı kontrolü birkaç saniye sürebilir: form beklemeden açılır
     durum.sistem = { ollama: "Kontrol ediliyor…", varsayilan_cikti: "" };
     api("/api/durum").catch(() => ({ ollama: "Durum alınamadı.", varsayilan_cikti: "" }))
-      .then(s => { durum.sistem = s; if (form.isConnected) ciz(); });
+      .then(s => {
+        durum.sistem = s;
+        if (!f.hakem_elle_secildi) {
+          f.hakem = !s.ollama;
+        }
+        if (form.isConnected) ciz();
+      });
+  } else if (!f.hakem_elle_secildi && f.hakem === undefined) {
+    f.hakem = !durum.sistem.ollama;
   }
   ciz();
 
@@ -329,11 +337,15 @@ async function yeniEkrani(ana) {
           kapali ? el("span", { class: "uyari", style: "display:block" },
             ollama === "Kontrol ediliyor…" ? "Yapay zekâ programı kontrol ediliyor…" : "Şu an kullanılamıyor. " + ollama) : null));
       if (kod === "yazim" && f.kriterler.has("yazim")) {
+        const hakemHazir = !ollama;
+        const hakemSecili = !!(f.hakem && hakemHazir);
         satir.append(el("div", { class: "alt-secenek" },
-          el("input", { type: "checkbox", id: "hakem", checked: f.hakem && !ollama, disabled: !!ollama, "data-odak": "hakem",
-            onchange: e => f.hakem = e.target.checked }),
+          el("input", { type: "checkbox", id: "hakem", checked: hakemSecili, disabled: !hakemHazir, "data-odak": "hakem",
+            onchange: e => { f.hakem = e.target.checked; f.hakem_elle_secildi = true; ciz(); } }),
           el("label", { for: "hakem" }, "Şüpheli kelimeleri yapay zekâ hakemine de sor"),
-          el("span", { class: "sure" }, ollama ? "(yapay zekâ programı kapalı)" : "(daha az yanlış alarm, süre uzar)")));
+          el("span", { class: "sure" }, !hakemHazir
+            ? `(kullanılamıyor: ${ollama})`
+            : "(varsayılan açık: daha az yanlış alarm; inceleme süresi sayfa başına 1–2 sn uzar)")));
       }
       return satir;
     }));

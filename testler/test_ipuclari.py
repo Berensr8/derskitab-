@@ -74,6 +74,11 @@ class BirlesikTesti(unittest.TestCase):
         self.assertEqual([dusuk_oncelik.sebep(x) for x in sonuc], ["PDF okuma parçası", "terim", None])
         self.assertEqual(sonuc[2].guven_skoru, 1.0)
 
+    def test_yalniz_bir_arac_tanimadi_sebebi(self):
+        t = Tespit(1, 1, (0, 0, 1, 1), "yazim", "kelime çözümlenemedi (yalnız Starlang); yazım hatası olabilir (yalnız bir araç tanımadı).",
+                   0.25, alt_tur="morfoloji", metin_parcasi="test")
+        self.assertEqual(dusuk_oncelik.sebep(t), "yalnız bir araç tanımadı")
+
 
 if __name__ == "__main__":
     unittest.main()

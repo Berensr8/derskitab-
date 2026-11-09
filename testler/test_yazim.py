@@ -31,10 +31,11 @@ class KelimeDenetimiTesti(unittest.TestCase):
         t = kelime_denetimi(blok("Ali kisisel kitap okudu."), ikisi_de_bilir)
         self.assertEqual([(x.metin_parcasi, x.guven_skoru) for x in t], [("kisisel", 1.0)])
 
-    def test_tek_arac_bilmiyorsa_guven_yarim(self):
+    def test_tek_arac_bilmiyorsa_dusuk_oncelik(self):
         t = kelime_denetimi(blok("Ali nesilden nesile kitap okudu."), yalniz_zemberek_bilir)
-        self.assertEqual([(x.metin_parcasi, x.guven_skoru) for x in t], [("nesile", 0.5)])
+        self.assertEqual([(x.metin_parcasi, x.guven_skoru) for x in t], [("nesile", 0.25)])
         self.assertIn("yalnız Starlang", t[0].aciklama)
+        self.assertIn("yalnız bir araç tanımadı", t[0].aciklama)
 
     def test_buyuk_harfle_baslayan_ozel_isim_denetlenmez(self):
         sayac = Counter()
@@ -188,7 +189,7 @@ class GercekAraclarTesti(unittest.TestCase):
         t = analiz_et([blok("Üstlendiğimiz roller; kisisel gelisimimiz etkiler. "
                             "Değerleri nesilden nesile aktarmış.")], self.denetciler)
         bulunan = {x.metin_parcasi: x.guven_skoru for x in t}
-        self.assertEqual(bulunan, {"kisisel": 1.0, "gelisimimiz": 1.0, "nesile": 0.5})
+        self.assertEqual(bulunan, {"kisisel": 1.0, "gelisimimiz": 1.0, "nesile": 0.25})
 
     def test_dogru_metinde_tespit_yok(self):
         t = analiz_et([blok("Hayatımızın önemli bir bölümünü oluşturan eğitim sürecinde "

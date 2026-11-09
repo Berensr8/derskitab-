@@ -38,6 +38,21 @@ class HakemTesti(unittest.TestCase):
         self.assertEqual(sonuc[0].guven_skoru, 0.75)  # tek araç + hakem hemfikir
         self.assertIn("kişisel", sonuc[0].aciklama)
 
+    def test_yalniz_bir_arac_tanimadi_grubu_hakeme_gider_ve_yukselir(self):
+        t_tek_arac = Tespit(5, 1, BLOK.bbox, "yazim",
+                            "'kisisel' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi (yalnız Starlang); yazım hatası olabilir (yalnız bir araç tanımadı).",
+                            0.25, alt_tur="morfoloji", metin_parcasi="kisisel")
+        sonuc = hakemle([t_tek_arac], [BLOK], sahte_hakem([]), denetciler=DENETCI)
+        self.assertEqual(sonuc[0].guven_skoru, 0.75)
+        self.assertIn("Dil modeli (gemma4) de yazım hatası", sonuc[0].aciklama)
+
+    def test_kitap_ipuclari_hakeme_sorulmaz(self):
+        t_terim = Tespit(5, 1, BLOK.bbox, "yazim", "Terim: aken — terim notu", 0.25, alt_tur="morfoloji", metin_parcasi="aken")
+        kayit = []
+        sonuc = hakemle([t_terim], [BLOK], sahte_hakem(kayit), denetciler=DENETCI)
+        self.assertEqual(len(kayit), 0)
+        self.assertEqual(sonuc[0].guven_skoru, 0.25)
+
     def test_kural_tespitine_dokunulmaz_ve_girdi_degismez(self):
         kural = tespit("kitap ta,", alt_tur="bag_te_ta")
         girdi = [kural, tespit("Glikoliz")]

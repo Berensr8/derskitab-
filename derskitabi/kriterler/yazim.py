@@ -260,10 +260,12 @@ def kelime_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci],
         hemfikir = not st_gecerli and not zb_gecerli
         kim = "iki araç da: Starlang ve Zemberek" if hemfikir else (
             "yalnız Starlang" if not st_gecerli else "yalnız Zemberek")
+        guven = 1.0 if hemfikir else 0.25
+        ek_sebep = "" if hemfikir else " (yalnız bir araç tanımadı)"
         tespitler.append(_tespit(
-            blok, "morfoloji", 1.0 if hemfikir else 0.5, kelime,
+            blok, "morfoloji", guven, kelime,
             f"'{kelime}' kelimesi Türkçe kök ve ek kurallarına göre çözümlenemedi ({kim}); "
-            f"yazım hatası olabilir." + _ek_notu(kelime, starlang)))
+            f"yazım hatası olabilir{ek_sebep}." + _ek_notu(kelime, starlang)))
     return tespitler
 
 

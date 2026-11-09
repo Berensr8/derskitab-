@@ -64,7 +64,7 @@ class YazimIziTesti(unittest.TestCase):
         durum = {k["k"]: k["d"] for k in iz["kelimeler"]}
         self.assertEqual(durum["okula"], "gecerli")
         self.assertEqual(durum["kisisel"], "hata")       # ikisi de tanımadı
-        self.assertEqual(durum["nesile"], "supheli")     # yalnız biri tanımadı
+        self.assertEqual(durum["nesile"], "atlandi")     # yalnız biri tanımadı: düşük öncelik (K40)
         self.assertEqual(durum["villus"], "terim")       # kitapta 5 kez
         self.assertEqual(durum["Bakırçay"], "atlandi")   # büyük harf: özel isim
         self.assertEqual(iz["durum"], "denetlendi")

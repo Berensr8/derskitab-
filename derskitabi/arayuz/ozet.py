@@ -129,13 +129,17 @@ def sade_aciklama(t: Tespit) -> str:
             cumleler.append("Yapay zekâ hakemi muhtemelen doğru yazıldığını düşünüyor (terim, özel ad ya da alıntı).")
         if m := re.search(r"kitapta geçen '([^']+)' kelimesine", a):
             cumleler.append(f"Kitapta geçen '{m.group(1)}' kelimesine çok benziyor; yazım hatası olabilir.")
-        for not_, ad in NOTLAR.items():
-            if not_ in a:  # düşük öncelik sebebi önce söylenir
-                cumleler = [{"PDF okuma parçası": "Büyük ihtimalle hata değil: kitabın değil, PDF'in okunmasının sorunu.",
-                             "terim": "Büyük ihtimalle hata değil: kitabın kendi açıkladığı bir terim.",
-                             "alıntı içinde": "Büyük ihtimalle hata değil: bir alıntının içinde (yazarın ya da "
-                                              "eski yazım)."}[ad], "Sözlükte bulunmadığı için işaretlendi."]
-                break
+        if t.guven_skoru < 0.5:
+            for not_, ad in NOTLAR.items():
+                if not_ in a:  # düşük öncelik sebebi önce söylenir
+                    cumleler = [{"PDF okuma parçası": "Büyük ihtimalle hata değil: kitabın değil, PDF'in okunmasının sorunu.",
+                                 "terim": "Büyük ihtimalle hata değil: kitabın kendi açıkladığı bir terim.",
+                                 "alıntı içinde": "Büyük ihtimalle hata değil: bir alıntının içinde (yazarın ya da "
+                                                  "eski yazım).",
+                                 "yalnız bir araç tanımadı": "Büyük ihtimalle hata değil: denetim araçlarından biri "
+                                                             "kelimeyi geçerli kabul etti."}[ad],
+                                "Sözlükte bulunmadığı için işaretlendi."]
+                    break
         return " ".join(cumleler)
     if t.kriter == "okunabilirlik":
         o = _okunabilirlik_olculeri(a)
@@ -215,8 +219,8 @@ def yazim_cumleleri(maddeler: list[dict]) -> list[str]:
     else:
         cumleler.append("Yazımda öne çıkan bir hata yok.")
     if s["düşük"]:
-        cumleler.append(f"{s['düşük']} yer daha var ama büyük ihtimalle hata değil (terim, alıntı ya da PDF okuma "
-                        f"sorunu); listede 'düşük öncelikli' olarak duruyor.")
+        cumleler.append(f"{s['düşük']} yer daha var ama büyük ihtimalle hata değil (terim, alıntı, tek aracın tanıdığı "
+                        f"kelimeler ya da PDF okuma sorunu); listede 'düşük öncelikli' olarak duruyor.")
     return cumleler
 
 

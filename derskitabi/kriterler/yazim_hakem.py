@@ -105,9 +105,11 @@ def hakemle(tespitler: list[Tespit], bloklar: list[Blok], hakem: Hakem | None = 
     denetciler = denetciler or yazim.varsayilan_denetciler()
     sonuc, soruldu, dusen = [], 0, 0
     for t in tespitler:
-        if t.alt_tur != "morfoloji" or not t.metin_parcasi or dusuk_oncelik_sebebi(t):
+        s = dusuk_oncelik_sebebi(t)
+        if t.alt_tur != "morfoloji" or not t.metin_parcasi or (s and s != "yalnız bir araç tanımadı"):
             # alıntı (K28), PDF parçası, terim (K29): kitap ipucu yetiyor, düşük öncelikte kalır
-            # (model alıntıdaki eski yazımı "düzeltmeye" kalkıyordu)
+            # (model alıntıdaki eski yazımı "düzeltmeye" kalkıyordu).
+            # "yalnız bir araç tanımadı" grubu ise hakeme gönderilir; hakem hata derse yükselebilir.
             sonuc.append(t)
             continue
         cumle, onceki = baglam(metin.get((t.sayfa_no, t.blok_no), ""), t.metin_parcasi)

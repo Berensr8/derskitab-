@@ -41,7 +41,8 @@ GORUNTU_DPI = 110
 IPUCU_ACIKLAMALARI = {
     "alıntı içinde": "alıntı metin: yazarın kendi yazımı ya da eski yazım olabilir (düşük öncelik)",
     "terim": "kitabın kendi terimi: sözlüğünde açıklanmış ya da italik yazılmış (düşük öncelik)",
-    "PDF okuma parçası": "PDF okuma parçası: kelime metin çıkarılırken parçalanmış (düşük öncelik)"}
+    "PDF okuma parçası": "PDF okuma parçası: kelime metin çıkarılırken parçalanmış (düşük öncelik)",
+    "yalnız bir araç tanımadı": "tek araç: denetim araçlarından biri geçerli kabul etti (düşük öncelik)"}
 
 
 def satirlari_birlestir(dikdortgenler: list[pymupdf.Rect]) -> list[list[float]]:

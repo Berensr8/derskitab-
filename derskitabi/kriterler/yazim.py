@@ -349,6 +349,32 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
             tespitler.append(_tespit(blok, "bitisik_ayri", 1.0, m.group(0),
                                      f"'{m.group(0)}' değil, '{dogru}' yazılır (TDK)."))
 
+    # R13: Cümle sonu noktasından sonra parantezli gönderme ve tekrar nokta (K41)
+    for m in re.finditer(r"(\w+\.)(\s*\((?:Görsel|Tablo|Şekil|Grafik|Harita|Resim|Fotoğraf|Şema|Bkz\.|bkz\.)\s*[^)]+\))(\.)", metin):
+        parca = m.group(0).strip()
+        tespitler.append(_tespit(
+            blok, "noktalama_parantez_cift_nokta", 1.0, parca,
+            "Cümle sonu noktasından sonra parantezli gönderme ve tekrar nokta konulmuş "
+            "(noktalardan biri fazla: parantez içi cümle değilse gönderme cümlenin içine alınmalı)."
+        ))
+
+    # R14: Çift tırnak yerine art arda iki tek tırnak (’’ veya ‘‘) (K41)
+    if len(metin.strip()) > 3:
+        for m in re.finditer(r"(’’|‘‘)", metin):
+            parca = metin[max(0, m.start() - 15):min(len(metin), m.end() + 15)].strip()
+            tespitler.append(_tespit(
+                blok, "noktalama_cift_tek_tirnak", 1.0, parca,
+                f"Çift tırnak işareti yerine art arda iki tek tırnak ('{m.group(1)}') kullanılmış."
+            ))
+
+    # R15: Ters açılış tırnağı (” yerine “) (K41)
+    for m in re.finditer(r"(?:^|[\s(\[{])(”)(?=[a-zA-ZçğıöşüÇĞİÖŞÜ])", metin):
+        parca = metin[max(0, m.start() - 5):min(len(metin), m.end() + 20)].strip()
+        tespitler.append(_tespit(
+            blok, "noktalama_ters_tirnak", 1.0, parca,
+            "Açılış tırnağı olarak ters (kapanış) tırnak işareti ('”') kullanılmış (doğrusu '“' olmalı)."
+        ))
+
     if blok.tur != "paragraf" or _aralikli_mi(metin):
         return tespitler
 

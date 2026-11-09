@@ -1,0 +1,9 @@
+Bağımsız değerlendirme kilidi — 2026-11-09 21:12
+Sistemin bu sayfalardaki ve 40 tespitteki çıktısı, yapay zekâlar ve Beren karar vermeden ÖNCE hesaplandı.
+Dosyalar veri/bagimsiz/ altında (git dışı). Parmak izleri (SHA-256):
+9cca00f369a9f7e1596ebfed4559b25d1707678981db79210bc647af60bbacb0 *A_sistem_gizli.json
+b39641e51e7588bd0cf57f5aa0845dd8fcedb06814697e95b57cab9813ff3578 *B_anahtar.json
+Kod: commit 2f7ce04; çalışma ağacında başka bir ajanın commit edilmemiş metin düzeltmeleri vardı
+(ozet.py, alinti.py, pdf_notlari.py vb.). Sistem hakemsiz (arayüzün varsayılanı), yazım + kesme kuralları.
+Seçim: tohum 20261109; daha önce etiketlenmiş sayfalar (±1) hariç; A: kitap başına 10 sayfa (≥150 paragraf kelimesi),
+B: kitap başına 8 gösterilen tespit (güven ≥ 0,5), 5 kitap (Biyoloji 9, 11; TDE 10, 11, 12).

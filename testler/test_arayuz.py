@@ -169,6 +169,29 @@ class SunucuTesti(unittest.TestCase):
         self.assertEqual(kod, 403)
         self.assertIsNotNone(gecmis.oku(self.kayit["id"]))
 
+    def test_ayni_dakikada_bos_klasor_bulur(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ust = Path(tmp)
+            temel = "Biyoloji 9 2026-11-09 16.00"
+            k1 = sunucu._bos_klasor_bul(ust, temel)
+            self.assertEqual(k1.name, temel)
+            k1.mkdir()
+            k2 = sunucu._bos_klasor_bul(ust, temel)
+            self.assertEqual(k2.name, f"{temel} (2)")
+            k2.mkdir()
+            k3 = sunucu._bos_klasor_bul(ust, temel)
+            self.assertEqual(k3.name, f"{temel} (3)")
+
+    def test_secili_sayfalarda_karsilastirma_sayisi(self):
+        kayit = [
+            {"a": {"sayfa_no": 25}, "b": {"sayfa_no": 50}},
+            {"a": {"sayfa_no": 10}, "b": {"sayfa_no": 15}},
+            {"a": {"sayfa_no": 30}, "b": {"sayfa_no": 35}},
+        ]
+        secili = {20, 21, 22, 23, 24, 25}
+        sayi = sum(1 for k in kayit if k["a"]["sayfa_no"] in secili or k["b"]["sayfa_no"] in secili)
+        self.assertEqual(sayi, 1)
+
 
 if __name__ == "__main__":
     unittest.main()

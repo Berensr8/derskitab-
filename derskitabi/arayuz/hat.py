@@ -195,7 +195,8 @@ def calistir(klasor: Path) -> dict:
              {"okunabilirlik_ozeti": ozet.sozluge() if ozet else None}),
             ("mufredat", muf_t, {}),
             ("tutarlilik", sec(tut_t) if tut_t is not None else None,
-             {"karsilastirma": len(tut_kayit) if tut_kayit else None, "hazir": tut_hazir})):
+             {"karsilastirma": (sum(1 for k in tut_kayit if k["a"]["sayfa_no"] in secili or k["b"]["sayfa_no"] in secili)
+                                if secili else len(tut_kayit)) if tut_kayit else None, "hazir": tut_hazir})):
         if tespitler is None and kod not in secilen:
             continue  # seçilmeyen kriter sonuç ekranında hiç görünmez
         kriterler[kod] = kriter_ozeti(kod, tespitler, blok_sozluk, no, neden=neden.get(kod), **ek)

@@ -266,11 +266,16 @@ def sayfa_araligi_coz(metin: str, sayfa_sayisi: int) -> list[int]:
         if not eslesme:
             raise ValueError(f"Geçersiz sayfa aralığı: {parca!r}")
         bas, son = int(eslesme.group(1)), int(eslesme.group(2) or eslesme.group(1))
+        if bas > son:
+            raise ValueError(f"Sayfa aralığı ters yazılmış: {bas}-{son}; küçük sayı önce gelmeli")
         sayfalar += range(bas, son + 1)
     gecersiz = [s for s in sayfalar if not 1 <= s <= sayfa_sayisi]
     if gecersiz:
         raise ValueError(f"PDF'te olmayan sayfa(lar): {gecersiz} (sayfa sayısı {sayfa_sayisi})")
-    return sorted(set(sayfalar))
+    sonuc = sorted(set(sayfalar))
+    if not sonuc:
+        raise ValueError("Sayfa aralığı boş olamaz.")
+    return sonuc
 
 
 def isaretli_pdf_olustur(pdf_yolu, cikti_yolu, sayfalar: list[int] | None = None,

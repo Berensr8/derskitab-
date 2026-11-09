@@ -55,6 +55,9 @@ class SayfaAraligiTesti(unittest.TestCase):
             sayfa_araligi_coz("abc", 10)
         with self.assertRaises(ValueError):
             sayfa_araligi_coz("9-12", 10)
+        with self.assertRaises(ValueError) as ctx:
+            sayfa_araligi_coz("40-20", 50)
+        self.assertIn("Sayfa aralığı ters yazılmış: 40-20; küçük sayı önce gelmeli", str(ctx.exception))
 
 
 class BlokRaporuTesti(unittest.TestCase):

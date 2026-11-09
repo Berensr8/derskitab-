@@ -76,6 +76,18 @@ def _klasor_adi(ad: str) -> str:
     return re.sub(r'[<>:"/\\|?*]+', " ", ad).strip()[:60] + time.strftime(" %Y-%m-%d %H.%M")
 
 
+def _bos_klasor_bul(ust: Path, temel_ad: str) -> Path:
+    klasor = ust / temel_ad
+    if not klasor.exists():
+        return klasor
+    sayac = 2
+    while True:
+        aday = ust / f"{temel_ad} ({sayac})"
+        if not aday.exists():
+            return aday
+        sayac += 1
+
+
 def ilerlemeyi_oku(klasor: Path) -> list[dict]:
     yol = klasor / "ilerleme.jsonl"
     if not yol.exists():
@@ -126,7 +138,8 @@ def baslat(istek: dict) -> dict:
         from ..gorsellestir import sayfa_araligi_coz
         sayfalar = sayfa_araligi_coz(istek["sayfa_metni"], bilgi["sayfa_sayisi"])
     ust = Path(istek.get("cikti") or gecmis.VARSAYILAN_CIKTI)
-    klasor = ust / _klasor_adi(istek.get("kitap_adi") or bilgi["ad"])
+    temel = _klasor_adi(istek.get("kitap_adi") or bilgi["ad"])
+    klasor = _bos_klasor_bul(ust, temel)
     klasor.mkdir(parents=True, exist_ok=False)
     ayar = {"pdf": bilgi["pdf"], "kitap_adi": istek.get("kitap_adi") or bilgi["ad"], "kriterler": kriterler,
             "sayfalar": sayfalar, "sayfa_metni": f"Sayfa {istek['sayfa_metni']}" if sayfalar else None,

@@ -68,7 +68,7 @@ class OzetTesti(unittest.TestCase):
         self.assertIn("yapay zekâ modellerinden biri", ozet.sade_aciklama(t))
 
     def test_hic_hata_yoksa(self):
-        self.assertEqual(ozet.kriter_ozeti("yazim", [], BLOKLAR)["cumleler"], ["Yazımda hata bulunmadı."])
+        self.assertEqual(ozet.kriter_ozeti("yazim", [], BLOKLAR)["cumleler"], ["Sistemin denetlediği türlerde yazım hatası bulunmadı."])
         self.assertIn("hepsi", ozet.kriter_ozeti("mufredat", [], BLOKLAR)["cumleler"][0])
 
     def test_calismayan_kriter(self):

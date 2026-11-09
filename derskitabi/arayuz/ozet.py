@@ -25,8 +25,11 @@ _SADE_TUR = {"morfoloji": "kelime yazımı", "kitap_ici_zor_paragraf": "zor para
              "kisaltma_kesme": "kısaltmaya gelen ekte kesme eksik", "sayi_kesme": "sayıya gelen ekte kesme eksik"}
 # Sistemin ölçülmüş başarısı, kullanıcının diliyle (kaynak: testseti/*_sonuclari.md; rapor.py OLCULEN_BASARI)
 GUVEN = {
-    "yazim": "Ne kadar güvenilir? Bilerek eklenen 56 yazım hatasının 55'ini buldu. Ama gerçek kitaplarda "
-             "işaretlenen kelimelerin bir kısmı terim, özel ad ya da alıntı çıkıyor; her birine göz atın.",
+    "yazim": "Ne kadar güvenilir? Bilerek eklenen, sistemin aradığı türden 56 yazım hatasının 55'ini buldu; "
+             "büyük harfle başlayan kelimeler (morfoloji denetiminde) ve kitapta 3+ kez tekrarlanan yanlışlar "
+             "denetlenmez, gerçek hatalarda bulma oranı ölçülmedi. Görülmemiş kitaplarda işaretlenenlerin çoğu "
+             "(hakem kapalıyken ~%96, açıkken ~%85) hata değildir; edebiyat kitaplarında isabet en düşüktür; her birine göz atın.",
+
     "okunabilirlik": "Ne kadar güvenilir? Ölçüler cümle ve kelime uzunluğuna dayanır; sınıf düzeyini kesin "
                      "ayırt etmez. İşaretler 'buraya bir bakın' anlamındadır.",
     "mufredat": "Ne kadar güvenilir? Yalnız kitapta hiç geçmeyen kavramları yakalar; bir konunun yeterince "
@@ -195,7 +198,7 @@ def yazim_cumleleri(maddeler: list[dict]) -> list[str]:
     s = _say(maddeler)
     goster = s["yüksek"] + s["orta"]
     if not maddeler:
-        return ["Yazımda hata bulunmadı."]
+        return ["Sistemin denetlediği türlerde yazım hatası bulunmadı."]
     cumleler = []
     if goster:
         cumleler.append(f"Yazımda {goster} olası hata var." + (

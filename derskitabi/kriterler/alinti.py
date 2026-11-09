@@ -297,27 +297,38 @@ def alinti_bloklari(bloklar: list[Blok], bicimler: dict, denetciler=None) -> dic
     return sonuc
 
 
+KESME_TURLERI = {"ozel_ad_kesme", "kisaltma_kesme", "sayi_kesme", "gereksiz_kesme"}
+
+
 def alintilari_isaretle(tespitler: list[Tespit], alintilar: dict) -> list[Tespit]:
     """Alıntı bloklarındaki kelime tespitleri düşük önceliğe iner (silinmez); TDK kurallarına
     dokunulmaz (noktalama boşluğu gibi dizgi hataları alıntıda da kitabın hatasıdır)."""
     sonuc = []
     for t in tespitler:
         sebep = alintilar.get((t.sayfa_no, t.blok_no))
-        if t.alt_tur != "morfoloji" or sebep is None:
+        if sebep is None:
             sonuc.append(t)
             continue
-        kaynak = {"eski dil": "eski Türkçe ya da edebî dil işaretleri var", "tiyatro repliği": "tiyatro repliği",
-                  "diyalog": "hikâye diyaloğu"}.get(sebep, f"kaynak: {sebep}")
-        sonuc.append(replace(t, guven_skoru=min(t.guven_skoru, DUSUK_GUVEN), aciklama=t.aciklama +
-                             f" {ALINTI_NOTU} ({kaynak}): kelime yazarın kendi yazımı ya da eski yazım olabilir"
-                             " — düşük öncelik."))
+        if t.alt_tur == "morfoloji":
+            kaynak = {"eski dil": "eski Türkçe ya da edebî dil işaretleri var", "tiyatro repliği": "tiyatro repliği",
+                      "diyalog": "hikâye diyaloğu"}.get(sebep, f"kaynak: {sebep}")
+            sonuc.append(replace(t, guven_skoru=min(t.guven_skoru, DUSUK_GUVEN), aciklama=t.aciklama +
+                                 f" {ALINTI_NOTU} ({kaynak}): kelime yazarın kendi yazımı ya da eski yazım olabilir"
+                                 " — düşük öncelik."))
+        elif t.alt_tur in KESME_TURLERI:
+            yeni_aciklama = t.aciklama.replace(" (TDK)", "").replace("(TDK)", "").strip()
+            yeni_aciklama += (f" {ALINTI_NOTU}: Alıntıysa yazımı korunur; dipnot var mı kontrol edin "
+                              "(MEB TYMM 2.4.1) — düşük öncelik.")
+            sonuc.append(replace(t, guven_skoru=min(t.guven_skoru, DUSUK_GUVEN), aciklama=yeni_aciklama))
+        else:
+            sonuc.append(t)
     return sonuc
 
 
 def pdf_ile_isaretle(pdf_yolu, bloklar: list[Blok], tespitler: list[Tespit]) -> list[Tespit]:
     """Kelime tespiti olan sayfalarda alıntıları bulur ve işaretler (yazı tipleri PDF'ten okunur).
     İmzası sonraki sayfalarda olabileceği için tespitli sayfaların ardındaki sayfalar da okunur."""
-    tespitli = {t.sayfa_no for t in tespitler if t.alt_tur == "morfoloji"}
+    tespitli = {t.sayfa_no for t in tespitler if t.alt_tur in ({"morfoloji"} | KESME_TURLERI)}
     if not tespitli:
         return tespitler
     sayfalar = {s + i for s in tespitli for i in range(ALINTI_EN_FAZLA_SAYFA)}

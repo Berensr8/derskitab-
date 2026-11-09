@@ -55,7 +55,7 @@ def oncelik(g: float) -> str:
 
 
 def guven_metni(g: float) -> str:
-    return f"{oncelik(g)} ({str(round(g, 2)).replace('.', ',')})"
+    return f"{oncelik(g)} ({str(round(g, 2)).replace('.', ',')}; öncelik bir sıralamadır, olasılık değildir)"
 
 
 def _kisalt(metin: str, n: int = 45) -> str:

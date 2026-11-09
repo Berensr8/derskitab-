@@ -55,7 +55,7 @@ class Tespit:
     bbox: BBox
     kriter: str  # KRITERLER içinden biri
     aciklama: str
-    guven_skoru: float  # 0.0 (çok emin değil) – 1.0 (kesin)
+    guven_skoru: float  # 0.0 (çok emin değil) – 1.0
 
     # İsteğe bağlı alanlar
     basili_sayfa_no: str | None = None  # Arayüzde "PDF s. 19 / Kitap s. 15" göstermek için

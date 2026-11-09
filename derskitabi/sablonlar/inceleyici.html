@@ -664,7 +664,7 @@ function kelimeGoster(wi, kaydir = false) {
   const kitapta = w.kitapta != null ? ` Kitapta ${w.kitapta} kez geçiyor.` : "";
   const sonuc = {
     gecerli: "İki araç da çözümleyebildi → doğru yazılmış kabul edildi.",
-    hata: `İki araç da çözümleyemedi ve hiçbir sahte hata önlemine uymadı → YAZIM HATASI (güven 1,0).${kitapta} Terim sayılması için en az ${E.terim} kez geçmeliydi.`,
+    hata: `İki araç da çözümleyemedi ve hiçbir sahte hata önlemine uymadı → olası yazım hatası (iki araç da tanımadı).${kitapta} Terim sayılması için en az ${E.terim} kez geçmeliydi.`,
     supheli: `Araçlardan yalnız biri çözümleyemedi → şüpheli, düşük güvenle raporlandı (güven 0,5).${kitapta}`,
     atlandi: `En az bir araç tanımadı ama sahte hata önlemiyle atlandı: ${w.not}.`,
     terim: `En az bir araç tanımadı ama kitapta sık geçiyor ("${w.not}" en az ${E.terim} kez) → araçların bilmediği, kitaba özel bir terim sayıldı.${kitapta}`,

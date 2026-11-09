@@ -149,6 +149,21 @@ class IsaretlemeTesti(unittest.TestCase):
         self.assertIn(ALINTI_NOTU, sonuc[0].aciklama)
         self.assertIn("Necâtî", sonuc[0].aciklama)
 
+    def test_alintidaki_kesme_tespiti_dusuk_oncelik_ve_meb_notu_alir(self):
+        # K38: Alıntıdaki kesme tespiti MEB TYMM 2.4.1 uyarısı alır ve düşük önceliğe iner
+        t = [
+            Tespit(1, 2, (0, 0, 1, 1), "yazim", "Özel ada gelen ek kesmeyle ayrılır: 'Bursa'mızda' (TDK).",
+                   1.0, alt_tur="ozel_ad_kesme", metin_parcasi="Bursamızda"),
+            Tespit(1, 2, (0, 0, 1, 1), "yazim", "Noktalamadan sonra boşluk eksik.",
+                   1.0, alt_tur="noktalama_bosluk", metin_parcasi="nokta.Sonra"),
+        ]
+        sonuc = alintilari_isaretle(t, {(1, 2): "Tanpınar"})
+        kesme = sonuc[0]
+        self.assertEqual(kesme.guven_skoru, DUSUK_GUVEN)
+        self.assertNotIn("(TDK)", kesme.aciklama)
+        self.assertIn("Alıntıysa yazımı korunur; dipnot var mı kontrol edin (MEB TYMM 2.4.1)", kesme.aciklama)
+        self.assertEqual(sonuc[1].guven_skoru, 1.0)
+
 
 if __name__ == "__main__":
     unittest.main()

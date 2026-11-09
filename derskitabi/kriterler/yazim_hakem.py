@@ -8,7 +8,7 @@ Hakem, her kelime tespitini cümlesiyle birlikte gemma4'e sorar:
                 (editör hiçbir şeyi kaybetmez, ama önce gerçek hatalara bakar);
   - "hata"    → güven korunur (yalnız bir araç demişse 0,5 → 0,75), önerilen yazım eklenir;
   - "belirsiz"/cevap yok → tespit olduğu gibi kalır.
-TDK kural tespitlerine dokunulmaz (K23'te 9'un 8'i isabetliydi).
+TDK kural tespitlerine dokunulmaz (K23'te belirsizler dahil 8/16; görülmemiş kitaplarda 7'de 3).
 """
 
 import json

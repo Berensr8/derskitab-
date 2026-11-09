@@ -147,9 +147,9 @@ class NotluPdfTesti(unittest.TestCase):
         self.assertFalse(r2.intersects(r) or r2.intersects(yan_kutu))
 
     def test_guven_metni(self):
-        self.assertEqual(guven_metni(1.0), "yüksek (1,0)")
-        self.assertEqual(guven_metni(0.5), "orta (0,5)")
-        self.assertEqual(guven_metni(0.25), "düşük (0,25)")
+        self.assertEqual(guven_metni(1.0), "yüksek (1,0; öncelik bir sıralamadır, olasılık değildir)")
+        self.assertEqual(guven_metni(0.5), "orta (0,5; öncelik bir sıralamadır, olasılık değildir)")
+        self.assertEqual(guven_metni(0.25), "düşük (0,25; öncelik bir sıralamadır, olasılık değildir)")
 
 
 if __name__ == "__main__":

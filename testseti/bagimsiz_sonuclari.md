@@ -62,7 +62,7 @@ Bu çalışma ikisini de ilk kez, sistemi yazandan bağımsız biçimde ölçüy
 
   Gizlenenler de sayılınca oran 8/21 = %38 (%21–59).
 
-- **Düzeltme (K41-ek):** Kurulun metinde "hata" dediği 21 maddeden 4'ü (A01: TAHRIŞ EDICI, A48: DINLEME, A16: Anahtarı’’, A25: ”Yüce) basılı sayfada var olmayan metin katmanı farkıdır (`page.get_texttrace()` ve sayfa görüntüsü incelendiğinde basılı sayfada bunların doğru yazıldığı görülmüştür). Bu 4 sahte hata çıkarıldığında **gerçek basım hatası 17**'dir. Sistemin bulduğu gerçek basım hatası: **6/17 = %35,3** (%95 Wilson aralığı: %17,3–%58,7).
+- **Düzeltme (K41-ek):** Kurulun metinde "hata" dediği 21 maddeden 4'ü (A01: TAHRIŞ EDICI, A48: DINLEME, A16: Anahtarı’’, A25: ”Yüce) basılı sayfada var olmayan metin katmanı farkıdır (`page.get_texttrace()` ve sayfa görüntüsü incelendiğinde basılı sayfada bunların doğru yazıldığı görülmüştür). Bu 4 sahte hata çıkarıldığında **gerçek basım hatası 17**'dir. Sistemin bulduğu gerçek basım hatası: **6/17 = %35,3** (%95 Wilson aralığı: %17,3–%58,7). Ayrıca B grubundaki B18 "asitbaz" tespiti de satır birleştirmenin sildiği tireden doğmuş bir sahte hatadır (basılı sayfada satır sonu hecelenen "asit-" / "baz" kelimesidir). Bu düzeltildiğinde B'deki gerçek hata 8 değil 7'dir; eski kodun gerçek basım isabeti **7/40 = %17,5** (%95 Wilson aralığı: %8,7–%31,9).
 
 - **Kaçırılan 13 hata, türlerine göre:**
   - Büyük harf ya da İ/I karışması (4): TAHRIŞ EDICI, DINLEME, "Milli Edebiyat dönemi", "Türk Edebiyatı".

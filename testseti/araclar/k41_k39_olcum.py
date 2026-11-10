@@ -104,9 +104,9 @@ w_b_yeni = wilson(yeni_b_hata, len(yeni_b_gosterilen))
 print("\n1. B İSABETİ (Gösterilenlerin kaçı gerçek hata?)")
 print(f"  Eski Kod (K39 zemininde): {eski_b_hata_k39}/{eski_b_gosterilen} = %{eski_b_hata_k39 / eski_b_gosterilen * 100:.1f}")
 print(f"  Eski Kod (Düzeltilmiş 7 gerçek hata zemininde): {eski_b_hata_gercek}/{eski_b_gosterilen} = %{eski_b_hata_gercek / eski_b_gosterilen * 100:.1f} (%95 GA: %{w_b_eski[0]*100:.1f}–%{w_b_eski[1]*100:.1f})")
-print(f"  Yeni Kod (K41-ek2, hakemsiz): {yeni_b_hata}/{len(yeni_b_gosterilen)} = %{yeni_b_hata / len(yeni_b_gosterilen) * 100:.1f} (%95 GA: %{w_b_yeni[0]*100:.1f}–%{w_b_yeni[1]*100:.1f})")
+print(f"  Yeni Kod (K41-ek3, hakemsiz): {yeni_b_hata}/{len(yeni_b_gosterilen)} = %{yeni_b_hata / len(yeni_b_gosterilen) * 100:.1f} (%95 GA: %{w_b_yeni[0]*100:.1f}–%{w_b_yeni[1]*100:.1f})")
 print(f"  Gizlenen / Düşen tespit sayısı: {len(yeni_b_gizlenen)}")
-print(f"  Gizlenenler içindeki gerçek basım hatası sayısı: 0 (B18 'asitbaz' satır birleştirme sahtesiydi, yeni bloklarda doğru tire korundu)")
+print(f"  Gizlenenler içindeki gerçek basım hatası sayısı: {gizlenen_hata} (B18 'asitbaz' satır birleştirme sahtesiydi, yeni bloklarda doğru tire korundu)")
 
 # =====================================================================
 # 2. A BULMA ORANI (Sayfalardaki gerçek hataların kaçını buldu?)

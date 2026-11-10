@@ -64,6 +64,15 @@ class MetinTemizlemeTesti(unittest.TestCase):
     def test_satir_sonlari_ve_fazla_bosluk_teke_iner(self):
         self.assertEqual(_metni_temizle("Bir\nparagraf  burada.\n"), "Bir paragraf burada.")
 
+    def test_kelime_ici_yumusak_tire_silinir(self):
+        self.assertEqual(_metni_temizle("ka\xadlınarak"), "kalınarak")
+
+    def test_tireden_sonra_bosluk_varsa_birlestirilmez(self):
+        self.assertEqual(_metni_temizle("yüğürt- \nkızıl"), "yüğürt- kızıl")
+
+    def test_kitapta_tireli_kelime_korunur(self):
+        self.assertEqual(_metni_temizle("asit-\nbaz", tireli_kelimeler={"asit-baz"}), "asit-baz")
+
 
 class BlokTuruTesti(unittest.TestCase):
     # Örnekler gerçek kitaptan (Sosyal Bilgiler) alınmıştır.

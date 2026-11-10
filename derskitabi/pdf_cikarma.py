@@ -33,13 +33,14 @@ _OKUMA_AYARLARI = pymupdf.TEXT_MEDIABOX_CLIP
 _OKUMA_AYARLARI_NOACT = pymupdf.TEXT_MEDIABOX_CLIP | pymupdf.TEXT_IGNORE_ACTUALTEXT
 
 # Satır sonunda bölünmüş kelimeler ("öğren-" + "ciler"):
-#  - Yumuşak tire (U+00AD) satır sonunda heceleme tiresidir, silinir.
-#  - Satır ortasında iki karakter arasındaki U+00AD görünür kısa çizgidir (K41-ek2).
+#  - Yumuşak tire (U+00AD) yalnızca satır bölmek için vardır, her zaman silinir.
 #  - Normal tire (-) yalnızca sonraki satır küçük harfle başlıyorsa silinir;
 #    ancak kitap içinde tireyle yazılan birleşik kelimeler ("asit-baz") korunur.
 #    Büyük harfle devam eden ("Türk-Yunan", "1923-1938") gerçek tireler korunur.
+#    Tireden sonra boşluk varsa iki kelime birleştirilmez (K41-ek3).
 _YUMUSAK_TIRE = re.compile("­\\s*")
-_GERCEK_TIRE_SATIR_SONU = re.compile(r"([-‐])\s*\n\s*")
+_SATIR_SONU_TIRESI = re.compile(r"(\w+)[-‐]\n\s*([a-zçğıöşüâîû]+)")
+_GERCEK_TIRE_SATIR_SONU = re.compile(r"([-‐])\n\s*")
 
 # Bu kadar ve daha fazla kelimeli bloklar "paragraf" sayılır (K8).
 PARAGRAF_ESIGI = 5
@@ -75,7 +76,6 @@ def tireli_kelimeleri_topla(belge: pymupdf.Document) -> set[str]:
     tireli = set()
     for sayfa in belge:
         text = sayfa.get_text(flags=_OKUMA_AYARLARI)
-        text = re.sub(r"(\S)\xad(\S)", r"\1-\2", text)
         for m in re.finditer(r"\b([a-zçğıöşüâîû]+(?:-[a-zçğıöşüâîû]+)+)\b", _kucuk_harf_tr(text)):
             tireli.add(m.group(1))
     return tireli
@@ -87,25 +87,23 @@ def _metni_temizle(ham: str, tireli_kelimeler: set[str] | None = None) -> str:
     metin = unicodedata.normalize("NFC", ham)
     # Kontrol karakterlerini ve öğrenci satırı artıklarını temizle
     metin = re.sub(r"[\x08\ufeff\u200c]", " ", metin)
-    # 1. Satır ortasında iki boşluk olmayan karakter arasındaki U+00AD görünür tire '-' olur (K41-ek2)
-    metin = re.sub(r"(\S)\xad(\S)", r"\1-\2", metin)
+    # Yumuşak tire (U+00AD) dizgi hecelemesidir, her zaman silinir
+    metin = _YUMUSAK_TIRE.sub("", metin)
 
     if tireli_kelimeler is None:
         tireli_kelimeler = set()
 
-    # 2. Satır sonu tiresi: kitapta tireyle geçen kelimeler ("asit-baz") korunur,
+    # Satır sonu tiresi: kitapta tireyle geçen kelimeler ("asit-baz") korunur,
     # diğer küçük harfle devam eden hecelemeler birleştirilir ("öğren-" + "ciler" -> "öğrenciler").
+    # Tire ile \n arasında boşluk varsa birleştirilmez.
     def repl(m):
         sol, sag = m.group(1), m.group(2)
         bilesik = f"{_kucuk_harf_tr(sol)}-{_kucuk_harf_tr(sag)}"
         if bilesik in tireli_kelimeler:
             return f"{sol}-{sag}"
-        if sag[0].islower() or sag[0] in "çğıöşüâîû":
-            return f"{sol}{sag}"
-        return f"{sol}-{sag}"
+        return f"{sol}{sag}"
 
-    metin = re.sub(r"([a-zçğıöşüâîûA-ZÇĞİÖŞÜÂÎÛ0-9]+)[-‐\xad]\s*\n\s*([a-zçğıöşüâîûA-ZÇĞİÖŞÜÂÎÛ0-9]+)", repl, metin)
-    metin = _YUMUSAK_TIRE.sub("", metin)
+    metin = _SATIR_SONU_TIRESI.sub(repl, metin)
     metin = _GERCEK_TIRE_SATIR_SONU.sub(r"\1", metin)
     # Kalan satır sonları ve fazla boşluklar tek boşluğa indirilir.
     return " ".join(metin.split())

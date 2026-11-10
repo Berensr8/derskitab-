@@ -64,9 +64,10 @@ def satir_gruplari(bloklar: list[Blok]) -> list[list[Blok]]:
     return gruplar
 
 
-def grup_metni(grup: list[Blok], bilesik_mi=None, parca_mi=None) -> tuple[str, list[int]]:
+def grup_metni(grup: list[Blok], bilesik_mi=None, parca_mi=None, tireli_mi=None) -> tuple[str, list[int]]:
     """(birleşik metin, her bloğun metindeki başlangıç konumu). Satır sonu tiresi ("top-" + "lumsal")
-    alttaki satır küçük harfle başlıyorsa silinip kelime birleştirilir. bilesik_mi(kelime) verilirse
+    alttaki satır küçük harfle başlıyorsa silinip kelime birleştirilir. tireli_mi(kelime) verilirse
+    kitapta tireyle geçen kelimeler ("asit-baz") korunur. bilesik_mi(kelime) verilirse
     tiresi hiç kaydedilmemiş kelimeler ("Ga" + "rip") de boşluksuz birleştirilir: birleşim geçerli bir
     kelimeyse ve parçalardan biri değilse. parca_mi: parçalar için (daha sıkı) ölçüt; verilmezse bilesik_mi
     ("yansı" + "ması": araçlardan biri "ması"yı da kelime sanıyor — parçalar iki araçla da sınanmalı)."""
@@ -74,7 +75,12 @@ def grup_metni(grup: list[Blok], bilesik_mi=None, parca_mi=None) -> tuple[str, l
     for b in grup:
         parca = b.metin.strip()
         if metin and _SATIR_SONU_TIRESI.search(metin):
-            if parca[:1].islower():
+            sol = _SON_KELIME.search(metin[:-1])
+            sag = _ILK_KELIME.search(parca)
+            tire_korunsun = False
+            if sol and sag and tireli_mi and tireli_mi(f"{sol.group(0).lower()}-{sag.group(0).lower()}"):
+                tire_korunsun = True
+            if parca[:1].islower() and not tire_korunsun:
                 metin = metin[:-1]  # satır sonu tiresi; büyük harfle devam ediyorsa gerçek tire ("Türk-Yunan")
         elif metin:
             sol, sag = _SON_KELIME.search(metin), _ILK_KELIME.search(parca)
@@ -93,12 +99,13 @@ def birlesik_bloklar(bloklar: list[Blok]) -> list[Blok]:
     """Her satır grubu tek blok olur: ilk bloğun numarası, kutuların birleşimi, birleşik metin.
     Tek bloklu gruplar olduğu gibi kalır."""
     from .pdf_cikarma import blok_turu
+    tireli = {m.group(1).lower() for b in bloklar for m in re.finditer(r"\b([a-zçğıöşüâîû]+-[a-zçğıöşüâîû]+)\b", b.metin.lower())}
     sonuc = []
     for grup in satir_gruplari(bloklar):
         if len(grup) == 1:
             sonuc.append(grup[0])
             continue
-        metin, _ = grup_metni(grup)
+        metin, _ = grup_metni(grup, tireli_mi=lambda k: k.lower() in tireli)
         kutu = (min(b.bbox[0] for b in grup), min(b.bbox[1] for b in grup),
                 max(b.bbox[2] for b in grup), max(b.bbox[3] for b in grup))
         sonuc.append(Blok(grup[0].sayfa_no, grup[0].blok_no, kutu, metin, grup[0].basili_sayfa_no, blok_turu(metin)))

@@ -26,7 +26,12 @@ _SAYFA_NO_DESENI = re.compile(r"^\d{1,4}$")
 # PyMuPDF metin okuma ayarı: TEXT_PRESERVE_LIGATURES verilmediği için "ﬁ" gibi
 # bitişik harfler normal harflere ("f" + "i") açılır; aksi halde yazım kriteri
 # bu kelimeleri hatalı sanar.
-_OKUMA_AYARLARI = pymupdf.TEXT_MEDIABOX_CLIP
+# PyMuPDF metin okuma ayarı: TEXT_PRESERVE_LIGATURES verilmediği için "ﬁ" gibi
+# bitişik harfler normal harflere ("f" + "i") açılır; aksi halde yazım kriteri
+# bu kelimeleri hatalı sanar. TEXT_IGNORE_ACTUALTEXT bayrağı, InDesign/PDF ActualText
+# etiketindeki hatalı eşlemelerin (özellikle büyük başlıklardaki "İ" harfini "I"ya
+# çevirmesi) engellenmesini sağlar (K41-ek).
+_OKUMA_AYARLARI = pymupdf.TEXT_MEDIABOX_CLIP | pymupdf.TEXT_IGNORE_ACTUALTEXT
 
 # Satır sonunda bölünmüş kelimeler ("öğren-" + "ciler"):
 #  - Yumuşak tire (U+00AD) yalnızca satır bölmek için vardır, her zaman silinir.

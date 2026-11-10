@@ -165,14 +165,14 @@ class IsaretlemeTesti(unittest.TestCase):
         self.assertEqual(sonuc[1].guven_skoru, 1.0)
 
     def test_eski_dil_sapkali_ve_arkaik_kaliplar(self):
-        # K41: Arkaik kalıplar (didüm, didi, şâd vb.) ve şapka yoğunluğu alıntı sayılır
-        sahte_arac = (lambda k: k in {"hava", "çok", "güzel", "ve", "güneşli", "bugün"},
-                      lambda k: k in {"hava", "çok", "güzel", "ve", "güneşli", "bugün"})
-        b1 = blok(1, (0, 0, 1, 1), "Didüm ki kâmetün âfet didi ne togru haber")
-        b2 = blok(2, (0, 0, 1, 1), "Rûhu şâd ola ki incitmez idi kimseneyi Ne gönündeki biti ne kulağında keneyi")
+        # K41-ek: Arkaik ek kalıpları (-durur, -mağa vb.) alıntı sayılır; günümüz şapkalı metinleri alıntı sayılmaz
+        sahte_arac = (lambda k: k in {"hava", "çok", "güzel", "ve", "güneşli", "bugün", "felsefî", "imkânlar"},
+                      lambda k: k in {"hava", "çok", "güzel", "ve", "güneşli", "bugün", "felsefî", "imkânlar"})
+        b1 = blok(1, (0, 0, 1, 1), "Hakka varmağa yüz tutup süredurur gice gündüz")
+        b2 = blok(2, (0, 0, 1, 1), "Bireyin felsefî imkânlar çerçevesinde metiniçi ve metindışı bağları.")
         b3 = blok(3, (0, 0, 1, 1), "Bugün hava çok güzel ve güneşli.")
         self.assertTrue(eski_dil_mi(b1, sahte_arac))
-        self.assertTrue(eski_dil_mi(b2, sahte_arac))
+        self.assertFalse(eski_dil_mi(b2, sahte_arac))  # modern şapkalı kelimeler alıntı sayılmaz (K41-ek)
         self.assertFalse(eski_dil_mi(b3, sahte_arac))
 
 

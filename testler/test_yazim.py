@@ -176,12 +176,14 @@ class KuralTesti(unittest.TestCase):
     def test_r14_cift_tek_tirnak(self):
         t = kural_denetimi(blok("Analitik Dereceli ‘‘Puanlama Anahtarı’’ ile değerlendiriniz."))
         self.assertEqual([x.alt_tur for x in t], ["noktalama_cift_tek_tirnak", "noktalama_cift_tek_tirnak"])
-        self.assertEqual(t[0].guven_skoru, 1.0)
+        self.assertEqual(t[0].guven_skoru, 0.25)
+        self.assertIn("basılı sayfada görünmez", t[0].aciklama)
 
     def test_r15_ters_acilis_tirnagi(self):
         t = kural_denetimi(blok("Bir atlı geldi. ”Yüce dağların başında” türküsünü söyledi."))
         self.assertIn("noktalama_ters_tirnak", [x.alt_tur for x in t])
-        self.assertEqual(t[0].guven_skoru, 1.0)
+        self.assertEqual(t[0].guven_skoru, 0.25)
+        self.assertIn("basılı sayfada görünmeyebilir", t[0].aciklama)
 
     def test_r16_dizgi_rakam_harf(self):
         t1 = kural_denetimi(blok("NİN HAYATI (…) 0 civar karyelerinden birinde doğdu."))

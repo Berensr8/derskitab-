@@ -428,20 +428,25 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
         ))
 
     # R14: Çift tırnak yerine art arda iki tek tırnak (’’ veya ‘‘) (K41)
+    # Basılı sayfada 2 pt arayla çift tırnak gibi göründüğünden okuyucu fark görmez (K41-ek);
+    # bu nedenle düşük öncelikli (0,25) olarak işaretlenir.
     if len(metin.strip()) > 3:
         for m in re.finditer(r"(’’|‘‘)", metin):
             parca = metin[max(0, m.start() - 15):min(len(metin), m.end() + 15)].strip()
             tespitler.append(_tespit(
-                blok, "noktalama_cift_tek_tirnak", 1.0, parca,
-                f"Çift tırnak işareti yerine art arda iki tek tırnak ('{m.group(1)}') kullanılmış."
+                blok, "noktalama_cift_tek_tirnak", 0.25, parca,
+                f"Çift tırnak işareti yerine art arda iki tek tırnak ('{m.group(1)}') kullanılmış "
+                f"(dizgi tercihi, basılı sayfada görünmez)."
             ))
 
     # R15: Ters açılış tırnağı (” yerine “) (K41)
+    # Basılı sayfada fonta bağlı olarak düzgün görünebilir (K41-ek); düşük öncelik (0,25).
     for m in re.finditer(r"(?:^|[\s(\[{])(”)(?=[a-zA-ZçğıöşüÇĞİÖŞÜ])", metin):
         parca = metin[max(0, m.start() - 5):min(len(metin), m.end() + 20)].strip()
         tespitler.append(_tespit(
-            blok, "noktalama_ters_tirnak", 1.0, parca,
-            "Açılış tırnağı olarak ters (kapanış) tırnak işareti ('”') kullanılmış (doğrusu '“' olmalı)."
+            blok, "noktalama_ters_tirnak", 0.25, parca,
+            "Açılış tırnağı olarak kapanış tırnak karakteri ('”') kullanılmış "
+            "(dizgi tercihi, basılı sayfada görünmeyebilir)."
         ))
 
     # R16: Rakamın harf yerine dizilmesi (0 civar / c0var vb.) (K41)

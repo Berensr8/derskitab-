@@ -81,6 +81,18 @@ class TerimTesti(unittest.TestCase):
             self.assertEqual(t.guven_skoru, terim.DUSUK_GUVEN)
             self.assertIn(terim.TERIM_NOTU, t.aciklama)
 
+    def test_taninan_kokun_hatali_eki_terim_sayilmaz(self):
+        # "asit" araçlarca tanınan bir kelimedir; "asiti" (doğrusu: asidi) ve "asitbaz"
+        # terim önekiyle gizlenmemelidir (K41-ek).
+        b = blok(1, "Hidrofobik kuyruk (yağ asiti) ve asitbaz dengesi.")
+        t_asiti = tespit(1, "asiti")
+        t_asitbaz = tespit(1, "asitbaz")
+        sozluk = {"asit", "hidrofobik", "kuyruk", "dengesi", "ve"}
+        sahte = (lambda k: k in sozluk, lambda k: k in sozluk)
+        sonuc = terim.isaretle([t_asiti, t_asitbaz], [b], None, sahte)
+        self.assertEqual(sonuc[0].guven_skoru, 1.0)
+        self.assertEqual(sonuc[1].guven_skoru, 1.0)
+
 
 class BirlesikTesti(unittest.TestCase):
     def test_ilk_uyan_sebep_ve_kisa_ad(self):

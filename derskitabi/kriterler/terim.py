@@ -31,11 +31,10 @@ _MADDE = re.compile(
     r"\s*(?:\([^)]{1,40}\)\s*)?:\s+\S"
 )
 _TANIM = re.compile(r"\b([a-zçğıöşüâîû]{4,})\s+(?:denir|adı verilir|olarak adlandırılır|olarak isimlendirilir)\b")
-_PARANTEZ_TERIM = re.compile(r"\(([a-zçğıöşüâîû]{4,}(?:\s+[a-zçğıöşüâîû]{3,})?)\)")
-_PARANTEZ_ONCESI_TERIM = re.compile(r"\b([a-zçğıöşüâîû]{4,})\s*\(([a-zçğıöşüâîû]{3,})\)")
+_PARANTEZ_TERIM_CIFT = re.compile(r"\b([a-zçğıöşüâîû]{4,})\s*\(([a-zçğıöşüâîû]{4,})\)")
 _BILIMSEL_TAMLAMA = re.compile(
     r"\b([a-zçğıöşüâîû]{4,})\s+(?:enzim|enzimi|enzimler|enzimleri|hormon|hormonu|hormonlar|hormonları|"
-    r"protein|proteini|proteinler|proteinleri|vitamin|vitamini|bakteri|bakterisi|virüs|virüsü|asit|asidi)\b"
+    r"protein|proteini|proteinler|proteinleri|vitamin|vitamini|bakteri|bakterisi|virüs|virüsü)\b"
 )
 _ITALIK = 2  # PyMuPDF span bayrağı
 # Bloğun bu oranından fazlası italikse italik bir işaret değil, bloğun biçimidir (başlık, yönerge): o
@@ -56,18 +55,15 @@ def sozluk_maddeleri(bloklar: list[Blok]) -> set[str]:
 
 
 def tanim_kelimeleri(bloklar: list[Blok]) -> set[str]:
-    """Kitap içinde '... denir / adı verilir', parantez içi veya bilimsel niteleyici tamlamasıyla
-    geçen terim kelimeleri."""
+    """Kitap içinde '... denir / adı verilir', terim çiftleri (inflamasyon (yangı)) veya
+    bilimsel niteleyici tamlamasıyla geçen terim kelimeleri (K41-ek)."""
     terimler = set()
     for b in bloklar:
         for m in _TANIM.finditer(b.metin):
             terimler.add(yazim.tr_kucuk(m.group(1)))
-        for m in _PARANTEZ_TERIM.finditer(b.metin):
-            for k in m.group(1).split():
-                if len(k) >= 4:
-                    terimler.add(yazim.tr_kucuk(k))
-        for m in _PARANTEZ_ONCESI_TERIM.finditer(b.metin):
+        for m in _PARANTEZ_TERIM_CIFT.finditer(b.metin):
             terimler.add(yazim.tr_kucuk(m.group(1)))
+            terimler.add(yazim.tr_kucuk(m.group(2)))
         for m in _BILIMSEL_TAMLAMA.finditer(b.metin):
             terimler.add(yazim.tr_kucuk(m.group(1)))
     return terimler
@@ -136,10 +132,12 @@ def isaretle(tespitler: list[Tespit], bloklar: list[Blok], italikler: dict | Non
                 sebep = f"kitabın sözlüğünde açıklanmış ('{madde}')"
             elif k in tanimlar:
                 sebep = f"tanım veya terim kalıbı ('{k}')"
-            elif any(k[:i] in tanimlar for i in range(len(k) - 1, EN_KISA_KOK - 1, -1)):
-                kok = next(k[:i] for i in range(len(k) - 1, EN_KISA_KOK - 1, -1) if k[:i] in tanimlar)
+            elif any(k[:i] in tanimlar and not yazim._gecerli(denetciler[0], k[:i])
+                     for i in range(len(k) - 1, EN_KISA_KOK - 1, -1)):
+                kok = next(k[:i] for i in range(len(k) - 1, EN_KISA_KOK - 1, -1)
+                           if k[:i] in tanimlar and not yazim._gecerli(denetciler[0], k[:i]))
                 sebep = f"tanım veya terim kalıbı ('{kok}')"
-            elif k.endswith(("ler", "lar")) and k[:-3] in (maddeler | tanimlar):
+            elif k.endswith(("ler", "lar")) and k[:-3] in (maddeler | tanimlar) and not yazim._gecerli(denetciler[0], k[:-3]):
                 kok = k[:-3]
                 sebep = f"çoğul terim ('{kok}')"
             elif k in italik:

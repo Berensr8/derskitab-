@@ -53,15 +53,12 @@ ONCELIKLI = ("yazim", "tutarlilik")  # yalnız bunlar olası hata; öncelik veri
 # (yapay zekâ asistanı) tek başına koydu; bağımsız etiketleme yapılmadı.
 # Kaynak: testseti/*_sonuclari.md. Sistem değişirse burası da güncellenmeli.
 OLCULEN_BASARI = [
-    ("Yazım ve noktalama", "Bilerek eklenmiş, sistemin aradığı türden 56 yazım hatasının 55'i bulundu "
-     "(gerileme seti — geliştirme sırasında tekrar kullanıldı, hakemli); büyük harfle başlayan kelimeler "
-     "(morfoloji denetiminde) ve kitapta 3+ kez tekrarlanan yanlış yazımlar denetlenmez; gerçek hatalarda "
-     "bulma oranı ölçülmedi.",
-     "testseti/yazim_sonuclari.md (K23, K25)"),
-    ("Yazım ve noktalama", "Gerçek kitapta isabet düşük: geliştirme kitabı (Matematik 11, hakemli) "
-     "tespitlerinin %27'si gerçek hata; görülmemiş kitaplarda hakemsiz 6/137, hakemli 6/39 (çoğu terim, "
-     "özel isim, alıntı). TDK kuralları belirsizler dahil 8/16; görülmemiş kitaplarda 7'de 3.",
-     "testseti/yazim_sonuclari.md (K23, K25)"),
+    ("Yazım ve noktalama", "Bağımsız 3 modelli kurul ölçümünde (K42, 2026-11-10) hakemli sistemde gösterilen "
+     "tespitlerin %28'i (7/25) gerçek hatadır (hakemsiz %17; K39'da %20 idi). Fen kitaplarında isabet yüksek, "
+     "edebiyat kitaplarında alıntılar nedeniyle düşüktür (%18). Doğal kitap hatalarını bulma oranı düşüktür "
+     "(30 bağımsız sayfadaki 17 hatada 0/17 = %0; noktalama boşlukları, yabancı terimler ve geçerli kelimeler denetlenmez). "
+     "Bilerek eklenen 56 hatanın 55'i gerileme setinde yakalanmıştır.",
+     "testseti/bagimsiz2_sonuclari.md (K42)"),
     ("Yazım ve noktalama", "Kesme işareti (özel ad, kısaltma, sayı; gereksiz kesme): kitabın kendi metninde "
      "yaklaşık %56 (10/18); 31 gerçek tespitin ~21'i alıntılarda; denemede eksik kesmelerin yalnız ~%28'ini buldu.",
      "testseti/kesme_sonuclari.md (K34)"),

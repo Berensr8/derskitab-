@@ -25,10 +25,11 @@ _SADE_TUR = {"morfoloji": "kelime yazımı", "kitap_ici_zor_paragraf": "zor para
              "kisaltma_kesme": "kısaltmaya gelen ekte kesme eksik", "sayi_kesme": "sayıya gelen ekte kesme eksik"}
 # Sistemin ölçülmüş başarısı, kullanıcının diliyle (kaynak: testseti/*_sonuclari.md; rapor.py OLCULEN_BASARI)
 GUVEN = {
-    "yazim": "Ne kadar güvenilir? Bağımsız kurul ölçümünde (K42) hakemli sistemde işaretlenenlerin %28'i gerçek hatadır "
-             "(edebiyat kitaplarında alıntılar nedeniyle %18'e düşer, fen kitaplarında yüksektir; hakem kapalıyken %17'dir). "
-             "Doğal kitap hatalarında bulma oranı çok düşüktür; sistem her yazım hatasını yakalamaz (aralık boşluğu, yabancı "
-             "terimler ve geçerli kelimeler denetlenmez). Her tespite mutlaka göz atın.",
+    "yazim": "Ne kadar güvenilir? Bağımsız kurul ölçümünde (K42) işaretlenenlerin hakemliyken %28'i (7/25), "
+             "hakemsizken %17'si (5/29) gerçek hatadır (örneklem küçüktür, güven aralıkları çakışır; hakemin elediği "
+             "tespitlerin hiçbiri hata değildir). Doğal kitap hatalarında bulma oranı çok düşüktür (gösterilenlerde 0/17); "
+             "sistem her yazım hatasını yakalamaz (aralık boşluğu, yabancı terimler ve geçerli kelimeler denetlenmez). "
+             "Her tespite mutlaka göz atın.",
 
     "okunabilirlik": "Ne kadar güvenilir? Ölçüler cümle ve kelime uzunluğuna dayanır; ölçtüğümüzde "
                      "aynı dersin farklı sınıf kitaplarını bile ayırt etmedi. İşaretler 'buraya bir bakın' anlamındadır.",

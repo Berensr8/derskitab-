@@ -54,9 +54,10 @@ ONCELIKLI = ("yazim", "tutarlilik")  # yalnız bunlar olası hata; öncelik veri
 # Kaynak: testseti/*_sonuclari.md. Sistem değişirse burası da güncellenmeli.
 OLCULEN_BASARI = [
     ("Yazım ve noktalama", "Bağımsız 3 modelli kurul ölçümünde (K42, 2026-11-10) hakemli sistemde gösterilen "
-     "tespitlerin %28'i (7/25) gerçek hatadır (hakemsiz %17; K39'da %20 idi). Fen kitaplarında isabet yüksek, "
-     "edebiyat kitaplarında alıntılar nedeniyle düşüktür (%18). Doğal kitap hatalarını bulma oranı düşüktür "
-     "(30 bağımsız sayfadaki 17 hatada 0/17 = %0; noktalama boşlukları, yabancı terimler ve geçerli kelimeler denetlenmez). "
+     "tespitlerin %28'i (7/25, %14–48), hakemsiz %17'si (5/29, %8–35) gerçek hatadır (K39'da düzeltilmiş %17,5 [7/40], "
+     "ilk ham %20 idi; örneklem küçüktür, güven aralıkları çakışır). Hakemin gizlediği 13 tespitin hiçbiri gerçek hata "
+     "değildir. Doğal kitap hatalarını bulma oranı düşüktür: gösterilenlerde 0/17 (%0), düşük öncelikliler dahil 1/17'dir "
+     "(K39'da düzeltilmiş %35,3 [6/17], ilk ham %29 idi; noktalama boşlukları, yabancı terimler ve geçerli kelimeler denetlenmez). "
      "Bilerek eklenen 56 hatanın 55'i gerileme setinde yakalanmıştır.",
      "testseti/bagimsiz2_sonuclari.md (K42)"),
     ("Yazım ve noktalama", "Kesme işareti (özel ad, kısaltma, sayı; gereksiz kesme): kitabın kendi metninde "

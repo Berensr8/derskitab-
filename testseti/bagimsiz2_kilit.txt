@@ -14,6 +14,8 @@ ca0c79515ca562ae335e387f33a9c25fdec6bb4b553dd108cda749524324ef07 *turkdili10_sis
 0ac5ddb85b48571017c28a9d34da27d7db57444cc6e96cf74c42d76987ab5dfe *turkdili11_sistem_hakemli.json
 f805217c16327acf373a1939eb5aaf7c748c7d443749fb23e29e0c75ab422c3a *turkdili12_sistem_hakemsiz.json
 ac48bab9cc91faa61243841aa0e6b5e5c8364c393e3e7a0a3d5adfaa2a1cf41c *turkdili12_sistem_hakemli.json
+20e68723406d60c71fa2674a6ff45b907ec79d2f3d015d3f7e06a66ebab2f79b *A_birlesik_anahtar.json
+f4e0ebd219b2e0a0e6375e15c7ad61113fc791af03bd60993eb71aee99b774fe *kurul_anahtar.json
 Ön kayıt: testseti/k42_on_kayit.md (havuz.json SHA-256 1e96023b2b015f9c87eca7f4a26e431a610fef9afe0dc5bdbe6e86c0cfc36c27; tohum 20261110).
 Ölçülen kod: 854559a (ölçüm betiklerinin commit'i: 53ed14d; derskitabi/ klasörü 854559a ile birebir aynı, çalışma ağacı temiz).
 Ortam: .venv Python, PyMuPDF 1.28.2.
@@ -30,4 +32,7 @@ Metin katmanı kontrolü (ön kayıt eki, K41-ek): adayın her sözcüğü sayfa
   "metin katmanı farkı" sayılır, kurula gönderilmez, pay ve paydadan çıkarılıp ayrı raporlanır (testseti/araclar/k42_katman.py).
 A: 30 kilitli sayfa (S01-S30; Biyoloji 9, Biyoloji 11, TDE 10). Talimatlar K39'unkinin aynısı.
 Not: Hakemsiz çıktıda B havuzunda 30 gösterilen tespit var; biri aynı bloktaki aynı sözcüğün tekrarı (aynı sayfa, blok, parça, tür), kurula tek aday olarak gider: 29 benzersiz.
-B listesinde 38 benzersiz aday var (hakemli 25 + hakemsiz 29 - ortak 16). k42_hazirla.py ve k42_katman.py bu kilitle birlikte commit edilir.
+B listesinde 38 benzersiz aday var (hakemli 25 + hakemsiz 29 - ortak 16).
+A listesi: ChatGPT (37) ve Gemini (76) sonuçları birleştirildi, 82 aday (M) oluşturuldu (2 aday kitapta zaten var olduğu için elendi).
+Kurul listesi: A (82 aday) + B (38 aday) = 120 aday tohum 20261110 ile karıştırılarak K001-K120 kimlikleriyle hazırlandı.
+k42_hazirla.py, k42_katman.py, k42_a_birlestir.py ve k42_kurul.py bu kilitle birlikte commit edilir.

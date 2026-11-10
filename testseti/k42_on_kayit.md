@@ -63,3 +63,15 @@ En az 150 kelime paragraf içeren uygun sayfalar arasından rastgele 10'ar sayfa
   3. İsabet hiçbir durumda K39'un taban değeri olan **%20'nin altına düşmeyecektir**.
   4. 2. adımda eklenecek yeni kurallardan her birinin kendi isabeti **≥ %50** olmalıdır; %50'nin altında kalan kural üründe düşük önceliğe (güven 0,25) indirilir.
 - Sonuç ne çıkarsa çıksın olduğu gibi dürüstçe raporlanacak; bu ölçütler ve eşikler sonradan değiştirilmeyecektir.
+
+
+---
+
+## 5. Ek (K41-ek): Metin Katmanı Mekanik Kontrolü
+
+- **Gerekçe:** K39 bağımsız değerlendirmesinde kurulun "hata" dediği 21 maddeden 4'ünün (A01: "TAHRIŞ EDICI", A48: "DINLEME", A16: "Anahtarı’’", A25: "”Yüce") basılı sayfada var olmayan, InDesign / PDF dönüştürücüsünün `ActualText` etiketinden veya görsel tırnak dizgisinden kaynaklanan sahte metin katmanı farkları olduğu saptanmıştır.
+- **Kural:** Kurula gitmeden önce bütün A ve B adayları için mekanik bir "metin katmanı kontrolü" yapılacaktır:
+  - Bir adayın metni, PDF'in glif düzeyindeki karakterlerinden (`page.get_texttrace()`) veya sayfa görüntüsünden farklıysa aday "metin katmanı farkı" olarak ayrılacaktır.
+  - Bu tür adaylar ne gerçek hata ne de sistem isabeti sayılacak; hata doğruluk pay ve paydasından çıkarılarak ayrı bir başlık altında raporlanacaktır.
+  - Karar kurulu talimatları (`testseti/bagimsiz/A_talimat.txt` ve `KURUL_talimat.txt`) değiştirilmeyecektir.
+- Bu ek, bağımsız kurul ölçümünden (K42) önce ön kayıt dosyasına işlenmiştir.

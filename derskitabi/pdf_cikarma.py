@@ -16,6 +16,14 @@ from pathlib import Path
 
 import pymupdf
 
+_BEKLENEN_PYMUPDF_SURUMU = "1.28.2"
+if pymupdf.__version__ != _BEKLENEN_PYMUPDF_SURUMU:
+    raise RuntimeError(
+        f"PyMuPDF sürümü {pymupdf.__version__}; beklenen: {_BEKLENEN_PYMUPDF_SURUMU}. "
+        "Farklı PyMuPDF sürümleri blok bölütlemesini değiştirmektedir. "
+        "Lütfen D:\\derskitabı\\.venv\\Scripts\\python.exe kullanın."
+    )
+
 from .kayit import bloklari_kaydet
 from .model import BLOK_TURLERI, Blok
 

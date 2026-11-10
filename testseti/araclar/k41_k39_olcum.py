@@ -1,4 +1,4 @@
-"""K39 bağımsız değerlendirme verisi üzerinde K41-ek2 kodunun gerçek çalıştırılması ve ölçümü.
+"""K39 bağımsız değerlendirme verisi üzerinde K41-ek4 kodunun gerçek çalıştırılması ve ölçümü.
 
 Bu betik K39'un 30 A sayfasını ve 40 B tespitini 'yazim.analiz_et' + 'dusuk_oncelik.isaretle'
 zincirini ürün gibi tüm kitap bloklarıyla gerçek zamanlı olarak çalıştırarak mekanik biçimde eşleştirir.
@@ -10,6 +10,16 @@ import math
 import re
 import sys
 from pathlib import Path
+
+import pymupdf
+
+BEKLENEN_PYMUPDF = "1.28.2"
+if pymupdf.__version__ != BEKLENEN_PYMUPDF:
+    sys.exit(
+        f"HATA: PyMuPDF sürümü {pymupdf.__version__}; beklenen: {BEKLENEN_PYMUPDF}. "
+        "Farklı PyMuPDF sürümleri blok bölütlemesini değiştirmektedir. "
+        "Lütfen D:\\derskitabı\\.venv\\Scripts\\python.exe kullanın."
+    )
 
 sys.path.insert(0, ".")
 sys.stdout.reconfigure(encoding="utf-8")
@@ -53,7 +63,7 @@ kitap_map = {
 }
 
 print("=" * 70)
-print("[GELİŞTİRME VERİSİ, GERÇEK ÇALIŞTIRMA] K39 Verisi Üzerinde K41-ek2 Ölçümü")
+print("[GELİŞTİRME VERİSİ, GERÇEK ÇALIŞTIRMA] K39 Verisi Üzerinde K41-ek4 Ölçümü")
 print("=" * 70)
 
 # Tüm 5 kitabı ürün gibi bloklarıyla tara
@@ -179,13 +189,13 @@ w_a17_yeni = wilson(bulunan_gercek_basim, toplam_gercek_basim_hatasi)
 
 print("\n  --- K39 Zemininde (21 metin adayı) ---")
 print(f"  Eski Kod (K39): 6/{toplam_metin_hatasi} = %{6 / toplam_metin_hatasi * 100:.1f} (%95 GA: %{w_a21_eski[0]*100:.1f}–%{w_a21_eski[1]*100:.1f})")
-print(f"  Yeni Kod (K41-ek2, hakemsiz): {bulunan_toplam_metin}/{toplam_metin_hatasi} = %{bulunan_toplam_metin / toplam_metin_hatasi * 100:.1f} (%95 GA: %{w_a21_yeni[0]*100:.1f}–%{w_a21_yeni[1]*100:.1f})")
+print(f"  Yeni Kod (K41-ek4, hakemsiz): {bulunan_toplam_metin}/{toplam_metin_hatasi} = %{bulunan_toplam_metin / toplam_metin_hatasi * 100:.1f} (%95 GA: %{w_a21_yeni[0]*100:.1f}–%{w_a21_yeni[1]*100:.1f})")
 
 print("\n  --- K41-ek Düzeltilmiş Zemininde (17 gerçek basım hatası) ---")
 print(f"  Eski Kod (K39): 6/{toplam_gercek_basim_hatasi} = %{6 / toplam_gercek_basim_hatasi * 100:.1f} (%95 GA: %{w_a17_eski[0]*100:.1f}–%{w_a17_eski[1]*100:.1f})")
-print(f"  Yeni Kod (K41-ek2, hakemsiz): {bulunan_gercek_basim}/{toplam_gercek_basim_hatasi} = %{bulunan_gercek_basim / toplam_gercek_basim_hatasi * 100:.1f} (%95 GA: %{w_a17_yeni[0]*100:.1f}–%{w_a17_yeni[1]*100:.1f})")
+print(f"  Yeni Kod (K41-ek4, hakemsiz): {bulunan_gercek_basim}/{toplam_gercek_basim_hatasi} = %{bulunan_gercek_basim / toplam_gercek_basim_hatasi * 100:.1f} (%95 GA: %{w_a17_yeni[0]*100:.1f}–%{w_a17_yeni[1]*100:.1f})")
 
 print("\n" + "=" * 70)
-print(f"Özet (K41-ek2): B isabeti %{yeni_b_hata/len(yeni_b_gosterilen)*100:.1f} ({yeni_b_hata}/{len(yeni_b_gosterilen)}), "
+print(f"Özet (K41-ek4): B isabeti %{yeni_b_hata/len(yeni_b_gosterilen)*100:.1f} ({yeni_b_hata}/{len(yeni_b_gosterilen)}), "
       f"A bulma oranı %{bulunan_gercek_basim/toplam_gercek_basim_hatasi*100:.1f} ({bulunan_gercek_basim}/{toplam_gercek_basim_hatasi} gerçek basım hatası).")
 print("=" * 70)

@@ -84,3 +84,18 @@ Modelin ürettiği toplam 67 adayın **61'i** gerçek hatayla eşleşmemiştir:
 - **Sayfa başına ortalama süre:** 12,51 sn (en kısa: 1,23 sn [S15]; en uzun: 46,56 sn [S13])
 - **300 sayfalık bir kitap için tahmini süre:** ~62,5 dakika (1,04 saat)
 - **Ön kayıttan sapma:** Yoktur. Hiçbir sayfa 4000 karakter sınırını aşmadığı için (en uzun sayfa S07: 3629 karakter) tüm sayfalar tek parçada gönderilmiş, istemde veya JSON şemasında koşu sonrasında hiçbir değişiklik yapılmamıştır.
+
+## 6. Doğrulama Notu (Claude, 2026-11-15)
+
+Sayım `veri/k43/cikti.json` üzerinden yeniden yapıldı: 6/17, 67 aday, 6 eşleşmenin hepsi gerçek
+eşleşme (kısa parça tesadüfü yok). Sonuca bir sınır eklenmeli:
+
+- **Girdi metni temizlenmemişti.** Modele verilen `A_30_sayfa_metin.txt` (kurula verilen dosya)
+  42 yumuşak tire (U+00AD) ve satır sonu tireleri içeriyor; ürün bunları siler. 67 adayın **50'si**
+  bu tirelerden doğan sahte adaydır ("vücutla­rında", "açıkla-"). Temiz metinle aday sayısı yaklaşık
+  17'ye (sayfa başı ~0,6), isabet yaklaşık 6/17'ye (%35) inerdi. Yani düşük isabet (%9) büyük ölçüde
+  girdiden kaynaklanıyor, modelden değil.
+- **Karar değişmez.** Ölçüt bulma oranıdır ve 6/17 sınırın (9) altındadır. Bulunan 6 hatanın 5'i
+  iyileştirme planı bölüm 3'teki basit kuralların zaten yakalayacağı türdendir; kuralla yakalanamayan
+  8 hatadan model yalnız 1'ini (Commasie) buldu. Temiz metinle tekrar koşmak görülmüş sayfalarda ikinci
+  bir deneme olurdu ve bu farkı kapatması beklenmez; tekrarlanmadı.

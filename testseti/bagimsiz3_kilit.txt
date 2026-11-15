@@ -8,6 +8,8 @@ a2ece344fae40494994a89040e9fe6267eb3c6ffceea9ab54c13de503e1e9c01 *A_sistem_gizli
 722cba39ba47451c5101bd7011d10e5382bf9c25ead8ffe25d67a0cdd439f71a *biyoloji12_sistem_hakemli.json
 7588e6652703c7b22c97399e8021e29ef30ad200d7bec9aa1fc9e93b25e40cd2 *inkilap12_sistem_hakemsiz.json
 45c9311d86cfcd78b8809fdebcc46d7426323ef9db8e16b6f8b0843e6e7f85e4 *inkilap12_sistem_hakemli.json
+9d12c1d15d9684de4672ccc69d93dd458f53a2ce304f3decaf2d5ad06c92f042 *A_birlesik_anahtar.json
+2bf55752dcfd3b480c120f0d52fa205e75c505c1972895bb0bb92c496113e5f1 *kurul_anahtar.json
 Ön kayıt: testseti/k45_on_kayit.md (havuz.json SHA-256 db127255975e612b46d628368a944f850b79b300f043367459cd2a8908f68702; tohum 20261116).
 Ölçülen kod: ba44473 (ölçüm betiklerinin commit'i: 51f0ed2; derskitabi/ klasörü ba44473 ile birebir aynı, çalışma ağacı temiz).
 Ortam: .venv Python, PyMuPDF 1.28.2.
@@ -20,3 +22,5 @@ B seçimi: İki kitabın (Biyoloji 12, İnkılâp 12) A dışındaki bütün say
 Metin katmanı kontrolü (K41-ek): adayın her sözcüğü sayfanın glif metninde (get_texttrace) aranır; bulunmayanlar
   "metin katmanı farkı" sayılır, kurula gönderilmez, pay ve paydadan çıkarılıp ayrı raporlanır (testseti/araclar/k42_katman.py).
 A: 30 kilitli sayfa (S01-S30; Biyoloji 12: S01-S15, İnkılâp 12: S16-S30). Talimatlar K39/K42'ninkinin aynısı.
+A listesi: ChatGPT (35) ve Gemini (58) sonuçları birleştirildi; 68 aday oluşturuldu (12 dayanaksız/mevcut iddia elendi).
+Kurul listesi: A (68 aday) + B (129 katman-temiz aday; 4 katman farkı hariç) = 197 aday tohum 20261116 ile karıştırılarak K001-K197 kimlikleriyle hazırlandı.

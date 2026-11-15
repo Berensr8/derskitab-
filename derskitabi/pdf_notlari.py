@@ -40,7 +40,18 @@ KURAL_ADLARI = {"noktalama_bosluk": "noktalamadan sonra boşluk", "bag_te_ta": "
                "bag_de_da_uyum": "bağlaç de/da uyumu", "soru_eki_uyum": "soru eki uyumu",
                "ya_da": "ya da", "bitisik_ayri": "bitişik/ayrı yazım", "kelime_tekrari": "bağlaç tekrarı",
                "ozel_ad_kesme": "özel ada gelen ekte kesme", "kisaltma_kesme": "kısaltmaya gelen ekte kesme",
-               "sayi_kesme": "sayıya gelen ekte kesme", "gereksiz_kesme": "gereksiz kesme işareti"}
+               "sayi_kesme": "sayıya gelen ekte kesme", "gereksiz_kesme": "gereksiz kesme işareti",
+               "buyuk_harf_i": "büyük harfli kelimede I/İ karışması",
+               "duzeltme_isareti_nispet": "düzeltme işareti eksikliği",
+               "bitisik_rakam": "kelimeye bitişik rakam",
+               "yil_virgul_bosluk": "iki yıl arasında boşluksuz virgül",
+               "liste_tutarsiz_virgul": "sayı listesinde tutarsız virgül boşluğu",
+               "iki_nokta_bosluk": "iki noktadan önce boşluk",
+               "yonerge_cift_nokta": "yönergede çift nokta",
+               "yonerge_soru_isareti": "emir kipinden sonra soru işareti",
+               "bir_takim": "birtakım/bir takım yazımı",
+               "birim_gr": "gram kısaltması (gr → g)",
+               "yanlis_kelime": "yanlış türetilmiş kelime"}
 UYARI = "Bu not sistemin önerisidir, kesin hata değildir; editör kontrolü gerekir."
 
 

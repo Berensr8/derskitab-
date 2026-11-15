@@ -384,6 +384,76 @@ _RE_TEK_0 = re.compile(r"(?:^|(?<=[\s(«“]))0\s+([a-zçğıöşü]{3,})")
 _RE_KELIME_ICI_0 = re.compile(r"\b([a-zA-ZçğıöşüÇĞİÖŞÜ]+0[a-zA-ZçğıöşüÇĞİÖŞÜ]+)\b")
 _RE_KELIME_BASI_0 = re.compile(r"(?<![a-zA-ZçğıöşüÇĞİÖŞÜ0-9])0([a-zçğıöşü]{3,})\b")
 
+# K44: Dokuz küçük kural için sabitler ve desenler
+YONERGE_EMIRLERI = {
+    "yazınız", "veriniz", "açıklayınız", "belirtiniz", "söyleyiniz", "tartışınız",
+    "bulunuz", "yapınız", "cevaplayınız", "gösteriniz", "anlatınız", "inceleyiniz",
+    "karşılaştırınız", "değerlendiriniz", "hazırlayınız", "doldurunuz", "yorumlayınız",
+    "sıralayınız", "tamamlayınız",
+}
+YANLIS_KELIME_SOZLUGU = {
+    "coğrafik": "coğrafi",
+}
+_RE_BITISIK_RAKAM = re.compile(r"(?<![A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû0-9_])([A-ZÇĞİÖŞÜ][a-zçğıöşüâîû]{2,})(\d+)\b")
+_RE_YIL_VIRGUL = re.compile(r"(?<![0-9.,%])\b((?:1\d{3}|20\d{2}|2100)),((?:1\d{3}|20\d{2}|2100))\b(?![0-9.,])")
+_RE_LISTE_VIRGUL = re.compile(r"(?<![0-9.,%])\b(\d+),(\d+),\s+(\d+)\b(?![0-9,])")
+_RE_IKI_NOKTA_BOSLUKLU = re.compile(r"\b([A-ZÇĞİÖŞÜ][a-zçğıöşüâîû]{2,})\s+:")
+_RE_IKI_NOKTA_BOSLUKSUZ = re.compile(r"\b([A-ZÇĞİÖŞÜ][a-zçğıöşüâîû]{2,}):")
+_RE_CIFT_NOKTA = re.compile(r"\b([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)\.\.(?!\.)")
+_RE_EMIR_SORU = re.compile(r"\b([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)\?")
+_RE_BIR_TAKIM = re.compile(
+    r"\b(bir\s+takım)\s+([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)(?:\s+([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+))?",
+    re.I,
+)
+_RE_BIRIM_GR = re.compile(r"\b(\d+(?:[.,]\d+)?)\s+(gr)\b(?![a-zA-ZçğıöşüÇĞİÖŞÜ.])", re.I)
+_RE_YANLIS_KELIME = re.compile(r"\b(coğrafik)\b", re.I)
+
+
+def iki_nokta_bosluk_denetimi(bloklar: list[Blok], kitap_bloklari: list[Blok] | None = None) -> list[Tespit]:
+    """İki noktadan önce boşluk denetimi (K44).
+
+    Yalnız kitap aynı büyük harfle başlayan kelimeyi en az 3 kez ve boşluklu yazımın en az
+    3 katı sıklıkla boşluksuz ('Yönerge:') yazıyorsa boşluklu geçişleri ('Yönerge :') işaretler.
+    Sözlük maddeleri ('metabolizma : …') ve çok alanlı form satırları ('Adı : … Soyadı : …') hariçtir.
+    """
+    bosluklu_sayac = Counter()
+    bosluksuz_sayac = Counter()
+    kaynak = kitap_bloklari or bloklar
+    for b in kaynak:
+        if b.tur not in ("paragraf", "kisa"):
+            continue
+        for m in _RE_IKI_NOKTA_BOSLUKSUZ.finditer(b.metin):
+            bosluksuz_sayac[tr_kucuk(m.group(1))] += 1
+        if len(_RE_IKI_NOKTA_BOSLUKLU.findall(b.metin)) >= 2:
+            continue  # aynı blokta birden çok 'Alan :' varsa form satırıdır
+        for m in _RE_IKI_NOKTA_BOSLUKLU.finditer(b.metin):
+            bosluklu_sayac[tr_kucuk(m.group(1))] += 1
+
+    uygun_kelimeler = {
+        kel for kel, nb in bosluklu_sayac.items()
+        if bosluksuz_sayac[kel] >= 3 and bosluksuz_sayac[kel] >= 3 * nb
+    }
+    if not uygun_kelimeler:
+        return []
+
+    tespitler = []
+    for b in bloklar:
+        if b.tur not in ("paragraf", "kisa"):
+            continue
+        if len(_RE_IKI_NOKTA_BOSLUKLU.findall(b.metin)) >= 2:
+            continue
+        for m in _RE_IKI_NOKTA_BOSLUKLU.finditer(b.metin):
+            kel = tr_kucuk(m.group(1))
+            if kel in uygun_kelimeler:
+                parca = m.group(0)
+                dogru = f"{m.group(1)}:"
+                tespitler.append(_tespit(
+                    b, "iki_nokta_bosluk", 0.75, parca,
+                    f"'{parca}' ifadesinde iki noktadan önce boşluk bırakılmış ('{dogru}' olmalı; "
+                    f"kitapta {bosluksuz_sayac[kel]} kez boşluksuz yazılmış)."
+                ))
+    return tespitler
+
 
 def kural_denetimi(blok: Blok) -> list[Tespit]:
     metin = _WEB.sub(lambda w: " " * len(w.group(0)), blok.metin)
@@ -477,6 +547,89 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
             blok, "dizgi_rakam_harf", 0.5, parca,
             f"Kelime başında '0' rakamı büyük 'O' harfi yerine dizilmiş olabilir ('O{m.group(1)}'?)."
         ))
+
+    if not _aralikli_mi(metin):
+        # K44-1: Büyük harfle başlayan kelime + bitişik rakam (Form11, Tablo2; yalnız paragrafta)
+        if blok.tur == "paragraf":
+            for m in _RE_BITISIK_RAKAM.finditer(metin):
+                tespitler.append(_tespit(
+                    blok, "bitisik_rakam", 0.75, m.group(0),
+                    f"'{m.group(0)}' ifadesinde kelime ile sayı arasında boşluk bırakılmamış "
+                    f"('{m.group(1)} {m.group(2)}' olmalı)."
+                ))
+
+        # K44-2: İki yıl arasında boşluksuz virgül (1947,1962)
+        for m in _RE_YIL_VIRGUL.finditer(metin):
+            tespitler.append(_tespit(
+                blok, "yil_virgul_bosluk", 0.75, m.group(0),
+                f"'{m.group(0)}' ifadesinde iki yıl arasındaki virgülden sonra boşluk bırakılmamış "
+                f"('{m.group(1)}, {m.group(2)}' olmalı)."
+            ))
+
+        # K44-3: Listede tutarsız virgül (11,12, 13; önünde % olan ondalıklar hariç)
+        for m in _RE_LISTE_VIRGUL.finditer(metin):
+            if metin[:m.start()].rstrip().endswith("%"):
+                continue
+            tespitler.append(_tespit(
+                blok, "liste_tutarsiz_virgul", 0.75, m.group(0),
+                f"'{m.group(0)}' sayı listesinde ilk virgülden sonra boşluk bırakılmamış "
+                f"('{m.group(1)}, {m.group(2)}, {m.group(3)}' olmalı)."
+            ))
+
+        # K44-5: Yönerge emir kipinden sonra çift nokta (yazınız..)
+        for m in _RE_CIFT_NOKTA.finditer(metin):
+            if tr_kucuk(m.group(1)) in YONERGE_EMIRLERI:
+                parca = m.group(0)
+                tespitler.append(_tespit(
+                    blok, "yonerge_cift_nokta", 0.75, parca,
+                    f"'{parca}' yönerge ifadesinin sonunda yan yana iki nokta konulmuş ('{m.group(1)}.' olmalı)."
+                ))
+
+        # K44-6: Yönerge emir kipinden sonra soru işareti (örnek veriniz?)
+        for m in _RE_EMIR_SORU.finditer(metin):
+            if tr_kucuk(m.group(1)) in YONERGE_EMIRLERI:
+                parca = m.group(0)
+                tespitler.append(_tespit(
+                    blok, "yonerge_soru_isareti", 0.75, parca,
+                    f"Emir kipindeki '{m.group(1)}' yönergesinin sonuna soru işareti konulmuş "
+                    f"('{m.group(1)}.' olmalı, TDK)."
+                ))
+
+        # K44-7: "bir takım" + sonraki iki kelimeden biri çoğul (-lar/-ler) -> "birtakım"
+        for m in _RE_BIR_TAKIM.finditer(metin):
+            w1 = tr_kucuk(m.group(2) or "")
+            w2 = tr_kucuk(m.group(3) or "")
+            if re.search(r"l[ae]r", w1) or re.search(r"l[ae]r", w2):
+                parca = m.group(1)
+                dogru = "Birtakım" if parca[:1].isupper() else "birtakım"
+                tespitler.append(_tespit(
+                    blok, "bir_takim", 0.75, parca,
+                    f"'Bazı' anlamındaki '{parca}' belgisiz sıfatı bitişik yazılır ('{dogru}' olmalı, TDK)."
+                ))
+
+        # K44-8: Sayıdan sonra "gr" kısaltması (doğrusu "g")
+        for m in _RE_BIRIM_GR.finditer(metin):
+            parca = m.group(0)
+            tespitler.append(_tespit(
+                blok, "birim_gr", 0.75, parca,
+                f"'{parca}' ifadesinde gram biriminin uluslararası kısaltması 'g' olarak yazılır "
+                f"('{m.group(1)} g' olmalı, TDK)."
+            ))
+
+        # K44-9: Küçük TDK yanlış kelime listesi (coğrafik -> coğrafi)
+        for m in _RE_YANLIS_KELIME.finditer(metin):
+            parca = m.group(0)
+            dogru = YANLIS_KELIME_SOZLUGU[tr_kucuk(parca)]
+            if parca.isupper():
+                dogru_bicim = tr_buyuk(dogru)
+            elif parca[:1].isupper():
+                dogru_bicim = dogru.capitalize()
+            else:
+                dogru_bicim = dogru
+            tespitler.append(_tespit(
+                blok, "yanlis_kelime", 0.75, parca,
+                f"'{parca}' yerine '{dogru_bicim}' kullanılmalıdır (TDK)."
+            ))
 
     if blok.tur != "paragraf" or _aralikli_mi(metin):
         return tespitler
@@ -593,6 +746,7 @@ def analiz_et(bloklar: list[Blok], denetciler: tuple[Denetci, Denetci] | None = 
                 kural_tespitleri += satira_bagla(kesme.kesme_denetimi(b, kesmeli, kesme_cozumleyici), grup, b.metin)
 
     kural_tespitleri += nispet_i_denetimi(bloklar, kitap_bloklari)
+    kural_tespitleri += iki_nokta_bosluk_denetimi(bloklar, kitap_bloklari)
 
     kitap_kelimeleri = kitap_kelime_sayilari(kitap_bloklari or bloklar)
     terimler = kitaba_ozel_terimler({tr_kucuk(t.metin_parcasi) for t in kelime_tespitleri},

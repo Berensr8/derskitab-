@@ -286,5 +286,83 @@ class NispetDuzeltmeIsaretiTesti(unittest.TestCase):
         self.assertNotIn("kez geçiyor", t[0].aciklama)
 
 
+class K44DokuzKuralTesti(unittest.TestCase):
+    def test_1_bitisik_rakam(self):
+        t = kural_denetimi(blok("Ekler bölümündeki Form11 ve Tablo2 doldurulacaktır."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("bitisik_rakam", "Form11", 0.75), ("bitisik_rakam", "Tablo2", 0.75)])
+        # Kimyasal formül, vitamin/büyük harf kısaltma ve kısa harita etiketi yakalanmaz
+        self.assertEqual(kural_denetimi(blok("B12 vitamini, CO2, H2O ve Fe2 iyonu incelendi.")), [])
+        self.assertEqual(kural_denetimi(blok("Karacaören2", tur="kisa")), [])
+
+    def test_2_yil_virgul_bosluk(self):
+        t = kural_denetimi(blok("Merhaba Akdeniz (1947,1962) adlı eseri yayımlandı."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("yil_virgul_bosluk", "1947,1962", 0.75)])
+        # Ondalık sayılar ve boşluklu yıllar yakalanmaz
+        self.assertEqual(kural_denetimi(blok("Oran 3,1415 ve 1947, 1962 yılları arasında değişti.")), [])
+
+    def test_3_liste_tutarsiz_virgul(self):
+        t = kural_denetimi(blok("Tablodan yararlanarak 11,12, 13 ve 14. soruları cevaplayınız."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("liste_tutarsiz_virgul", "11,12, 13", 0.75)])
+        # Yüzde içeren ondalık ifadeler yakalanmaz
+        self.assertEqual(kural_denetimi(blok("Oran %14,8, 2040 yılında ise %18,2 oldu.")), [])
+
+    def test_4_iki_nokta_bosluk(self):
+        from derskitabi.kriterler.yazim import iki_nokta_bosluk_denetimi
+        kitap = [
+            blok("Yönerge: Soruları cevaplayınız."),
+            blok("Yönerge: Tabloyu inceleyiniz."),
+            blok("Yönerge: Metni okuyunuz."),
+            blok("Yönerge : Boşlukları doldurunuz."),
+            blok("metabolizma : Canlı hücrelerdeki tepkimeler."),
+            blok("Kurum : Kimlik No : Hasta Adı : Cinsiyeti :"),
+            blok("Adı Soyadı : ................"),
+        ]
+        t = iki_nokta_bosluk_denetimi(kitap)
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("iki_nokta_bosluk", "Yönerge :", 0.75)])
+        # Kitapta en az 3 kez boşluksuz geçmiyorsa yakalanmaz
+        az_kitap = [blok("Yönerge: Soruları cevaplayınız."), blok("Yönerge : Okuyunuz.")]
+        self.assertEqual(iki_nokta_bosluk_denetimi(az_kitap), [])
+
+    def test_5_yonerge_cift_nokta(self):
+        t = kural_denetimi(blok("Tahmininizi yazınız.. Sonra Açıklayınız.."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("yonerge_cift_nokta", "yazınız..", 0.75),
+                          ("yonerge_cift_nokta", "Açıklayınız..", 0.75)])
+        # Şiir/konuşmadaki '..' veya üç nokta '...' yakalanmaz
+        self.assertEqual(kural_denetimi(blok("Bir garip yolcuyum.. Gidiyorum... Tahmininizi yazınız...")), [])
+
+    def test_6_yonerge_soru_isareti(self):
+        t = kural_denetimi(blok("Bu duruma örnek veriniz? Sebebini açıklayınız?"))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("yonerge_soru_isareti", "veriniz?", 0.75),
+                          ("yonerge_soru_isareti", "açıklayınız?", 0.75)])
+        # Gerçek soru kipleri (-misiniz, -musunuz, geçmiş zaman -diniz) yakalanmaz
+        self.assertEqual(kural_denetimi(blok("Bunu yapabilir misiniz? Okumak ister misiniz? Ne istediniz?")), [])
+
+    def test_7_bir_takim(self):
+        t = kural_denetimi(blok("Masallar bir takım vasıflar ve bir takım üstün değerler kazandırır."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("bir_takim", "bir takım", 0.75), ("bir_takim", "bir takım", 0.75)])
+        # 'Takım' (grup/ekip) anlamındakiler yakalanmaz
+        self.assertEqual(kural_denetimi(blok("Arkadaşlarınızla bir takım oluşturunuz ve bir takım sözcüsü seçiniz.")), [])
+
+    def test_8_birim_gr(self):
+        t = kural_denetimi(blok("Karışıma 500 gr un ve 1283 gr su eklendi."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("birim_gr", "500 gr", 0.75), ("birim_gr", "1283 gr", 0.75)])
+        # 'gram', 'g' veya 'grup' yakalanmaz
+        self.assertEqual(kural_denetimi(blok("Karışıma 500 gram un, 200 g şeker ve 3 grup öğrenci eklendi.")), [])
+
+    def test_9_yanlis_kelime_cografik(self):
+        t = kural_denetimi(blok("Uygun coğrafik koşullarda Coğrafik konum önemlidir."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("yanlis_kelime", "coğrafik", 0.75), ("yanlis_kelime", "Coğrafik", 0.75)])
+        self.assertEqual(kural_denetimi(blok("Uygun coğrafi koşullarda coğrafya önemlidir.")), [])
+
+
 if __name__ == "__main__":
     unittest.main()

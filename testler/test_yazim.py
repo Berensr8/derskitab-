@@ -335,6 +335,15 @@ class K44DokuzKuralTesti(unittest.TestCase):
         # Şiir/konuşmadaki '..' veya üç nokta '...' yakalanmaz
         self.assertEqual(kural_denetimi(blok("Bir garip yolcuyum.. Gidiyorum... Tahmininizi yazınız...")), [])
 
+    def test_k46_kesme_bosluk(self):
+        t = kural_denetimi(blok("Çalışma 1953’ te yayımlandı. Ürünler H2S’ dir. Sonuç Tablo 3.6 ‘da verilmiştir."))
+        self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],
+                         [("kesme_bosluk", "1953’ te", 0.75), ("kesme_bosluk", "H2S’ dir", 0.75),
+                          ("kesme_bosluk", "3.6 ‘da", 0.75)])
+        # Tırnak içindeki kelimeden sonra gelen bağlaç ve doğru kesme yakalanmaz
+        self.assertEqual([x for x in kural_denetimi(blok("Ona ‘canım’ de dedi. Bu 1953’te oldu."))
+                          if x.alt_tur == "kesme_bosluk"], [])
+
     def test_6_yonerge_soru_isareti(self):
         t = kural_denetimi(blok("Bu duruma örnek veriniz? Sebebini açıklayınız?"))
         self.assertEqual([(x.alt_tur, x.metin_parcasi, x.guven_skoru) for x in t],

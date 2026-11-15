@@ -51,7 +51,8 @@ KURAL_ADLARI = {"noktalama_bosluk": "noktalamadan sonra boşluk", "bag_te_ta": "
                "yonerge_soru_isareti": "emir kipinden sonra soru işareti",
                "bir_takim": "birtakım/bir takım yazımı",
                "birim_gr": "gram kısaltması (gr → g)",
-               "yanlis_kelime": "yanlış türetilmiş kelime"}
+               "yanlis_kelime": "yanlış türetilmiş kelime",
+               "kesme_bosluk": "kesme işaretinden sonra boşluk"}
 UYARI = "Bu not sistemin önerisidir, kesin hata değildir; editör kontrolü gerekir."
 
 

@@ -400,6 +400,14 @@ _RE_LISTE_VIRGUL = re.compile(r"(?<![0-9.,%])\b(\d+),(\d+),\s+(\d+)\b(?![0-9,])"
 _RE_IKI_NOKTA_BOSLUKLU = re.compile(r"\b([A-ZÇĞİÖŞÜ][a-zçğıöşüâîû]{2,})\s+:")
 _RE_IKI_NOKTA_BOSLUKSUZ = re.compile(r"\b([A-ZÇĞİÖŞÜ][a-zçğıöşüâîû]{2,}):")
 _RE_CIFT_NOKTA = re.compile(r"\b([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)\.\.(?!\.)")
+_KESME_EKI = (r"(?:d[ae]|t[ae]|d[ae]n|t[ae]n|nd[ae]n?|[yn]?[ae]|[yn]?[ıiuü]|[ıiuü]n|n[ıiuü]n|l[ae]|yl[ae]|"
+               r"d[ıiuü]r|t[ıiuü]r|k[ıi]|[ıiuü]nd[ae]n?|[ıiuü]n[ae]|l[ae]r[ıi]?n?)")
+# K46: kesme işaretinden sonra boşluk ('1953’ te', 'H2S’ dir'). Kesmeden önceki öğe rakam, yüzde, büyük harfle
+# başlayan ad ya da kısaltma olmalı (tırnak içindeki kelimeden sonra gelen "de" bağlacı yakalanmasın).
+_RE_KESME_BOSLUK = re.compile(
+    rf"(?<![‘'])\b([0-9][0-9.,]*|%[0-9][0-9.,]*|[A-ZÇĞİÖŞÜ][\wçğıöşüâîû.]*)[’'] ({_KESME_EKI})(?![\wçğıöşüâîû’'])")
+# K46: rakamdan sonra boşluk ve açılış tırnağıyla yazılmış ek ('Görsel 2.2 ‘de')
+_RE_TERS_KESME = re.compile(rf"([0-9][0-9.]*) ‘({_KESME_EKI})(?![\wçğıöşüâîû’'])")
 _RE_EMIR_SORU = re.compile(r"\b([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)\?")
 _RE_BIR_TAKIM = re.compile(
     r"\b(bir\s+takım)\s+([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)(?:\s+([A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+))?",
@@ -629,6 +637,18 @@ def kural_denetimi(blok: Blok) -> list[Tespit]:
             tespitler.append(_tespit(
                 blok, "yanlis_kelime", 0.75, parca,
                 f"'{parca}' yerine '{dogru_bicim}' kullanılmalıdır (TDK)."
+            ))
+
+        # K46: Kesme işaretinden sonra boşluk ('1953’ te') ve rakamdan sonra ters kesme ('2.2 ‘de')
+        for m in _RE_KESME_BOSLUK.finditer(metin):
+            tespitler.append(_tespit(
+                blok, "kesme_bosluk", 0.75, m.group(0),
+                f"Kesme işaretinden sonra boşluk bırakılmış ('{m.group(1)}’{m.group(2)}' olmalı)."
+            ))
+        for m in _RE_TERS_KESME.finditer(metin):
+            tespitler.append(_tespit(
+                blok, "kesme_bosluk", 0.75, m.group(0),
+                f"Ek, boşluk ve açılış tırnağıyla yazılmış ('{m.group(1)}’{m.group(2)}' olmalı)."
             ))
 
     if blok.tur != "paragraf" or _aralikli_mi(metin):

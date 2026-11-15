@@ -22,6 +22,12 @@ CEVAP = {
     "oğuzlar": [P.format(k="Oğuzlar", l="oğuzlar"), "[Oğuz:Noun, Prop] oğuz:Noun+lar:A3pl"],
     "oğuz": [P.format(k="Oğuz", l="oğuz")],
     "türkçe": ["[Türk:Noun, Prop] türk:Noun+A3sg+çe:Equ", P.format(k="Türkçe", l="türkçe")],
+    "almanca": ["[Alman:Noun, Prop] alman:Noun+A3sg+ca:Equ", P.format(k="Almanca", l="almanca")],
+    "alman": [P.format(k="Alman", l="alman")],
+    "arapça": ["[Arap:Noun, Prop] arap:Noun+A3sg+ça:Equ", P.format(k="Arapça", l="arapça")],
+    "arap": [P.format(k="Arap", l="arap")],
+    "meryemce": ["[Meryem:Noun, Prop] meryem:Noun+A3sg+ce:Equ"],
+    "meryem": [P.format(k="Meryem", l="meryem")],
     "tibete": [P.format(k="Tibet", l="tibet") + "+e:Dat"],
     "halide": [P.format(k="Halid", l="halid") + "+e:Dat"],
     "ömerî": [P.format(k="Ömer", l="ömer") + "+î:Acc"],
@@ -94,6 +100,16 @@ class GereksizKesmeTesti(unittest.TestCase):
         self.assertIsNone(gereksiz_kesme("Oğuzlar", "ın", cozumle))  # sözlükte ad olarak var
         self.assertIsNone(gereksiz_kesme("Atatürk", "ün", cozumle))
         self.assertIsNone(gereksiz_kesme("Osmanlı", "nın", cozumle))  # TDK: Karakeçili'nin
+
+    def test_kisi_adi_meryemce_dil_adi_sayilmaz_ama_dil_adlari_bozulmaz(self):
+        # K44: "Meryemce" kitapta kişi adı olarak geçiyorsa "Meryemce'nin" gereksiz kesme sayılmaz;
+        # ama "Türkçe'nin", "Almanca'da", "Arapça'dan" dil adı olarak yakalanmaya devam eder.
+        metin = ("Meryemce köyden çıktı. Meryemce’nin sırtında küfe vardı. "
+                 "Türkçe konuşuldu; Türkçe'nin, Almanca'da ve Arapça'dan örnekleri incelendi.")
+        self.assertEqual(
+            bulunan(metin),
+            [("gereksiz_kesme", "Türkçe'nin"), ("gereksiz_kesme", "Almanca'da"), ("gereksiz_kesme", "Arapça'dan")],
+        )
 
 
 if __name__ == "__main__":

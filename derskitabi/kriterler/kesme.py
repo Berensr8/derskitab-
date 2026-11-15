@@ -134,9 +134,17 @@ def yalniz_ozel_ad(kelime: str, cozumle: Cozumleyici) -> bool:
     return bool(analizler) and all(_parcala(a)[1] for a in analizler)
 
 
-def gereksiz_kesme(on: str, ek: str, cozumle: Cozumleyici) -> str | None:
+_DIL_ADLARI = {"türkçe", "almanca", "arapça", "fransızca", "ingilizce", "uygurca", "farsça", "rusça",
+               "ispanyolca", "italyanca", "çince", "japonca", "yunanca", "latince", "osmanlıca",
+               "çağatayca", "kazakça", "kırgızca", "özbekçe", "tatarca", "türkmence", "azerice"}
+
+
+def gereksiz_kesme(on: str, ek: str, cozumle: Cozumleyici,
+                   ozel_adlar: Counter | set[str] | None = None) -> str | None:
     """"Konya'lı", "Türkler'in", "Türkçe'nin": kesme gereksizse sebebi, değilse None.
-    "-lı" ile biten adlar (Osmanlı'nın) işaretlenmez: TDK'nın kendi örneği "Karakeçili'nin"."""
+    "-lı" ile biten adlar (Osmanlı'nın) işaretlenmez: TDK'nın kendi örneği "Karakeçili'nin".
+    "-ca/-ce" ile biten kelime dil adı değilse ve kitapta özel ad olarak geçiyorsa ("Meryemce'nin", K44)
+    dil adı sayılmaz."""
     if _GEREKSIZ_EK.match(ek):
         return "yapım ekleri ve çokluk eki kesmeyle ayrılmaz"
     analizler = cozumle(on)
@@ -144,6 +152,8 @@ def gereksiz_kesme(on: str, ek: str, cozumle: Cozumleyici) -> str | None:
     if re.search(r"l[ae]r$", on) and not sozlukte_kendisi and yalniz_ozel_ad(on[:-3], cozumle):
         return "çokluk eki ve sonraki ekler kesmeyle ayrılmaz"  # "Türkler'in" (ama "Alpler'de": dağ adı)
     if re.search(r"[cç][ae]$", on) and yalniz_ozel_ad(on[:-2], cozumle):
+        if not sozlukte_kendisi and on.lower() not in _DIL_ADLARI and ozel_adlar and on in ozel_adlar:
+            return None  # "Meryemce'nin": kişi adı (kitapta özel ad olarak geçiyor)
         return "yapım eki (-ca/-ce) ve sonraki ekler kesmeyle ayrılmaz"  # "Türkçe'nin", "İngilizce'de"
     return None
 
@@ -176,8 +186,16 @@ def eser_listesinde(metin: str, konum: int) -> bool:
 
 
 def kesmeli_adlar(bloklar: list[Blok]) -> Counter:
-    """Kitapta kesmeyle yazılmış özel adlar: "Tibet’e" → Tibet."""
-    return Counter(m.group(1) for b in bloklar for m in _KESMELI.finditer(b.metin))
+    """Kitapta kesmeyle yazılmış özel adlar: "Tibet’e" → Tibet.
+    Ayrıca '-ca/-ce/-ça/-çe' ile biten ve yalın özel ad olarak geçen kelimeler ("Meryemce")
+    de sayılır ki kişi adları dil adı sanılmasın (K44)."""
+    sayac = Counter(m.group(1) for b in bloklar for m in _KESMELI.finditer(b.metin))
+    for b in bloklar:
+        for m in _KELIME.finditer(b.metin):
+            kel = m.group(0)
+            if re.search(r"[cç][ae]$", kel):
+                sayac[kel] += 1
+    return sayac
 
 
 def kesme_denetimi(blok: Blok, kesmeli: Counter, cozumle: Cozumleyici | None = None) -> list[Tespit]:
@@ -203,8 +221,11 @@ def kesme_denetimi(blok: Blok, kesmeli: Counter, cozumle: Cozumleyici | None = N
     for m in _SAYI_EKI.finditer(metin):
         tespitler.append(_tespit(blok, "sayi_kesme", m.group(0),
                                  f"Sayıya gelen ek kesmeyle ayrılır: '{m.group(1)}'{m.group(2)}' (TDK)."))
+    ce_adlar = {k for k, n in kesmeli.items() if n > 0} | {
+        m.group(0) for m in _KELIME.finditer(metin) if re.search(r"[cç][ae]$", m.group(0))
+    }
     for m in _KESMELI.finditer(metin):
-        sebep = gereksiz_kesme(m.group(1), m.group(2), cozumle)
+        sebep = gereksiz_kesme(m.group(1), m.group(2), cozumle, ce_adlar)
         if sebep:
             tespitler.append(_tespit(blok, "gereksiz_kesme", m.group(0),
                                      f"Kesme gereksiz: '{m.group(1)}{m.group(2)}' yazılır ({sebep}, TDK)."))

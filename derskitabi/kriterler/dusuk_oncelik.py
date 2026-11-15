@@ -58,9 +58,16 @@ def eski_metin_sayfasi(tespitler: list[Tespit], bloklar: list[Blok], denetciler=
     eski_sayfalar = {s for s, kelimeler in sayfa_kelimeleri.items() if len(kelimeler) >= ESKI_METIN_ESIGI}
     if not eski_sayfalar:
         return tespitler
+    # Aynı sayfada 'Günümüz Türkçesiyle' başlığından sonra gelen bloklar günümüz Türkçesidir (ör. TDE 12 s.247)
+    gunumuz_baslangic = {}
+    for b in bloklar:
+        if b.sayfa_no in eski_sayfalar and "günümüz türkçesiyle" in yazim.tr_kucuk(b.metin) and len(b.metin) < 60:
+            gunumuz_baslangic[b.sayfa_no] = min(gunumuz_baslangic.get(b.sayfa_no, b.blok_no), b.blok_no)
     sonuc = []
     for t in tespitler:
-        if t.sayfa_no not in eski_sayfalar or any(not_ in t.aciklama for not_ in KITAP_IPUCU_NOTLARI):
+        if (t.sayfa_no not in eski_sayfalar
+                or any(not_ in t.aciklama for not_ in KITAP_IPUCU_NOTLARI)
+                or (t.sayfa_no in gunumuz_baslangic and t.blok_no >= gunumuz_baslangic[t.sayfa_no])):
             sonuc.append(t)
         elif t.alt_tur == "morfoloji":
             if t.metin_parcasi and yazim.tr_kucuk(t.metin_parcasi) in yakinlar:

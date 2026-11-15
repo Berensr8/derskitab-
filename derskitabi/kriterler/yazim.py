@@ -4,9 +4,9 @@ Girdi : Blok listesi ("paragraf" ve "kisa" türleri; K8)
 Çıktı : Tespit listesi (kriter="yazim")
 
 İki parça:
-  1. Kelime denetimi (K13): her kelime iki morfolojik çözümleyiciye sorulur —
+  1. Kelime denetimi (K13, K44): her kelime iki morfolojik çözümleyiciye sorulur —
      Starlang (ana denetçi) ve Zemberek (ikinci görüş). İkisi de çözümleyemezse
-     güven 1,0; yalnız biri çözümleyemezse 0,5.
+     güven 0,75; yalnız biri çözümleyemezse 0,25.
   2. TDK kuralları (K14): R1 noktalamadan sonra boşluk, R3–R5 ayrı yazılan de/da ve
      mi, R6 yada, R7 bitişik/ayrı yazım listesi, R8 bağlaç tekrarı; kesme işareti (K34, kesme.py).
 
@@ -266,7 +266,7 @@ def kelime_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci],
         hemfikir = not st_gecerli and not zb_gecerli
         kim = "iki araç da: Starlang ve Zemberek" if hemfikir else (
             "yalnız Starlang" if not st_gecerli else "yalnız Zemberek")
-        guven = 1.0 if hemfikir else 0.25
+        guven = 0.75 if hemfikir else 0.25
         ek_sebep = "" if hemfikir else " (yalnız bir araç tanımadı)"
         tespitler.append(_tespit(
             blok, "morfoloji", guven, kelime,
@@ -314,7 +314,7 @@ def buyuk_harf_i_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci]) -> li
                 break
         if bulunan_aday:
             tespitler.append(_tespit(
-                blok, "buyuk_harf_i", 0.5, kelime,
+                blok, "buyuk_harf_i", 1.0, kelime,
                 f"Büyük harfle yazılan '{kelime}' kelimesinde 'I'/'İ' karışması olabilir "
                 f"(doğrusu '{bulunan_aday.upper()}' olabilir)."
             ))

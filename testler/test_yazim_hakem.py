@@ -74,7 +74,7 @@ class HakemTesti(unittest.TestCase):
         hakem = lambda kelime, cumle, onceki: {"karar": "dogru", "aciklama": "", "oneri": ""}  # noqa: E731
         t = Tespit(7, 1, blok.bbox, "yazim", "x", 1.0, alt_tur="morfoloji", metin_parcasi="jandama")
         sonuc = hakemle([t], [blok], hakem, denetciler=DENETCI)
-        self.assertEqual(sonuc[0].guven_skoru, 0.5)
+        self.assertEqual(sonuc[0].guven_skoru, 1.0)
         self.assertIn("jandarma", sonuc[0].aciklama)
 
     def test_son_harf_silinmesi_ve_rastgele_degisim_komsu_sayilmaz(self):

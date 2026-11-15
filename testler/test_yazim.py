@@ -27,9 +27,9 @@ yalniz_zemberek_bilir = (lambda k: k in SOZLUK, lambda k: k in SOZLUK | {"nesile
 
 
 class KelimeDenetimiTesti(unittest.TestCase):
-    def test_iki_arac_da_bilmiyorsa_guven_1(self):
+    def test_iki_arac_da_bilmiyorsa_guven_075(self):
         t = kelime_denetimi(blok("Ali kisisel kitap okudu."), ikisi_de_bilir)
-        self.assertEqual([(x.metin_parcasi, x.guven_skoru) for x in t], [("kisisel", 1.0)])
+        self.assertEqual([(x.metin_parcasi, x.guven_skoru) for x in t], [("kisisel", 0.75)])
 
     def test_tek_arac_bilmiyorsa_dusuk_oncelik(self):
         t = kelime_denetimi(blok("Ali nesilden nesile kitap okudu."), yalniz_zemberek_bilir)
@@ -222,7 +222,7 @@ class GercekAraclarTesti(unittest.TestCase):
         t = analiz_et([blok("Üstlendiğimiz roller; kisisel gelisimimiz etkiler. "
                             "Değerleri nesilden nesile aktarmış.")], self.denetciler)
         bulunan = {x.metin_parcasi: x.guven_skoru for x in t}
-        self.assertEqual(bulunan, {"kisisel": 1.0, "gelisimimiz": 1.0, "nesile": 0.25})
+        self.assertEqual(bulunan, {"kisisel": 0.75, "gelisimimiz": 0.75, "nesile": 0.25})
 
     def test_dogru_metinde_tespit_yok(self):
         t = analiz_et([blok("Hayatımızın önemli bir bölümünü oluşturan eğitim sürecinde "
@@ -252,7 +252,7 @@ class BuyukHarfITesti(unittest.TestCase):
         t = buyuk_harf_i_denetimi(b, sahte_arac)
         self.assertEqual([x.metin_parcasi for x in t], ["TAHRIŞ", "EDICI"])
         self.assertEqual(t[0].alt_tur, "buyuk_harf_i")
-        self.assertEqual(t[0].guven_skoru, 0.5)
+        self.assertEqual(t[0].guven_skoru, 1.0)
 
     def test_gecerli_ve_kisa_buyuk_harfli_kelimeler_atlanir(self):
         from derskitabi.kriterler.yazim import buyuk_harf_i_denetimi

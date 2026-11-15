@@ -142,7 +142,7 @@ def hakemle(tespitler: list[Tespit], bloklar: list[Blok], hakem: Hakem | None = 
         yakin = (yakin_dogru_kelime(t.metin_parcasi, kitap_kelimeleri, denetciler)
                  if k["karar"] == "dogru" else None)
         if yakin:
-            sonuc.append(replace(t, guven_skoru=0.5, aciklama=t.aciklama +
+            sonuc.append(replace(t, guven_skoru=1.0, aciklama=t.aciklama +
                                  f" Dil modeli (gemma4) doğru dedi, ama kelime kitapta geçen '{yakin}' kelimesine "
                                  f"tek yazım hatası (harf ya da hece) uzaklıkta: olası yazım hatası.{gerekce}"))
         elif k["karar"] == "dogru":

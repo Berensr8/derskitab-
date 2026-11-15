@@ -1,0 +1,22 @@
+Bağımsız değerlendirme 3 (K45) kilidi — 2026-11-15 18:11
+Sistemin kilitli A sayfalarındaki ve B örnekleminden seçilen tespitlerdeki çıktısı, yapay zekâlar kararlarını vermeden ÖNCE hesaplandı.
+Dosyalar veri/bagimsiz3/ altında (git dışı). Parmak izleri SHA-256; satır sonları LF'ye çevrilerek hesaplandı (Windows CRLF yazar):
+db127255975e612b46d628368a944f850b79b300f043367459cd2a8908f68702 *havuz.json
+f7ca9823402f3683760e9b50584b41a66fca93ba78bc1080306778952c24f013 *B_anahtar.json
+a2ece344fae40494994a89040e9fe6267eb3c6ffceea9ab54c13de503e1e9c01 *A_sistem_gizli.json
+4df47a788260f000aa7588b6e4f41d63906c5f8076e9f61dc3bb6baeed2b5f77 *biyoloji12_sistem_hakemsiz.json
+722cba39ba47451c5101bd7011d10e5382bf9c25ead8ffe25d67a0cdd439f71a *biyoloji12_sistem_hakemli.json
+7588e6652703c7b22c97399e8021e29ef30ad200d7bec9aa1fc9e93b25e40cd2 *inkilap12_sistem_hakemsiz.json
+45c9311d86cfcd78b8809fdebcc46d7426323ef9db8e16b6f8b0843e6e7f85e4 *inkilap12_sistem_hakemli.json
+Ön kayıt: testseti/k45_on_kayit.md (havuz.json SHA-256 db127255975e612b46d628368a944f850b79b300f043367459cd2a8908f68702; tohum 20261116).
+Ölçülen kod: ba44473 (ölçüm betiklerinin commit'i: 51f0ed2; derskitabi/ klasörü ba44473 ile birebir aynı, çalışma ağacı temiz).
+Ortam: .venv Python, PyMuPDF 1.28.2.
+Yapılandırma: ürünün varsayılanı. Yazım hakemi varsayılan olarak açık (Ollama + gemma4:12b-it-qat hazır). Ana sonuç hakemli çıktıdır; hakemsiz çıktı ikincil olarak ayrıca hesaplandı.
+B seçimi: İki kitabın (Biyoloji 12, İnkılâp 12) A dışındaki bütün sayfalarında gösterilen (güven >= 0,5) tespitler:
+  Hakemli toplam 133 benzersiz tespit -> seçilen 80 (örnekleme: True).
+  Hakemsiz toplam 205 benzersiz tespit -> seçilen 80 (örnekleme: True).
+  K44'ün 9 kuralı + buyuk_harf_i için kural başına en çok 10 tespit (10'dan fazlaysa tohum "20261116:<alt_tur>" ile örneklem; hepsi kurula gider).
+  Toplam birleşim: 133 benzersiz B adayı (katman farkı: 4).
+Metin katmanı kontrolü (K41-ek): adayın her sözcüğü sayfanın glif metninde (get_texttrace) aranır; bulunmayanlar
+  "metin katmanı farkı" sayılır, kurula gönderilmez, pay ve paydadan çıkarılıp ayrı raporlanır (testseti/araclar/k42_katman.py).
+A: 30 kilitli sayfa (S01-S30; Biyoloji 12: S01-S15, İnkılâp 12: S16-S30). Talimatlar K39/K42'ninkinin aynısı.

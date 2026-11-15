@@ -137,6 +137,8 @@ def sade_aciklama(t: Tespit) -> str:
                                  "terim": "Büyük ihtimalle hata değil: kitabın kendi açıkladığı bir terim.",
                                  "alıntı içinde": "Büyük ihtimalle hata değil: bir alıntının içinde (yazarın ya da "
                                                   "eski yazım).",
+                                 "eski metin sayfası": "Büyük ihtimalle hata değil: bu sayfada çok sayıda sözlük dışı "
+                                                       "kelime var (eski Türkçe ya da ağız özelliği olabilir).",
                                  "yalnız bir araç tanımadı": "Büyük ihtimalle hata değil: denetim araçlarından biri "
                                                              "kelimeyi geçerli kabul etti."}[ad],
                                 "Sözlükte bulunmadığı için işaretlendi."]

@@ -105,6 +105,19 @@ class AdTesti(unittest.TestCase):
                  (2, 2): ("MyriadPro-Regular", 10), (2, 3): ("MyriadPro-Bold", 10)}
         self.assertEqual(set(alinti_bloklari(bloklar, bicim)), {(1, 2), (2, 1), (2, 2)})  # başlıkta durur
 
+    def test_imzali_iki_sutunlu_siirin_yan_sutunu_da_alinti(self):
+        # TDE 10 s.19: solda eski Türkçe, sağda günümüz Türkçesi; imza sağ kenara hizalı
+        sol1 = blok(1, (127, 73, 230, 135), "Kulan tükel komıttı, Arkar, sukak yomıttı, Yaylag tapa emitti")
+        sag1 = blok(2, (263, 73, 419, 135), "Yaban eşeklerini hep coşturdu, Keçileri geyikleri birleştirdi")
+        sol2 = blok(3, (127, 146, 230, 208), "Yagmur yagıp saçıldı, Türlüg çeçek suçuldı, Yinçü kabı açıldı")
+        sag2 = blok(4, (263, 146, 419, 208), "Yağmur yağdı, sular saçıldı, Yerden türlü çiçek seçildi")
+        imza = blok(5, (121, 225, 420, 250), "Anonim (haz.: Ahmet Bican Ercilasun)", "kisa")
+        bicim = {(1, 1): ("Avenir-BookOblique", 11), (1, 2): ("Avenir-Book", 11),
+                 (1, 3): ("Avenir-BookOblique", 11), (1, 4): ("Avenir-Book", 11),
+                 (1, 5): ("Avenir-Oblique", 9)}
+        self.assertEqual(set(alinti_bloklari([sol1, sag1, sol2, sag2, imza], bicim)),
+                         {(1, 1), (1, 2), (1, 3), (1, 4)})
+
     def test_eski_dil(self):
         from derskitabi.kriterler.yazim import varsayilan_denetciler
         den = varsayilan_denetciler()
@@ -137,6 +150,18 @@ class ReplikTesti(unittest.TestCase):
         self.assertEqual(replik_bloklari(icindekiler), {})
         self.assertEqual(replik_bloklari(hormonlar), {})  # her etiket bir kez: tanım listesi (Biyoloji 11)
         self.assertEqual(replik_bloklari(iki_replik), {})  # sayfada en az 3 replik
+
+    def test_replik_sahnesindeki_ara_dizeler_de_alinti(self):
+        # TDE 11 s.19: replikler arasındaki gazel dizeleri sahneye dahildir; sağ kenar kutusu ve numaralı başlık hariç
+        sahne = [
+            blok(1, (51, 228, 225, 240), "HACİVAT — (Şarkı söyliyerek perdeye gelir.)"),
+            blok(2, (51, 303, 267, 315), "Beyâz üzre yazılmış elde bir fermânımız vardır"),
+            blok(3, (403, 310, 491, 330), "Gölge Oyunu videosuna karekoddan"),
+            blok(4, (51, 350, 500, 370), "2. Muhavere (Söyleşme): Asıl oyunun konusuyla ilgili olmayan bölüm."),
+            blok(5, (51, 552, 368, 565), "HACİVAT — Vay efendim, Karagöz’üm!"),
+            blok(6, (51, 571, 282, 583), "KARAGÖZ — Sinsileni sansar boğsun!"),
+        ]
+        self.assertEqual(set(replik_bloklari(sahne)), {(1, 1), (1, 2), (1, 5), (1, 6)})
 
 
 class IsaretlemeTesti(unittest.TestCase):

@@ -208,8 +208,36 @@ def imza_mi(b: Blok, ust: Blok | None, bolge: list[Blok], bicim, ust_bicim, alt_
         # tipiyle devam eden metin varsa da başlıktır
         kalin = bool(_KALIN.search(bicim[0])) and not _KALIN.search(ust_bicim[0])
         return kalin and "," in metin and alt_bicim != ust_bicim and (girintili or sola_hizali_altta)
-    # Küçük punto: metnin sağına girintili (çoğu imza) ya da sola hizalı ve hemen altında (iki sütunlu şiirler)
-    return girintili or sola_hizali_altta
+    # Küçük punto: metnin sağına girintili (çoğu imza), sağ kenara hizalı (iki sütunlu şiir altında
+    # uzun kaynak satırı, TDE 10 s.19) ya da sola hizalı ve hemen altında (iki sütunlu şiirler)
+    saga_hizali = abs(b.bbox[2] - sag) <= 6 and b.bbox[1] - ust.bbox[3] <= BOLGE_EN_FAZLA_BOSLUK
+    return girintili or sola_hizali_altta or saga_hizali
+
+
+def yan_sutun(bolge: list[Blok], sayfa_bloklari: list[Blok], bicimler: dict) -> list[Blok]:
+    """İki sütunlu şiir ya da eski metin + 'Günümüz Türkçesiyle' çeviri sütunu (TDE 10 s.19):
+    alıntı sütununun yanında, aynı puntoda ve kıtaları aynı satır hizasında (y0) başlayan bloklar."""
+    if not bolge:
+        return []
+    ilk_bicim = bicimler.get((bolge[0].sayfa_no, bolge[0].blok_no))
+    if not ilk_bicim:
+        return []
+    punto, kalin_bolge = ilk_bicim[1], bool(_KALIN.search(ilk_bicim[0]))
+    sol, sag = min(x.bbox[0] for x in bolge), max(x.bbox[2] for x in bolge)
+    ust_y, alt_y = min(x.bbox[1] for x in bolge), max(x.bbox[3] for x in bolge)
+    kitalar = [x for x in bolge if not ATLAMA.match(x.metin.strip())] or bolge
+    eslesen = [y for y in sayfa_bloklari
+               if (y.bbox[0] >= sag or y.bbox[2] <= sol)
+               and (yb := bicimler.get((y.sayfa_no, y.blok_no))) and yb[1] == punto
+               and (kalin_bolge or not _KALIN.search(yb[0]))
+               and any(abs(y.bbox[1] - x.bbox[1]) <= 5 for x in kitalar)]
+    if not eslesen:
+        return []
+    ysol, ysag = min(y.bbox[0] for y in eslesen), max(y.bbox[2] for y in eslesen)
+    return [y for y in sayfa_bloklari
+            if y.bbox[0] < ysag and y.bbox[2] > ysol and ust_y - 5 <= y.bbox[1] <= alt_y + 5
+            and (yb := bicimler.get((y.sayfa_no, y.blok_no))) and yb[1] == punto
+            and (kalin_bolge or not _KALIN.search(yb[0]))]
 
 
 _ESKI_EK = re.compile(
@@ -252,6 +280,18 @@ def replik_bloklari(sayfa_bloklari: list[Blok]) -> dict:
     cizgili = [b for b in sayfa_bloklari if KONUSMA_CIZGISI.match(b.metin)]
     if len(cizgili) >= REPLIK_EN_AZ:
         sonuc |= {(b.sayfa_no, b.blok_no): "diyalog" for b in cizgili if (b.sayfa_no, b.blok_no) not in sonuc}
+    if sonuc:
+        # Replik sahnesindeki replik olmayan ara bloklar (gazel dizeleri, sahne yönergeleri, anlatıcı
+        # cümleleri — TDE 11 s.19); sağ kenardaki bilgi kutuları ve numaralı soru başlıkları hariç
+        replikler = [b for b in sayfa_bloklari if (b.sayfa_no, b.blok_no) in sonuc]
+        ilk_y, son_y = min(b.bbox[1] for b in replikler), max(b.bbox[1] for b in replikler)
+        replik_sol = min(b.bbox[0] for b in replikler)
+        varsayilan_sebep = next(iter(sonuc.values()))
+        for b in sayfa_bloklari:
+            if ((b.sayfa_no, b.blok_no) not in sonuc and ilk_y < b.bbox[1] < son_y
+                    and b.bbox[0] <= replik_sol + 120 and b.bbox[2] > replik_sol
+                    and not re.match(r"^\s*\d+\.", b.metin)):
+                sonuc[(b.sayfa_no, b.blok_no)] = varsayilan_sebep
     return sonuc
 
 
@@ -290,10 +330,14 @@ def alinti_bloklari(bloklar: list[Blok], bicimler: dict, denetciler=None) -> dic
             if ust is None:
                 continue
             bolge = alinti_bolgesi(ust, sayfa_bloklari, bicimler)
+            yan = yan_sutun(bolge, sayfa_bloklari, bicimler)
             alt = _alttaki(b, sayfa_bloklari)
-            if imza_mi(b, ust, bolge, bicimler.get((b.sayfa_no, b.blok_no)), bicimler.get((ust.sayfa_no, ust.blok_no)),
+            if imza_mi(b, ust, bolge + yan, bicimler.get((b.sayfa_no, b.blok_no)), bicimler.get((ust.sayfa_no, ust.blok_no)),
                        bicimler.get((alt.sayfa_no, alt.blok_no)) if alt else None):
-                for x in bolge + onceki_sayfalara_uzat(bolge, sayfalar, bicimler):
+                uzatilan = onceki_sayfalara_uzat(bolge, sayfalar, bicimler)
+                onceki_yan = [y for s_no in {x.sayfa_no for x in uzatilan}
+                              for y in yan_sutun([x for x in uzatilan if x.sayfa_no == s_no], sayfalar[s_no], bicimler)]
+                for x in bolge + yan + uzatilan + onceki_yan:
                     sonuc[(x.sayfa_no, x.blok_no)] = b.metin.strip()
         for anahtar, sebep in replik_bloklari(sayfa_bloklari).items():
             sonuc.setdefault(anahtar, sebep)

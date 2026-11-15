@@ -107,6 +107,28 @@ class BirlesikTesti(unittest.TestCase):
                    0.25, alt_tur="morfoloji", metin_parcasi="test")
         self.assertEqual(dusuk_oncelik.sebep(t), "yalnız bir araç tanımadı")
 
+    def test_eski_metin_sayfasi_ve_yakin_kelime_istisnasi(self):
+        # Sayfada en az 4 farklı "iki araç da" tespiti varsa morfoloji ve kesme 0,25'e iner;
+        # ancak kitapta geçen geçerli bir kelimeye tek harf uzak olan ("kisisel" -> "kişisel") inmez.
+        sozluk = GECERLI | {"kişisel"}
+        sahte = (lambda k: k in sozluk, lambda k: k in sozluk)
+        bloklar = [blok(1, "bolsar budunuğ törüsin yitü kisisel kişisel bir olay")]
+        acik = "Türkçe kök ve ek kurallarına göre çözümlenemedi (iki araç da: Starlang ve Zemberek); yazım hatası olabilir."
+        t_list = [
+            Tespit(1, 1, (0, 0, 1, 1), "yazim", acik, 1.0, alt_tur="morfoloji", metin_parcasi=k)
+            for k in ("bolsar", "budunuğ", "törüsin", "yitü", "kisisel")
+        ] + [
+            Tespit(1, 1, (0, 0, 1, 1), "yazim", "Özel ada gelen ek kesmeyle ayrılır (TDK).", 0.5,
+                   alt_tur="ozel_ad_kesme", metin_parcasi="Orhunda")
+        ]
+        sonuc = dusuk_oncelik.isaretle(None, bloklar, t_list, sahte)
+        self.assertEqual([x.guven_skoru for x in sonuc[:4]], [0.25, 0.25, 0.25, 0.25])
+        self.assertEqual(dusuk_oncelik.sebep(sonuc[0]), "eski metin sayfası")
+        self.assertEqual(sonuc[4].guven_skoru, 1.0)  # "kisisel" -> "kişisel" istisnası
+        self.assertIsNone(dusuk_oncelik.sebep(sonuc[4]))
+        self.assertEqual(sonuc[5].guven_skoru, 0.25)  # kesme tespiti de iner
+        self.assertEqual(dusuk_oncelik.sebep(sonuc[5]), "eski metin sayfası")
+
 
 if __name__ == "__main__":
     unittest.main()

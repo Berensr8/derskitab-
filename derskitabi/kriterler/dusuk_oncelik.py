@@ -58,16 +58,20 @@ def eski_metin_sayfasi(tespitler: list[Tespit], bloklar: list[Blok], denetciler=
     eski_sayfalar = {s for s, kelimeler in sayfa_kelimeleri.items() if len(kelimeler) >= ESKI_METIN_ESIGI}
     if not eski_sayfalar:
         return tespitler
-    # Aynı sayfada 'Günümüz Türkçesiyle' başlığından sonra gelen bloklar günümüz Türkçesidir (ör. TDE 12 s.247)
-    gunumuz_baslangic = {}
+    # Aynı sayfada ve aynı sütunda 'Günümüz Türkçesiyle' başlığından aşağıda kalan bloklar
+    # günümüz Türkçesidir (ör. TDE 12 s.247); yan sütundaki 'Günümüz Türkçesiyle' (TDE 11 s.156)
+    # sol sütundaki eski metin bloklarını etkilemez.
+    gunumuz_kutulari = defaultdict(list)
     for b in bloklar:
-        if b.sayfa_no in eski_sayfalar and "günümüz türkçesiyle" in yazim.tr_kucuk(b.metin) and len(b.metin) < 60:
-            gunumuz_baslangic[b.sayfa_no] = min(gunumuz_baslangic.get(b.sayfa_no, b.blok_no), b.blok_no)
+        if b.sayfa_no in eski_sayfalar and yazim.tr_kucuk(b.metin.strip()) == "günümüz türkçesiyle":
+            gunumuz_kutulari[b.sayfa_no].append(b.bbox)
     sonuc = []
     for t in tespitler:
-        if (t.sayfa_no not in eski_sayfalar
-                or any(not_ in t.aciklama for not_ in KITAP_IPUCU_NOTLARI)
-                or (t.sayfa_no in gunumuz_baslangic and t.blok_no >= gunumuz_baslangic[t.sayfa_no])):
+        gunumuz_altinda = any(
+            t.bbox[1] >= g_bbox[1] and abs(t.bbox[0] - g_bbox[0]) < 80
+            for g_bbox in gunumuz_kutulari.get(t.sayfa_no, ())
+        )
+        if t.sayfa_no not in eski_sayfalar or any(not_ in t.aciklama for not_ in KITAP_IPUCU_NOTLARI) or gunumuz_altinda:
             sonuc.append(t)
         elif t.alt_tur == "morfoloji":
             if t.metin_parcasi and yazim.tr_kucuk(t.metin_parcasi) in yakinlar:

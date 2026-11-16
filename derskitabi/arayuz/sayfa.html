@@ -276,7 +276,7 @@ const KRITERLER = [
 
 async function yeniEkrani(ana) {
   document.title = "Yeni inceleme · Ders Kitabı İnceleme";
-  if (!durum.form) durum.form = { kriterler: new Set(["yazim", "okunabilirlik", "mufredat"]), kapsam: "hepsi", aralik: "", hakem: undefined, hakem_elle_secildi: false, cikti: null };
+  if (!durum.form) durum.form = { kriterler: new Set(["yazim", "okunabilirlik", "mufredat"]), kapsam: "hepsi", aralik: "", hakem: undefined, hakem_elle_secildi: false, sayfa_okuma: undefined, sayfa_okuma_elle_secildi: false, cikti: null };
   const f = durum.form;
   ana.append(el("h1", {}, "Bir kitabı incele"),
     el("p", { class: "alt-bilgi" }, "Kitabı seçin, nerelere bakılacağını işaretleyin. Sonuçlar seçtiğiniz klasöre kaydedilir ve Geçmiş'te kalır."));
@@ -290,10 +290,14 @@ async function yeniEkrani(ana) {
         if (!f.hakem_elle_secildi) {
           f.hakem = !s.ollama;
         }
+        if (!f.sayfa_okuma_elle_secildi) f.sayfa_okuma = !s.ollama;
         if (form.isConnected) ciz();
       });
   } else if (!f.hakem_elle_secildi && f.hakem === undefined) {
     f.hakem = !durum.sistem.ollama;
+  }
+  if (!f.sayfa_okuma_elle_secildi && f.sayfa_okuma === undefined && durum.sistem.ollama !== "Kontrol ediliyor…") {
+    f.sayfa_okuma = !durum.sistem.ollama;
   }
   ciz();
 
@@ -346,6 +350,14 @@ async function yeniEkrani(ana) {
           el("span", { class: "sure" }, !hakemHazir
             ? `(kullanılamıyor: ${ollama})`
             : "(varsayılan açık: daha az yanlış alarm; inceleme süresi sayfa başına 1–2 sn uzar)")));
+        const okumaSecili = !!(f.sayfa_okuma && hakemHazir);
+        satir.append(el("div", { class: "alt-secenek" },
+          el("input", { type: "checkbox", id: "sayfa-okuma", checked: okumaSecili, disabled: !hakemHazir, "data-odak": "sayfa-okuma",
+            onchange: e => { f.sayfa_okuma = e.target.checked; f.sayfa_okuma_elle_secildi = true; ciz(); } }),
+          el("label", { for: "sayfa-okuma" }, "Yapay zekâ her sayfayı okuyup yazım ve noktalama önerisi de yapsın (sayfa okuma)"),
+          el("span", { class: "sure" }, !hakemHazir
+            ? `(kullanılamıyor: ${ollama})`
+            : "(Kitap başına yaklaşık 1 saat ekler (300 sayfa). Yeni özellik: etkisi henüz bağımsız ölçülmedi.)")));
       }
       return satir;
     }));
@@ -392,7 +404,7 @@ async function yeniEkrani(ana) {
       try {
         const kayit = await api("/api/incele", {
           pdf: b.pdf, kitap_adi: b.ad, sinif: b.sinif, kriterler: [...f.kriterler],
-          sayfa_metni: f.kapsam === "aralik" ? f.aralik.trim() : null, yazim_hakemi: f.hakem && !ollama, cikti: ciktiYolu });
+          sayfa_metni: f.kapsam === "aralik" ? f.aralik.trim() : null, yazim_hakemi: f.hakem && !ollama, sayfa_okuma: !!(f.sayfa_okuma && !ollama), cikti: ciktiYolu });
         durum.bilgi = null;
         location.hash = `#/inceleme/${kayit.id}`;
       } catch (e) {

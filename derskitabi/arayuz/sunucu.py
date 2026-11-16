@@ -152,6 +152,8 @@ def inceleme_durumu(kayit: dict) -> dict:
 
 
 def baslat(istek: dict) -> dict:
+    from ..kriterler.sayfa_okuma import sayfa_okuma_varsayilani
+    from ..kriterler.yazim_hakem import hakem_varsayilani
     bilgi = pdf_bilgisi(istek["pdf"])
     kriterler = [k for k in istek.get("kriterler", []) if k in ("yazim", "okunabilirlik", "mufredat", "tutarlilik")]
     if not kriterler:
@@ -166,7 +168,8 @@ def baslat(istek: dict) -> dict:
     klasor.mkdir(parents=True, exist_ok=False)
     ayar = {"pdf": bilgi["pdf"], "kitap_adi": istek.get("kitap_adi") or bilgi["ad"], "kriterler": kriterler,
             "sayfalar": sayfalar, "sayfa_metni": f"Sayfa {istek['sayfa_metni']}" if sayfalar else None,
-            "sinif": istek.get("sinif") or None, "yazim_hakemi": hakem_varsayilani(istek.get("yazim_hakemi")), "cikti": str(klasor)}
+            "sinif": istek.get("sinif") or None, "yazim_hakemi": hakem_varsayilani(istek.get("yazim_hakemi")),
+            "sayfa_okuma": sayfa_okuma_varsayilani(istek.get("sayfa_okuma")), "cikti": str(klasor)}
     (klasor / "ayar.json").write_text(json.dumps(ayar, ensure_ascii=False, indent=1), encoding="utf-8")
     kayit = gecmis.yeni(ayar)
     with open(klasor / "gunluk.txt", "w", encoding="utf-8") as gunluk:
@@ -218,7 +221,8 @@ def ac(kimlik: str, ne: str) -> None:
 def durum_bilgisi() -> dict:
     from .hat import ollama_durumu
     from ..kriterler.yazim_hakem import hakem_varsayilani
-    return {"ollama": ollama_durumu(), "hakem_varsayilan": hakem_varsayilani(),
+    hazir = hakem_varsayilani()  # hakem ve sayfa okuma aynı modeli (gemma4) kullanır: Ollama bir kez sorulur
+    return {"ollama": ollama_durumu(), "hakem_varsayilan": hazir, "sayfa_okuma_varsayilan": hazir,
             "varsayilan_cikti": str(gecmis.VARSAYILAN_CIKTI)}
 
 

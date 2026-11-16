@@ -22,7 +22,7 @@ from . import yerel_model
 from .gorsellestir import sayfa_araligi_coz
 from .inceleyici import inceleme_html_olustur
 from .kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet, tespitleri_yukle
-from .kriterler import dusuk_oncelik, mufredat, okunabilirlik, tutarlilik, yazim, yazim_hakem
+from .kriterler import dusuk_oncelik, mufredat, okunabilirlik, sayfa_okuma, tutarlilik, yazim, yazim_hakem
 from .model import BLOK_TURLERI
 from .pdf_notlari import KRITER_ADLARI, notlu_pdf_olustur
 from .rapor import rapor_olustur
@@ -255,6 +255,17 @@ def main() -> None:
                                                    ilerleme=lambda m: print(" ", m, flush=True))
         finally:
             json_kaydet(onbellek, onbellek_yolu)
+    if (not ollama_hazir_mi() and evet_mi(
+            "  Yapay zekâ her sayfayı okuyup yazım ve noktalama önerisi de yapsın mı (sayfa okuma)? "
+            + sayfa_okuma.SURE_UYARISI + " Etkisi henüz bağımsız ölçülmedi")):
+        onbellek_yolu = PROJE_KOKU / "veri" / sayfa_okuma.ONBELLEK_ADI
+        onbellek = sayfa_okuma.onbellek_yukle(onbellek_yolu)
+        try:
+            yazim_tespitleri, _sayac = sayfa_okuma.uygula(
+                yazim_tespitleri, bloklar, sayfalar=secili, alintilar=sayfa_okuma.alintilari_bul(pdf, bloklar, secili),
+                onbellek=onbellek, ilerleme=lambda m: print(" ", m, flush=True), kitap_adi=pdf.stem)
+        finally:
+            sayfa_okuma.onbellek_kaydet(onbellek, onbellek_yolu)
     tespitleri_kaydet(yazim_tespitleri, klasor / "yazim_tespitler.json")
     yuksek = sum(t_.guven_skoru >= 0.75 for t_ in yazim_tespitleri)
     dusuk_sayisi = sum(t_.guven_skoru < 0.5 for t_ in yazim_tespitleri)

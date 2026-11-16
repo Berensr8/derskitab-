@@ -54,7 +54,7 @@ def calistir(klasor: Path) -> dict:
 
     from ..inceleyici import inceleme_html_olustur
     from ..kayit import bloklari_kaydet, json_kaydet, tespitleri_kaydet, tespitleri_yukle
-    from ..kriterler import dusuk_oncelik, mufredat, okunabilirlik, tutarlilik, yazim, yazim_hakem
+    from ..kriterler import dusuk_oncelik, mufredat, okunabilirlik, sayfa_okuma, tutarlilik, yazim, yazim_hakem
     from ..pdf_cikarma import bloklari_cikar
     from ..pdf_notlari import notlu_pdf_olustur
     from ..rapor import rapor_olustur
@@ -112,6 +112,21 @@ def calistir(klasor: Path) -> dict:
                     hakem_calisti = True
                 finally:
                     json_kaydet(onbellek, onbellek_yolu)
+        if ayar.get("sayfa_okuma"):  # K48: yerel dil modeli her sayfayı okur (hakemden sonra: mevcut tespitler kesinleşti)
+            sebep = ollama_durumu()
+            if sebep:
+                il.mesaj("yazim", f"Sayfa okuma atlandı: {sebep}")
+            else:
+                il.mesaj("yazim", "Sayfalar yapay zekâ ile okunuyor (kitap başına yaklaşık 1 saat sürebilir)…")
+                onbellek_yolu = proje / "veri" / sayfa_okuma.ONBELLEK_ADI
+                onbellek = sayfa_okuma.onbellek_yukle(onbellek_yolu)
+                try:
+                    yazim_t, _sayac = sayfa_okuma.uygula(
+                        yazim_t, bloklar, sayfalar=secili, alintilar=sayfa_okuma.alintilari_bul(pdf, bloklar, secili),
+                        onbellek=onbellek, ilerleme=lambda m: il.mesaj("yazim", m),
+                        kitap_adi=ayar.get("kitap_adi") or pdf.stem)
+                finally:
+                    sayfa_okuma.onbellek_kaydet(onbellek, onbellek_yolu)
         tespitleri_kaydet(yazim_t, klasor / "yazim_tespitler.json")
         il.adim("yazim", "bitti", f"{sum(t.guven_skoru >= 0.5 for t in yazim_t)} olası hata")
     else:

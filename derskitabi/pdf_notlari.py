@@ -52,7 +52,8 @@ KURAL_ADLARI = {"noktalama_bosluk": "noktalamadan sonra boşluk", "bag_te_ta": "
                "bir_takim": "birtakım/bir takım yazımı",
                "birim_gr": "gram kısaltması (gr → g)",
                "yanlis_kelime": "yanlış türetilmiş kelime",
-               "kesme_bosluk": "kesme işaretinden sonra boşluk"}
+               "kesme_bosluk": "kesme işaretinden sonra boşluk",
+                "sayfa_okuma": "dil modeli sayfa okuma önerisi"}
 UYARI = "Bu not sistemin önerisidir, kesin hata değildir; editör kontrolü gerekir."
 
 
@@ -110,7 +111,8 @@ class _Sayfalar:
 def _yazim_notu(s: _Sayfalar, t: Tespit, dusuk: bool) -> tuple[float, float]:
     sayfa = s.sayfa(t.sayfa_no)
     kutular = _kutular(parca_kutulari(_ham_kelimeler(s.kelimeler(t.sayfa_no), t.bbox), t.metin_parcasi or ""))
-    tur = "kelime" if t.alt_tur == "morfoloji" else f"TDK kuralı: {KURAL_ADLARI.get(t.alt_tur, t.alt_tur)}"
+    tur = ("kelime" if t.alt_tur == "morfoloji" else "dil modeli sayfa okuma" if t.alt_tur == "sayfa_okuma"
+           else f"TDK kuralı: {KURAL_ADLARI.get(t.alt_tur, t.alt_tur)}")
     icerik = (f"{t.aciklama}\n\nKonum: {konum_metni(t.sayfa_no, t.basili_sayfa_no)}\n"
               f"Güven: {guven_metni(t.guven_skoru)}\n\n{UYARI}")
     renk = RENKLER["dusuk"] if dusuk else None
@@ -236,6 +238,8 @@ def _yer_imi_basligi(t: Tespit, bloklar: dict) -> str:
     yer = f"s. {t.basili_sayfa_no or t.sayfa_no}"
     if t.kriter == "yazim" and t.alt_tur == "morfoloji":
         return f"{yer}: {t.metin_parcasi}"
+    if t.kriter == "yazim" and t.alt_tur == "sayfa_okuma":
+        return f"{yer}: sayfa okuma — {_kisalt(t.metin_parcasi or '', 30)}"
     if t.kriter == "yazim":  # kural kesiti kelime ortasından başlayabilir: kuralın adı + noktalamalı kelime
         kelimeler = (t.metin_parcasi or "").split()
         isaretli = [k for k in kelimeler if any(c in k for c in ".,;:!?")] or kelimeler[1:-1] or kelimeler

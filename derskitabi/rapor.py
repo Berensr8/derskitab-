@@ -44,7 +44,8 @@ SUTUN = {ad: i + 1 for i, (ad, _) in enumerate(SUTUNLAR)}  # başlık -> sütun 
 HARF = {ad: chr(ord("A") + i) for i, (ad, _) in enumerate(SUTUNLAR)}
 TUR_ADLARI = {"morfoloji": "kelime (yazım)", "kitap_ici_zor_paragraf": "zor paragraf",
               "kitap_ici_celiski": "kitap içi çelişki", "kavram_yok": "anahtar kavram yok",
-              "tema_yok": "tema / öğrenme alanı yok", **{k: f"TDK kuralı: {v}" for k, v in KURAL_ADLARI.items()}}
+              "tema_yok": "tema / öğrenme alanı yok", **{k: f"TDK kuralı: {v}" for k, v in KURAL_ADLARI.items()},
+              "sayfa_okuma": "dil modeli sayfa okuma"}
 ONCELIK_RENGI = {"yüksek": "F8CBAD", "orta": "FFE699", "düşük": "D9D9D9"}
 GIRDI_RENGI = "FFF2CC"  # editörün dolduracağı hücreler
 BASLIK_RENGI = "1F4E79"
@@ -60,7 +61,8 @@ OLCULEN_BASARI = [
      "(%4), K42'de 0/17; kaçanlar çoğunlukla virgül eksikliği, kendi başına geçerli ama yanlış kullanılmış kelimeler "
      "ve her kitapta farklı dizgi hatalarıdır. K45'ten sonra öncelik sırası düzeltildi ve kesme işaretinden sonra "
      "boşluk kuralı eklendi (K46); bunların etkisi bağımsız olarak ölçülmedi. "
-     "Bilerek eklenen 56 hatanın 55'i gerileme setinde yakalanmıştır.",
+     "Bilerek eklenen 56 hatanın 55'i gerileme setinde yakalanmıştır. Sayfa okuma (yerel dil modeli) eklendi (K48); "
+     "etkisi henüz bağımsız olarak ölçülmedi.",
      "testseti/bagimsiz3_sonuclari.md (K45), testseti/bagimsiz2_sonuclari.md (K42)"),
     ("Yazım ve noktalama", "Kesme işareti (özel ad, kısaltma, sayı; gereksiz kesme): kitabın kendi metninde "
      "yaklaşık %56 (10/18); 31 gerçek tespitin ~21'i alıntılarda; denemede eksik kesmelerin yalnız ~%28'ini buldu.",
@@ -103,6 +105,9 @@ def kimlik(t: Tespit) -> str:
 
 
 def oneri(t: Tespit) -> str:
+    if t.alt_tur == "sayfa_okuma":  # "... 'kitaptaki' → 'önerilen'. Gerekçe: ..."
+        m = re.search(r"→ '(.*?)'\. (?:Gerekçe|Bu öneri)", t.aciklama, re.S)
+        return m.group(1) if m else ""
     m = re.search(r"Önerilen yazım: '([^']+)'", t.aciklama)
     return m.group(1) if m else ""
 

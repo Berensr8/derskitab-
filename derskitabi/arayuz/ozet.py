@@ -22,14 +22,16 @@ ONCELIK_ADI = {"yüksek": "öncelikli", "orta": "kontrol edilecek", "düşük": 
 ORNEK_SAYISI = 3
 _SADE_TUR = {"morfoloji": "kelime yazımı", "kitap_ici_zor_paragraf": "zor paragraf",
              "noktalama_bosluk": "noktalamadan sonra boşluk eksik", "ozel_ad_kesme": "özel ada gelen ekte kesme eksik",
-             "kisaltma_kesme": "kısaltmaya gelen ekte kesme eksik", "sayi_kesme": "sayıya gelen ekte kesme eksik"}
+             "kisaltma_kesme": "kısaltmaya gelen ekte kesme eksik", "sayi_kesme": "sayıya gelen ekte kesme eksik",
+             "sayfa_okuma": "sayfa okuma (dil modeli önerisi)"}
 # Sistemin ölçülmüş başarısı, kullanıcının diliyle (kaynak: testseti/*_sonuclari.md; rapor.py OLCULEN_BASARI)
 GUVEN = {
     "yazim": "Ne kadar güvenilir? Sistemi yazmayan üç yapay zekâdan oluşan kurulun yeni iki kitaptaki ölçümünde "
              "(K45) işaretlenenlerin yaklaşık dörtte biri (%26, 20/76) gerçek hatadır; önceki ölçümde de %28'di. "
              "Hakemin 'muhtemelen doğru' diye gizledikleri neredeyse hiç hata değildir. Kitaptaki doğal hataların "
              "çoğunu bulamaz (yeni kitaplarda 27 hatadan 1'i): virgül eksikliği ve kendi başına geçerli ama yanlış "
-             "kullanılmış kelimeler denetlenmez. Her tespite mutlaka göz atın.",
+             "kullanılmış kelimeler denetlenmez. Sonradan 'sayfa okuma' eklendi (yapay zekâ her sayfayı okuyup öneri "
+             "yapar); etkisi henüz bağımsız olarak ölçülmedi. Her tespite mutlaka göz atın.",
 
     "okunabilirlik": "Ne kadar güvenilir? Ölçüler cümle ve kelime uzunluğuna dayanır; ölçtüğümüzde "
                      "aynı dersin farklı sınıf kitaplarını bile ayırt etmedi. İşaretler 'buraya bir bakın' anlamındadır.",
@@ -89,6 +91,10 @@ def kisa_aciklama(t: Tespit) -> str:
     if t.kriter == "yazim" and t.alt_tur == "morfoloji":
         oneri = re.search(r"Önerilen yazım: '([^']+)'", t.aciklama)
         return "Sözlükte bulunamadı, yanlış yazılmış olabilir" + (f" (önerilen: {oneri.group(1)})" if oneri else "") + "."
+    if t.kriter == "yazim" and t.alt_tur == "sayfa_okuma":
+        m = re.search(r"işaretledi: '(.*?)' → '(.*?)'\. (?:Gerekçe|Bu öneri)", t.aciklama, re.S)
+        return ("Yapay zekâ sayfayı okurken işaretledi" + (f": '{m.group(1)}' yerine '{m.group(2)}' olmalı" if m else "")
+                + ". Ölçülmüş isabeti henüz bilinmiyor.")
     if t.kriter == "tutarlilik":  # 's. 241: "A" ile s. 256: "B" çelişiyor olabilir …' → karşı cümle
         m = re.match(r's\. (\S+): "(.+?)" ile s\. (\S+): "(.+?)" çelişiyor', t.aciklama)
         if m:
@@ -143,6 +149,16 @@ def sade_aciklama(t: Tespit) -> str:
                                                              "kelimeyi geçerli kabul etti."}[ad],
                                 "Sözlükte bulunmadığı için işaretlendi."]
                     break
+        return " ".join(cumleler)
+    if t.kriter == "yazim" and t.alt_tur == "sayfa_okuma":
+        cumleler = ["Yapay zekâ (yerel dil modeli) sayfayı baştan sona okurken bu yeri işaretledi."]
+        if m := re.search(r"işaretledi: '(.*?)' → '(.*?)'\. (?:Gerekçe|Bu öneri)", a, re.S):
+            cumleler.append(f"Önerisi: '{m.group(1)}' yerine '{m.group(2)}'.")
+        if m := re.search(r"Gerekçe: (.*?) Bu öneri bir dil modelinden gelir", a, re.S):
+            cumleler.append(f"Gerekçesi: {m.group(1)}")
+        cumleler.append("Bu öneri bir dil modelinden gelir; ölçülmüş isabeti henüz bilinmiyor.")
+        if "Alıntı metin" in a:
+            cumleler.append("Büyük ihtimalle hata değil: bir alıntının içinde (yazarın ya da eski yazım).")
         return " ".join(cumleler)
     if t.kriter == "okunabilirlik":
         o = _okunabilirlik_olculeri(a)

@@ -53,7 +53,7 @@ KURAL_ADLARI = {"noktalama_bosluk": "noktalamadan sonra boşluk", "bag_te_ta": "
                "birim_gr": "gram kısaltması (gr → g)",
                "yanlis_kelime": "yanlış türetilmiş kelime",
                "kesme_bosluk": "kesme işaretinden sonra boşluk",
-                "sayfa_okuma": "dil modeli sayfa okuma önerisi"}
+               "sayfa_okuma": "dil modeli sayfa okuma önerisi"}
 UYARI = "Bu not sistemin önerisidir, kesin hata değildir; editör kontrolü gerekir."
 
 

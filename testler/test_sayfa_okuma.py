@@ -53,16 +53,29 @@ class SuzgecTesti(unittest.TestCase):
         self.assertEqual(len(sonuc), 1)
 
     def test_filtre1_ayni_metin(self):
-        sonuc, sayac = calistir([aday("Hücreler enerji üretir", "hücreler  enerji üretir"),
-                                 aday("Etsem de ‘abesdir", "Etsem de 'abesdir"),
-                                 aday("1953’ te", "1953’te")])  # yalnız boşluk farkı da "aynı" sayılır (spec)
+        sonuc, sayac = calistir([aday("Hücreler enerji üretir", "Hücreler  enerji\nüretir"),
+                                 aday("Etsem de ‘abesdir", "Etsem de 'abesdir")])
         self.assertEqual(sonuc, [])
-        self.assertEqual(sayac["ayni_metin"], 3)
+        self.assertEqual(sayac["ayni_metin"], 2)
+
+    def test_bosluk_ve_harf_boyu_duzeltmesi_gercek_oneridir(self):
+        # boşluk silme/ekleme ve büyük/küçük harf düzeltmesi "aynı" sayılmaz (K48 düzeltmesi)
+        self.assertFalse(so.ayni_mi("1953’ te", "1953’te"))
+        self.assertFalse(so.ayni_mi("Ksilem de", "Ksilemde"))
+        self.assertFalse(so.ayni_mi("suv modeli", "SUV modeli"))
+        sonuc, sayac = calistir([aday("1953’ te", "1953’te")])
+        self.assertEqual((len(sonuc), sayac["ayni_metin"]), (1, 0))
 
     def test_filtre2_iki_nokta_ve_satir_sonu(self):
         sonuc, sayac = calistir([aday("Adı Difüzyon ve Ozmoz Süre 80 dk.", "Adı: Difüzyon ve Ozmoz\nSüre: 80 dk.")])
         self.assertEqual(sonuc, [])
         self.assertEqual(sayac["iki_nokta_satir_sonu"], 1)
+        # iki nokta öncesindeki boşluğu düzeltmek sayfa düzeni değildir
+        self.assertFalse(so.iki_nokta_satir_sonu_farki_mi("Yönerge :", "Yönerge:"))
+
+    def test_satir_sonunda_bolunmus_kelime(self):
+        self.assertTrue(so.satir_sonu_tiresi_mi("hazır\nlanması", "hazırlanması"))
+        self.assertFalse(so.satir_sonu_tiresi_mi("hazır lanması", "hazırlanması"))
 
     def test_filtre3_satir_sonu_tiresi(self):
         sonuc, sayac = calistir([aday("yapısı-", "yapısı"), aday("yapısı-", "yapısı-nın"),

@@ -83,6 +83,11 @@ def main() -> None:
     satir = []
     satir += ["# K48 geliştirme kontrolü: sayfa okuma ürün hattında", "",
               "**Geliştirme verisi; süzgeçler bu sayfalara bakılarak yazıldı. Gerçek etki K49'da yeni kitapta ölçülecek.**", "",
+              "> Claude düzeltmesi (K48 doğrulaması): görev metnindeki süzgeç 1 boşluk ve büyük/küçük harf farkını da yok "
+              "sayıyordu; bu yüzden 'Ksilem de' → 'Ksilemde', '1953’ te' → '1953’te', 'suv' → 'SUV' gibi gerçek öneriler "
+              "'kitaptaki = önerilen' diye atılıyordu (ilk çalıştırmada 22/44). Süzgeç 1 artık yalnız tırnak biçimini ve "
+              "boşluk dizisi uzunluğunu yok sayar; süzgeç 2 yalnız iki nokta EKLEYEN öneriyi atar; süzgeç 3 satır sonunda "
+              "bölünmüş kelimeyi ('hazır\\nlanması') de kapsar. İstem, şema ve model değişmedi.", "",
               f"Sayfalar: K42 ve K45 A sayfaları (60), kurulun HATA dediği 44 gerçek hata. Hat: yazım denetimi + kitap ipuçları + "
               f"yazım hakemi + sayfa okuma (`{sayfa_okuma.MODEL}`, istem sürümü `{sayfa_okuma.ISTEM_SURUMU}`).", "",
               "## Sonuç", "", "| Ölçü | Değer |", "|---|---|",

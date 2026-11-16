@@ -6,9 +6,10 @@ kullanılmış kelimeler, virgül). Bedeli: sayfa başına birkaç aday ve ~15 s
 
 İstem, şema, sıcaklık (0) ve süzgeç eşikleri K43/K47 ile aynıdır; AYARLANMAZ (değişirse ISTEM_SURUMU artar,
 önbellek yenilenir). Süzgeçler (yalnızca sayfa düzeninden ya da modelin tutarsızlığından gelen sahte adaylar):
-  1. kitaptaki = önerilen (boşluk, büyük/küçük harf, kıvrık/düz kesme farkı yok sayılır);
+  1. kitaptaki = önerilen (yalnız kıvrık/düz tırnak ve boşluk/satır sonu dizisi uzunluğu yok sayılır; boşluk
+     ekleyen/silen ya da büyük/küçük harfi düzelten öneri gerçek öneridir);
   2. fark yalnız iki nokta üst üste ve/veya satır sonu eklemek (başlık ve form satırları: "Adı Difüzyon");
-  3. satır sonu tiresi kalıntısı ("yapısı-" → "yapısı", "spektru-" → "spektrum-");
+  3. satır sonu kalıntısı ("yapısı-" → "yapısı", "spektru-" → "spektrum-", "hazır\\nlanması" → "hazırlanması");
   4. aynı yer için mevcut sistemin (kural, morfoloji, kesme) zaten bir tespiti var: yeni tespit üretilmez,
      mevcut tespitin açıklamasına "sayfa okuma da işaretledi" notu eklenir (öncelik değişmez).
 Ayrıca kitap metninde (sayfanın bloklarında) geçmeyen aday atılır (modelin uydurduğu metin).
@@ -135,18 +136,31 @@ def ollama_okuyucu(baslik: str, metin: str) -> list[dict] | None:
 
 # --- süzgeçler -----------------------------------------------------------------------------------
 
+def _tek_bosluk(metin: str) -> str:
+    """Kıvrık/düz tırnak birleşir, boşluk ve satır sonu dizileri tek boşluğa iner (boşluk SİLİNMEZ, harf boyu korunur)."""
+    m = (metin or "").replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+    return re.sub(r"\s+", " ", m).strip()
+
+
 def ayni_mi(kitaptaki: str, onerilen: str) -> bool:
-    return _norm(kitaptaki) == _norm(onerilen)
+    """Model değişiklik önermiyor. Boşluk ekleme/silme ve büyük/küçük harf düzeltmesi gerçek öneridir
+    ('Ksilem de' → 'Ksilemde', '1953’ te' → '1953’te', 'suv' → 'SUV'); bunlar aynı sayılmaz (Claude düzeltmesi, K48)."""
+    return _tek_bosluk(kitaptaki) == _tek_bosluk(onerilen)
 
 
 def iki_nokta_satir_sonu_farki_mi(kitaptaki: str, onerilen: str) -> bool:
-    """Fark yalnız ':' ve/veya satır sonu eklemekten ibaret (boşluk farkı zaten yok sayılır)."""
-    return _norm(kitaptaki.replace(":", "")) == _norm(onerilen.replace(":", ""))
+    """Fark yalnız ':' ve/veya satır sonu EKLEMEKTEN ibaret ('Adı Difüzyon' → 'Adı: Difüzyon').
+    'Yönerge :' → 'Yönerge:' gibi iki nokta öncesindeki boşluğu düzelten öneri atılmaz."""
+    return (onerilen.count(":") > kitaptaki.count(":")
+            and _tek_bosluk(kitaptaki.replace(":", "")) == _tek_bosluk(onerilen.replace(":", "")))
 
 
 def satir_sonu_tiresi_mi(kitaptaki: str, onerilen: str) -> bool:
-    """'yapısı-' → 'yapısı' (tire kalkıyor) ya da 'spektru-' → 'spektrum-' (kelime tamamlanıyor)."""
+    """'yapısı-' → 'yapısı' (tire kalkıyor) ya da 'spektru-' → 'spektrum-' (kelime tamamlanıyor); ayrıca satır
+    sonunda bölünmüş kelimenin birleştirilmesi ('hazır\\nlanması' → 'hazırlanması', sayfa düzeni)."""
     k = kitaptaki.strip()
+    if "\n" in k and _tek_bosluk(re.sub(r"\s*\n\s*", "", k)) == _tek_bosluk(onerilen):
+        return True
     if not k.endswith(("-", "‐")):
         return False
     kok = _norm(k[:-1])

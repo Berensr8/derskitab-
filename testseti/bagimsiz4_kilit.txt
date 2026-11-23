@@ -1,0 +1,19 @@
+Bağımsız değerlendirme 4 (K49) kilidi — 2026-11-23 21:42
+Sistemin kilitli A sayfalarındaki ve B örneklemindeki çıktısı, yapay zekâlar kararlarını vermeden ÖNCE hesaplandı.
+Dosyalar veri/bagimsiz4/ altında (git dışı). Parmak izleri SHA-256; satır sonları LF'ye çevrilerek hesaplandı:
+8b15506e0e960635fffd7285f56f0d63697e30983a1aa09f4eee6c3ec166bebd *havuz.json
+18277460acc08863c279be1d7c1984a3245f7b7af66d6a84f077d3bae15d7ea9 *B_anahtar.json
+87aff16ee32639d960b194f9ed394df2d27ccca39431fe96f0532b0c3353341d *B_nufus.json
+651e75356b9f8c285ac0f5eafb1370f40c6f921c27f125e0a26fffbad26a66e8 *A_sistem_gizli.json
+2f768dceb35c6e076e96c220ce65def7b777849c7882bc24f4c8f587980b1eb4 *tarih9_sistem.json
+9f441dde05ba71fec76e7264ca3f6d0b1ac129ec1196cb04e2d1534a13ae376e *tarih9_sayac.json
+8955b91f5fefacbba3f3b36f3f6f480cc640f1239f388eadfc035d45bd8a7a4e *cografya9_sistem.json
+979971cd3ed401bb61b52390fff32ece7096956d8aff5c802ae2049f6bca87a2 *cografya9_sayac.json
+Ön kayıt: testseti/k49_on_kayit.md (havuz.json SHA-256 8b15506e0e960635fffd7285f56f0d63697e30983a1aa09f4eee6c3ec166bebd; tohum 20261123).
+Ölçülen kod: 68a7a71 (betiklerin commit'i: 7cb5c89; derskitabi/ 68a7a71 ile birebir aynı).
+Ortam: .venv Python, PyMuPDF 1.28.2; Ollama gemma4:12b-it-qat (yazım hakemi ve sayfa okuma).
+Yapılandırma: ürünün varsayılanı (yazım hakemi açık, sayfa okuma açık); testseti/araclar/k49_sistem.py (zincir arayuz/hat.py ile aynı).
+B havuzu (A dışındaki 478 sayfa) gösterilen: mevcut hat N1 = 162, sayfa okuma N2 = 420.
+B1 = 80 (mevcut hat örneği), B2 = 60 (sayfa okuma örneği), B3 = 15 (kurallar, kural başına en çok 10).
+Toplam benzersiz B adayı 155; metin katmanı farkı 20 (kurula gitmez, ayrı raporlanır).
+A: 30 kilitli sayfa (S01-S15 Tarih 9, S16-S30 Coğrafya 9). A_talimat.txt K39/K42/K45 ile aynı.

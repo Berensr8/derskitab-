@@ -9,6 +9,8 @@ Dosyalar veri/bagimsiz4/ altında (git dışı). Parmak izleri SHA-256; satır s
 9f441dde05ba71fec76e7264ca3f6d0b1ac129ec1196cb04e2d1534a13ae376e *tarih9_sayac.json
 8955b91f5fefacbba3f3b36f3f6f480cc640f1239f388eadfc035d45bd8a7a4e *cografya9_sistem.json
 979971cd3ed401bb61b52390fff32ece7096956d8aff5c802ae2049f6bca87a2 *cografya9_sayac.json
+7fb98c441d25170a1b8f0ca4fad70f2a7c834bcd8a33d866120bc6ba3b811464 *A_birlesik_anahtar.json
+65a6bdcf83cfec48527e222ad9fce87f297d6ef7b1eb27c30deeb91621128590 *kurul_anahtar.json
 Ön kayıt: testseti/k49_on_kayit.md (havuz.json SHA-256 8b15506e0e960635fffd7285f56f0d63697e30983a1aa09f4eee6c3ec166bebd; tohum 20261123).
 Ölçülen kod: 68a7a71 (betiklerin commit'i: 7cb5c89; derskitabi/ 68a7a71 ile birebir aynı).
 Ortam: .venv Python, PyMuPDF 1.28.2; Ollama gemma4:12b-it-qat (yazım hakemi ve sayfa okuma).
@@ -17,3 +19,5 @@ B havuzu (A dışındaki 478 sayfa) gösterilen: mevcut hat N1 = 162, sayfa okum
 B1 = 80 (mevcut hat örneği), B2 = 60 (sayfa okuma örneği), B3 = 15 (kurallar, kural başına en çok 10).
 Toplam benzersiz B adayı 155; metin katmanı farkı 20 (kurula gitmez, ayrı raporlanır).
 A: 30 kilitli sayfa (S01-S15 Tarih 9, S16-S30 Coğrafya 9). A_talimat.txt K39/K42/K45 ile aynı.
+A listesi: ChatGPT ve Gemini cevapları birleştirildi: 68 aday (dayanaksız ya da tekrar 14 satır elendi; deepseek.txt ön kayıtta yok, kullanılmadı).
+Kurul listesi: A (68) + B (135 katman-temiz; 20 katman farkı hariç) = 203 aday, tohum 20261123 ile karıştırılıp K001-K203 kimlikleriyle hazırlandı.

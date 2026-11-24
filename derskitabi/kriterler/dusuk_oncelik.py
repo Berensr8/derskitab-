@@ -93,7 +93,9 @@ def eski_metin_sayfasi(tespitler: list[Tespit], bloklar: list[Blok], denetciler=
 def isaretle(pdf_yolu, bloklar: list[Blok], tespitler: list[Tespit], denetciler=None) -> list[Tespit]:
     """PDF okuma parçası, terim, alıntı ve eski metin sayfası ipuçlarını uygular (yazı biçimleri PDF'ten okunur)."""
     tespitler = pdf_parcasi.isaretle(tespitler, bloklar, denetciler)
-    sayfalar = {t.sayfa_no for t in tespitler if t.alt_tur == "morfoloji" and not any(not_ in t.aciklama for not_ in KITAP_IPUCU_NOTLARI)}
+    if pdf_yolu:  # K50: büyük harfli kelimede basılı harf noktalı İ ise metin katmanı farkıdır
+        tespitler = pdf_parcasi.basili_i_isaretle(pdf_yolu, tespitler)
+    sayfalar ={t.sayfa_no for t in tespitler if t.alt_tur == "morfoloji" and not any(not_ in t.aciklama for not_ in KITAP_IPUCU_NOTLARI)}
     italikler = terim.italik_kelimeler(pdf_yolu, bloklar, sayfalar) if pdf_yolu else None
     tespitler = _yalniz_isaretsizlere(lambda ts: terim.isaretle(ts, bloklar, italikler, denetciler), tespitler)
     if pdf_yolu:

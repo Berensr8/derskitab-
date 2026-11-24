@@ -1,5 +1,11 @@
 # Bağımsız değerlendirme 2: yazım (K42, 2026-11-10)
 
+> **Düzeltme notu (2026-11-24, K50):** Kurulun "hata" dediği üç `buyuk_harf_i` tespiti (`SEBEPLERI`,
+> `BENZERLIKLER`, `BENZERLIKLERIN`, TDE 10 s. 299) basılı sayfada noktalı İ ile doğru yazılmıştır; yalnız PDF'in
+> metin katmanı "I" diyor (glifin gerçek kutusu ve sayfa görüntüsüyle doğrulandı). Kurul yalnız metni gördüğü
+> için bunları hata saydı. Basılı sayfaya göre hakemli isabet **7/25 değil 4/25 (%16)**, `buyuk_harf_i` kuralı
+> **3/3 değil 0/3**'tür. Aşağıdaki sayılar kurulun özgün oylamasıdır, değiştirilmedi.
+
 **Neden:** K39 bağımsız değerlendirmesinde yazım denetimi başarısı bağımsız kurulca ilk kez ölçülmüştü (düzeltilmiş sayılarla isabet 7/40 = %17,5, bulma oranı 6/17 = %35,3; ilk ham sonuçlar: 8/40 = %20, 6/21 = %29). Ardından K40'ta yeni bir kilitli havuz ayrıldı, K41'de eksik kurallar eklendi, K41-ek ve K41-ek4 adımlarında PDF okuma katmanındaki hatalar (I/İ dönüşümü, görünür kısa çizgi, satır sonu boşlukları) düzeltildi. Bu çalışma (K42), yapılan iyileştirmeleri kirlenmemiş yeni bir örneklem üzerinde bağımsız olarak sınamaktadır.
 
 Ön kayıt belgesi: `testseti/k42_on_kayit.md`. Sistemin kilitli çıktıları ve parmak izleri kurul oylamasından önce kilitlendi (`testseti/bagimsiz2_kilit.txt`, commit `9c28fe7` ve `722dad7`).

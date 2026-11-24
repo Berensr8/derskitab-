@@ -130,5 +130,44 @@ class BirlesikTesti(unittest.TestCase):
         self.assertEqual(dusuk_oncelik.sebep(sonuc[5]), "eski metin sayfası")
 
 
+
+
+ARIAL = "C:/Windows/Fonts/arial.ttf"
+
+
+@unittest.skipUnless(__import__("os").path.exists(ARIAL), "Arial yazı tipi yok")
+class BasiliITesti(unittest.TestCase):
+    """K50: büyük harfli kelimede basılı harf (glifin gerçek kutusu) noktalı İ mi?"""
+
+    def pdf(self, metin: str):
+        import pathlib
+        import tempfile
+        import pymupdf
+        yol = pathlib.Path(tempfile.mkdtemp()) / "deneme.pdf"
+        d = pymupdf.open()
+        s = d.new_page()
+        s.insert_font(fontname="arial", fontfile=ARIAL)
+        s.insert_text((72, 100), metin, fontname="arial", fontsize=24)
+        d.save(yol)
+        return yol
+
+    def test_noktali_i_basilmis_kelime_dusuk_oncelige_iner(self):
+        yol = self.pdf("ETKİNLİK")
+        t = Tespit(1, 1, (60, 70, 300, 110), "yazim", "Açıklama.", 0.5, alt_tur="buyuk_harf_i", metin_parcasi="ETKINLIK")
+        sonuc = pdf_parcasi.basili_i_isaretle(yol, [t])[0]
+        self.assertEqual(sonuc.guven_skoru, 0.25)
+        self.assertIn("noktalı İ", sonuc.aciklama)
+        self.assertEqual(dusuk_oncelik.sebep(sonuc), "PDF okuma parçası")
+
+    def test_duz_i_basilmis_kelime_degismez(self):
+        yol = self.pdf("EDICI MADDE")
+        t = Tespit(1, 1, (60, 70, 300, 110), "yazim", "Açıklama.", 0.5, alt_tur="buyuk_harf_i", metin_parcasi="EDICI")
+        self.assertEqual(pdf_parcasi.basili_i_isaretle(yol, [t])[0], t)
+        import pymupdf
+        with pymupdf.open(yol) as d:
+            self.assertIs(pdf_parcasi.basili_i_noktali_mi(d[0], "EDICI"), False)
+            self.assertIsNone(pdf_parcasi.basili_i_noktali_mi(d[0], "YOKTUR"))
+
+
 if __name__ == "__main__":
     unittest.main()

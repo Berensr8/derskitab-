@@ -29,11 +29,11 @@ _SADE_TUR = {"morfoloji": "kelime yazımı", "kitap_ici_zor_paragraf": "zor para
 GUVEN = {
     "yazim": "Ne kadar güvenilir? Sistemi yazmayan üç yapay zekâdan oluşan kurulun en son ölçümünde (K49, Tarih 9 "
              "ve Coğrafya 9) işaretlenenlerin yaklaşık dörtte biri (%29, 18/63) gerçek hatadır; önceki iki ölçümde "
-             "de %26–28'di. Hakemin 'muhtemelen doğru' diye gizledikleri neredeyse hiç hata değildir. Kitaptaki "
+             "%16 ve %26'ydı. Hakemin 'muhtemelen doğru' diye gizledikleri neredeyse hiç hata değildir. Kitaptaki "
              "doğal hataların çoğunu bulamaz: yeni kitaplarda 28 hatadan 3'ünü buldu. İsteğe bağlı 'sayfa okuma' "
              "açıkken 7'sini buldu, ama onun önerilerinin yalnız %23'ü gerçek hatadır ve sayfa başına bir öneri "
-             "ekler. Tamamı büyük harfle yazılmış başlıklardaki 'İ yerine I' uyarıları çoğunlukla PDF'in metin "
-             "katmanından gelir, basılı sayfada sorun yoktur. Her tespite mutlaka göz atın.",
+             "ekler. Büyük harfle yazılmış kelimelerdeki 'İ yerine I' uyarılarında basılı harfe bakılır: harf "
+             "sayfada noktalıysa sorun PDF'tedir, uyarı düşük önceliğe iner. Her tespite mutlaka göz atın.",
 
     "okunabilirlik": "Ne kadar güvenilir? Ölçüler cümle ve kelime uzunluğuna dayanır; ölçtüğümüzde "
                      "aynı dersin farklı sınıf kitaplarını bile ayırt etmedi. İşaretler 'buraya bir bakın' anlamındadır.",

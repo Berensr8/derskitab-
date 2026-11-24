@@ -285,11 +285,17 @@ def _tespit(blok: Blok, alt_tur: str, guven: float, parca: str, aciklama: str) -
 
 def buyuk_harf_i_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci]) -> list[Tespit]:
     """Tümü büyük harfli kelimelerde I/İ karışması (K41). Tümü büyük harfli bir kelime
-    tr_kucuk ile geçersizken, içindeki I harfleri İ yapıldığında iki araca göre de geçerliyse."""
+    tr_kucuk ile geçersizken, içindeki I harfleri İ yapıldığında iki araca göre de geçerliyse.
+
+    K50: güven 0,5 (kontrol edilecek). K44'ün 1,0'ı K42'deki 3/3'e dayanıyordu; o üç kelime de basılı sayfada
+    noktalı İ çıktı (yalnız PDF'in metin katmanı farkı). 13 kitapta bu kuralın doğrulanmış gerçek hatası yok.
+    Basılı harfi noktalı İ olanları dusuk_oncelik/pdf_parcasi.basili_i_isaretle düşük önceliğe indirir.
+    Kelime sınırı her harfe (É gibi yabancı harfler dahil), rakama ve alt çizgiye göre alınır ('ÉLISE',
+    adres içindeki 'DIJITAL_')."""
     if _aralikli_mi(blok.metin):
         return []
     tespitler = []
-    for m in re.finditer(r"(?<![a-zA-ZçğıöşüÇĞİÖŞÜIİ])[A-ZÇĞİÖŞÜIİ]{4,}(?![a-zA-ZçğıöşüÇĞİÖŞÜIİ])", blok.metin):
+    for m in re.finditer(r"(?<!\w)[A-ZÇĞİÖŞÜIİ]{4,}(?!\w)", blok.metin):
         kelime = m.group(0)
         sade = kelime.replace("’", "'")
         if len(kelime) <= 3 or sade.lower() in KISALTMALAR or "I" not in kelime:
@@ -314,7 +320,7 @@ def buyuk_harf_i_denetimi(blok: Blok, denetciler: tuple[Denetci, Denetci]) -> li
                 break
         if bulunan_aday:
             tespitler.append(_tespit(
-                blok, "buyuk_harf_i", 1.0, kelime,
+                blok, "buyuk_harf_i", 0.5, kelime,
                 f"Büyük harfle yazılan '{kelime}' kelimesinde 'I'/'İ' karışması olabilir "
                 f"(doğrusu '{bulunan_aday.upper()}' olabilir)."
             ))

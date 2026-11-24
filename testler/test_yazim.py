@@ -252,7 +252,14 @@ class BuyukHarfITesti(unittest.TestCase):
         t = buyuk_harf_i_denetimi(b, sahte_arac)
         self.assertEqual([x.metin_parcasi for x in t], ["TAHRIŞ", "EDICI"])
         self.assertEqual(t[0].alt_tur, "buyuk_harf_i")
-        self.assertEqual(t[0].guven_skoru, 1.0)
+        self.assertEqual(t[0].guven_skoru, 0.5)  # K50: kontrol edilecek
+
+    def test_yabanci_harf_ve_alt_cizgi_kelime_siniri(self):
+        from derskitabi.kriterler.yazim import buyuk_harf_i_denetimi
+        sozluk = {"lise", "dijital"}
+        sahte_arac = (lambda k: k in sozluk, lambda k: k in sozluk)
+        b = blok("ÉLISE: tez_DIJITAL_dunya DIJITAL")
+        self.assertEqual([x.metin_parcasi for x in buyuk_harf_i_denetimi(b, sahte_arac)], ["DIJITAL"])
 
     def test_gecerli_ve_kisa_buyuk_harfli_kelimeler_atlanir(self):
         from derskitabi.kriterler.yazim import buyuk_harf_i_denetimi

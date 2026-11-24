@@ -55,15 +55,17 @@ ONCELIKLI = ("yazim", "tutarlilik")  # yalnız bunlar olası hata; öncelik veri
 # Kaynak: testseti/*_sonuclari.md. Sistem değişirse burası da güncellenmeli.
 OLCULEN_BASARI = [
     ("Yazım ve noktalama", "Bağımsız 3 modelli kurul ölçümünde, geliştirmede hiç kullanılmamış iki yeni kitapta "
-     "(K45, 2026-11-15: Biyoloji 12, İnkılâp Tarihi 12) hakemli sistemde gösterilen tespitlerin %26'sı (20/76, %18–37), "
-     "hakemsiz %15'i (12/80) gerçek hatadır (K42'de %28 [7/25]). Hakemin gizlediği tespitlerin neredeyse hiçbiri "
-     "hata değildir (K42 ve K45'te 48 tespitin 47'si). Doğal kitap hatalarını bulma oranı çok düşüktür: K45'te 1/27 "
-     "(%4), K42'de 0/17; kaçanlar çoğunlukla virgül eksikliği, kendi başına geçerli ama yanlış kullanılmış kelimeler "
-     "ve her kitapta farklı dizgi hatalarıdır. K45'ten sonra öncelik sırası düzeltildi ve kesme işaretinden sonra "
-     "boşluk kuralı eklendi (K46); bunların etkisi bağımsız olarak ölçülmedi. "
-     "Bilerek eklenen 56 hatanın 55'i gerileme setinde yakalanmıştır. Sayfa okuma (yerel dil modeli) eklendi (K48); "
-     "etkisi henüz bağımsız olarak ölçülmedi.",
-     "testseti/bagimsiz3_sonuclari.md (K45), testseti/bagimsiz2_sonuclari.md (K42)"),
+     "(K49, 2026-11-24: Tarih 9, Coğrafya 9) hakemli sistemde gösterilen tespitlerin %29'u (18/63, %19–41) gerçek "
+     "hatadır (K45'te %26 [20/76], K42'de %28 [7/25]). Hakemin gizlediği tespitlerin neredeyse hiçbiri hata "
+     "değildir (K42 ve K45'te 48 tespitin 47'si). Doğal kitap hatalarını bulma oranı düşüktür: K49'da 3/28 "
+     "(%11), K45'te 1/27, K42'de 0/17; kaçanlar çoğunlukla düzeltme işareti, özel ada gelen ekin kesmesi, virgül ve "
+     "kendi başına geçerli ama yanlış kullanılmış kelimelerdir. Tamamı büyük harfli başlıklardaki 'İ yerine I' "
+     "uyarıları (buyuk_harf_i) K49'da 0/18 ve ayrıca 20'si yalnız PDF metin katmanı farkıdır; en yüksek öncelik "
+     "grubunun isabetini düşürür. İsteğe bağlı sayfa okuma (yerel dil modeli, K48; varsayılan kapalı): önerilerin "
+     "%23'ü (14/60) gerçek hata, bulmayı 3/28'den 7/28'e çıkarır, sayfa başına ~0,9 öneri ekler. "
+     "Bilerek eklenen 56 hatanın 55'i gerileme setinde yakalanmıştır.",
+     "testseti/bagimsiz4_sonuclari.md (K49), testseti/bagimsiz3_sonuclari.md (K45), "
+     "testseti/bagimsiz2_sonuclari.md (K42)"),
     ("Yazım ve noktalama", "Kesme işareti (özel ad, kısaltma, sayı; gereksiz kesme): kitabın kendi metninde "
      "yaklaşık %56 (10/18); 31 gerçek tespitin ~21'i alıntılarda; denemede eksik kesmelerin yalnız ~%28'ini buldu.",
      "testseti/kesme_sonuclari.md (K34)"),
@@ -79,7 +81,7 @@ OLCULEN_BASARI = [
      "kavramı yakalar: bir tema çıkarıldığında kavramlarının çoğu başka temalarda da geçtiği için eksik görünmez. "
      "Öğrenme çıktısı kapsamını dil modeliyle değerlendirme ölçütü geçemedi (ürüne alınmadı).",
      "KARARLAR.md K31 ve eki"),
-    ("Yazım dışındaki kriterler", "İsabet etiketlerini geliştirici (yapay zekâ asistanı) tek başına koydu; bu kriterlerde bağımsız etiketleme yapılmadı (yazım ve noktalama bağımsız kurulla ölçüldü: K39, K42, K45).",
+    ("Yazım dışındaki kriterler", "İsabet etiketlerini geliştirici (yapay zekâ asistanı) tek başına koydu; bu kriterlerde bağımsız etiketleme yapılmadı (yazım ve noktalama bağımsız kurulla ölçüldü: K39, K42, K45, K49).",
      "docs/yontem_incelemesi_2026-11-09.md (Bulgu 3)"),
     ("Kapsam dışı", "Bu sistem şunları denetlemez: bilgilerin dış kaynakla doğruluğu, anlatım bozukluğu, "
      "görsel/tablo/altyazı, kitabın tutarlı biçimde tekrarladığı bir yanlış.",

@@ -290,14 +290,14 @@ async function yeniEkrani(ana) {
         if (!f.hakem_elle_secildi) {
           f.hakem = !s.ollama;
         }
-        if (!f.sayfa_okuma_elle_secildi) f.sayfa_okuma = !s.ollama;
+        if (!f.sayfa_okuma_elle_secildi) f.sayfa_okuma = false;  // K49: varsayılan kapalı
         if (form.isConnected) ciz();
       });
   } else if (!f.hakem_elle_secildi && f.hakem === undefined) {
     f.hakem = !durum.sistem.ollama;
   }
   if (!f.sayfa_okuma_elle_secildi && f.sayfa_okuma === undefined && durum.sistem.ollama !== "Kontrol ediliyor…") {
-    f.sayfa_okuma = !durum.sistem.ollama;
+    f.sayfa_okuma = false;  // K49: varsayılan kapalı
   }
   ciz();
 
@@ -357,7 +357,7 @@ async function yeniEkrani(ana) {
           el("label", { for: "sayfa-okuma" }, "Yapay zekâ her sayfayı okuyup yazım ve noktalama önerisi de yapsın (sayfa okuma)"),
           el("span", { class: "sure" }, !hakemHazir
             ? `(kullanılamıyor: ${ollama})`
-            : "(Kitap başına yaklaşık 1 saat ekler (300 sayfa). Yeni özellik: etkisi henüz bağımsız ölçülmedi.)")));
+            : "(varsayılan kapalı: kitap başına yaklaşık 1 saat ekler (300 sayfa); bağımsız ölçümde kitaptaki gerçek hatalardan bulunanı 28'de 3'ten 7'ye çıkardı, ama önerilerinin yalnız yaklaşık dörtte biri (%23) gerçek hata)")));
       }
       return satir;
     }));

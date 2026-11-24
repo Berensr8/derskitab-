@@ -11,6 +11,7 @@ import re
 from collections import Counter
 
 from ..kriterler.dusuk_oncelik import NOTLAR
+from ..kriterler.sayfa_okuma import OLCUM_NOTU
 from ..model import Blok, Tespit
 from ..pdf_notlari import oncelik
 from ..rapor import TUR_ADLARI
@@ -26,12 +27,13 @@ _SADE_TUR = {"morfoloji": "kelime yazımı", "kitap_ici_zor_paragraf": "zor para
              "sayfa_okuma": "sayfa okuma (dil modeli önerisi)"}
 # Sistemin ölçülmüş başarısı, kullanıcının diliyle (kaynak: testseti/*_sonuclari.md; rapor.py OLCULEN_BASARI)
 GUVEN = {
-    "yazim": "Ne kadar güvenilir? Sistemi yazmayan üç yapay zekâdan oluşan kurulun yeni iki kitaptaki ölçümünde "
-             "(K45) işaretlenenlerin yaklaşık dörtte biri (%26, 20/76) gerçek hatadır; önceki ölçümde de %28'di. "
-             "Hakemin 'muhtemelen doğru' diye gizledikleri neredeyse hiç hata değildir. Kitaptaki doğal hataların "
-             "çoğunu bulamaz (yeni kitaplarda 27 hatadan 1'i): virgül eksikliği ve kendi başına geçerli ama yanlış "
-             "kullanılmış kelimeler denetlenmez. Sonradan 'sayfa okuma' eklendi (yapay zekâ her sayfayı okuyup öneri "
-             "yapar); etkisi henüz bağımsız olarak ölçülmedi. Her tespite mutlaka göz atın.",
+    "yazim": "Ne kadar güvenilir? Sistemi yazmayan üç yapay zekâdan oluşan kurulun en son ölçümünde (K49, Tarih 9 "
+             "ve Coğrafya 9) işaretlenenlerin yaklaşık dörtte biri (%29, 18/63) gerçek hatadır; önceki iki ölçümde "
+             "de %26–28'di. Hakemin 'muhtemelen doğru' diye gizledikleri neredeyse hiç hata değildir. Kitaptaki "
+             "doğal hataların çoğunu bulamaz: yeni kitaplarda 28 hatadan 3'ünü buldu. İsteğe bağlı 'sayfa okuma' "
+             "açıkken 7'sini buldu, ama onun önerilerinin yalnız %23'ü gerçek hatadır ve sayfa başına bir öneri "
+             "ekler. Tamamı büyük harfle yazılmış başlıklardaki 'İ yerine I' uyarıları çoğunlukla PDF'in metin "
+             "katmanından gelir, basılı sayfada sorun yoktur. Her tespite mutlaka göz atın.",
 
     "okunabilirlik": "Ne kadar güvenilir? Ölçüler cümle ve kelime uzunluğuna dayanır; ölçtüğümüzde "
                      "aynı dersin farklı sınıf kitaplarını bile ayırt etmedi. İşaretler 'buraya bir bakın' anlamındadır.",
@@ -94,7 +96,7 @@ def kisa_aciklama(t: Tespit) -> str:
     if t.kriter == "yazim" and t.alt_tur == "sayfa_okuma":
         m = re.search(r"işaretledi: '(.*?)' → '(.*?)'\. (?:Gerekçe|Bu öneri)", t.aciklama, re.S)
         return ("Yapay zekâ sayfayı okurken işaretledi" + (f": '{m.group(1)}' yerine '{m.group(2)}' olmalı" if m else "")
-                + ". Ölçülmüş isabeti henüz bilinmiyor.")
+                + f". {OLCUM_NOTU[0].upper()}{OLCUM_NOTU[1:]}.")
     if t.kriter == "tutarlilik":  # 's. 241: "A" ile s. 256: "B" çelişiyor olabilir …' → karşı cümle
         m = re.match(r's\. (\S+): "(.+?)" ile s\. (\S+): "(.+?)" çelişiyor', t.aciklama)
         if m:
@@ -156,7 +158,7 @@ def sade_aciklama(t: Tespit) -> str:
             cumleler.append(f"Önerisi: '{m.group(1)}' yerine '{m.group(2)}'.")
         if m := re.search(r"Gerekçe: (.*?) Bu öneri bir dil modelinden gelir", a, re.S):
             cumleler.append(f"Gerekçesi: {m.group(1)}")
-        cumleler.append("Bu öneri bir dil modelinden gelir; ölçülmüş isabeti henüz bilinmiyor.")
+        cumleler.append(f"Bu öneri bir dil modelinden gelir; {OLCUM_NOTU}.")
         if "Alıntı metin" in a:
             cumleler.append("Büyük ihtimalle hata değil: bir alıntının içinde (yazarın ya da eski yazım).")
         return " ".join(cumleler)

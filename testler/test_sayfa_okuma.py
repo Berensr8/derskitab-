@@ -40,7 +40,7 @@ class SuzgecTesti(unittest.TestCase):
         self.assertIn("Yerel dil modeli (gemma4) sayfayı okurken işaretledi", t.aciklama)
         self.assertIn("'gece gündüz fotosentezi' → 'gece gündüz, fotosentezi'", t.aciklama)
         self.assertIn("Gerekçe: Gerekçe.", t.aciklama)
-        self.assertIn("ölçülmüş isabeti henüz bilinmiyor", t.aciklama)
+        self.assertIn("bağımsız ölçümde (K49) bu önerilerin yaklaşık dörtte biri", t.aciklama)
         self.assertEqual(sayac["tespit"], 1)
 
     def test_kitapta_gecmeyen_aday_atilir(self):
@@ -191,7 +191,7 @@ class AkisTesti(unittest.TestCase):
     def test_varsayilan_fonksiyonu(self):
         self.assertTrue(so.sayfa_okuma_varsayilani(True))
         self.assertFalse(so.sayfa_okuma_varsayilani(False))
-        self.assertIsInstance(so.sayfa_okuma_varsayilani(None), bool)
+        self.assertFalse(so.sayfa_okuma_varsayilani(None))  # K49: varsayılan kapalı
 
 
 class UrunMetniTesti(unittest.TestCase):
@@ -204,7 +204,8 @@ class UrunMetniTesti(unittest.TestCase):
         self.assertIn("sayfa okuma", TUR_ADLARI["sayfa_okuma"])
         self.assertEqual(oneri(t), "1953’te")
         self.assertIn("Yapay zekâ sayfayı okurken işaretledi", ozet.kisa_aciklama(t))
-        self.assertIn("ölçülmüş isabeti", ozet.sade_aciklama(t))
+        self.assertIn("bağımsız ölçümde (K49)", ozet.sade_aciklama(t))
+        self.assertIn("Bağımsız ölçümde (K49)", ozet.kisa_aciklama(t))
 
 
 if __name__ == "__main__":

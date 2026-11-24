@@ -15,6 +15,10 @@ kullanılmış kelimeler, virgül). Bedeli: sayfa başına birkaç aday ve ~15 s
 Ayrıca kitap metninde (sayfanın bloklarında) geçmeyen aday atılır (modelin uydurduğu metin).
 Tespit: kriter "yazim", alt_tur "sayfa_okuma", güven 0,5 (alıntı ya da replik içindeyse 0,25). Yazım hakemi
 bu tespitlere sorulmaz (model zaten kendisi önerdi).
+
+K49 bağımsız ölçümü (testseti/bagimsiz4_sonuclari.md, Tarih 9 ve Coğrafya 9): önerilerin 14/60'ı (%23) gerçek
+hata; sayfalardaki 28 gerçek hatadan 4'ünü ek olarak buldurdu. Ön kayıttaki karar gereği (isabet %30'un altında)
+varsayılan KAPALI; kullanıcı açıkça seçerse çalışır.
 """
 
 import hashlib
@@ -41,6 +45,7 @@ ALINTI_GUVENI = 0.25
 ALT_TUR = "sayfa_okuma"
 MEVCUT_NOTU = "Sayfa okuma da işaretledi"
 SURE_UYARISI = "Kitap başına yaklaşık 1 saat ekler (300 sayfa)."
+OLCUM_NOTU = "bağımsız ölçümde (K49) bu önerilerin yaklaşık dörtte biri (%23) gerçek hata çıktı"
 ONBELLEK_ADI = "sayfa_okuma_onbellek.json"
 
 # K43/K47 ile birebir aynı sistem istemi, soru şablonu ve JSON şeması (testseti/k43_on_kayit.md)
@@ -82,14 +87,9 @@ SURZGEC_ADLARI = {
 
 
 def sayfa_okuma_varsayilani(kullanici_secimi: bool | None = None) -> bool:
-    """Varsayılan durum: kullanıcı açıkça belirtmediyse Ollama ve gemma4 hazırsa True, değilse False."""
-    if kullanici_secimi is not None:
-        return bool(kullanici_secimi)
-    modeller = yerel_model.yuklu_modeller()
-    if modeller is None:
-        return False
-    kok = MODEL.split(":")[0]
-    return any(m == MODEL or m.startswith(kok) for m in modeller)
+    """Varsayılan KAPALI (K49 ön kayıt kararı: bağımsız isabet %23 < %30). Yalnız kullanıcı açıkça seçerse True;
+    Ollama hazır değilse hat ve demo zaten atlar."""
+    return bool(kullanici_secimi)
 
 
 def _norm(metin: str) -> str:
@@ -196,7 +196,7 @@ def _aciklama(kitaptaki: str, onerilen: str, gerekce: str, alintida: bool) -> st
         metin += f" Gerekçe: {gerekce}"
         if not metin.endswith((".", "!", "?")):
             metin += "."
-    metin += " Bu öneri bir dil modelinden gelir; ölçülmüş isabeti henüz bilinmiyor."
+    metin += f" Bu öneri bir dil modelinden gelir; {OLCUM_NOTU}."
     if alintida:
         metin += (f" {alinti.ALINTI_NOTU}: yazarın kendi yazımı ya da eski yazım olabilir — düşük öncelik.")
     return metin

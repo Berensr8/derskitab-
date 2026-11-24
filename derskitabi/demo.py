@@ -257,7 +257,7 @@ def main() -> None:
             json_kaydet(onbellek, onbellek_yolu)
     if (not ollama_hazir_mi() and evet_mi(
             "  Yapay zekâ her sayfayı okuyup yazım ve noktalama önerisi de yapsın mı (sayfa okuma)? "
-            + sayfa_okuma.SURE_UYARISI + " Etkisi henüz bağımsız ölçülmedi")):
+            + sayfa_okuma.SURE_UYARISI + " Önerilerin yaklaşık dörtte biri gerçek hata (K49)", varsayilan=False)):
         onbellek_yolu = PROJE_KOKU / "veri" / sayfa_okuma.ONBELLEK_ADI
         onbellek = sayfa_okuma.onbellek_yukle(onbellek_yolu)
         try:

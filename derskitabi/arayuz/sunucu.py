@@ -222,7 +222,7 @@ def durum_bilgisi() -> dict:
     from .hat import ollama_durumu
     from ..kriterler.yazim_hakem import hakem_varsayilani
     hazir = hakem_varsayilani()  # hakem ve sayfa okuma aynı modeli (gemma4) kullanır: Ollama bir kez sorulur
-    return {"ollama": ollama_durumu(), "hakem_varsayilan": hazir, "sayfa_okuma_varsayilan": hazir,
+    return {"ollama": ollama_durumu(), "hakem_varsayilan": hazir, "sayfa_okuma_varsayilan": False,
             "varsayilan_cikti": str(gecmis.VARSAYILAN_CIKTI)}
 
 
